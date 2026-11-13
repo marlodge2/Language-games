@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Conference Welcome Speech — Hidden Word Listening</title>
+<link rel="stylesheet" href="hidden-engine.css" />
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"></script>
+<script>
+  ((window.plausible = window.plausible || function () { (plausible.q = plausible.q || []).push(arguments); }),
+   (plausible.init = plausible.init || function (i) { plausible.o = i || {}; }));
+  plausible.init();
+</script>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script src="hidden-engine.js"></script>
+<script>
+  HiddenWordEngine.render({
+    title: "Conference Welcome Speech",
+    next: "hidden4.html",
+    questions: [
+      { audio: "q1", before: "Good afternoon, ladies and gentlemen, ", after: " I have your attention please.",
+        words: ["daft", "sand", "may", "ten"], correct: 2,
+        hints: ["Good afternoon ....", "... ladies and ....", null, ".. attention .."] },
+      { audio: "q2", before: "We ", after: " a few administrative matters to take care of before the conference starts.",
+        words: ["have", "fewer", "mat", "forth"], correct: 0,
+        hints: [null, "... few administrative ...", "... matters ...", "...before the ...."] },
+      { audio: "q3", before: "First of all, please collect your room keys and meal coupons from Beryl ", after: " the reception desk.",
+        words: ["festival", "lecture", "milk", "at"], correct: 3,
+        hints: ["First of all ...", "... collect your ...", "... meal coupons ...", null] },
+      { audio: "q4", before: "We will be having ", after: " meals in the Windsor Dining Hall on level three.",
+        words: ["wheel", "our", "sin", "only"], correct: 1,
+        hints: ["We will...", null, "...meals in ...", "... on level ..."] },
+      { audio: "q5", before: "Now if you have come here by car, please make ", after: " you park only in the bays numbered 61 to 90.",
+        words: ["knife", "sure", "sixteen", "nineteen"], correct: 1,
+        hints: ["Now if ...", null, "... sixty-one", "... ninety."] },
+      { audio: "q6", before: "The permanent staff tend to ", after: " very annoyed if we take up their parking spaces, so please be careful about that.",
+        words: ["get", "noise", "cup", "speak"], correct: 0,
+        hints: [null, "... annoyed ...", "... take up ...", "... please be careful .."] },
+      { audio: "q7", before: "And I have one announcement to make about a change in the schedule. Professor Morris can't get ", after: " till Friday, so tomorrow's plenary will be by Dr. Wilson.",
+        words: ["die", "outer", "here", "spleen"], correct: 2,
+        hints: ["And I ..", ".. about a ...", null, "... tomorrow's plenary ..."] },
+      { audio: "q8", before: "Professor Morris will give his paper before the final panel discussion on Saturday, and I am sure we are ", after: " looking forward to that.",
+        words: ["swill", "givers", "cushion", "all"], correct: 3,
+        hints: ["...Morris will ...", "... give his ..", ".. discussion ..", null] },
+      { audio: "q9", before: "So ", after: " me close by welcoming you all and saying what a pleasure it is to see so many faces here.",
+        words: ["let", "spy", "water", "cease"], correct: 0,
+        hints: [null, "... close by ...", "... what a ...", ".. see so .."] },
+      { audio: "q10", before: "I am sure we are all going to enjoy ", after: " and learn a great deal about computers in education this week.",
+        words: ["raw", "ourselves", "dealer", "juke"], correct: 1,
+        hints: ["... are all ...", null, "... deal about ...", "... education ..."] }
+    ]
+  });
+</script>
+</body>
+</html>

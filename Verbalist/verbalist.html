@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Verbalist</title>
+<link rel="stylesheet" href="style.css" />
+ <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>   
+</head>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <h1>Verbalist</h1>
+    <p id="subtitle">How to build up verb phrases using the verb: <strong id="verbName">WALK</strong></p>
+  </div>
+  <div class="topbar-actions">
+    <label class="mini-select">Pronoun
+      <select id="pronounSelect">
+        <option value="1">I</option>
+        <option value="2">we</option>
+        <option value="3">you</option>
+        <option value="4">they</option>
+        <option value="5">he</option>
+        <option value="6">she</option>
+        <option value="7">it</option>
+      </select>
+    </label>
+    <label class="mini-select">Modal verb
+      <select id="modalSelect">
+        <option value="1">shall</option>
+        <option value="2">will</option>
+        <option value="3" selected>can</option>
+        <option value="4">may</option>
+        <option value="5">must</option>
+      </select>
+    </label>
+    <button id="newVerbBtn" class="btn">New verb</button>
+    <button id="aboutBtn" class="btn btn-ghost">About</button>
+  </div>
+</header>
+
+<main>
+  <section class="phrase-panel">
+    <div id="phraseBox" class="phrase-box">I walk ...</div>
+  </section>
+
+  <section class="controls">
+    <fieldset class="group" data-group="tense">
+      <legend>Tense</legend>
+      <div class="toggle-row">
+        <button data-value="present" class="toggle active">Present</button>
+        <button data-value="past" class="toggle">Past</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="group" data-group="modal">
+      <legend>Modal</legend>
+      <div class="toggle-row">
+        <button data-value="none" class="toggle active">None</button>
+        <button data-value="modal" class="toggle">Modal</button>
+        <button data-value="emphatic" class="toggle" id="emphaticBtn">Emphatic</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="group" data-group="perfect">
+      <legend>Perfect</legend>
+      <div class="toggle-row">
+        <button data-value="off" class="toggle active">Non-perfect</button>
+        <button data-value="on" class="toggle">Perfect</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="group" data-group="aspect">
+      <legend>Aspect</legend>
+      <div class="toggle-row">
+        <button data-value="simple" class="toggle active">Simple</button>
+        <button data-value="continuous" class="toggle">Continuous</button>
+        <button data-value="goingTo" class="toggle">Going to</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="group sub-group" id="goingToPerfectGroup" data-group="goingToPerfect" hidden>
+      <legend>+ extra perfect</legend>
+      <div class="toggle-row">
+        <button data-value="off" class="toggle active">Plain</button>
+        <button data-value="on" class="toggle">Perfect</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="group sub-group" id="goingToContinuousGroup" data-group="goingToContinuous" hidden>
+      <legend>+ extra continuous</legend>
+      <div class="toggle-row">
+        <button data-value="off" class="toggle active">Plain</button>
+        <button data-value="on" class="toggle">Continuous</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="group" data-group="voice">
+      <legend>Voice</legend>
+      <div class="toggle-row">
+        <button data-value="active" class="toggle active">Active</button>
+        <button data-value="passive" class="toggle">Passive</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="group" data-group="polarity">
+      <legend>Affirm / Negative</legend>
+      <div class="toggle-row">
+        <button data-value="affirmative" class="toggle active">Affirmative</button>
+        <button data-value="negative" class="toggle">Negative</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="group" data-group="statementType">
+      <legend>Statement</legend>
+      <div class="toggle-row">
+        <button data-value="statement" class="toggle active">Statement</button>
+        <button data-value="question" class="toggle">Question</button>
+        <button data-value="tag" class="toggle">Tag</button>
+      </div>
+    </fieldset>
+  </section>
+
+  <section class="listbuttons">
+    <button id="stativeBtn" class="btn btn-ghost" hidden>Stative verbs&#8230;</button>
+    <button id="intransBtn" class="btn btn-ghost" hidden>Intransitive verbs&#8230;</button>
+  </section>
+
+  <section class="info-panels">
+    <div id="ruleNote" class="panel panel-rule" hidden></div>
+    <div id="warnings" hidden></div>
+    <div class="panel panel-meaning">
+      <span class="panel-label">Meaning:</span>
+      <span id="definition"></span>
+    </div>
+    <div id="usageNote" class="panel panel-note" hidden></div>
+  </section>
+</main>
+
+<dialog id="newVerbDialog">
+  <form method="dialog" id="newVerbForm">
+    <h2>New verb</h2>
+    <p>Enter one word only (up to 18 letters).</p>
+    <input id="newVerbInput" type="text" maxlength="18" autocomplete="off" />
+    <div class="dialog-actions">
+      <button type="button" class="btn btn-ghost" id="newVerbCancel">Cancel</button>
+      <button type="submit" class="btn">Use this verb</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="aboutDialog">
+  <h2>Verbalist</h2>
+  <p class="about-version">Version 1.2</p>
+  <p>by John and Muriel Higgins, 2003</p>
+  <p class="about-recreation">Recreated as a website.</p>
+  <div class="dialog-actions">
+    <button class="btn" id="aboutClose">OK</button>
+  </div>
+</dialog>
+
+<dialog id="listDialog">
+  <h2 id="listDialogTitle"></h2>
+  <div id="listDialogBody" class="word-list"></div>
+  <div class="dialog-actions">
+    <button class="btn" id="listDialogClose">Close</button>
+  </div>
+</dialog>
+
+<script src="app.js"></script>
+<script src="ui.js"></script>
+</body>
+</html>

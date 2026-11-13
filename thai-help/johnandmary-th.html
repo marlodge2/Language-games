@@ -1,0 +1,875 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>John and Mary — a grammarland (คำแนะนำภาษาไทย)</title>
+    <style>
+      :root {
+        --bg: #f5f1e6;
+        --panel: #ffffff;
+        --ink: #241b12;
+        --ink-dim: #6b6152;
+        --accent: #c9822b;
+        --accent-bright: #e0a339;
+        --border: #e3d9bd;
+        --kitchen: #dcebf3;
+        --kitchen-border: #a9c7da;
+        --living: #f6ecd2;
+        --living-border: #d8c088;
+        --garden: #e2efd8;
+        --garden-border: #a9cf95;
+        --john: #3f6fae;
+        --mary: #b1497a;
+        --rex: #8b3a2b;
+        --signal: #2f8a52;
+        --alert: #b23b23;
+        --radius: 10px;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; height: 100%; }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: 'Noto Sans Thai', 'Inter', 'Segoe UI', Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+      }
+      .gloss { color: var(--ink-dim); font-style: italic; }
+      .lang-toggle { text-align: center; font-size: 0.85rem; }
+      .wrap {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        max-width: 1020px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 12px 20px 10px;
+        gap: 8px;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 12px 16px;
+        box-shadow: 0 1px 3px rgba(30, 20, 10, 0.05);
+        flex: 0 0 auto;
+      }
+
+      .canvas-panel {
+        display: flex;
+        justify-content: center;
+        max-height: 50vh;
+      }
+
+      #canvas {
+        display: block;
+        margin: 0 auto;
+        border-radius: 8px;
+        max-width: 100%;
+        max-height: calc(50vh - 24px);
+        width: auto;
+        height: auto;
+      }
+
+      .transcript-panel {
+        flex: 1 1 auto;
+        min-height: 80px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      form#inputForm { display: flex; gap: 8px; flex: 0 0 auto; }
+      #inputBox {
+        flex: 1;
+        background: #ffffff;
+        border: 1px solid var(--border);
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 1rem;
+        padding: 10px 12px;
+        border-radius: 6px;
+      }
+      #inputBox:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+      button {
+        font-family: inherit;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        border: 1px solid var(--accent);
+        border-radius: 6px;
+        padding: 10px 18px;
+        background: var(--accent);
+        color: #2a1a04;
+      }
+      button:hover { background: var(--accent-bright); }
+      #sendBtn {
+        font-size: 1.3rem;
+        line-height: 1;
+        padding: 8px 14px;
+      }
+
+      #transcript {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+      #transcript .line { padding: 3px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+      #transcript .line:last-child { border-bottom: none; }
+      #transcript .you::before { content: "> "; color: var(--ink-dim); }
+      #transcript .computer { color: var(--ink); }
+      #transcript .system { color: var(--ink-dim); font-style: italic; }
+
+      details#help {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 10px 16px;
+        font-size: 0.88rem;
+        color: var(--ink-dim);
+        flex: 0 0 auto;
+      }
+      details#help summary { cursor: pointer; color: var(--ink); font-weight: 600; }
+      details#help ul { margin: 8px 0 0 20px; padding: 0; line-height: 1.6; }
+      details#help code {
+        background: var(--kitchen);
+        padding: 1px 6px;
+        border-radius: 4px;
+        color: var(--ink);
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 4px;
+        font-size: 0.8rem;
+        color: var(--ink-dim);
+        flex: 0 0 auto;
+      }
+      footer a { color: var(--accent); }
+    </style>
+ <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>   
+ </head>
+  <body>
+    <div class="wrap">
+      <p class="lang-toggle"><a href="../grammarland/johnandmary.html">English version (no Thai help)</a></p>
+
+      <div class="panel canvas-panel">
+        <canvas id="canvas" width="1000" height="440"></canvas>
+      </div>
+
+      <div class="panel transcript-panel">
+        <div id="transcript"></div>
+      </div>
+
+      <form id="inputForm" autocomplete="off">
+        <input id="inputBox" type="text" placeholder="พิมพ์คำสั่งหรือคำถามเป็นภาษาอังกฤษ (type an instruction or question in English)" />
+        <button type="submit" id="sendBtn" aria-label="Send">&#9166;</button>
+      </form>
+
+      <details id="help" open>
+        <summary>พิมพ์อะไรได้บ้าง (What can I say?)</summary>
+        <ul>
+          <li>ย้ายคนหรือสัตว์ (move someone) &mdash; <code>Put John in the kitchen</code>, <code>Send Rex to the garden</code>, <code>Bring Mary into the living room</code>
+            <br><span class="gloss">(<code>bring</code> ใช้ได้เฉพาะตอนย้ายเข้าบ้าน ไม่ใช่ออกไปที่สวน — only makes sense for moving into the house, not out to the garden)</span></li>
+          <li>เปิด/ปิดประตู (work a door) &mdash; มีสองบาน ต้องบอกว่าบานไหน: <code>Open the kitchen door</code> (ระหว่างครัวกับห้องนั่งเล่น), <code>Close the garden door</code> (ระหว่างห้องนั่งเล่นกับสวน)</li>
+          <li>ไม่มีใครเดินผ่านประตูที่ปิดอยู่ได้ &mdash; ถ้าลอง จะบอกว่าต้องเปิดบานไหนก่อน (nobody can walk through a closed door)</li>
+          <li>ถามว่าใครอยู่ที่ไหน (ask where someone is) &mdash; <code>Where is John?</code>, <code>Where's Rex?</code> &mdash; หรือถามสองสามคนพร้อมกัน &mdash; <code>Where are John and Mary?</code></li>
+          <li>หรือถามว่าใครอยู่ในห้องนั้น (ask who's in a room) &mdash; <code>Who is in the garden?</code> &mdash; จะตอบ <code>Nobody.</code> ถ้าห้องว่าง</li>
+          <li>ถามเกี่ยวกับห้องหรือประตู (ask about a room or door) &mdash; <code>Is Mary in the kitchen?</code>, <code>Are Mary and Rex in the garden?</code>, <code>Is the kitchen door open?</code></li>
+          <li>ถามว่าอยู่ด้วยกันไหม (ask if they're together) &mdash; <code>Are John and Mary together?</code>, <code>Are John and Mary and Rex together?</code></li>
+          <li>ถามเรื่องมองเห็น (ask about sight lines) &mdash; <code>Can John see Mary?</code>, <code>Can John see Rex?</code>
+            <br><span class="gloss">(จริงถ้าอยู่ห้องเดียวกัน หรือประตูทุกบานระหว่างห้องเปิดหมด — true if they share a room, or if every door between their rooms is open)</span></li>
+          <li>หรือบอกข้อมูลเฉยๆ (just tell it something) &mdash; <code>John is in the garden.</code>, <code>The kitchen door is open.</code>, <code>Rex can see Mary.</code> &mdash; มันจะเห็นด้วยหรือแก้ไขให้ถ้าคุณพูดผิด (it'll agree, or correct you)</li>
+          <li>เร็กซ์เป็นสุนัข จึงใช้ <code>it</code> ไม่ใช่ <code>he</code>/<code>she</code> &mdash; ตั้งใจให้เป็นแบบนี้ (that's on purpose)</li>
+          <li>เว้นช่องว่างแล้วกด Enter เพื่อให้คอมพิวเตอร์เล่นเอง (leave the box empty and press Enter to let the computer get on with things by itself)</li>
+          <li>พิมพ์ <code>Quit</code> เพื่อกลับไปหน้า Grammarland</li>
+        </ul>
+      </details>
+
+      <footer>
+        John and Mary &middot; from the original in <em>Computers in Language Learning</em>, Higgins &amp; Johns, 1983. New HTML edition, 2026.
+        &middot; <a href="../grammarland/index.html">Back to Grammarland</a>
+      </footer>
+    </div>
+
+    <script>
+    (function () {
+      "use strict";
+
+      var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext("2d");
+      var transcriptEl = document.getElementById("transcript");
+
+      var ROOMS = ["kitchen", "living room", "garden"];
+      var CHARS = ["john", "mary", "rex"];
+      var NAME = { john: "John", mary: "Mary", rex: "Rex" };
+      var GENDER = { john: "m", mary: "f", rex: "n" }; // n = neuter ("it") — Rex is a dog
+
+      var state = {
+        johnRoom: "kitchen",
+        maryRoom: "living room",
+        rexRoom: "garden",
+        doors: { kitchenLiving: true, livingGarden: true },
+      };
+
+      // Each door is named after whichever adjoining room uniquely identifies
+      // it ("the kitchen door" only ever touches the kitchen). The living
+      // room touches both doors, so "the living room door" is ambiguous and
+      // the parser asks for clarification rather than guessing.
+      var DOORS = {
+        kitchenLiving: { rooms: ["kitchen", "living room"], label: "kitchen door" },
+        livingGarden: { rooms: ["living room", "garden"], label: "garden door" },
+      };
+      var DOOR_BY_ROOMWORD = { kitchen: "kitchenLiving", garden: "livingGarden" };
+
+      var ROOM_X = {
+        kitchen: [30, 290],
+        "living room": [370, 630],
+        garden: [710, 970],
+      };
+
+      function pron(id) { return GENDER[id] === "f" ? "she" : GENDER[id] === "m" ? "he" : "it"; }
+      function PRON(id) { var p = pron(id); return p.charAt(0).toUpperCase() + p.slice(1); }
+      function reflexive(id) { return GENDER[id] === "f" ? "herself" : GENDER[id] === "m" ? "himself" : "itself"; }
+      function roomOf(id) { return state[id + "Room"]; }
+      function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+      // "[a]" / "[a] and [b]" / "[a] and [b] and [c]" — plain "and" every
+      // time (no Oxford comma), because the parser's own regexes for
+      // "...and...and..." questions require exactly that literal wording to
+      // read a self-asked question back again.
+      function andJoin(list) {
+        return list.length === 1 ? list[0] : list.slice(0, -1).join(" and ") + " and " + list[list.length - 1];
+      }
+
+      // "he is in the kitchen and she is in the living room" — one clause
+      // per person, in the order given.
+      function pronounLocationList(ids) {
+        return andJoin(ids.map(function (id) { return pron(id) + " is in the " + roomOf(id); }));
+      }
+
+      // Answers "Are X and Y (and Z) together?" for 2 or 3 people, in the
+      // order they were asked about. Three distinct outcomes: all in one
+      // room; all in different rooms (each reported by pronoun, since every
+      // one of them gets their own clause); or — only possible with three —
+      // a pair sharing a room and one apart, reported by name so it's clear
+      // who's grouped with whom.
+      function togetherAnswer(ids) {
+        var rooms = ids.map(roomOf);
+        var uniqueRooms = rooms.filter(function (r, i) { return rooms.indexOf(r) === i; });
+        if (uniqueRooms.length === 1) return "Yes, they are.";
+        if (uniqueRooms.length === ids.length) {
+          return "No, " + pronounLocationList(ids) + ".";
+        }
+        var groups = {};
+        ids.forEach(function (id) {
+          var r = roomOf(id);
+          (groups[r] = groups[r] || []).push(id);
+        });
+        var pairRoom, pairIds, oddId, oddRoom;
+        for (var r in groups) {
+          if (groups[r].length > 1) { pairRoom = r; pairIds = groups[r]; }
+          else { oddRoom = r; oddId = groups[r][0]; }
+        }
+        return "No, " + NAME[pairIds[0]] + " and " + NAME[pairIds[1]] + " are in the " + pairRoom +
+          " but " + NAME[oddId] + " is in the " + oddRoom + ".";
+      }
+
+      // Answers "Are X and Y (and Z) in the ROOM?" — like togetherAnswer,
+      // but anchored to a specific named room rather than "wherever they
+      // happen to share". Whoever's actually there gets named together (or
+      // alone if it's just one); anyone who isn't gets their own pronoun
+      // clause reporting where they really are.
+      function inRoomAnswer(ids, room) {
+        var inGroup = ids.filter(function (id) { return roomOf(id) === room; });
+        var outGroup = ids.filter(function (id) { return roomOf(id) !== room; });
+        if (!outGroup.length) return "Yes, they are.";
+        if (!inGroup.length) return "No, " + pronounLocationList(ids) + ".";
+        var inNames = andJoin(inGroup.map(function (id) { return NAME[id]; }));
+        var inVerb = inGroup.length > 1 ? "are" : "is";
+        return "No, " + inNames + " " + inVerb + " in the " + room + " but " + pronounLocationList(outGroup) + ".";
+      }
+
+      function roundRect(x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
+        ctx.closePath();
+      }
+
+      function drawRoom(room, fill, border, label) {
+        var x0 = ROOM_X[room][0], x1 = ROOM_X[room][1];
+        ctx.fillStyle = fill;
+        roundRect(x0, 60, x1 - x0, 340, 10);
+        ctx.fill();
+        ctx.strokeStyle = border;
+        ctx.lineWidth = 2;
+        roundRect(x0, 60, x1 - x0, 340, 10);
+        ctx.stroke();
+        ctx.fillStyle = "#241b12";
+        ctx.font = "600 18px 'Inter', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(label, (x0 + x1) / 2, 42);
+      }
+
+      function drawStove() {
+        var bx = 80, by = 300;
+        ctx.fillStyle = "#8fa8b6";
+        roundRect(bx, by, 90, 60, 6);
+        ctx.fill();
+        ctx.fillStyle = "#5c7382";
+        [[bx + 22, by + 18], [bx + 68, by + 18], [bx + 22, by + 44], [bx + 68, by + 44]].forEach(function (p) {
+          ctx.beginPath();
+          ctx.arc(p[0], p[1], 8, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+
+      function drawSofa() {
+        var sx = 420, sy = 320;
+        ctx.fillStyle = "#c48a4a";
+        roundRect(sx, sy, 150, 46, 10);
+        ctx.fill();
+        roundRect(sx, sy - 22, 26, 30, 8);
+        ctx.fill();
+        roundRect(sx + 124, sy - 22, 26, 30, 8);
+        ctx.fill();
+        // lamp
+        ctx.strokeStyle = "#8a7250";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(605, 340);
+        ctx.lineTo(605, 280);
+        ctx.stroke();
+        ctx.fillStyle = "#e6c15a";
+        ctx.beginPath();
+        ctx.moveTo(585, 280);
+        ctx.lineTo(625, 280);
+        ctx.lineTo(617, 255);
+        ctx.lineTo(593, 255);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      function drawTree(x, y) {
+        ctx.strokeStyle = "#7a5636";
+        ctx.lineWidth = 6;
+        ctx.beginPath();
+        ctx.moveTo(x, y + 40);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        ctx.fillStyle = "#5c9a4a";
+        [[-14, -6], [14, -6], [0, -24]].forEach(function (o) {
+          ctx.beginPath();
+          ctx.arc(x + o[0], y + o[1], 20, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+
+      function drawDoor(doorKey) {
+        var door = DOORS[doorKey];
+        var r0 = ROOM_X[door.rooms[0]], r1 = ROOM_X[door.rooms[1]];
+        var dx = r0[1], dy = 100, dw = r1[0] - r0[1], dh = 260;
+        var open = state.doors[doorKey];
+        if (open) {
+          ctx.fillStyle = "#fdfaf2";
+          ctx.fillRect(dx, dy, dw, dh);
+          ctx.strokeStyle = "#2f8a52";
+          ctx.lineWidth = 3;
+          ctx.setLineDash([8, 6]);
+          ctx.strokeRect(dx, dy, dw, dh);
+          ctx.setLineDash([]);
+        } else {
+          ctx.fillStyle = "#8a5a3c";
+          roundRect(dx + 4, dy + 4, dw - 8, dh - 8, 4);
+          ctx.fill();
+          ctx.fillStyle = "#e6c15a";
+          ctx.beginPath();
+          ctx.arc(dx + dw - 16, dy + dh / 2, 4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.fillStyle = open ? "#2f8a52" : "#b23b23";
+        ctx.font = "600 12px 'Inter', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(door.label + (open ? " (open)" : " (closed)"), dx + dw / 2, dy - 10);
+      }
+
+      function roomCenter(room) {
+        var x0 = ROOM_X[room][0], x1 = ROOM_X[room][1];
+        return (x0 + x1) / 2;
+      }
+
+      function drawPerson(x, y, color, name, flare) {
+        ctx.save();
+        ctx.fillStyle = "rgba(20,15,5,0.12)";
+        ctx.beginPath();
+        ctx.ellipse(x, y + 60, 26, 7, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = color;
+        if (flare) {
+          ctx.beginPath();
+          ctx.moveTo(x - 14, y - 6);
+          ctx.lineTo(x + 14, y - 6);
+          ctx.lineTo(x + 24, y + 46);
+          ctx.lineTo(x - 24, y + 46);
+          ctx.closePath();
+          ctx.fill();
+        } else {
+          roundRect(x - 18, y - 6, 36, 52, 12);
+          ctx.fill();
+        }
+
+        ctx.fillStyle = "#f2d3b6";
+        ctx.beginPath();
+        ctx.arc(x, y - 24, 17, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#241b12";
+        ctx.font = "600 15px 'Inter', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(name, x, y + 64);
+        ctx.restore();
+      }
+
+      function drawDog(x, y, color, name) {
+        ctx.save();
+        ctx.fillStyle = "rgba(20,15,5,0.12)";
+        ctx.beginPath();
+        ctx.ellipse(x, y + 26, 30, 6, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = color;
+        // legs
+        [-18, -6, 6, 18].forEach(function (lx) {
+          roundRect(x + lx - 3, y + 6, 6, 16, 3);
+          ctx.fill();
+        });
+        // body
+        ctx.beginPath();
+        ctx.ellipse(x, y, 30, 14, 0, 0, Math.PI * 2);
+        ctx.fill();
+        // tail
+        ctx.beginPath();
+        ctx.moveTo(x - 28, y - 4);
+        ctx.quadraticCurveTo(x - 42, y - 20, x - 34, y - 26);
+        ctx.quadraticCurveTo(x - 26, y - 14, x - 18, y - 6);
+        ctx.closePath();
+        ctx.fill();
+        // head
+        ctx.beginPath();
+        ctx.arc(x + 30, y - 6, 13, 0, Math.PI * 2);
+        ctx.fill();
+        // ears
+        ctx.beginPath();
+        ctx.ellipse(x + 22, y - 16, 5, 9, -0.4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.ellipse(x + 38, y - 16, 5, 9, 0.4, 0, Math.PI * 2);
+        ctx.fill();
+        // snout
+        ctx.fillStyle = "#241b12";
+        ctx.beginPath();
+        ctx.arc(x + 41, y - 4, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.font = "600 15px 'Inter', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(name, x, y + 44);
+        ctx.restore();
+      }
+
+      function drawScene() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#faf7ee";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        drawRoom("kitchen", "#dcebf3", "#a9c7da", "Kitchen");
+        drawRoom("living room", "#f6ecd2", "#d8c088", "Living room");
+        drawRoom("garden", "#e2efd8", "#a9cf95", "Garden");
+        drawStove();
+        drawSofa();
+        drawTree(870, 200);
+        drawTree(930, 320);
+        drawDoor("kitchenLiving");
+        drawDoor("livingGarden");
+
+        drawPerson(roomCenter(state.johnRoom) - 40, 260, "#3f6fae", "John", false);
+        drawPerson(roomCenter(state.maryRoom) + (state.maryRoom === state.johnRoom ? 40 : 0), 260, "#b1497a", "Mary", true);
+        drawDog(roomCenter(state.rexRoom) + (state.rexRoom === state.maryRoom || state.rexRoom === state.johnRoom ? -80 : 0), 340, "#8b3a2b", "Rex");
+      }
+
+      function say(role, text) {
+        var div = document.createElement("div");
+        div.className = "line " + role;
+        div.textContent = text;
+        transcriptEl.appendChild(div);
+        transcriptEl.scrollTop = transcriptEl.scrollHeight;
+      }
+
+      /* ---------------- reachability ("can X see Y") ---------------- */
+
+      function canSee(aId, bId) {
+        var ra = roomOf(aId), rb = roomOf(bId);
+        if (ra === rb) return { ok: true, reason: "same", room: ra };
+        var doorKey = null;
+        for (var k in DOORS) {
+          var rooms = DOORS[k].rooms;
+          if ((rooms[0] === ra && rooms[1] === rb) || (rooms[0] === rb && rooms[1] === ra)) doorKey = k;
+        }
+        if (doorKey) {
+          return state.doors[doorKey]
+            ? { ok: true, reason: "door", doors: [DOORS[doorKey].label] }
+            : { ok: false, doors: [DOORS[doorKey].label] };
+        }
+        // not adjacent: only the kitchen/garden pair, via the living room
+        var allOpen = state.doors.kitchenLiving && state.doors.livingGarden;
+        return allOpen
+          ? { ok: true, reason: "chain" }
+          : { ok: false, doors: [DOORS.kitchenLiving.label, DOORS.livingGarden.label] };
+      }
+
+      // The three rooms sit in a line (kitchen — living room — garden), so
+      // walking from one room to another only ever needs the doors directly
+      // in between, in order. Returns the door key of the first closed door
+      // on that route, or null if the whole route is open.
+      var ROOM_ORDER = ["kitchen", "living room", "garden"];
+      var DOOR_BETWEEN = {
+        "kitchen|living room": "kitchenLiving",
+        "living room|kitchen": "kitchenLiving",
+        "living room|garden": "livingGarden",
+        "garden|living room": "livingGarden",
+      };
+      function pathBlocked(fromRoom, toRoom) {
+        var fromIdx = ROOM_ORDER.indexOf(fromRoom), toIdx = ROOM_ORDER.indexOf(toRoom);
+        var step = fromIdx < toIdx ? 1 : -1;
+        for (var i = fromIdx; i !== toIdx; i += step) {
+          var dKey = DOOR_BETWEEN[ROOM_ORDER[i] + "|" + ROOM_ORDER[i + step]];
+          if (!state.doors[dKey]) return dKey;
+        }
+        return null;
+      }
+
+      /* ---------------- parser ---------------- */
+
+      function normRoom(s) { return s.replace(/\s+/g, " ").trim().toLowerCase(); }
+
+      function handle(raw) {
+        var text = raw.trim();
+        if (!text) return null;
+        // Strip trailing punctuation once, here, rather than leaning on each
+        // pattern to remember \??$ for itself — people (understandably)
+        // aren't reliable about question marks, full stops or "!".
+        var lower = text.toLowerCase().replace(/[.!?]+$/, "");
+
+        if (/^(quit|exit)$/i.test(lower)) {
+          say("system", "ลาก่อน! (Goodbye!)");
+          setTimeout(function () { window.location.href = "index.html"; }, 500);
+          return "";
+        }
+
+        var moveVerb = null, who, room;
+        var mMove = lower.match(/^(put|send|move|bring)\s+(john|mary|rex)\s+(?:in|into|to)\s+(?:the\s+)?(kitchen|living\s*room|garden)$/);
+        if (mMove) {
+          moveVerb = mMove[1]; who = mMove[2]; room = normRoom(mMove[3]);
+        } else {
+          var mGo = lower.match(/^(john|mary|rex),?\s+go(?:es)?\s+to\s+(?:the\s+)?(kitchen|living\s*room|garden)$/);
+          if (mGo) { moveVerb = "go"; who = mGo[1]; room = normRoom(mGo[2]); }
+        }
+        if (moveVerb) {
+          // "bring" implies motion into an enclosed space, so it only fits
+          // the kitchen or living room — not the garden, which is outdoors.
+          if (moveVerb === "bring" && room === "garden") {
+            return "‘Bring’ is for moving someone into the house — try ‘take’, ‘put’ or ‘send’ for the garden.";
+          }
+          var key = who + "Room";
+          if (state[key] === room) return NAME[who] + " is already in the " + room + ".";
+          var blocker = pathBlocked(state[key], room);
+          if (blocker) return "You'll have to open the " + DOORS[blocker].label + " first.";
+          state[key] = room;
+          drawScene();
+          return "OK. " + NAME[who] + " is now in the " + room + ".";
+        }
+
+        var mDoor = lower.match(/^(open|close|shut)\s+the\s+(kitchen|garden|living\s*room)\s+door$/);
+        if (mDoor) {
+          var roomWord = normRoom(mDoor[2]);
+          if (roomWord === "living room") {
+            return "The living room has two doors — do you mean the kitchen door or the garden door?";
+          }
+          var dKey = DOOR_BY_ROOMWORD[roomWord];
+          var opening = mDoor[1] === "open";
+          if (state.doors[dKey] === opening) return "The " + DOORS[dKey].label + " is already " + (opening ? "open" : "closed") + ".";
+          state.doors[dKey] = opening;
+          drawScene();
+          return "OK. The " + DOORS[dKey].label + " is now " + (opening ? "open" : "closed") + ".";
+        }
+
+        var mWhere = lower.match(/^where(?:'s| is)\s+(john|mary|rex)$/);
+        if (mWhere) {
+          var w = mWhere[1];
+          return PRON(w) + " is in the " + roomOf(w) + ".";
+        }
+
+        var mWhereAre = lower.match(/^where\s+are\s+(john|mary|rex)\s+and\s+(john|mary|rex)(?:\s+and\s+(john|mary|rex))?$/);
+        if (mWhereAre) {
+          var waIds = [mWhereAre[1], mWhereAre[2]];
+          if (mWhereAre[3]) waIds.push(mWhereAre[3]);
+          var waUnique = waIds.filter(function (id, i) { return waIds.indexOf(id) === i; });
+          if (waUnique.length !== waIds.length) return "Those need to be two different people (or three).";
+          return capitalize(pronounLocationList(waIds)) + ".";
+        }
+
+        var mWhoInRoom = lower.match(/^who(?:'s| is)\s+in\s+(?:the\s+)?(kitchen|living\s*room|garden)$/);
+        if (mWhoInRoom) {
+          var wr = normRoom(mWhoInRoom[1]);
+          var occupants = CHARS.filter(function (c) { return roomOf(c) === wr; }).map(function (c) { return NAME[c]; });
+          if (occupants.length === 0) return "Nobody.";
+          if (occupants.length === 1) return occupants[0] + " is.";
+          return occupants.slice(0, -1).join(", ") + " and " + occupants[occupants.length - 1] + " are.";
+        }
+
+        var mDoorQ = lower.match(/^is\s+the\s+(kitchen|garden|living\s*room)\s+door\s+(open|closed|shut)$/);
+        if (mDoorQ) {
+          var qRoomWord = normRoom(mDoorQ[1]);
+          if (qRoomWord === "living room") {
+            return "The living room has two doors — do you mean the kitchen door or the garden door?";
+          }
+          var qKey = DOOR_BY_ROOMWORD[qRoomWord];
+          var askOpen = mDoorQ[2] === "open";
+          var actuallyOpen = state.doors[qKey];
+          var lbl = DOORS[qKey].label;
+          if (askOpen === actuallyOpen) return "Yes, the " + lbl + " is " + (actuallyOpen ? "open" : "closed") + ".";
+          return "No, the " + lbl + " is " + (actuallyOpen ? "open" : "closed") + ".";
+        }
+
+        // -------- Statement: "The kitchen door is open." — confirm or contradict --------
+        var mStateDoor = lower.match(/^the\s+(kitchen|garden|living\s*room)\s+door\s+is\s+(open|closed|shut)$/);
+        if (mStateDoor) {
+          var sdRoomWord = normRoom(mStateDoor[1]);
+          if (sdRoomWord === "living room") {
+            return "The living room has two doors — do you mean the kitchen door or the garden door?";
+          }
+          var sdKey = DOOR_BY_ROOMWORD[sdRoomWord];
+          var sdClaimOpen = mStateDoor[2] === "open";
+          var sdActual = state.doors[sdKey];
+          if (sdClaimOpen === sdActual) return "Yes, it is.";
+          return "No, it isn't. It's " + (sdActual ? "open" : "closed") + ".";
+        }
+
+        var mInRoom = lower.match(/^is\s+(john|mary|rex)\s+in\s+(?:the\s+)?(kitchen|living\s*room|garden)$/);
+        if (mInRoom) {
+          var iw = mInRoom[1], ir = normRoom(mInRoom[2]);
+          if (roomOf(iw) === ir) return "Yes, " + NAME[iw] + " is in the " + ir + ".";
+          return "No, " + NAME[iw] + " is in the " + roomOf(iw) + ".";
+        }
+
+        var mTogether = lower.match(/^are\s+(john|mary|rex)\s+and\s+(john|mary|rex)(?:\s+and\s+(john|mary|rex))?\s+together$/);
+        if (mTogether) {
+          var tIds = [mTogether[1], mTogether[2]];
+          if (mTogether[3]) tIds.push(mTogether[3]);
+          var tUnique = tIds.filter(function (id, i) { return tIds.indexOf(id) === i; });
+          if (tUnique.length !== tIds.length) return "Those need to be two different people (or three).";
+          return togetherAnswer(tIds);
+        }
+
+        var mAreInRoom = lower.match(/^are\s+(john|mary|rex)\s+and\s+(john|mary|rex)(?:\s+and\s+(john|mary|rex))?\s+in\s+(?:the\s+)?(kitchen|living\s*room|garden)$/);
+        if (mAreInRoom) {
+          var airIds = [mAreInRoom[1], mAreInRoom[2]];
+          if (mAreInRoom[3]) airIds.push(mAreInRoom[3]);
+          var airUnique = airIds.filter(function (id, i) { return airIds.indexOf(id) === i; });
+          if (airUnique.length !== airIds.length) return "Those need to be two different people (or three).";
+          return inRoomAnswer(airIds, normRoom(mAreInRoom[4]));
+        }
+
+        // -------- Statement: "John is in the garden." — confirm or contradict --------
+        var mStateInRoom = lower.match(/^(john|mary|rex)\s+is\s+in\s+(?:the\s+)?(kitchen|living\s*room|garden)$/);
+        if (mStateInRoom) {
+          var sw = mStateInRoom[1], sr = normRoom(mStateInRoom[2]);
+          if (roomOf(sw) === sr) return "Yes, " + pron(sw) + " is.";
+          return "No, " + pron(sw) + " isn't. " + PRON(sw) + " is in the " + roomOf(sw) + ".";
+        }
+
+        var mSee = lower.match(/^can\s+(john|mary|rex)\s+see\s+(john|mary|rex)$/);
+        if (mSee) {
+          var a = mSee[1], b = mSee[2];
+          if (a === b) return NAME[a] + " can always see " + reflexive(a) + "!";
+          var res = canSee(a, b);
+          if (res.ok && res.reason === "same") {
+            return "Yes, " + NAME[a] + " can see " + NAME[b] + " — they're both in the " + res.room + ".";
+          }
+          if (res.ok && res.reason === "door") {
+            return "Yes, " + NAME[a] + " can see " + NAME[b] + " through the open " + res.doors[0] + ".";
+          }
+          if (res.ok && res.reason === "chain") {
+            return "Yes, " + NAME[a] + " can see " + NAME[b] + " — both doors are open, right through the living room.";
+          }
+          if (res.doors && res.doors.length === 2) {
+            return "No, " + NAME[a] + " can't see " + NAME[b] + " — that needs both the " + res.doors[0] + " and the " + res.doors[1] + " open.";
+          }
+          return "No, " + NAME[a] + " can't see " + NAME[b] + " — they're in different rooms and the " + res.doors[0] + " is closed.";
+        }
+
+        // -------- Statement: "John can see Mary." — confirm or contradict --------
+        var mStateSee = lower.match(/^(john|mary|rex)\s+can\s+see\s+(john|mary|rex)$/);
+        if (mStateSee) {
+          var sa = mStateSee[1], sb = mStateSee[2];
+          if (sa === sb) return NAME[sa] + " can always see " + reflexive(sa) + "!";
+          var sres = canSee(sa, sb);
+          if (sres.ok) return "Yes, " + pron(sa) + " can.";
+          if (sres.doors && sres.doors.length === 2) {
+            return "No, " + pron(sa) + " can't — that needs both the " + sres.doors[0] + " and the " + sres.doors[1] + " open.";
+          }
+          return "No, " + pron(sa) + " can't — they're in different rooms and the " + sres.doors[0] + " is closed.";
+        }
+
+        return null;
+      }
+
+      /* ---------------- self-talk (blank Enter) ----------------
+       * Like TENSELAND's "leave the box empty" behaviour: an empty Enter
+       * lets the computer act on its own. A self-asked question is answered
+       * on the *next* blank Enter (mirroring TENSELAND's ask/answer rhythm);
+       * a movement or door action just happens and is narrated immediately,
+       * since there's no one to "answer" a thing that already happened.
+       */
+
+      var pendingSelfQuestion = null; // { text }
+
+      function randomChoice(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+      // Picks 2 or 3 distinct characters at random and names them.
+      function randomNamesGroup() {
+        var shuffled = CHARS.slice().sort(function () { return Math.random() - 0.5; });
+        return shuffled.slice(0, Math.random() < 0.5 ? 2 : 3).map(function (id) { return NAME[id]; });
+      }
+
+      function randomQuestionText() {
+        var kind = randomChoice(["where", "inroom", "doorstate", "cansee", "together"]);
+        if (kind === "where") {
+          if (Math.random() < 0.35) return "Where are " + andJoin(randomNamesGroup()) + "?";
+          return "Where is " + NAME[randomChoice(CHARS)] + "?";
+        }
+        if (kind === "inroom") {
+          if (Math.random() < 0.35) return "Are " + andJoin(randomNamesGroup()) + " in the " + randomChoice(ROOMS) + "?";
+          return "Is " + NAME[randomChoice(CHARS)] + " in the " + randomChoice(ROOMS) + "?";
+        }
+        if (kind === "doorstate") {
+          return "Is the " + randomChoice(["kitchen", "garden"]) + " door " + randomChoice(["open", "closed"]) + "?";
+        }
+        if (kind === "together") {
+          return "Are " + andJoin(randomNamesGroup()) + " together?";
+        }
+        // cansee: pick two different characters
+        var a = randomChoice(CHARS);
+        var b = randomChoice(CHARS.filter(function (c) { return c !== a; }));
+        return "Can " + NAME[a] + " see " + NAME[b] + "?";
+      }
+
+      // A reachable room for `who`, respecting closed doors — self-talk
+      // shouldn't cheat through a door any more than a typed command can.
+      function reachableRoomFor(who) {
+        var here = roomOf(who);
+        var options = ROOMS.filter(function (r) { return r !== here && !pathBlocked(here, r); });
+        return options.length ? randomChoice(options) : null;
+      }
+
+      function selfMove() {
+        var who = randomChoice(CHARS);
+        var target = reachableRoomFor(who);
+        if (!target) return null; // boxed in by closed doors right now
+        state[who + "Room"] = target;
+        drawScene();
+        var verb = Math.random() < 0.6 ? "goes" : "wanders"; // both in play, "goes" a little commoner
+        return NAME[who] + " " + verb + " into the " + target + ".";
+      }
+
+      function selfDoor() {
+        var doorKey = randomChoice(["kitchenLiving", "livingGarden"]);
+        var opening = !state.doors[doorKey];
+        state.doors[doorKey] = opening;
+        drawScene();
+        return "I " + (opening ? "open" : "close") + " the " + DOORS[doorKey].label + ".";
+      }
+
+      function selfTalk() {
+        if (pendingSelfQuestion) {
+          var q = pendingSelfQuestion;
+          pendingSelfQuestion = null;
+          say("computer", handle(q.text)); // answered fresh, against whatever is true right now
+          return;
+        }
+        var roll = Math.random();
+        if (roll < 0.35) {
+          var qText = randomQuestionText();
+          say("computer", qText);
+          pendingSelfQuestion = { text: qText };
+        } else if (roll < 0.7) {
+          say("computer", selfMove() || selfDoor());
+        } else {
+          say("computer", selfDoor());
+        }
+      }
+
+      var form = document.getElementById("inputForm");
+      var inputBox = document.getElementById("inputBox");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var raw = inputBox.value;
+        inputBox.value = "";
+        if (!raw.trim()) {
+          selfTalk();
+          return;
+        }
+        say("you", raw);
+        var response = handle(raw);
+        if (response === null) {
+          // If the computer just asked itself something and this doesn't
+          // parse as anything else, treat it as an attempt to answer that
+          // question — reveal the true answer rather than claiming not to
+          // understand a perfectly reasonable "Yes"/"No".
+          if (pendingSelfQuestion) {
+            var answered = pendingSelfQuestion;
+            pendingSelfQuestion = null;
+            say("computer", handle(answered.text));
+          } else {
+            say("computer", "ขอโทษ ไม่เข้าใจ ลองพิมพ์ (Sorry, I don't understand that. Try) ‘Put John in the kitchen’, ‘Open the kitchen door’, ‘Where is Rex?’, or ‘Quit’.");
+          }
+        } else if (response !== "") {
+          pendingSelfQuestion = null; // whatever was pending, the moment's passed
+          say("computer", response);
+        }
+      });
+
+      drawScene();
+      say("system", "จอห์นอยู่ในครัว แมรี่อยู่ในห้องนั่งเล่น และเร็กซ์อยู่ในสวน ประตูทั้งสองบานเปิดอยู่ (John is in the kitchen, Mary is in the living room, and Rex is in the garden. Both doors are open.) Type an instruction or a question below, or leave it empty and press Enter to watch them get on with things by themselves.");
+      inputBox.focus();
+    })();
+    </script>
+  </body>
+</html>

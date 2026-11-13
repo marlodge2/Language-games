@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Jeu Solo</title>
+  <link rel="stylesheet" href="soclip.css">
+  <script src="frsoclip.js" defer></script>
+ <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+    </script>
+  </head>
+<body>
+  <div id="pageWrapper">
+    <!-- Barre de titre -->
+    <div id="titleBar">
+      <h1 id="storyTitle">Chargement de l'histoire...</h1>
+    </div>
+
+    <!-- Texte de l'histoire -->
+    <div id="textBox">
+      Chargement du texte...
+    </div>
+
+    <!-- Zone de jeu solo -->
+    <div id="playArea">
+      <div id="soloBox" style="display:none;">
+        <div class="inputRow">
+          <input id="wordInput" type="text" placeholder="Entrez un mot">
+          <button id="soloHelpButton">Aide</button>
+          <button id="soloFirstLetterButton">Premières lettres</button>
+          <button id="giveUpButton">Quitter</button>
+        </div>
+        <div id="feedback"></div>
+      </div>
+
+      <!-- Écran de fin -->
+      <div id="endScreen"></div>
+    </div>
+  </div>
+</body>
+</html>

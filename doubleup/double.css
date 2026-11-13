@@ -1,0 +1,95 @@
+  body { font-family: Arial, sans-serif; text-align: center; }
+{
+        background-color: lightgoldenrodyellow;
+        
+      }
+      a {
+        color: #0e8c62;
+      }
+      h1 {
+        text-align: center;
+      }
+      h2 {
+        text-align: center;
+      }
+      h4 {
+        text-align: right;
+      }
+/* Puzzle area */
+.textBox {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 15px 0;
+  background-color: #f9f9f9;
+  min-height: 80px;
+  overflow-y: auto;
+}
+#maskedBox { font-size: 18px; line-height: 1.5; }
+#alphabetBox { font-size: 14px; color: #333; }
+.maskSquare {
+  display: inline-block;
+  width: 12px;
+  height: 18px;
+  background-color: #ddd;
+  margin: 1px;
+}
+#choose-prompt {
+  margin: 10px 0;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+/* Menu styling */
+.menuBox {
+  margin: 50px auto;
+  padding: 30px;
+  width: 60%;
+  max-width: 600px;
+  background: linear-gradient(135deg, #f0f8ff, #e6f2ff);
+  border: 2px solid #99c;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.menuBox h2 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: #333366;
+}
+#titleSelect {
+  font-size: 1.1em;
+  padding: 8px;
+  width: 80%;
+  border-radius: 6px;
+  border: 1px solid #999;
+}
+.menuButton {
+  margin-top: 20px;
+  padding: 12px 24px;
+  font-size: 1.1em;
+  background-color: #3366cc;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.menuButton:hover { background-color: #254a99; }
+
+/* End screen buttons */
+.endButton {
+  margin: 10px;
+  padding: 12px 24px;
+  font-size: 1.1em;
+  background-color: #669933;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.endButton:hover { background-color: #446622; }
+
+/* Fade effect */
+.fadeBox { transition: opacity 1s ease; }
+.hidden { opacity: 0; }
+.visible { opacity: 1; }

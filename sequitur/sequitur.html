@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sequitur</title>
+    <link rel="stylesheet" href="sequ.css?v=20240604" />
+     <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>   
+</head>
+  </head>
+  <body>
+    <div id="title-screen">
+      <h1>Sequitur</h1>
+      <div class="subtitle">
+        A language game by John and Muriel Higgins<br />Revised Summer 2026
+      </div>
+      <div id="title-instructions">
+        You see the start of a text and have to rebuild it by picking the right
+        continuation at each step. It is a kind of story jigsaw puzzle. If you
+        get stuck, click "Need help?" for a five-second glance at the complete
+        story.
+      </div>
+      <div id="story-list">
+        <select id="story-select" onchange="enableStartButton()">
+          <option value="" disabled selected>-- Select a story --</option>
+          <option value="ducksoup.txt">Nasreddin's Visitors</option>
+          <option value="pot.txt">Borrowing a Pot</option>
+          <option value="shirt.txt">Nasreddin's Shirt</option>
+          <option value="officeboy.txt">Office Boy in London</option>
+          <option value="langlabs.txt">Language Laboratories</option>
+          <option value="treasure.txt">from Treasure Island</option>        </select>
+      </div>
+
+      <button id="start-button" onclick="startGame()" disabled>
+        Start Game
+      </button>
+    </div>
+
+    <div id="game-screen" class="hidden">
+      <h2 id="story-title"></h2>
+      <div id="story-box"></div>
+      <p id="instruction" class="instruction">Pick the right continuation</p>
+      <div id="options"></div>
+      <div id="game-controls">
+        <button id="help-button" onclick="needHelp()">Need help?</button>
+        <button id="quit-button" onclick="quitGame()">Quit</button>
+      </div>
+      <div id="end-controls" class="hidden">
+        <button id="play-again-button" onclick="restartGame()">
+          Play Again
+        </button>
+        <button id="home-button" onclick="goHome()">
+          John Higgins's Home Page
+        </button>
+      </div>
+    </div>
+
+    <script src="sequ.js"></script>
+  </body>
+</html>

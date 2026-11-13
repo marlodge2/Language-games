@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Partial Eclipse</title>
+  <link rel="stylesheet" href="soclip.css">
+  <script src="soclip.js" defer></script>
+</head>
+<body>
+  <div id="pageWrapper">
+    <!-- Summary overlay, shown once when a text with a ### summary loads -->
+    <div id="summaryOverlay" style="display:none;">
+      <div id="summaryBox">
+        <p id="summaryText"></p>
+        <button id="summaryDismissButton">Continue</button>
+      </div>
+    </div>
+
+    <!-- Title bar -->
+    <div id="titleBar">
+      <h1 id="storyTitle">Loading story...</h1>
+    </div>
+
+    <!-- Story text -->
+    <div id="textBox">
+      Loading text...
+    </div>
+
+    <!-- Reveal-setup: choose which word categories to show before guessing
+         begins, then either start the on-screen game or print a worksheet. -->
+    <div id="revealSetup" style="display:none;">
+      <p id="revealHint">Tick any categories you want already revealed, either to give the students a head start or to focus the task on a particular kind of word. Nothing ticked means a normal fully-blanked text.</p>
+      <div id="revealChecks">
+        <label><input type="checkbox" data-category="capitalised"> Capitalised words</label>
+        <label><input type="checkbox" data-category="short"> Short words (1&ndash;4 letters)</label>
+        <label><input type="checkbox" data-category="long"> Long words (5+ letters)</label>
+        <label><input type="checkbox" data-category="content"> All content words</label>
+        <label><input type="checkbox" data-category="determiners"> Determiners/pronouns</label>
+        <label><input type="checkbox" data-category="auxiliaries"> Auxiliary verbs</label>
+        <label><input type="checkbox" data-category="prepositions"> Prepositions/conjunctions</label>
+        <label><input type="checkbox" data-category="adverbs"> Adverbs</label>
+        <label><input type="checkbox" data-category="numbers"> Numbers</label>
+        <label><input type="checkbox" data-category="firstLetters"> First letters</label>
+        <label><input type="checkbox" data-category="lastLetters"> Last letters</label>
+      </div>
+      <div id="revealActions" class="buttonRow">
+        <button id="startGuessingButton">Start guessing on screen</button>
+        <button id="printWorksheetButton">Print this worksheet</button>
+      </div>
+    </div>
+
+    <!-- Solo play area -->
+    <div id="playArea">
+      <div id="soloBox" style="display:none;">
+      <div class="inputRow">
+  <input id="wordInput" type="text" placeholder="Enter a word">
+  <button id="soloHelpButton">Help</button>
+  <button id="soloFirstLetterButton">First Letters</button>
+  <button id="giveUpButton">Quit</button>
+</div>  <div id="feedback"></div>
+      </div>
+
+      <!-- End screen -->
+      <div id="endScreen"></div>
+    </div>
+  </div>
+</body>
+</html>

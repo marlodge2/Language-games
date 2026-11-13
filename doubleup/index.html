@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DOUBLE UP</title>
+    <link rel="stylesheet" href="../minimals.css" />
+    <style>
+      h1 {
+        font-size: 1.3em;
+        text-align: center;
+        margin-bottom: 20px;
+        line-height: 1.4;
+      }
+
+      /* Start buttons */
+      .startButton {
+        display: block;
+        margin: 15px auto;
+        padding: 14px 28px;
+        font-size: 1.1em;
+        background-color: #3366cc;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        width: 50%;
+        max-width: 300px;
+        transition:
+          background-color 0.3s ease,
+          transform 0.2s ease;
+      }
+
+      .startButton:hover {
+        background-color: #254a99;
+        transform: scale(1.05);
+      }
+
+      .instructions {
+        margin-top: 30px;
+        font-size: 1.1em;
+        line-height: 1.5;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        color: #333;
+      }
+    </style>
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+    </script>
+  </head>
+  <body>
+    <h1>
+      DOUBLE UP<br />
+      A game for language learners by John and Muriel Higgins,<br />
+      revised summer 2026
+    </h1>
+
+    <div class="instructions">
+      You will see a short text which has been masked out, and all the words in
+      the text in alphabetical order. Your task is to find the pairs of words
+      that appear together in the original text. If you get stuck, you can click
+      the <strong>Need Help</strong> button to reveal the full text for 5
+      seconds.
+    </div>
+
+    <div class="startButtons">
+      <button
+        class="startButton"
+        onclick="loadGame('dbleasy.txt', 'doubleup.html')"
+      >
+        Easy English
+      </button>
+      <button
+        class="startButton"
+        onclick="loadGame('dblquot.txt', 'doubleup.html')"
+      >
+        Famous Quotations
+      </button>
+      <button
+        class="startButton"
+        onclick="loadGame('dblfren.txt', 'frendouble.html')"
+      >
+        French Stories
+      </button>
+    </div>
+
+    <script>
+      function loadGame(filename, targetPage) {
+        fetch(filename)
+          .then((response) => response.text())
+          .then((data) => {
+            const lines = data.trim().split("\n");
+            const texts = [];
+            for (let i = 0; i < lines.length; i += 2) {
+              const title = lines[i];
+              const passage = lines[i + 1];
+              texts.push({ title, passage });
+            }
+
+            // Store in localStorage for the game page
+            localStorage.setItem("doubleUpTexts", JSON.stringify(texts));
+
+            // Redirect to the chosen game page
+            window.location.href = targetPage;
+          })
+          .catch((err) => {
+            alert("Error loading " + filename + ": " + err);
+          });
+      }
+    </script>
+  </body>
+</html>

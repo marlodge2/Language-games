@@ -1,0 +1,955 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>สมชาย กับ สมหญิง — word-highlight build (private)</title>
+    <style>
+      :root {
+        --bg: #f5f1e6;
+        --panel: #ffffff;
+        --ink: #241b12;
+        --ink-dim: #6b6152;
+        --accent: #c9822b;
+        --accent-bright: #e0a339;
+        --border: #e3d9bd;
+        --kitchen: #dcebf3;
+        --kitchen-border: #a9c7da;
+        --living: #f6ecd2;
+        --living-border: #d8c088;
+        --garden: #e2efd8;
+        --garden-border: #a9cf95;
+        --john: #3f6fae;
+        --mary: #b1497a;
+        --rex: #8b3a2b;
+        --signal: #2f8a52;
+        --alert: #b23b23;
+        --radius: 10px;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; height: 100%; }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: 'Noto Sans Thai', 'Inter', 'Segoe UI', Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+      }
+      .wrap {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        max-width: 1020px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 12px 20px 10px;
+        gap: 8px;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 12px 16px;
+        box-shadow: 0 1px 3px rgba(30, 20, 10, 0.05);
+        flex: 0 0 auto;
+      }
+
+      .canvas-panel {
+        display: flex;
+        justify-content: center;
+        max-height: 50vh;
+      }
+
+      #canvas {
+        display: block;
+        margin: 0 auto;
+        border-radius: 8px;
+        max-width: 100%;
+        max-height: calc(50vh - 24px);
+        width: auto;
+        height: auto;
+      }
+
+      .transcript-panel {
+        flex: 1 1 auto;
+        min-height: 80px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      form#inputForm { display: flex; gap: 8px; flex: 0 0 auto; }
+      #inputBox {
+        flex: 1;
+        background: #ffffff;
+        border: 1px solid var(--border);
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 1rem;
+        padding: 10px 12px;
+        border-radius: 6px;
+      }
+      #inputBox:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+      button {
+        font-family: inherit;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        border: 1px solid var(--accent);
+        border-radius: 6px;
+        padding: 10px 18px;
+        background: var(--accent);
+        color: #2a1a04;
+      }
+      button:hover { background: var(--accent-bright); }
+      #sendBtn {
+        font-size: 1.3rem;
+        line-height: 1;
+        padding: 8px 14px;
+      }
+
+      #transcript {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+      #transcript .line { padding: 3px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+      #transcript .line:last-child { border-bottom: none; }
+      #transcript .you::before { content: "คุณ: "; color: var(--ink-dim); }
+      #transcript .computer { color: var(--ink); }
+      #transcript .system { color: var(--ink-dim); font-style: italic; }
+      #transcript .word { transition: background-color 0.1s; border-radius: 3px; padding: 0 1px; }
+      #transcript .word.highlight { background: var(--accent-bright); color: #2a1a04; font-style: normal; }
+
+      details#help {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 10px 16px;
+        font-size: 0.88rem;
+        color: var(--ink-dim);
+        flex: 0 0 auto;
+      }
+      details#help summary { cursor: pointer; color: var(--ink); font-weight: 600; }
+      details#help ul { margin: 8px 0 0 20px; padding: 0; line-height: 1.7; }
+      details#help code {
+        background: var(--kitchen);
+        padding: 1px 6px;
+        border-radius: 4px;
+        color: var(--ink);
+      }
+      details#help .gloss { color: var(--ink-dim); font-style: italic; font-size: 0.9em; }
+      details#help .caveat {
+        margin-top: 10px;
+        padding: 8px 10px;
+        background: #fdf3e2;
+        border: 1px solid var(--accent);
+        border-radius: 6px;
+        font-style: normal;
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 4px;
+        font-size: 0.8rem;
+        color: var(--ink-dim);
+        flex: 0 0 auto;
+      }
+      footer a { color: var(--accent); }
+    </style>
+ <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>
+ </head>
+  <body>
+    <div class="wrap">
+      <div class="panel canvas-panel">
+        <canvas id="canvas" width="1000" height="440"></canvas>
+      </div>
+
+      <div class="panel transcript-panel">
+        <div id="transcript"></div>
+      </div>
+
+      <label id="speakToggleRow" style="display:none;">
+        <input type="checkbox" id="speakToggle" /> <span id="speakToggleLabel">เปิดเสียง</span>
+      </label>
+
+      <form id="inputForm" autocomplete="off">
+        <input id="inputBox" type="text" placeholder="พิมพ์ คำสั่ง หรือ คำถาม (type a command or a question)" />
+        <button type="submit" id="sendBtn" aria-label="ส่ง">&#9166;</button>
+      </form>
+
+      <details id="help">
+        <summary>นี่ คือ อะไร (What is this?)</summary>
+        <p class="gloss">
+          Words below are separated by spaces on purpose — real Thai writing usually runs words
+          together, but spacing them out like this is a real, occasional convention for children and
+          learners, and it's what this page's parser expects too.
+        </p>
+        <ul>
+          <li>ย้าย คน &mdash; <code>พา สมชาย ไป ที่ ครัว</code> <span class="gloss">(take Somchai to the kitchen)</span>,
+            <code>ส่ง เร็กซ์ ไป ที่ สวน</code> <span class="gloss">(send Rex to the garden)</span>,
+            <code>สมหญิง , ไป ที่ ห้องนั่งเล่น</code> <span class="gloss">(Somying, go to the living room)</span></li>
+          <li>เปิด หรือ ปิด ประตู &mdash; มี สอง บาน บอก ว่า บานไหน &mdash;
+            <code>เปิด ประตูครัว</code> <span class="gloss">(open the kitchen door)</span>,
+            <code>ปิด ประตูสวน</code> <span class="gloss">(close the garden door)</span></li>
+          <li>ไม่มี ใคร เดิน ผ่าน ประตู ที่ ปิด อยู่ ได้ &mdash; ถ้า คุณ ลอง มัน จะ บอก คุณ ว่า ต้อง เปิด บานไหน ก่อน</li>
+          <li>ถาม ว่า ใคร อยู่ ที่ไหน &mdash; <code>สมชาย อยู่ ที่ไหน</code> <span class="gloss">(where is Somchai?)</span>,
+            <code>สมชาย กับ สมหญิง อยู่ ที่ไหน</code> <span class="gloss">(where are Somchai and Somying?)</span></li>
+          <li>หรือ ถาม ว่า ใคร อยู่ ใน ห้อง &mdash; <code>ใคร อยู่ ใน สวน</code> <span class="gloss">(who is in the garden?)</span>
+            &mdash; คำตอบ คือ <code>ไม่มี ใคร</code> ถ้า ห้อง ว่าง</li>
+          <li>ถาม เกี่ยวกับ ห้อง หรือ ประตู &mdash; <code>สมหญิง อยู่ ใน ครัว ไหม</code>,
+            <code>สมหญิง กับ เร็กซ์ อยู่ ใน สวน ไหม</code>, <code>ประตูครัว เปิด อยู่ ไหม</code></li>
+          <li>ถาม ว่า อยู่ ด้วยกัน ไหม &mdash; <code>สมชาย กับ สมหญิง อยู่ ด้วยกัน ไหม</code></li>
+          <li>ถาม เรื่อง มองเห็น &mdash; <code>สมชาย เห็น สมหญิง ได้ ไหม</code>,
+            <code>สมชาย เห็น เร็กซ์ ได้ ไหม</code> &mdash; จะ เห็น ได้ ถ้า อยู่ ห้อง เดียวกัน หรือ
+            ถ้า ประตู ทุก บาน ระหว่าง ห้อง เปิด อยู่ หมด</li>
+          <li>หรือ บอก มัน เฉยๆ &mdash; <code>สมชาย อยู่ ใน สวน</code>, <code>ประตูครัว เปิด อยู่</code>,
+            <code>เร็กซ์ เห็น สมหญิง ได้</code> &mdash; แล้ว มัน จะ บอก ว่า ใช่ หรือ ไม่ใช่</li>
+          <li>เว้น ช่อง ว่าง แล้ว กด Enter เพื่อ ดู มัน เล่น เอง</li>
+          <li>พิมพ์ <code>จบ</code> เพื่อ กลับ ไป หน้า Grammarland</li>
+        </ul>
+        <p class="caveat">
+          Note: this is a good-faith build, not checked by a native Thai speaker yet — treat the Thai
+          here as a solid first draft, not an authority, especially the exact wording of the longer
+          sentences.
+        </p>
+      </details>
+
+      <footer>
+        สมชาย กับ สมหญิง &middot; Thai version of &laquo;John and Mary&raquo;, after the original in <em>Computers in Language Learning</em>, Higgins &amp; Johns, 1983. New HTML edition, 2026.
+        &middot; <a href="index.html">Back to Grammarland</a>
+      </footer>
+    </div>
+
+    <script>
+    (function () {
+      "use strict";
+
+      var ROOMS = ["kitchen", "living", "garden"];
+      var CHARS = ["somchai", "somying", "rex"];
+      var NAME = { somchai: "สมชาย", somying: "สมหญิง", rex: "เร็กซ์" };
+      // Thai third-person pronouns don't mark gender at all (เขา covers
+      // "he" and "she" equally, unlike every other version of this game),
+      // so there's no GENDER map here and nothing to decide for Rex either
+      // — Thai simply doesn't force the choice English (or French, German,
+      // Croatian) does.
+      var ROOM_TH = { kitchen: "ครัว", living: "ห้องนั่งเล่น", garden: "สวน" };
+
+      var state = {
+        somchaiRoom: "kitchen",
+        somyingRoom: "living",
+        rexRoom: "garden",
+        doors: { kl: true, lg: true },
+      };
+
+      var DOORS = {
+        kl: { rooms: ["kitchen", "living"], label: "ประตูครัว" },
+        lg: { rooms: ["living", "garden"], label: "ประตูสวน" },
+      };
+      var DOOR_BY_ROOMWORD = { kitchen: "kl", garden: "lg" };
+
+      var ROOM_X = {
+        kitchen: [30, 290],
+        living: [370, 630],
+        garden: [710, 970],
+      };
+
+      function roomOf(id) { return state[id + "Room"]; }
+
+      // Thai has no single word for a general "he is in X and she is in Y"
+      // pronoun-list the way French/German/Croatian do — เขา doesn't
+      // distinguish who's who, so any list mentioning more than one person
+      // uses real names throughout instead, joined with และ ("and", for
+      // joining clauses/sentences — กับ is used elsewhere for joining two
+      // names within one noun phrase, e.g. a question's subject).
+      function nameLocationList(ids) {
+        return ids.map(function (id) { return NAME[id] + " อยู่ ใน " + ROOM_TH[roomOf(id)]; }).join(" และ ");
+      }
+
+      // Answers "NAME1 กับ NAME2 (กับ NAME3) อยู่ ด้วยกัน ไหม"
+      function togetherAnswer(ids) {
+        var rooms = ids.map(roomOf);
+        var uniqueRooms = rooms.filter(function (r, i) { return rooms.indexOf(r) === i; });
+        if (uniqueRooms.length === 1) return "ใช่ พวกเขา อยู่ ด้วยกัน";
+        if (uniqueRooms.length === ids.length) {
+          return "ไม่ใช่ " + nameLocationList(ids);
+        }
+        var groups = {};
+        ids.forEach(function (id) {
+          var r = roomOf(id);
+          (groups[r] = groups[r] || []).push(id);
+        });
+        var pairRoom, pairIds, oddId, oddRoom;
+        for (var r in groups) {
+          if (groups[r].length > 1) { pairRoom = r; pairIds = groups[r]; }
+          else { oddRoom = r; oddId = groups[r][0]; }
+        }
+        return "ไม่ใช่ " + NAME[pairIds[0]] + " กับ " + NAME[pairIds[1]] + " อยู่ ใน " + ROOM_TH[pairRoom] +
+          " แต่ " + NAME[oddId] + " อยู่ ใน " + ROOM_TH[oddRoom];
+      }
+
+      // Answers "NAME1 กับ NAME2 (กับ NAME3) อยู่ ใน ROOM ไหม"
+      function inRoomAnswer(ids, room) {
+        var inGroup = ids.filter(function (id) { return roomOf(id) === room; });
+        var outGroup = ids.filter(function (id) { return roomOf(id) !== room; });
+        if (!outGroup.length) return "ใช่ พวกเขา อยู่ ที่นั่น";
+        if (!inGroup.length) return "ไม่ใช่ " + nameLocationList(ids);
+        var inNames = inGroup.map(function (id) { return NAME[id]; }).join(" กับ ");
+        return "ไม่ใช่ " + inNames + " อยู่ ใน " + ROOM_TH[room] + " แต่ " + nameLocationList(outGroup);
+      }
+
+      function roundRect(x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
+        ctx.closePath();
+      }
+
+      function drawRoom(room, fill, border, label) {
+        var x0 = ROOM_X[room][0], x1 = ROOM_X[room][1];
+        ctx.fillStyle = fill;
+        roundRect(x0, 60, x1 - x0, 340, 10);
+        ctx.fill();
+        ctx.strokeStyle = border;
+        ctx.lineWidth = 2;
+        roundRect(x0, 60, x1 - x0, 340, 10);
+        ctx.stroke();
+        ctx.fillStyle = "#241b12";
+        ctx.font = "600 18px 'Noto Sans Thai', 'Inter', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(label, (x0 + x1) / 2, 42);
+      }
+
+      function drawStove() {
+        var bx = 80, by = 300;
+        ctx.fillStyle = "#8fa8b6";
+        roundRect(bx, by, 90, 60, 6);
+        ctx.fill();
+        ctx.fillStyle = "#5c7382";
+        [[bx + 22, by + 18], [bx + 68, by + 18], [bx + 22, by + 44], [bx + 68, by + 44]].forEach(function (p) {
+          ctx.beginPath();
+          ctx.arc(p[0], p[1], 8, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+
+      function drawSofa() {
+        var sx = 420, sy = 320;
+        ctx.fillStyle = "#c48a4a";
+        roundRect(sx, sy, 150, 46, 10);
+        ctx.fill();
+        roundRect(sx, sy - 22, 26, 30, 8);
+        ctx.fill();
+        roundRect(sx + 124, sy - 22, 26, 30, 8);
+        ctx.fill();
+        ctx.strokeStyle = "#8a7250";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(605, 340);
+        ctx.lineTo(605, 280);
+        ctx.stroke();
+        ctx.fillStyle = "#e6c15a";
+        ctx.beginPath();
+        ctx.moveTo(585, 280);
+        ctx.lineTo(625, 280);
+        ctx.lineTo(617, 255);
+        ctx.lineTo(593, 255);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      function drawTree(x, y) {
+        ctx.strokeStyle = "#7a5636";
+        ctx.lineWidth = 6;
+        ctx.beginPath();
+        ctx.moveTo(x, y + 40);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        ctx.fillStyle = "#5c9a4a";
+        [[-14, -6], [14, -6], [0, -24]].forEach(function (o) {
+          ctx.beginPath();
+          ctx.arc(x + o[0], y + o[1], 20, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+
+      function drawDoor(doorKey) {
+        var door = DOORS[doorKey];
+        var r0 = ROOM_X[door.rooms[0]], r1 = ROOM_X[door.rooms[1]];
+        var dx = r0[1], dy = 100, dw = r1[0] - r0[1], dh = 260;
+        var open = state.doors[doorKey];
+        if (open) {
+          ctx.fillStyle = "#fdfaf2";
+          ctx.fillRect(dx, dy, dw, dh);
+          ctx.strokeStyle = "#2f8a52";
+          ctx.lineWidth = 3;
+          ctx.setLineDash([8, 6]);
+          ctx.strokeRect(dx, dy, dw, dh);
+          ctx.setLineDash([]);
+        } else {
+          ctx.fillStyle = "#8a5a3c";
+          roundRect(dx + 4, dy + 4, dw - 8, dh - 8, 4);
+          ctx.fill();
+          ctx.fillStyle = "#e6c15a";
+          ctx.beginPath();
+          ctx.arc(dx + dw - 16, dy + dh / 2, 4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.fillStyle = open ? "#2f8a52" : "#b23b23";
+        ctx.font = "600 12px 'Noto Sans Thai', 'Inter', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(door.label + (open ? " (เปิด)" : " (ปิด)"), dx + dw / 2, dy - 10);
+      }
+
+      function roomCenter(room) {
+        var x0 = ROOM_X[room][0], x1 = ROOM_X[room][1];
+        return (x0 + x1) / 2;
+      }
+
+      function drawPerson(x, y, color, name, flare) {
+        ctx.save();
+        ctx.fillStyle = "rgba(20,15,5,0.12)";
+        ctx.beginPath();
+        ctx.ellipse(x, y + 60, 26, 7, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = color;
+        if (flare) {
+          ctx.beginPath();
+          ctx.moveTo(x - 14, y - 6);
+          ctx.lineTo(x + 14, y - 6);
+          ctx.lineTo(x + 24, y + 46);
+          ctx.lineTo(x - 24, y + 46);
+          ctx.closePath();
+          ctx.fill();
+        } else {
+          roundRect(x - 18, y - 6, 36, 52, 12);
+          ctx.fill();
+        }
+
+        ctx.fillStyle = "#f2d3b6";
+        ctx.beginPath();
+        ctx.arc(x, y - 24, 17, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#241b12";
+        ctx.font = "600 15px 'Noto Sans Thai', 'Inter', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(name, x, y + 64);
+        ctx.restore();
+      }
+
+      function drawDog(x, y, color, name) {
+        ctx.save();
+        ctx.fillStyle = "rgba(20,15,5,0.12)";
+        ctx.beginPath();
+        ctx.ellipse(x, y + 26, 30, 6, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = color;
+        [-18, -6, 6, 18].forEach(function (lx) {
+          roundRect(x + lx - 3, y + 6, 6, 16, 3);
+          ctx.fill();
+        });
+        ctx.beginPath();
+        ctx.ellipse(x, y, 30, 14, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(x - 28, y - 4);
+        ctx.quadraticCurveTo(x - 42, y - 20, x - 34, y - 26);
+        ctx.quadraticCurveTo(x - 26, y - 14, x - 18, y - 6);
+        ctx.closePath();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x + 30, y - 6, 13, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.ellipse(x + 22, y - 16, 5, 9, -0.4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.ellipse(x + 38, y - 16, 5, 9, 0.4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#241b12";
+        ctx.beginPath();
+        ctx.arc(x + 41, y - 4, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.font = "600 15px 'Noto Sans Thai', 'Inter', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(name, x, y + 44);
+        ctx.restore();
+      }
+
+      function drawScene() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#faf7ee";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        drawRoom("kitchen", "#dcebf3", "#a9c7da", ROOM_TH.kitchen);
+        drawRoom("living", "#f6ecd2", "#d8c088", ROOM_TH.living);
+        drawRoom("garden", "#e2efd8", "#a9cf95", ROOM_TH.garden);
+        drawStove();
+        drawSofa();
+        drawTree(870, 200);
+        drawTree(930, 320);
+        drawDoor("kl");
+        drawDoor("lg");
+
+        drawPerson(roomCenter(state.somchaiRoom) - 40, 260, "#3f6fae", NAME.somchai, false);
+        drawPerson(roomCenter(state.somyingRoom) + (state.somyingRoom === state.somchaiRoom ? 40 : 0), 260, "#b1497a", NAME.somying, true);
+        drawDog(roomCenter(state.rexRoom) + (state.rexRoom === state.somyingRoom || state.rexRoom === state.somchaiRoom ? -80 : 0), 340, "#8b3a2b", NAME.rex);
+      }
+
+      /* ---------------- optional text-to-speech for replies ---------------- */
+
+      var speechSupported = "speechSynthesis" in window;
+      var speakEnabled = false;
+      var speakToggle = document.getElementById("speakToggle");
+      var speakToggleRow = document.getElementById("speakToggleRow");
+
+      var speakToggleLabel = document.getElementById("speakToggleLabel");
+      function updateSpeakLabel() {
+        speakToggleLabel.textContent = speakEnabled ? "ปิดเสียง" : "เปิดเสียง";
+      }
+
+      if (speechSupported) {
+        speakToggleRow.style.display = "";
+        try {
+          speakEnabled = localStorage.getItem("somchaiandsomying_speak") === "1";
+        } catch (e) {}
+        speakToggle.checked = speakEnabled;
+        updateSpeakLabel();
+        speakToggle.addEventListener("change", function () {
+          speakEnabled = speakToggle.checked;
+          try {
+            localStorage.setItem("somchaiandsomying_speak", speakEnabled ? "1" : "0");
+          } catch (e) {}
+          updateSpeakLabel();
+          if (!speakEnabled) window.speechSynthesis.cancel();
+        });
+      }
+
+      // Voice lists load asynchronously in some browsers — calling
+      // speak() before they're ready can silently produce no sound at
+      // all (rather than falling back to a default voice), so we keep
+      // our own cache and refresh it once the browser tells us it's done.
+      var thaiVoice = null;
+      function refreshThaiVoice() {
+        if (!speechSupported) return;
+        var voices = window.speechSynthesis.getVoices();
+        thaiVoice = voices.find(function (v) { return v.lang === "th-TH"; })
+          || voices.find(function (v) { return v.lang && v.lang.indexOf("th") === 0; })
+          || null;
+      }
+      if (speechSupported) {
+        refreshThaiVoice();
+        window.speechSynthesis.addEventListener("voiceschanged", refreshThaiVoice);
+      }
+
+      // Private build: highlights each word in the transcript as it's
+      // spoken, using the words already being space-separated (a
+      // deliberate feature of this page, not standard Thai) as the
+      // natural unit to sync against the browser's speech "boundary"
+      // events. Not linked from the public site — personal copy only.
+      function renderWords(div, text) {
+        div.innerHTML = "";
+        var words = text.split(" ");
+        words.forEach(function (w, i) {
+          var span = document.createElement("span");
+          span.className = "word";
+          span.textContent = w;
+          div.appendChild(span);
+          if (i < words.length - 1) div.appendChild(document.createTextNode(" "));
+        });
+      }
+
+      function speak(text, div) {
+        if (!speechSupported || !speakEnabled || !text) return;
+
+        function doSpeak() {
+          var utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = "th-TH";
+          if (thaiVoice) utterance.voice = thaiVoice;
+
+          if (div) {
+            var wordSpans = div.querySelectorAll(".word");
+            utterance.onboundary = function (event) {
+              var idx = event.charIndex || 0;
+              var wordIndex = text.slice(0, idx).split(" ").length - 1;
+              wordSpans.forEach(function (span, i) {
+                span.classList.toggle("highlight", i === wordIndex);
+              });
+            };
+            utterance.onend = utterance.onerror = function () {
+              wordSpans.forEach(function (span) { span.classList.remove("highlight"); });
+            };
+          }
+
+          window.speechSynthesis.speak(utterance);
+        }
+
+        // Safari quirk: cancel() immediately followed by speak() plays
+        // the audio fine on later calls, but "boundary" events (which
+        // drive the word highlighting) silently stop firing unless
+        // there's a brief gap for Safari to actually reset first.
+        window.speechSynthesis.cancel();
+        setTimeout(doSpeak, 50);
+      }
+
+      function say(role, text) {
+        var div = document.createElement("div");
+        div.className = "line " + role;
+        transcriptEl.appendChild(div);
+        if (role === "computer" || role === "system") {
+          renderWords(div, text);
+          speak(text, div);
+        } else {
+          div.textContent = text;
+        }
+        transcriptEl.scrollTop = transcriptEl.scrollHeight;
+      }
+
+      function canSee(aId, bId) {
+        var ra = roomOf(aId), rb = roomOf(bId);
+        if (ra === rb) return { ok: true, reason: "same", room: ra };
+        var doorKey = null;
+        for (var k in DOORS) {
+          var rooms = DOORS[k].rooms;
+          if ((rooms[0] === ra && rooms[1] === rb) || (rooms[0] === rb && rooms[1] === ra)) doorKey = k;
+        }
+        if (doorKey) {
+          return state.doors[doorKey]
+            ? { ok: true, reason: "door", doors: [DOORS[doorKey].label] }
+            : { ok: false, doors: [DOORS[doorKey].label] };
+        }
+        var allOpen = state.doors.kl && state.doors.lg;
+        return allOpen
+          ? { ok: true, reason: "chain" }
+          : { ok: false, doors: [DOORS.kl.label, DOORS.lg.label] };
+      }
+
+      var ROOM_ORDER = ["kitchen", "living", "garden"];
+      var DOOR_BETWEEN = {
+        "kitchen|living": "kl",
+        "living|kitchen": "kl",
+        "living|garden": "lg",
+        "garden|living": "lg",
+      };
+      function pathBlocked(fromRoom, toRoom) {
+        var fromIdx = ROOM_ORDER.indexOf(fromRoom), toIdx = ROOM_ORDER.indexOf(toRoom);
+        var step = fromIdx < toIdx ? 1 : -1;
+        for (var i = fromIdx; i !== toIdx; i += step) {
+          var dKey = DOOR_BETWEEN[ROOM_ORDER[i] + "|" + ROOM_ORDER[i + step]];
+          if (!state.doors[dKey]) return dKey;
+        }
+        return null;
+      }
+
+      /* ---------------- parser ---------------- */
+      // Every pattern below expects space-separated Thai words, matching
+      // the word-spaced convention this page teaches (see the help panel).
+
+      var ROOM_WORD = { "ครัว": "kitchen", "ห้องนั่งเล่น": "living", "สวน": "garden" };
+      var NAME_WORD = { "สมชาย": "somchai", "สมหญิง": "somying", "เร็กซ์": "rex" };
+      var DOOR_WORD = { "ประตูครัว": "kl", "ประตูสวน": "lg", "ประตูห้องนั่งเล่น": "living-ambiguous" };
+
+      function handle(raw) {
+        var text = raw.trim();
+        if (!text) return null;
+        var lower = text.replace(/[?.!]+$/, "").replace(/\s+/g, " ").trim();
+
+        if (/^(จบ|ออก)$/.test(lower)) {
+          say("system", "ลาก่อน");
+          setTimeout(function () { window.location.href = "index.html"; }, 500);
+          return "";
+        }
+
+        // -------- movement: (พา|ส่ง) NAME ไป ที่ ROOM --------
+        var mMove = lower.match(/^(พา|ส่ง)\s+(สมชาย|สมหญิง|เร็กซ์)\s+ไป\s+ที่\s+(ครัว|ห้องนั่งเล่น|สวน)$/);
+        var mGo = lower.match(/^(สมชาย|สมหญิง|เร็กซ์)\s*,?\s*ไป\s+ที่\s+(ครัว|ห้องนั่งเล่น|สวน)$/);
+        var who, room, justMoved;
+        if (mMove) { who = NAME_WORD[mMove[2]]; room = ROOM_WORD[mMove[3]]; }
+        else if (mGo) { who = NAME_WORD[mGo[1]]; room = ROOM_WORD[mGo[2]]; }
+        if (who) {
+          var key = who + "Room";
+          if (state[key] === room) return NAME[who] + " อยู่ ใน " + ROOM_TH[room] + " แล้ว";
+          var blocker = pathBlocked(state[key], room);
+          if (blocker) return "ต้อง เปิด " + DOORS[blocker].label + " ก่อน";
+          state[key] = room;
+          drawScene();
+          return "ได้ " + NAME[who] + " อยู่ ใน " + ROOM_TH[room] + " แล้ว";
+        }
+
+        // -------- door: (เปิด|ปิด) DOOR --------
+        var mDoor = lower.match(/^(เปิด|ปิด)\s+(ประตูครัว|ประตูสวน|ประตูห้องนั่งเล่น)$/);
+        if (mDoor) {
+          var dw = DOOR_WORD[mDoor[2]];
+          if (dw === "living-ambiguous") {
+            return "ห้องนั่งเล่น มี ประตู สอง บาน คุณ หมายถึง ประตูครัว หรือ ประตูสวน";
+          }
+          var opening = mDoor[1] === "เปิด";
+          if (state.doors[dw] === opening) return DOORS[dw].label + " " + (opening ? "เปิด" : "ปิด") + " อยู่ แล้ว";
+          state.doors[dw] = opening;
+          drawScene();
+          return "ได้ " + DOORS[dw].label + " " + (opening ? "เปิด" : "ปิด") + " อยู่ แล้ว";
+        }
+
+        // -------- NAME อยู่ ที่ไหน --------
+        var mWhere = lower.match(/^(สมชาย|สมหญิง|เร็กซ์)\s+อยู่\s+ที่ไหน$/);
+        if (mWhere) {
+          var w = NAME_WORD[mWhere[1]];
+          return "เขา อยู่ ใน " + ROOM_TH[roomOf(w)];
+        }
+
+        // -------- NAME1 กับ NAME2 (กับ NAME3) อยู่ ที่ไหน --------
+        var mWhereAre = lower.match(/^(สมชาย|สมหญิง|เร็กซ์)\s+กับ\s+(สมชาย|สมหญิง|เร็กซ์)(?:\s+กับ\s+(สมชาย|สมหญิง|เร็กซ์))?\s+อยู่\s+ที่ไหน$/);
+        if (mWhereAre) {
+          var waIds = [NAME_WORD[mWhereAre[1]], NAME_WORD[mWhereAre[2]]];
+          if (mWhereAre[3]) waIds.push(NAME_WORD[mWhereAre[3]]);
+          var waUnique = waIds.filter(function (id, i) { return waIds.indexOf(id) === i; });
+          if (waUnique.length !== waIds.length) return "ต้อง เป็น คน ละ คน กัน (สอง หรือ สาม คน)";
+          return nameLocationList(waIds);
+        }
+
+        // -------- ใคร อยู่ ใน ROOM --------
+        var mWhoInRoom = lower.match(/^ใคร\s+อยู่\s+ใน\s+(ครัว|ห้องนั่งเล่น|สวน)$/);
+        if (mWhoInRoom) {
+          var wr = ROOM_WORD[mWhoInRoom[1]];
+          var occupants = CHARS.filter(function (c) { return roomOf(c) === wr; }).map(function (c) { return NAME[c]; });
+          if (occupants.length === 0) return "ไม่มี ใคร";
+          return occupants.join(" กับ ") + " อยู่";
+        }
+
+        // -------- DOOR เปิด/ปิด อยู่ ไหม --------
+        var mDoorQ = lower.match(/^(ประตูครัว|ประตูสวน|ประตูห้องนั่งเล่น)\s+(เปิด|ปิด)\s+อยู่\s+ไหม$/);
+        if (mDoorQ) {
+          var qdw = DOOR_WORD[mDoorQ[1]];
+          if (qdw === "living-ambiguous") {
+            return "ห้องนั่งเล่น มี ประตู สอง บาน คุณ หมายถึง ประตูครัว หรือ ประตูสวน";
+          }
+          var askOpen = mDoorQ[2] === "เปิด";
+          var actuallyOpen = state.doors[qdw];
+          var lbl = DOORS[qdw].label;
+          return (askOpen === actuallyOpen ? "ใช่ " : "ไม่ใช่ ") + lbl + " " + (actuallyOpen ? "เปิด" : "ปิด") + " อยู่";
+        }
+
+        // -------- Statement: DOOR เปิด/ปิด อยู่ --------
+        var mStateDoor = lower.match(/^(ประตูครัว|ประตูสวน|ประตูห้องนั่งเล่น)\s+(เปิด|ปิด)\s+อยู่$/);
+        if (mStateDoor) {
+          var sdw = DOOR_WORD[mStateDoor[1]];
+          if (sdw === "living-ambiguous") {
+            return "ห้องนั่งเล่น มี ประตู สอง บาน คุณ หมายถึง ประตูครัว หรือ ประตูสวน";
+          }
+          var claimOpen = mStateDoor[2] === "เปิด";
+          var actual = state.doors[sdw];
+          if (claimOpen === actual) return "ใช่";
+          return "ไม่ใช่ " + DOORS[sdw].label + " " + (actual ? "เปิด" : "ปิด") + " อยู่";
+        }
+
+        // -------- NAME อยู่ ใน ROOM ไหม --------
+        var mInRoom = lower.match(/^(สมชาย|สมหญิง|เร็กซ์)\s+อยู่\s+ใน\s+(ครัว|ห้องนั่งเล่น|สวน)\s+ไหม$/);
+        if (mInRoom) {
+          var iw = NAME_WORD[mInRoom[1]], ir = ROOM_WORD[mInRoom[2]];
+          if (roomOf(iw) === ir) return "ใช่ " + NAME[iw] + " อยู่ ใน " + ROOM_TH[ir];
+          return "ไม่ใช่ " + NAME[iw] + " อยู่ ใน " + ROOM_TH[roomOf(iw)];
+        }
+
+        // -------- NAME1 กับ NAME2 (กับ NAME3) อยู่ ด้วยกัน ไหม --------
+        var mTogether = lower.match(/^(สมชาย|สมหญิง|เร็กซ์)\s+กับ\s+(สมชาย|สมหญิง|เร็กซ์)(?:\s+กับ\s+(สมชาย|สมหญิง|เร็กซ์))?\s+อยู่\s+ด้วยกัน\s+ไหม$/);
+        if (mTogether) {
+          var tIds = [NAME_WORD[mTogether[1]], NAME_WORD[mTogether[2]]];
+          if (mTogether[3]) tIds.push(NAME_WORD[mTogether[3]]);
+          var tUnique = tIds.filter(function (id, i) { return tIds.indexOf(id) === i; });
+          if (tUnique.length !== tIds.length) return "ต้อง เป็น คน ละ คน กัน (สอง หรือ สาม คน)";
+          return togetherAnswer(tIds);
+        }
+
+        // -------- NAME1 กับ NAME2 (กับ NAME3) อยู่ ใน ROOM ไหม --------
+        var mAreInRoom = lower.match(/^(สมชาย|สมหญิง|เร็กซ์)\s+กับ\s+(สมชาย|สมหญิง|เร็กซ์)(?:\s+กับ\s+(สมชาย|สมหญิง|เร็กซ์))?\s+อยู่\s+ใน\s+(ครัว|ห้องนั่งเล่น|สวน)\s+ไหม$/);
+        if (mAreInRoom) {
+          var airIds = [NAME_WORD[mAreInRoom[1]], NAME_WORD[mAreInRoom[2]]];
+          if (mAreInRoom[3]) airIds.push(NAME_WORD[mAreInRoom[3]]);
+          var airUnique = airIds.filter(function (id, i) { return airIds.indexOf(id) === i; });
+          if (airUnique.length !== airIds.length) return "ต้อง เป็น คน ละ คน กัน (สอง หรือ สาม คน)";
+          return inRoomAnswer(airIds, ROOM_WORD[mAreInRoom[4]]);
+        }
+
+        // -------- Statement: NAME อยู่ ใน ROOM --------
+        var mStateInRoom = lower.match(/^(สมชาย|สมหญิง|เร็กซ์)\s+อยู่\s+ใน\s+(ครัว|ห้องนั่งเล่น|สวน)$/);
+        if (mStateInRoom) {
+          var sw = NAME_WORD[mStateInRoom[1]], sr = ROOM_WORD[mStateInRoom[2]];
+          if (roomOf(sw) === sr) return "ใช่";
+          return "ไม่ใช่ เขา อยู่ ใน " + ROOM_TH[roomOf(sw)];
+        }
+
+        // -------- NAME1 เห็น NAME2 ได้ ไหม --------
+        var mSee = lower.match(/^(สมชาย|สมหญิง|เร็กซ์)\s+เห็น\s+(สมชาย|สมหญิง|เร็กซ์)\s+ได้\s+ไหม$/);
+        if (mSee) {
+          var a = NAME_WORD[mSee[1]], b = NAME_WORD[mSee[2]];
+          if (a === b) return NAME[a] + " เห็น ตัวเอง ได้ เสมอ";
+          var res = canSee(a, b);
+          if (res.ok && res.reason === "same") {
+            return "ใช่ " + NAME[a] + " เห็น " + NAME[b] + " ได้ " + NAME[a] + " กับ " + NAME[b] + " อยู่ ใน " + ROOM_TH[res.room];
+          }
+          if (res.ok && res.reason === "door") {
+            return "ใช่ " + NAME[a] + " เห็น " + NAME[b] + " ได้ เพราะ " + res.doors[0] + " เปิด อยู่";
+          }
+          if (res.ok && res.reason === "chain") {
+            return "ใช่ " + NAME[a] + " เห็น " + NAME[b] + " ได้ " + DOORS.kl.label + " กับ " + DOORS.lg.label + " เปิด อยู่ ผ่าน " + ROOM_TH.living;
+          }
+          if (res.doors.length === 2) {
+            return "ไม่ใช่ " + NAME[a] + " เห็น " + NAME[b] + " ไม่ ได้ ต้อง เปิด " + res.doors[0] + " กับ " + res.doors[1];
+          }
+          return "ไม่ใช่ " + NAME[a] + " เห็น " + NAME[b] + " ไม่ ได้ เพราะ " + res.doors[0] + " ปิด อยู่";
+        }
+
+        // -------- Statement: NAME1 เห็น NAME2 ได้ --------
+        var mStateSee = lower.match(/^(สมชาย|สมหญิง|เร็กซ์)\s+เห็น\s+(สมชาย|สมหญิง|เร็กซ์)\s+ได้$/);
+        if (mStateSee) {
+          var sa = NAME_WORD[mStateSee[1]], sb = NAME_WORD[mStateSee[2]];
+          if (sa === sb) return NAME[sa] + " เห็น ตัวเอง ได้ เสมอ";
+          var sres = canSee(sa, sb);
+          if (sres.ok) return "ใช่";
+          return "ไม่ใช่ เขา เห็น " + NAME[sb] + " ไม่ ได้";
+        }
+
+        return null;
+      }
+
+      /* ---------------- self-talk (blank Enter) ---------------- */
+
+      var pendingSelfQuestion = null;
+
+      function randomChoice(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+      function randomNamesGroup() {
+        var shuffled = CHARS.slice().sort(function () { return Math.random() - 0.5; });
+        return shuffled.slice(0, Math.random() < 0.5 ? 2 : 3).map(function (id) { return NAME[id]; });
+      }
+      function joinNamesTH(names) { return names.join(" กับ "); }
+
+      function randomQuestionText() {
+        var kind = randomChoice(["where", "inroom", "doorstate", "cansee", "together"]);
+        if (kind === "where") {
+          if (Math.random() < 0.35) return joinNamesTH(randomNamesGroup()) + " อยู่ ที่ไหน";
+          return NAME[randomChoice(CHARS)] + " อยู่ ที่ไหน";
+        }
+        if (kind === "inroom") {
+          if (Math.random() < 0.35) return joinNamesTH(randomNamesGroup()) + " อยู่ ใน " + ROOM_TH[randomChoice(ROOMS)] + " ไหม";
+          return NAME[randomChoice(CHARS)] + " อยู่ ใน " + ROOM_TH[randomChoice(ROOMS)] + " ไหม";
+        }
+        if (kind === "doorstate") {
+          var dk = randomChoice(["kl", "lg"]);
+          return DOORS[dk].label + " " + randomChoice(["เปิด", "ปิด"]) + " อยู่ ไหม";
+        }
+        if (kind === "together") {
+          return joinNamesTH(randomNamesGroup()) + " อยู่ ด้วยกัน ไหม";
+        }
+        var a = randomChoice(CHARS);
+        var b = randomChoice(CHARS.filter(function (c) { return c !== a; }));
+        return NAME[a] + " เห็น " + NAME[b] + " ได้ ไหม";
+      }
+
+      function reachableRoomFor(who) {
+        var here = roomOf(who);
+        var options = ROOMS.filter(function (r) { return r !== here && !pathBlocked(here, r); });
+        return options.length ? randomChoice(options) : null;
+      }
+
+      function selfMove() {
+        var who = randomChoice(CHARS);
+        var target = reachableRoomFor(who);
+        if (!target) return null;
+        state[who + "Room"] = target;
+        drawScene();
+        return NAME[who] + " ไป ที่ " + ROOM_TH[target];
+      }
+
+      function selfDoor() {
+        var doorKey = randomChoice(["kl", "lg"]);
+        var opening = !state.doors[doorKey];
+        state.doors[doorKey] = opening;
+        drawScene();
+        return (opening ? "เปิด " : "ปิด ") + DOORS[doorKey].label;
+      }
+
+      function selfTalk() {
+        if (pendingSelfQuestion) {
+          var q = pendingSelfQuestion;
+          pendingSelfQuestion = null;
+          say("computer", handle(q.text));
+          return;
+        }
+        var roll = Math.random();
+        if (roll < 0.35) {
+          var qText = randomQuestionText();
+          say("computer", qText);
+          pendingSelfQuestion = { text: qText };
+        } else if (roll < 0.7) {
+          say("computer", selfMove() || selfDoor());
+        } else {
+          say("computer", selfDoor());
+        }
+      }
+
+      var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext("2d");
+      var transcriptEl = document.getElementById("transcript");
+
+      var form = document.getElementById("inputForm");
+      var inputBox = document.getElementById("inputBox");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var raw = inputBox.value;
+        inputBox.value = "";
+        if (!raw.trim()) {
+          selfTalk();
+          return;
+        }
+        say("you", raw);
+        var response = handle(raw);
+        if (response === null) {
+          if (pendingSelfQuestion) {
+            var answered = pendingSelfQuestion;
+            pendingSelfQuestion = null;
+            say("computer", handle(answered.text));
+          } else {
+            say("computer", "ขอโทษ ไม่ เข้าใจ ลอง เช่น « พา สมชาย ไป ที่ ครัว » , « เปิด ประตูครัว » , « สมชาย อยู่ ที่ไหน » , หรือ « จบ »");
+          }
+        } else if (response !== "") {
+          pendingSelfQuestion = null;
+          say("computer", response);
+        }
+      });
+
+      drawScene();
+      say("system", "สมชาย อยู่ ใน ครัว สมหญิง อยู่ ใน ห้องนั่งเล่น และ เร็กซ์ อยู่ ใน สวน ประตู ทั้ง สอง บาน เปิด อยู่ พิมพ์ คำสั่ง หรือ คำถาม ข้างล่าง หรือ เว้น ช่อง ว่าง แล้ว กด เอนเทอร์ เพื่อ ดู พวกเขา เล่น เอง");
+      inputBox.focus();
+    })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Findword</title>
+  <link rel="stylesheet" href="findword.css">
+  <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>   
+</head>
+
+<body>
+
+  <!-- HEADER BAR -->
+  <header class="app-header">
+    <div class="header-title">FINDWORD — A Word List Utility</div>
+    <div class="header-menu">
+      <div class="menu-button">Help ▼</div>
+      <div class="menu-dropdown">
+        <div class="menu-item">About FINDWORD</div>
+        <div class="menu-item">How to Search</div>
+        <div class="menu-item">Examples</div>
+        <div class="menu-item">Background to the Project</div>
+        <div class="menu-item">Credits</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <div class="layout">
+
+    <!-- LEFT PANE: FILTERS -->
+    <aside class="pane filters-pane">
+
+      <h2>Filters</h2>
+
+      <h3>Spelling</h3>
+      <label>Includes</label>
+      <input id="spellInclude" type="text">
+
+      <label>Excludes</label>
+      <input id="spellExclude" type="text">
+
+      <h3>Pronunciation</h3>
+      <label>Includes</label>
+      <input id="pronInclude" type="text">
+
+      <label>Excludes</label>
+      <input id="pronExclude" type="text">
+
+      <h3>IPA symbols</h3>
+      <div id="ipaPalette" class="ipa-palette">
+        <button>ɪ</button><button>iː</button><button>e</button><button>æ</button>
+        <button>ɑː</button><button>ɒ</button><button>ɔː</button><button>ʊ</button>
+        <button>uː</button><button>ʌ</button><button>ɜː</button><button>ə</button>
+
+        <button>eɪ</button><button>aɪ</button><button>aʊ</button>
+        <button>ɔɪ</button><button>ɪə</button><button>eə</button><button>ʊə</button>
+
+        <button>p</button><button>t</button><button>k</button><button>b</button>
+        <button>d</button><button>g</button><button>m</button><button>n</button>
+        <button>ŋ</button><button>f</button><button>v</button><button>s</button>
+        <button>z</button><button>ʃ</button><button>ʒ</button><button>θ</button>
+        <button>ð</button><button>h</button><button>tʃ</button><button>dʒ</button>
+        <button>j</button><button>r</button><button>l</button><button>w</button>
+
+        <button>ˈ</button><button>ˌ</button>
+      </div>
+
+      <h3>Syllables</h3>
+      <select id="syllableSelect">
+        <option value="all">All</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4plus">4+</option>
+      </select>
+
+      <h3>Part of Speech</h3>
+      <select id="posSelect">
+        <option value="any">ANY</option>
+        <option value="verb">Verb</option>
+        <option value="noun">Noun</option>
+        <option value="adj">Adjective</option>
+        <option value="adv">Adverb</option>
+        <option value="pron">Pronoun</option>
+        <option value="article">Article</option>
+        <option value="prep">Preposition</option>
+        <option value="conj">Conjunction</option>
+        <option value="interj">Interjection</option>
+        <option value="particle">Particle</option>
+        <option value="prefix">Prefix</option>
+        <option value="abbr">Abbreviation</option>
+        <option value="other">Not classified</option>
+      </select>
+
+      <label id="subtypeLabel" style="display:none;">Subtype:</label>
+      <select id="subtypeSelect" style="display:none;">
+        <option value="any">ANY</option>
+      </select>
+
+      <button id="resetPosBtn" style="margin-left:6px;">Reset POS</button>
+
+      <h3>Rarity</h3>
+      <select id="raritySelect">
+        <option value="any">ANY</option>
+        <option value="*">Common</option>
+        <option value="%">Normal</option>
+        <option value="$">Rare</option>
+      </select>
+
+      <h3>Logic</h3>
+      <label><input type="radio" name="logic" value="and" checked> AND</label>
+      <label><input type="radio" name="logic" value="or"> OR (grammar only)</label>
+
+      <button onclick="clearAllFilters()">Clear</button>
+>
+
+    </aside>
+
+    <!-- MIDDLE PANE: RESULTS -->
+    <main class="pane results-pane">
+<div class="results-header">Results</div>
+      <div id="resultsList"></div>
+      <div class="list-toolbar">
+        <button id="addToListBtn">+ Add to list</button>
+        <button id="viewListBtn">View list (0)</button>
+        <button id="clearListBtn">Clear list</button>
+        <span id="listCountLabel" class="list-count-label">List: 0 words</span>
+      </div>
+    </main>
+
+    <!-- RIGHT PANE: DETAILS -->
+<section class="pane details-pane">
+
+  <div id="resultsCount" class="results-count"></div>
+
+  <div id="details">
+    <div class="details-placeholder">Select a word to view details</div>
+  </div>
+
+  <button id="exportBtn" class="export-button">Export results</button>
+
+</section>
+
+  </div> <!-- THIS closes .layout -->
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Switch</title>
+    <style>
+      body { font-family: Arial, sans-serif; background-color: lightgoldenrodyellow; margin: 20px; text-align: center; }
+      #storyBox { border: 2px solid #333; padding: 20px; margin: 20px auto; max-width: 800px; text-align: left; background-color: #fff; line-height: 1.6; }
+      .line-black { color: black; }
+      .line-magenta { color: magenta; font-weight: bold; }
+      .line-red { color: red; font-weight: bold; }
+      #choices { margin-top: 20px; }
+      .choiceButton { display: inline-block; margin: 5px; padding: 10px 20px; font-size: 1em; background-color: #3366cc; color: white; border: none; border-radius: 6px; cursor: pointer; }
+      .choiceButton:hover { background-color: #254a99; }
+      .navButton, .evalButton { margin: 10px; font-size: 1.2em; cursor: pointer; background: none; border: 2px solid #3366cc; color: #3366cc; padding: 5px 15px; border-radius: 6px; }
+      .navButton:hover, .evalButton:hover { background-color: #3366cc; color: white; }
+    </style>
+  </head>
+  <body>
+    <h1 id="title"></h1>
+    <div id="storyBox"></div>
+    <div id="choices"></div>
+    <div id="controls"></div>
+
+    <script>
+      let texts = [];
+      let currentPhraseIndex = 0;
+
+      // Load file from query string
+      document.addEventListener("DOMContentLoaded", () => {
+        const params = new URLSearchParams(window.location.search);
+        const file = params.get("file");
+
+        if (file) {
+          const title = file.replace(/\.txt$/i, "").toUpperCase();
+          document.getElementById("title").innerText = title;
+
+          fetch(file)
+            .then((response) => response.text())
+            .then((text) => {
+              const lines = text.split(/\r?\n/).filter((l) => l.trim() !== "");
+              const triplets = [];
+              for (let i = 0; i < lines.length; i += 3) {
+                triplets.push({
+                  preferred: lines[i],
+                  alt1: lines[i + 1],
+                  alt2: lines[i + 2],
+                  selected: null,
+                });
+              }
+              texts = triplets;
+              // Random initial selections
+              texts.forEach((t) => {
+                if (hasAlternatives(t)) {
+                  const options = [t.preferred, t.alt1, t.alt2].filter(
+                    (o) => o && o !== "#",
+                  );
+                  t.selected =
+                    options[Math.floor(Math.random() * options.length)];
+                } else {
+                  t.selected = t.preferred;
+                }
+              });
+              startGame();
+            })
+            .catch((err) => {
+              document.getElementById("storyBox").innerText =
+                "Error loading " + file;
+              console.error(err);
+            });
+        } else {
+          document.getElementById("storyBox").innerText = "No file specified.";
+        }
+      });
+
+      function startGame() {
+        currentPhraseIndex = findFirstAlternative();
+        renderStory();
+        renderChoices();
+        renderControls();
+      }
+
+      function hasAlternatives(trip) {
+        return (
+          (trip.alt1 && trip.alt1 !== "#") || (trip.alt2 && trip.alt2 !== "#")
+        );
+      }
+
+      function findFirstAlternative() {
+        return texts.findIndex((t) => hasAlternatives(t));
+      }
+
+      function renderStory() {
+        let html = "";
+        texts.forEach((trip, i) => {
+          let phrase = trip.selected;
+          if (i === currentPhraseIndex && hasAlternatives(trip)) {
+            html += `<span class="line-magenta">${phrase}</span> `;
+          } else {
+            html += `<span class="line-black">${phrase}</span> `;
+          }
+        });
+        document.getElementById("storyBox").innerHTML = html;
+      }
+
+      function renderChoices() {
+  if (currentPhraseIndex === -1) {
+    document.getElementById("choices").innerHTML = "";
+    return;
+  }
+  const trip = texts[currentPhraseIndex];
+  const choicesDiv = document.getElementById("choices");
+  choicesDiv.innerHTML = "";
+
+  // Shuffle once per phrase and cache it, so the button order stays put
+  // while navigating back and forth to the same phrase.
+  if (!trip.optionOrder) {
+    trip.optionOrder = shuffle(
+      [trip.preferred, trip.alt1, trip.alt2].filter((o) => o && o !== "#"),
+    );
+  }
+
+  trip.optionOrder.forEach((opt) => {
+    const btn = document.createElement("button");
+    btn.className = "choiceButton";
+    btn.textContent = opt;
+    btn.addEventListener("click", () => choosePhrase(opt));
+    choicesDiv.appendChild(btn);
+  });
+}
+
+function shuffle(array) {
+  const result = array.slice();
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+      function renderControls() {
+        document.getElementById("controls").innerHTML = `
+    <button class="navButton" onclick="prevPhrase()">← Previous</button>
+    <button class="navButton" onclick="nextPhrase()">Next →</button>
+    <button class="evalButton" onclick="readyEvaluate()">Ready</button>
+  `;
+      }
+
+      function choosePhrase(choice) {
+        texts[currentPhraseIndex].selected = choice;
+        renderStory();
+        renderChoices();
+      }
+
+      function prevPhrase() {
+        for (let i = currentPhraseIndex - 1; i >= 0; i--) {
+          if (hasAlternatives(texts[i])) {
+            currentPhraseIndex = i;
+            break;
+          }
+        }
+        renderStory();
+        renderChoices();
+      }
+
+      function nextPhrase() {
+        for (let i = currentPhraseIndex + 1; i < texts.length; i++) {
+          if (hasAlternatives(texts[i])) {
+            currentPhraseIndex = i;
+            break;
+          }
+        }
+        renderStory();
+        renderChoices();
+      }
+
+      function readyEvaluate() {
+        // Show user's version with wrong choices in red
+        let allCorrect = true;
+        let html = "";
+        texts.forEach((t) => {
+          if (t.selected === t.preferred) {
+            html += `<span class="line-black">${t.selected}</span> `;
+          } else {
+            html += `<span class="line-red">${t.selected}</span> `;
+            allCorrect = false;
+          }
+        });
+        document.getElementById("storyBox").innerHTML = html;
+
+        if (allCorrect) {
+          // Replace controls with congratulation message
+          document.getElementById("controls").innerHTML = `
+      <div class="congrats">🎉 Congratulations! You found all the original phrases!</div>
+      <button class="navButton" onclick="quitGame()">Next</button>
+    `;
+        } else {
+          // Replace controls with Original/Your version toggles
+          document.getElementById("controls").innerHTML = `
+      <button class="navButton" onclick="showOriginalText()">Original</button>
+      <button class="navButton" onclick="showUserSelection()">Your version</button>
+      <button class="navButton" onclick="quitGame()">Next</button>
+    `;
+        }
+
+        document.getElementById("choices").innerHTML = "";
+      }
+
+      function showOriginalText() {
+        let html = texts
+          .map((t) => `<span class="line-black">${t.preferred}</span>`)
+          .join(" ");
+        document.getElementById("storyBox").innerHTML = html;
+      }
+
+      function showUserSelection() {
+        let html = texts
+          .map((t) => {
+            if (t.selected === t.preferred) {
+              return `<span class="line-black">${t.selected}</span>`;
+            } else {
+              return `<span class="line-red">${t.selected}</span>`;
+            }
+          })
+          .join(" ");
+        document.getElementById("storyBox").innerHTML = html;
+      }
+
+      function quitGame() {
+        // Navigate back to the index page in the same folder
+        window.location.href = "index.html";
+      }
+    </script>
+  </body>
+</html>

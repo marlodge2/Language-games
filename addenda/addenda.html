@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ADDENDA Game English version</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 30px;
+        padding-bottom: 50px; /* room for the fixed footer */
+      }
+      .game-grid {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+      .column {
+        width: 250px;
+      }
+      .finished {
+        background-color: #d4edda; /* light green */
+        border-color: #28a745; /* green border */
+        color: #155724; /* dark green text */
+        font-style: italic; /* optional: makes it feel 'done' */
+        pointer-events: none; /* makes the box unclickable */
+      }
+      .label {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .box {
+        border: 2px solid #444;
+        padding: 10px;
+        min-height: 80px;
+        cursor: pointer;
+        background-color: white;
+      }
+      .disabled {
+        background-color: #ccc;
+        pointer-events: none;
+      }
+      .hidden {
+        visibility: hidden; /* keeps the element's space */
+      }
+      #instruction {
+        font-weight: bold;
+        margin-bottom: 16px;
+      }
+      #intro-box {
+        border: 3px solid #444;
+        padding: 30px;
+        margin: 40px auto;
+        width: 60%;
+        font-size: 1.5em;
+        font-weight: bold;
+        background-color: #f0f0f0;
+        cursor: pointer;
+      }
+      #end-controls {
+        display: none;
+        margin-top: 20px;
+      }
+      #currentWordDisplay {
+        text-align: center;
+        font-size: 24px;
+        margin-top: 18px;
+        font-weight: bold;
+      }
+      footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #eee;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 20px;
+        border-top: 1px solid #ccc;
+        box-sizing: border-box;
+      }
+      #scoreText {
+        font-weight: bold;
+      }
+      #quitLink {
+        position: absolute;
+        right: 20px;
+        font-size: 0.8em;
+        color: #888;
+        text-decoration: none;
+        cursor: pointer;
+        display: none;
+      }
+      #quitLink:hover {
+        color: #555;
+        text-decoration: underline;
+      }
+      #soundLabel {
+        position: absolute;
+        left: 20px;
+        font-size: 0.8em;
+        color: #888;
+        cursor: pointer;
+      }
+    </style>
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+    </script>
+  </head>
+
+  <body>
+    <h2 id="game-title">ADDENDA</h2>
+
+    <!-- Sound effects -->
+    <audio id="pingSound" src="ping.wav" preload="auto"></audio>
+    <audio id="errorSound" src="error.wav" preload="auto"></audio>
+
+    <!-- Fixed instruction, shown once the game starts -->
+    <div id="instruction"></div>
+
+    <!-- Story grid -->
+    <div class="game-grid" id="gameGrid"></div>
+
+    <!-- The word to add, now shown below the stories -->
+    <div id="currentWordDisplay"></div>
+
+    <div id="intro-box" onclick="startGame()">
+      A language game by John Higgins<br />May, 2026
+      <p>Build up three stories, one word at a time.</p>
+      <p>Click here to start!</p>
+    </div>
+
+    <!-- End controls -->
+    <div id="end-controls" style="display: none">
+      <button
+        onclick="startGame()"
+        style="padding: 10px 20px; margin-right: 20px"
+      >
+        Play Again
+      </button>
+      <button onclick="quitGame()" style="padding: 10px 20px">Quit</button>
+    </div>
+
+    <footer id="scoreBox">
+      <label id="soundLabel">
+        <input
+          type="checkbox"
+          id="soundToggle"
+          onchange="soundEnabled = this.checked"
+        />
+        Sound effects
+      </label>
+      <span id="scoreText">Score: 0</span>
+      <a id="quitLink" onclick="quitToResults()">Quit</a>
+    </footer>
+
+    <script>
+      const STORY_DATA = [{"title":"A cat or a comma?","words":["Do","you","know","the","difference","between","a","cat","and","a","comma?","A","cat","has","claws","at","the","end","of","its","paws,","while","a","comma","is","a","pause","at","the","end","of","a","clause.","So","which","is","the","more","useful,","do","you","think?"]},{"title":"Sherlock Holmes","words":["'Have","you","thought","about","the","curious","incident","of","the","dog","in","the","night","time?'","'But","the","dog","did","nothing","in","the","night","time.'","'That","was","the","curious","incident,'","said","Sherlock","Holmes."]},{"title":"Weather Forecast","words":["Today","in","Chiang","Mai,","expect","brilliant","sunshine","and","clear","skies.","Temperatures","will","climb","to","34°C","by","mid-afternoon.","After","sunset","the","weather","will","cool","down","to","a","pleasant","22°C.","No","rain","is","expected,","so","it’s","a","great","day","to","explore","the","city","or","relax","at","a","café."]},{"title":"From a Spy Story","words":["Rafael","ducked","into","the","alley","as","the","diplomat’s","car","coasted","past.","He","checked","the","flash","drive,","still","secure.","The","information","on","it","could","topple","governments.","He","had","to","get","it","to","his","contact","in","Bangkok,","but","first","he","needed","to","lose","the","tail","that","had","been","on","him","since","the","airport."]},{"title":"French Toast Recipe","words":["Whisk","two","eggs","with","half","a","cup","of","milk","and","a","pinch","of","salt.","Dip","two","slices","of","bread","into","the","mixture,","fry","till","light","brown,","then","sprinkle","on","sugar","and","a","dash","of","cinnamon.","Serve","with","fresh","fruit","or","syrup","for","a","delicious","breakfast","treat."]},{"title":"Agony Aunt","words":["Dear","Jane,","My","boyfriend","has","begun","to","spend","a","lot","of","money,","but","he","refuses","to","tell","me","where","it","comes","from.","I","know","his","wages","are","quite","small.","How","can","I","find","out","where","he","is","getting","all","this","money?","Is","it","from","something","dishonest?"]},{"title":"Songkran","words":["In","Thailand","we","celebrate","the","New","Year","over","the","three","days","from","13th","to","15th","of","April.","We","call","this","Songkran,","and","mark","it","with","ceremonies","to","show","respect","to","elderly","people","and","then","go","out","and","play","water-throwing","games","where","eveybody","gets","wet."]},{"title":"My grandmother","words":["My","grandmother","had","wanted","to","study","medicine,","but","her","father","declared","that","the","subject","was","unladylike","and","made","her","take","botany","instead,","which","she","thought","was","a","very","second-rate","course.","She","passed","the","exams","for","her","MA","in","1899","but","was","not","awarded","the","degree","until","1948."]},{"title":"A musical town","words":["But","Herford's","chief","distinction","was","that","in","1945","it","had","been","the","only","town","in","North","Germany","with","an","intact","concert","hall.","As","a","result","it","had","become","something","of","a","Mecca","for","musicians,","with","its","own","symphony","orchestra","and","a","bulging","programme","of","concerts","given","by","visiting","pianists","or","chamber","groups."]},{"title":"National Service","words":["Army","service","as","a","private","soldier","must","be","the","worst","possible","preparation","for","study","at","Oxford,","since","it","expects","obedience","and","deplores","private","initiative.","Never","volunteer,","wait","until","you","receive","an","order,","is","what","you","are","implicitly","told."]},{"title":"Thailand in 1910","words":["After","vivid","accounts","of","river","journeys","and","logging","camps","he","was","asked","by","an","audience","member:","'Was","life","better","or","worse","fifty","years","ago","than","it","is","now?'","He","answered,","'I","have","thought","about","this","a","lot","and","have","come","to","the","conclusion","that","we","were","pretty","damned","uncomfortable,","but","we","didn’t","know","it","and","so","it","didn’t","matter.'"]},{"title":"from Alice in Wonderland","words":["`Have","some","wine,'","the","March","Hare","said","in","an","encouraging","tone.","Alice","looked","all","round","the","table,","but","there","was","nothing","on","it","but","tea.","`I","don't","see","any","wine,'","she","remarked.","`There","isn't","any,'","said","the","March","Hare.","`Then","it","wasn't","very","civil","of","you","to","offer","it,'","said","Alice","angrily."]},{"title":"from The Secret Garden","words":["Her","mother","had","been","a","great","beauty","who","cared","only","to","go","to","parties","and","amuse","herself.","She","had","not","wanted","a","little","girl","at","all,","and","when","Mary","was","born","she","handed","her","over","to","the","care","of","an","Ayah,","who","was","told","that","if","she","wished","to","please","the","Memsahib","she","must","keep","the","child","out","of","sight."]}];
+
+      const INSTRUCTION_TEXT =
+        "Here are three unfinished stories. Underneath is a new word. Add it to the right story.";
+
+      let soundEnabled = false; // matches the checkbox's unchecked default; kept in sync by its onchange from then on
+      let fullTexts = [];
+      let titles = [];
+      let textOrder = [];
+      let progress = [5, 5, 5];
+      let boxes = [];
+      let correctIndices = [];
+      let currentWord = "";
+      let score = 0;
+      let attempts = 0;
+      let previousIndices = []; // the 3 stories just used -- excluded from the very next round only
+
+      function loadTexts() {
+        titles = STORY_DATA.map((s) => s.title);
+        fullTexts = STORY_DATA.map((s) => s.words.slice());
+      }
+
+      function renderBoxContent(i, box, highlightLast) {
+        const finished = progress[i] >= fullTexts[textOrder[i]].length;
+        const wordsHtml = boxes[i]
+          .map((w, wi) =>
+            highlightLast && wi === boxes[i].length - 1
+              ? `<span style="color:green">${w}</span>`
+              : w,
+          )
+          .join(" ");
+        box.innerHTML = wordsHtml + (finished ? "" : " ...");
+        if (finished) box.classList.add("finished");
+      }
+
+      function startGame() {
+        loadTexts();
+
+        document.getElementById("game-title").style.display = "none";
+        document.getElementById("intro-box").style.display = "none";
+        document.getElementById("end-controls").style.display = "none";
+        document.getElementById("quitLink").style.display = "inline";
+
+        document.getElementById("instruction").innerText = INSTRUCTION_TEXT;
+
+        // Skip whichever 3 stories were just used, so a "Play Again" always
+        // gets a fresh set; after that round, repeats are fine again.
+        let pool = [...Array(titles.length).keys()].filter(
+          (i) => !previousIndices.includes(i),
+        );
+        if (pool.length < 3) pool = [...Array(titles.length).keys()];
+        textOrder = shuffle(pool);
+        previousIndices = textOrder.slice(0, 3);
+
+        progress = [5, 5, 5];
+        boxes = [[], [], []];
+        score = 0;
+        attempts = 0;
+        document.getElementById("scoreText").innerText = "";
+
+        const grid = document.getElementById("gameGrid");
+        grid.innerHTML = "";
+
+        for (let i = 0; i < 3; i++) {
+          const col = document.createElement("div");
+          col.className = "column";
+
+          const label = document.createElement("div");
+          label.className = "label";
+          label.innerText = titles[textOrder[i]];
+          col.appendChild(label);
+
+          const box = document.createElement("div");
+          box.className = "box";
+          box.id = `text${i}`;
+          box.onclick = () => checkAnswer(i);
+          boxes[i] = fullTexts[textOrder[i]].slice(0, 5);
+          renderBoxContent(i, box, false);
+          col.appendChild(box);
+
+          grid.appendChild(col);
+        }
+
+        nextWord();
+      }
+
+      function quitGame() {
+        window.location.href = "index.html";
+        document.getElementById("game-title").style.display = "block";
+      }
+
+      function quitToResults() {
+        const grid = document.getElementById("gameGrid");
+        grid.innerHTML = "";
+        document.getElementById("currentWordDisplay").innerText = "";
+
+        for (let i = 0; i < 3; i++) {
+          const col = document.createElement("div");
+          col.className = "column";
+
+          const label = document.createElement("div");
+          label.className = "label";
+          label.innerText = titles[textOrder[i]];
+          col.appendChild(label);
+
+          const box = document.createElement("div");
+          box.className = "box";
+          box.style.cursor = "default";
+          const completeText = fullTexts[textOrder[i]];
+          box.innerText = completeText.join(" ");
+          col.appendChild(box);
+
+          grid.appendChild(col);
+        }
+
+        document.getElementById("instruction").innerText =
+          "Game ended. Here are the complete texts.";
+        document.getElementById("end-controls").style.display = "block";
+        document.getElementById("quitLink").style.display = "none";
+      }
+
+      function shuffle(arr) {
+        return arr.sort(() => Math.random() - 0.5);
+      }
+
+      function getRemainingIndices() {
+        return progress
+          .map((p, i) => (p < fullTexts[textOrder[i]].length ? i : null))
+          .filter((i) => i !== null);
+      }
+
+      function updateScore() {
+        const percent =
+          attempts === 0 ? 0 : Math.round((score / attempts) * 100);
+        document.getElementById("scoreText").innerText =
+          `Score: ${percent}% (${score} of ${attempts} tries)`;
+      }
+
+      function nextWord() {
+        const remaining = getRemainingIndices();
+        if (remaining.length === 0) {
+          document.getElementById("instruction").innerText =
+            "All texts completed! Final score:";
+          updateScore();
+          document.getElementById("end-controls").style.display = "block";
+          document.getElementById("currentWordDisplay").innerText = "";
+          document.getElementById("quitLink").style.display = "none";
+          return;
+        }
+
+        const sourceIndex =
+          remaining[Math.floor(Math.random() * remaining.length)];
+        currentWord = fullTexts[textOrder[sourceIndex]][progress[sourceIndex]];
+
+        correctIndices = remaining.filter(
+          (i) =>
+            progress[i] < fullTexts[textOrder[i]].length &&
+            fullTexts[textOrder[i]][progress[i]] === currentWord,
+        );
+
+        const wordEl = document.getElementById("currentWordDisplay");
+        wordEl.innerText = currentWord;
+        wordEl.classList.remove("hidden");
+
+        for (let i = 0; i < 3; i++) {
+          const box = document.getElementById(`text${i}`);
+          if (progress[i] < fullTexts[textOrder[i]].length) {
+            box.classList.remove("disabled");
+          }
+        }
+      }
+
+      function checkAnswer(index) {
+        attempts++;
+        if (correctIndices.includes(index)) {
+          score++;
+          const word = fullTexts[textOrder[index]][progress[index]];
+          boxes[index].push(word);
+          progress[index]++;
+
+          const box = document.getElementById(`text${index}`);
+          renderBoxContent(index, box, true);
+
+          if (soundEnabled) {
+            document.getElementById("pingSound").play();
+          }
+
+          // Hide the word immediately (no jump) while the highlight shows
+          document.getElementById("currentWordDisplay").classList.add("hidden");
+
+          setTimeout(() => {
+            renderBoxContent(index, box, false);
+            setTimeout(nextWord, 200);
+          }, 200);
+        } else {
+          if (soundEnabled) {
+            document.getElementById("errorSound").play();
+          }
+          document.getElementById(`text${index}`).classList.add("disabled");
+        }
+        updateScore();
+      }
+    </script>
+  </body>
+</html>

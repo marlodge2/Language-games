@@ -1,0 +1,197 @@
+[FileInfo]
+Version=3
+
+[Title]
+strQuizTitle=Conference Welcome Speech
+
+[NextEx]
+strNextExURL=hidden2.htm
+
+[Reading]
+IncludeReading=0
+IncludeTimer=0
+Timer=1
+ReadingInternal=1
+ReadingPath=
+ReadingTitle=
+ReadingTextLength=0
+
+[Question1]
+Question=<EMBED src="q1.wav" autostart=false height=55 width=145>
+AnswerA=daft
+AnswerB=sand
+AnswerC=may
+AnswerD=ten
+AnswerE=
+FeedbackA=No: Good afternoon ....
+FeedbackB=No: ... ladies and ....
+FeedbackC=CORRECT: Good afternoon, ladies and gentlemen, <FONT COLOR="green">may</FONT> I have your attention please.
+FeedbackD=No: .. attention ..
+FeedbackE=
+CorrectA=0
+CorrectB=0
+CorrectC=1
+CorrectD=0
+CorrectE=0
+
+[Question2]
+Question=<EMBED src="q2.wav" autostart=false height=55 width=145>
+AnswerA=have
+AnswerB=fewer
+AnswerC=mat
+AnswerD=forth
+AnswerE=
+FeedbackA=CORRECT: We <FONT COLOR="green">have</FONT> a few administrative matters to take care of before the conference starts.
+FeedbackB=No: ... few administrative ...
+FeedbackC=No: ... matters ...
+FeedbackD=No: ...before the ....
+FeedbackE=
+CorrectA=1
+CorrectB=0
+CorrectC=0
+CorrectD=0
+CorrectE=0
+
+[Question3]
+Question=<EMBED src="q3.wav" autostart=false height=55 width=145>
+AnswerA=festival
+AnswerB=lecture
+AnswerC=milk
+AnswerD=at
+AnswerE=
+FeedbackA=No: First of all ...
+FeedbackB=No: ... collect your ...
+FeedbackC=No: ... meal coupons ...
+FeedbackD=CORRECT: First of all, please collect your room keys and meal coupons from Beryl <FONT COLOR="green">at</FONT> the reception desk.
+FeedbackE=
+CorrectA=0
+CorrectB=0
+CorrectC=0
+CorrectD=1
+CorrectE=0
+
+[Question4]
+Question=<EMBED src="q4.wav" autostart=false height=55 width=145>
+AnswerA=wheel
+AnswerB=our
+AnswerC=sin
+AnswerD=only
+AnswerE=
+FeedbackA=No: We will...
+FeedbackB=CORRECT: We will be having <FONT COLOR="green">our</FONT> meals in the Windsor Dining Hall on level three.
+FeedbackC=No: ...meals in ...
+FeedbackD=No: ... on level ...
+FeedbackE=
+CorrectA=0
+CorrectB=1
+CorrectC=0
+CorrectD=0
+CorrectE=0
+
+[Question5]
+Question=<EMBED src="q5.wav" autostart=false height=55 width=145>
+AnswerA=knife
+AnswerB=sure
+AnswerC=sixteen
+AnswerD=nineteen
+AnswerE=
+FeedbackA=No: Now if ...
+FeedbackB=CORRECT: Now if you have come here by car, please make <FONT COLOR="green">sure</FONT> you park only in the bays numbered 61 to 90.
+FeedbackC=No: ... sixty-one
+FeedbackD=No: ... ninety.
+FeedbackE=
+CorrectA=0
+CorrectB=1
+CorrectC=0
+CorrectD=0
+CorrectE=0
+
+[Question6]
+Question=<EMBED src="q6.wav" autostart=false height=55 width=145>
+AnswerA=get
+AnswerB=noise
+AnswerC=cup
+AnswerD=speak
+AnswerE=
+FeedbackA=CORRECT: The permanent staff tend to <FONT COLOR="green">get </FONT>very annoyed if we take up their parking spaces, so please be careful about that.
+FeedbackB=No: ... annoyed ...
+FeedbackC=No: ... take up ...
+FeedbackD=No: ... please be careful ..
+FeedbackE=
+CorrectA=1
+CorrectB=0
+CorrectC=0
+CorrectD=0
+CorrectE=0
+
+[Question7]
+Question=<EMBED src="q7.wav" autostart=false height=55 width=145>
+AnswerA=die
+AnswerB=outer
+AnswerC=here
+AnswerD=spleen
+AnswerE=
+FeedbackA=No: And I ..
+FeedbackB=No: .. about a ...
+FeedbackC=CORRECT: And I have one announcement to make about a change in the schedule. Professor Morris can't get <FONT COLOR="green">here</FONT> till Friday, so tomorrow's plenary will be by Dr. Wilson.
+FeedbackD=No: ... tomorrow's plenary ...
+FeedbackE=
+CorrectA=0
+CorrectB=0
+CorrectC=1
+CorrectD=0
+CorrectE=0
+
+[Question8]
+Question=<EMBED src="q8.wav" autostart=false height=55 width=145>
+AnswerA=swill
+AnswerB=givers
+AnswerC=cushion
+AnswerD=all
+AnswerE=
+FeedbackA=No: ...Morris will ...
+FeedbackB=No: ... give his ..
+FeedbackC=No: .. discussion ..
+FeedbackD=CORRECT: Professor Morris will give his paper before the final panel discussion on Saturday, annd I am sure we are <FONT COLOR="green">all </FONT> looking forward to that.
+FeedbackE=
+CorrectA=0
+CorrectB=0
+CorrectC=0
+CorrectD=1
+CorrectE=0
+
+[Question9]
+Question=<EMBED src="q9.wav" autostart=false height=55 width=145>
+AnswerA=let
+AnswerB=spy
+AnswerC=water
+AnswerD=cease
+AnswerE=
+FeedbackA=CORRECT: So <FONT COLOR="green">let </FONT> me close by welcoming you all and saying what a pleasure it is to see so many faces here.
+FeedbackB=No: ... close by ...
+FeedbackC=No: ... what a ...
+FeedbackD=No: .. see so ..
+FeedbackE=
+CorrectA=1
+CorrectB=0
+CorrectC=0
+CorrectD=0
+CorrectE=0
+
+[Question10]
+Question=<EMBED src="q10.wav" autostart=false height=55 width=145>
+AnswerA=raw
+AnswerB=ourselves
+AnswerC=dealer
+AnswerD=juke
+AnswerE=
+FeedbackA=No: ... are all ...
+FeedbackB=CORRECT: I am sure we are all going to enjoy <FONT COLOR="green">ourselves</FONT> and learn a great deal about computers in education this week.
+FeedbackC=No: ... deal about ...
+FeedbackD=No: ... education ...
+FeedbackE=
+CorrectA=0
+CorrectB=1
+CorrectC=0
+CorrectD=0
+CorrectE=0

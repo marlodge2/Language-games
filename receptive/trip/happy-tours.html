@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Tours — a diary puzzle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#fdfaf2;
+    --paper-line:#e2d6ae;
+    --ink:#2c2418;
+    --ink-dim:#7a6f57;
+    --accent:#8a5a2b;
+    --accent-bright:#b9812f;
+    --signal:#3f8452;
+    --alert:#b04a3a;
+    --panel:#fffefa;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 10% -10%, #f4ecd2 0%, transparent 60%),
+      var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:28px 20px 60px;}
+
+  header{text-align:center;margin-bottom:20px;}
+  header h1{
+    font-family:'Archivo Black',sans-serif;
+    font-size:32px;
+    letter-spacing:2px;
+    margin:0 0 4px;
+    color:var(--accent);
+  }
+  header .sub{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-dim);}
+
+  .intro{
+    text-align:center;
+    font-size:16px;
+    margin:18px 0 22px;
+    line-height:1.5;
+  }
+
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--paper-line);
+    border-radius:var(--radius);
+    padding:18px 20px;
+    box-shadow:0 6px 18px rgba(60,40,10,0.06);
+  }
+
+  h2.section-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+    margin:0 0 12px;
+  }
+
+  /* ---------- Towns ---------- */
+  .town-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px;}
+  .town{
+    background:#fff;
+    border:1.5px solid var(--paper-line);
+    border-radius:20px;
+    padding:9px 16px;
+    font-size:14px;
+    font-weight:600;
+    cursor:grab;
+    transition:border-color .15s, background .15s, transform .08s;
+  }
+  .town:hover{border-color:var(--accent-bright);background:#fffaf0;}
+  .town:active{cursor:grabbing;}
+  .town.selected{border-color:var(--accent);background:#f6e9cf;box-shadow:0 0 0 2px rgba(138,90,43,.25);}
+  .town.disabled{
+    background:#eee;
+    color:#aaa;
+    border-color:#ddd;
+    cursor:not-allowed;
+    pointer-events:none;
+  }
+
+  /* ---------- Days ---------- */
+  .days{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:10px;
+    margin-bottom:24px;
+  }
+  @media(max-width:760px){ .days{grid-template-columns:repeat(4,1fr);} }
+  @media(max-width:480px){ .days{grid-template-columns:repeat(2,1fr);} }
+
+  .day{
+    position:relative;
+    border:2px dashed var(--paper-line);
+    border-radius:8px;
+    background:#fffefb;
+    min-height:96px;
+    padding:10px 8px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    cursor:pointer;
+    transition:border-color .15s, background .15s;
+  }
+  .day:hover{border-color:var(--accent-bright);}
+  .day.drag-over{border-color:var(--accent);background:#f6ecd6;}
+  .day .day-num{font-weight:700;font-size:13px;color:var(--ink-dim);}
+  .day .assignment{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:13.5px;
+    font-weight:600;
+    min-height:20px;
+  }
+  .day .assignment.correct{color:var(--signal);}
+  .day .assignment.wrong{color:var(--alert);}
+  .day.solved{border-style:solid;border-color:var(--signal);}
+  .day .deduced-dot{
+    position:absolute;top:6px;right:8px;
+    width:7px;height:7px;border-radius:50%;
+    background:var(--accent-bright);
+    box-shadow:0 0 5px rgba(185,129,47,.8);
+    display:none;
+  }
+  .day.deduced .deduced-dot{display:block;}
+  .day.filled .deduced-dot{display:none;}
+
+  /* ---------- Clue log ---------- */
+  .clue-board{
+    background:#fffefb;
+    border:1px solid var(--paper-line);
+    border-radius:8px;
+    padding:4px 0;
+    max-height:230px;
+    overflow-y:auto;
+    margin-bottom:14px;
+  }
+  .clue-line{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    padding:8px 14px;
+    border-bottom:1px solid #f0e8d2;
+    line-height:1.5;
+    animation:flipin .25s ease;
+  }
+  .clue-line:last-child{border-bottom:none;}
+  .clue-empty{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    color:var(--ink-dim);
+    padding:14px;
+  }
+  @keyframes flipin{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
+
+  .controls{display:flex;gap:10px;margin-bottom:6px;}
+  button{
+    font-family:'Inter',sans-serif;
+    cursor:pointer;
+    border:none;
+    border-radius:8px;
+    font-weight:600;
+    padding:11px 18px;
+    font-size:14px;
+    transition:transform .08s ease, background .15s ease, filter .12s ease;
+  }
+  button:active{transform:translateY(1px);}
+  button:disabled{opacity:.4;cursor:not-allowed;}
+  .btn-primary{background:var(--accent);color:#fff;}
+  .btn-primary:hover:not(:disabled){background:var(--accent-bright);}
+  .btn-ghost{background:transparent;color:var(--ink-dim);border:1px solid var(--paper-line);}
+  .btn-ghost:hover:not(:disabled){color:var(--ink);border-color:var(--accent-bright);}
+
+  .status-line{font-size:13px;color:var(--ink-dim);margin-top:10px;line-height:1.5;min-height:18px;}
+
+  .score-board{
+    text-align:center;
+    margin:18px 0 0;
+    font-weight:700;
+    color:var(--accent);
+    font-size:15px;
+  }
+
+  .banner{
+    display:none;
+    background:#eef6ee;
+    border:1px solid var(--signal);
+    border-radius:var(--radius);
+    padding:16px 18px;
+    margin-bottom:18px;
+    text-align:center;
+    animation:flipin .4s ease;
+  }
+  .banner.show{display:block;}
+  .banner.giveup{background:#f7ece9;border-color:var(--alert);}
+  .banner .msg b{
+    font-family:'Archivo Black',sans-serif;
+    display:block;
+    font-size:17px;
+    margin-bottom:4px;
+    color:var(--accent);
+  }
+  .banner .msg{font-size:14px;line-height:1.5;}
+  .banner .actions{margin-top:12px;display:flex;gap:10px;justify-content:center;}
+
+  footer{margin-top:26px;font-size:12px;color:var(--ink-dim);text-align:center;line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>HAPPY TOURS</h1>
+    <span class="sub">a diary logic puzzle</span>
+  </header>
+
+  <p class="intro" id="introLine"></p>
+
+  <div id="banner" class="banner">
+    <div class="msg" id="bannerMsg"></div>
+    <div class="actions">
+      <button class="btn-primary" id="playAgainBtn">Play again</button>
+      <button class="btn-ghost" id="quitBtn">Quit</button>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-bottom:16px;">
+    <h2 class="section-label">Towns visited</h2>
+    <div class="town-row" id="townRow"></div>
+    <h2 class="section-label">The week</h2>
+    <div class="days" id="daysRow"></div>
+    <div class="status-line" id="statusLine">Tap a town, then tap a day, to place it.</div>
+  </div>
+
+  <div class="panel">
+    <h2 class="section-label">Clues</h2>
+    <div class="clue-board" id="clueBoard">
+      <div class="clue-empty">No clues yet. Press "Get a clue" to begin.</div>
+    </div>
+    <div class="controls">
+      <button class="btn-primary" id="clueBtn">Get a clue</button>
+      <button class="btn-ghost" id="giveupBtn">Give up</button>
+    </div>
+  </div>
+
+  <div class="score-board" id="scoreBoard">Found: 0 / 7 · Wrong guesses: 0</div>
+
+  <footer>Happy Tours · a logic puzzle for practising past simple, past continuous and past perfect forms</footer>
+
+</div>
+
+<script>
+// ---------------------------------------------------------------------
+// Data: five regions, seven towns each.
+// ---------------------------------------------------------------------
+const TOWN_SETS = {
+  "the South of England": ["Bath", "Bristol", "Salisbury", "Oxford", "Cambridge", "Bournemouth", "London"],
+  "Scotland": ["Edinburgh", "Glasgow", "Inverness", "Aberdeen", "Stirling", "Dundee", "Perth"],
+  "Wales": ["Cardiff", "Swansea", "Newport", "Bangor", "Wrexham", "Aberystwyth", "Llandudno"],
+  "the North of England": ["Manchester", "Liverpool", "Leeds", "Sheffield", "Newcastle", "Durham", "Carlisle"],
+  "Ireland": ["Dublin", "Cork", "Galway", "Limerick", "Waterford", "Kilkenny", "Sligo"]
+};
+
+function randInt(a, b) { return a + Math.floor(Math.random() * (b - a + 1)); }
+function randChoice(arr) { return arr[randInt(0, arr.length - 1)]; }
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = randInt(0, i);
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function popcount(n) { let c = 0; while (n) { c += n & 1; n >>= 1; } return c; }
+function weightedChoice(weights) {
+  const total = Object.values(weights).reduce((s, w) => s + w, 0);
+  let r = Math.random() * total;
+  for (const k in weights) {
+    if (r < weights[k]) return k;
+    r -= weights[k];
+  }
+  return Object.keys(weights)[0];
+}
+
+// ---------------------------------------------------------------------
+// Clue text templates. Every clue kind below has several phrasings mixing
+// past simple, past continuous and past perfect, so the same underlying
+// logical fact keeps showing up in different grammatical clothes.
+// ---------------------------------------------------------------------
+const TEMPLATES = {
+  START: [
+    t => `They started their tour in ${t}.`,
+    t => `Their tour began in ${t}.`,
+    t => `The first stop on their trip was ${t}.`
+  ],
+  FINISH: [
+    t => `They finished their tour in ${t}.`,
+    t => `Their tour ended in ${t}.`,
+    t => `The last stop on their trip was ${t}.`,
+    t => `By the end of the week, they had reached ${t}.`
+  ],
+  NOT_START_END: [
+    t => `They did not begin or end their tour in ${t}.`,
+    t => `${t} was neither the first nor the last stop.`,
+    t => `They hadn't started in ${t}, and they didn't finish there either.`
+  ],
+  CONSECUTIVE: [
+    (a, b) => `Their coach broke down while they were travelling from ${a} to ${b}.`,
+    (a, b) => `They went straight from ${a} to ${b}.`,
+    (a, b) => `As soon as they had left ${a}, they arrived in ${b}.`,
+    (a, b) => `After they had visited ${a}, their next stop was ${b}.`,
+    (a, b) => `They travelled to ${b} immediately after leaving ${a}.`
+  ],
+  GAP: [
+    (a, b, n) => `Their visit to ${a} was ${n} days before ${b}.`,
+    (a, b, n) => `They visited ${b} exactly ${n} days after ${a}.`,
+    (a, b, n) => `${n} days after leaving ${a}, they arrived in ${b}.`,
+    (a, b, n) => `They had already spent ${n} days on the road since ${a} when they reached ${b}.`
+  ],
+  ORDER: [
+    (a, b) => `They visited ${a} before ${b}.`,
+    (a, b) => `${b} came after ${a} in their itinerary.`,
+    (a, b) => `By the time they got to ${b}, they had already visited ${a}.`,
+    (a, b) => `They had already been to ${a} before they arrived in ${b}.`,
+    (a, b) => `They hadn't yet visited ${b} when they were in ${a}.`
+  ]
+};
+
+// ---------------------------------------------------------------------
+// Puzzle engine: a constraint-propagation solver over 7 days x 7 towns,
+// same spirit as a bitmask CSP — each day holds a mask of which towns are
+// still logically possible, clues eliminate possibilities, and elimination
+// cascades whenever a day or a town becomes fully pinned down.
+// ---------------------------------------------------------------------
+class TripPuzzle {
+  constructor(region, towns) {
+    this.region = region;
+    this.towns = towns.slice();
+    this.n = towns.length;
+    this.full = (1 << this.n) - 1;
+
+    const order = shuffle([...Array(this.n).keys()]);
+    this.solution = {};
+    for (let d = 1; d <= this.n; d++) this.solution[d] = order[d - 1];
+
+    this.sol = new Array(this.n + 1).fill(this.full);
+    this.history = [];
+    this.usedSignatures = new Set();
+    this.clueCount = 0;
+    this.startGiven = false;
+    this.finishGiven = false;
+    this.answered = new Array(this.n + 1).fill(false); // player has correctly placed this day
+    this.wrongCount = 0;
+    this.propagate();
+  }
+
+  townName(i) { return this.towns[i]; }
+
+  // -- constraint appliers (each only ever narrows possibilities) --
+  applyStart(t) {
+    this.sol[1] &= (1 << t);
+    for (let d = 2; d <= this.n; d++) this.sol[d] &= ~(1 << t);
+  }
+  applyFinish(t) {
+    this.sol[this.n] &= (1 << t);
+    for (let d = 1; d < this.n; d++) this.sol[d] &= ~(1 << t);
+  }
+  applyNotStartEnd(t) {
+    this.sol[1] &= ~(1 << t);
+    this.sol[this.n] &= ~(1 << t);
+  }
+  applyConsecutive(a, b) { // a's day is immediately before b's day
+    for (let d = 1; d < this.n; d++) if (!(this.sol[d + 1] & (1 << b))) this.sol[d] &= ~(1 << a);
+    for (let d = 1; d < this.n; d++) if (!(this.sol[d] & (1 << a))) this.sol[d + 1] &= ~(1 << b);
+    this.sol[this.n] &= ~(1 << a);
+    this.sol[1] &= ~(1 << b);
+  }
+  applyGap(a, b, gap) { // b's day is exactly `gap` after a's day
+    for (let d = 1; d + gap <= this.n; d++) if (!(this.sol[d + gap] & (1 << b))) this.sol[d] &= ~(1 << a);
+    for (let d = 1 + gap; d <= this.n; d++) if (!(this.sol[d - gap] & (1 << a))) this.sol[d] &= ~(1 << b);
+    for (let d = this.n - gap + 1; d <= this.n; d++) this.sol[d] &= ~(1 << a);
+    for (let d = 1; d <= gap; d++) this.sol[d] &= ~(1 << b);
+  }
+  applyOrder(a, b) { // a's day is somewhere before b's day (gap unspecified)
+    const daysA = [], daysB = [];
+    for (let d = 1; d <= this.n; d++) {
+      if (this.sol[d] & (1 << a)) daysA.push(d);
+      if (this.sol[d] & (1 << b)) daysB.push(d);
+    }
+    for (const d of daysA) if (!daysB.some(e => e > d)) this.sol[d] &= ~(1 << a);
+    for (const e of daysB) if (!daysA.some(d => d < e)) this.sol[e] &= ~(1 << b);
+  }
+
+  applyOne(h) {
+    if (h.kind === 'START') this.applyStart(h.t);
+    else if (h.kind === 'FINISH') this.applyFinish(h.t);
+    else if (h.kind === 'NOT_START_END') this.applyNotStartEnd(h.t);
+    else if (h.kind === 'CONSECUTIVE') this.applyConsecutive(h.a, h.b);
+    else if (h.kind === 'GAP') this.applyGap(h.a, h.b, h.gap);
+    else if (h.kind === 'ORDER') this.applyOrder(h.a, h.b);
+  }
+
+  propagate() {
+    let changed = true;
+    while (changed) {
+      changed = false;
+      const before = this.sol.slice();
+      for (const h of this.history) this.applyOne(h);
+
+      // a day with exactly one possible town: remove that town everywhere else
+      for (let d = 1; d <= this.n; d++) {
+        if (popcount(this.sol[d]) === 1) {
+          const t = Math.round(Math.log2(this.sol[d]));
+          for (let d2 = 1; d2 <= this.n; d2++) if (d2 !== d) this.sol[d2] &= ~(1 << t);
+        }
+      }
+      // a town possible on only one remaining day: that day must be it
+      for (let t = 0; t < this.n; t++) {
+        let count = 0, onlyDay = -1;
+        for (let d = 1; d <= this.n; d++) if (this.sol[d] & (1 << t)) { count++; onlyDay = d; }
+        if (count === 1 && popcount(this.sol[onlyDay]) !== 1) this.sol[onlyDay] = (1 << t);
+      }
+
+      for (let d = 1; d <= this.n; d++) if (this.sol[d] !== before[d]) changed = true;
+    }
+    this.solvedCount = 0;
+    for (let d = 1; d <= this.n; d++) if (popcount(this.sol[d]) === 1) this.solvedCount++;
+    this.fullySolved = this.solvedCount === this.n;
+  }
+
+  signature(h) {
+    return [h.kind, h.t, h.a, h.b, h.gap].filter(v => v !== undefined).join('|');
+  }
+
+  // Tentatively add a constraint; keep it only if it actually narrows something.
+  wouldHelp(h) {
+    const before = this.sol.slice();
+    this.history.push(h);
+    this.propagate();
+    const changed = this.sol.some((v, i) => v !== before[i]);
+    if (!changed) this.history.pop();
+    return changed;
+  }
+
+  randomCandidate(kind) {
+    const days = this.n;
+    if (kind === 'NOT_START_END') {
+      const d = randInt(2, days - 1);
+      return { kind, t: this.solution[d] };
+    }
+    if (kind === 'CONSECUTIVE') {
+      const d = randInt(1, days - 1);
+      return { kind, a: this.solution[d], b: this.solution[d + 1] };
+    }
+    if (kind === 'GAP') {
+      const d = randInt(1, days - 2);
+      const maxGap = days - d;
+      if (maxGap < 2) return null;
+      const gap = randInt(2, maxGap);
+      return { kind, a: this.solution[d], b: this.solution[d + gap], gap };
+    }
+    if (kind === 'ORDER') {
+      const d1 = randInt(1, days - 1);
+      const d2 = randInt(d1 + 1, days);
+      return { kind, a: this.solution[d1], b: this.solution[d2] };
+    }
+    return null;
+  }
+
+  // Every legal candidate, for an exhaustive fallback once random sampling
+  // stops finding anything new (guarantees the button never goes "dry"
+  // while the puzzle is still logically underdetermined).
+  allCandidates() {
+    const list = [];
+    const days = this.n;
+    for (let d = 2; d < days; d++) list.push({ kind: 'NOT_START_END', t: this.solution[d] });
+    for (let d = 1; d < days; d++) list.push({ kind: 'CONSECUTIVE', a: this.solution[d], b: this.solution[d + 1] });
+    for (let d = 1; d <= days; d++) for (let gap = 2; d + gap <= days; gap++) list.push({ kind: 'GAP', a: this.solution[d], b: this.solution[d + gap], gap });
+    for (let d1 = 1; d1 < days; d1++) for (let d2 = d1 + 1; d2 <= days; d2++) list.push({ kind: 'ORDER', a: this.solution[d1], b: this.solution[d2] });
+    return shuffle(list);
+  }
+
+  textFor(h) {
+    const list = TEMPLATES[h.kind];
+    const fn = list[randInt(0, list.length - 1)];
+    if (h.kind === 'START' || h.kind === 'FINISH' || h.kind === 'NOT_START_END') return fn(this.townName(h.t));
+    if (h.kind === 'GAP') return fn(this.townName(h.a), this.townName(h.b), h.gap);
+    return fn(this.townName(h.a), this.townName(h.b));
+  }
+
+  getClue() {
+    if (this.fullySolved) return null;
+    this.clueCount++;
+
+    // Guarantee both start and finish appear within the first few clues.
+    if (this.clueCount <= 4) {
+      const missing = [];
+      if (!this.startGiven) missing.push('START');
+      if (!this.finishGiven) missing.push('FINISH');
+      const remaining = 4 - this.clueCount + 1;
+      if (missing.length > 0 && missing.length >= remaining) {
+        const kind = missing.length === 2 ? randChoice(missing) : missing[0];
+        const h = kind === 'START' ? { kind: 'START', t: this.solution[1] } : { kind: 'FINISH', t: this.solution[this.n] };
+        if (kind === 'START') this.startGiven = true; else this.finishGiven = true;
+        this.history.push(h);
+        this.usedSignatures.add(this.signature(h));
+        this.propagate();
+        return this.textFor(h);
+      }
+    }
+
+    const weights = { NOT_START_END: 2, CONSECUTIVE: 4, GAP: 3, ORDER: 3 };
+    for (let attempt = 0; attempt < 25; attempt++) {
+      const kind = weightedChoice(weights);
+      const cand = this.randomCandidate(kind);
+      if (!cand) continue;
+      const sig = this.signature(cand);
+      if (this.usedSignatures.has(sig)) continue;
+      if (this.wouldHelp(cand)) {
+        this.usedSignatures.add(sig);
+        return this.textFor(cand);
+      }
+    }
+    for (const cand of this.allCandidates()) {
+      const sig = this.signature(cand);
+      if (this.usedSignatures.has(sig)) continue;
+      if (this.wouldHelp(cand)) {
+        this.usedSignatures.add(sig);
+        return this.textFor(cand);
+      }
+    }
+    return null; // nothing left that would add information
+  }
+
+  guess(day, townName) {
+    const idx = this.towns.indexOf(townName);
+    const correct = this.solution[day] === idx;
+    if (correct) this.answered[day] = true;
+    else this.wrongCount++;
+    return correct;
+  }
+
+  isTownPlaced(townName) {
+    const idx = this.towns.indexOf(townName);
+    for (let d = 1; d <= this.n; d++) if (this.answered[d] && this.solution[d] === idx) return true;
+    return false;
+  }
+
+  isComplete() {
+    for (let d = 1; d <= this.n; d++) if (!this.answered[d]) return false;
+    return true;
+  }
+
+  giveUp() {
+    for (let d = 1; d <= this.n; d++) this.answered[d] = true;
+  }
+
+  summary(found) {
+    const clueText = this.clueCount === 1 ? " one clue" : ` ${this.clueCount} clues`;
+    let wrongText;
+    if (this.wrongCount === 0) wrongText = ".";
+    else if (this.wrongCount === 1) wrongText = " and making one wrong guess.";
+    else wrongText = ` and making ${this.wrongCount} wrong guesses.`;
+    const intro = found ? "You solved it after seeing" : "You gave up after seeing";
+    return intro + clueText + wrongText;
+  }
+}
+
+// ---------------------------------------------------------------------
+// UI layer
+// ---------------------------------------------------------------------
+const $ = id => document.getElementById(id);
+let puzzle = null;
+let selectedTown = null;
+let lastRegion = null;
+let ended = false;
+
+function pickRegion() {
+  const regions = Object.keys(TOWN_SETS);
+  let region;
+  do { region = randChoice(regions); } while (region === lastRegion && regions.length > 1);
+  lastRegion = region;
+  return region;
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+let townOrder = [];
+
+function renderTowns() {
+  const row = $("townRow");
+  row.innerHTML = "";
+  townOrder.forEach(name => {
+    const placed = puzzle.isTownPlaced(name);
+    const el = document.createElement("div");
+    el.className = "town" + (placed ? " disabled" : "");
+    el.textContent = name;
+    el.setAttribute("draggable", String(!placed));
+    el.dataset.name = name;
+    if (!placed) {
+      el.addEventListener("dragstart", e => {
+        e.dataTransfer.setData("text/plain", name);
+        selectedTown = null;
+        renderTowns();
+      });
+      el.addEventListener("click", () => {
+        if (ended) return;
+        selectedTown = (selectedTown === name) ? null : name;
+        renderTowns();
+      });
+      if (selectedTown === name) el.classList.add("selected");
+    }
+    row.appendChild(el);
+  });
+}
+
+function renderDays() {
+  const row = $("daysRow");
+  row.innerHTML = "";
+  for (let d = 1; d <= puzzle.n; d++) {
+    const box = document.createElement("div");
+    box.className = "day";
+    box.dataset.day = d;
+    const filled = puzzle.answered[d];
+    const deduced = !filled && popcount(puzzle.sol[d]) === 1;
+    if (filled) box.classList.add("filled", "solved");
+    if (deduced) box.classList.add("deduced");
+    box.innerHTML = `
+      <span class="day-num">Day ${d}</span>
+      <div class="deduced-dot" title="Logically determined"></div>
+      <div class="assignment ${filled ? 'correct' : ''}">${filled ? escapeHtml(puzzle.townName(puzzle.solution[d])) : ''}</div>
+    `;
+
+    box.addEventListener("dragover", e => { e.preventDefault(); box.classList.add("drag-over"); });
+    box.addEventListener("dragleave", () => box.classList.remove("drag-over"));
+    box.addEventListener("drop", e => {
+      e.preventDefault();
+      box.classList.remove("drag-over");
+      const name = e.dataTransfer.getData("text/plain");
+      attemptPlace(d, name, box);
+    });
+    box.addEventListener("click", () => {
+      if (ended || filled || !selectedTown) return;
+      attemptPlace(d, selectedTown, box);
+      selectedTown = null;
+    });
+
+    row.appendChild(box);
+  }
+}
+
+function attemptPlace(day, townName, box) {
+  if (ended || puzzle.answered[day]) return; // already solved, ignore further drops
+  const correct = puzzle.guess(day, townName);
+  if (correct) {
+    beep(660, 0.12, "triangle");
+    renderTowns();
+    renderDays();
+    updateScore();
+    if (puzzle.isComplete()) finishGame(true);
+  } else {
+    beep(140, 0.25, "sawtooth");
+    const box2 = box || document.querySelector(`.day[data-day="${day}"]`);
+    const assignEl = box2.querySelector(".assignment");
+    assignEl.textContent = "✖";
+    assignEl.classList.add("wrong");
+    updateScore();
+    setTimeout(() => {
+      if (!puzzle.answered[day]) { assignEl.textContent = ""; assignEl.classList.remove("wrong"); }
+    }, 900);
+  }
+}
+
+function updateScore() {
+  const found = puzzle.answered.filter(Boolean).length;
+  $("scoreBoard").textContent = `Found: ${found} / ${puzzle.n} · Wrong guesses: ${puzzle.wrongCount}`;
+}
+
+function renderClueLog() {
+  // rebuilt incrementally via appendClue(); this only handles the empty state
+}
+
+function appendClue(text) {
+  const board = $("clueBoard");
+  const empty = board.querySelector(".clue-empty");
+  if (empty) empty.remove();
+  const div = document.createElement("div");
+  div.className = "clue-line";
+  div.textContent = text;
+  board.appendChild(div);
+  board.scrollTop = board.scrollHeight;
+}
+
+function setStatus(msg) { $("statusLine").innerHTML = msg; }
+
+function getClue() {
+  if (ended) return;
+  const solvedBefore = puzzle.solvedCount;
+  const text = puzzle.getClue();
+  if (text) {
+    appendClue(text);
+    if (puzzle.solvedCount > solvedBefore) beep(880, 0.1, "sine");
+  } else {
+    setStatus("No more clues needed — everything left can be worked out from what you already have. Check the glowing days!");
+  }
+  renderDays();
+  const found = puzzle.answered.filter(Boolean).length;
+  setStatus(`${puzzle.clueCount} clue${puzzle.clueCount === 1 ? "" : "s"} seen so far, ${puzzle.wrongCount} wrong guess${puzzle.wrongCount === 1 ? "" : "es"}. Days with a glowing dot are fully worked out by logic — go fill them in!`);
+}
+
+function giveUp() {
+  if (ended) return;
+  puzzle.giveUp();
+  renderDays();
+  updateScore();
+  finishGame(false);
+}
+
+function finishGame(found) {
+  ended = true;
+  const banner = $("banner");
+  banner.classList.add("show");
+  banner.classList.toggle("giveup", !found);
+  $("bannerMsg").innerHTML = `<b>${found ? "Solved!" : "Tour revealed"}</b>${escapeHtml(puzzle.summary(found))}`;
+  $("clueBtn").disabled = true;
+  $("giveupBtn").disabled = true;
+  if (found) { beep(523, 0.12, "triangle"); setTimeout(() => beep(659, 0.12, "triangle"), 120); setTimeout(() => beep(784, 0.18, "triangle"), 240); }
+}
+
+let soundOn = true;
+function beep(freq, dur, type) {
+  if (!soundOn) return;
+  try {
+    const ctx = beep._ctx || (beep._ctx = new (window.AudioContext || window.webkitAudioContext)());
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type || "sine";
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.08, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + dur);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(); osc.stop(ctx.currentTime + dur);
+  } catch (e) { /* audio not available, ignore */ }
+}
+
+function newGame() {
+  ended = false;
+  selectedTown = null;
+  const region = pickRegion();
+  puzzle = new TripPuzzle(region, TOWN_SETS[region]);
+  townOrder = shuffle(puzzle.towns);
+  $("introLine").textContent = `Last week's Happy Tours took a party round ${region}. Can you match the towns to the days?`;
+  $("banner").classList.remove("show");
+  $("clueBtn").disabled = false;
+  $("giveupBtn").disabled = false;
+  $("clueBoard").innerHTML = '<div class="clue-empty">No clues yet. Press "Get a clue" to begin.</div>';
+  renderTowns();
+  renderDays();
+  updateScore();
+  setStatus("Tap a town, then tap a day, to place it.");
+}
+
+$("clueBtn").addEventListener("click", getClue);
+$("giveupBtn").addEventListener("click", giveUp);
+$("playAgainBtn").addEventListener("click", newGame);
+$("quitBtn").addEventListener("click", () => { window.location.href = "https://marlodge.net"; });
+
+newGame();
+</script>
+</body>
+</html>

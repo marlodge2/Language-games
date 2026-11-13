@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Language Game Home</title>
+  <link rel="stylesheet" href="soclip.css">
+ <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+    </script>
+   <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+    </script>  
+  </head>
+<body>
+  <div id="pageWrapper">
+    <h1>Welcome to ECLIPSE</h1>
+    <h2>A text rebuilding game by John and Muriel Higgins<br>July 2026</h2>
+    <p>This version is the CHALLENGE mode where you play against the computer. 
+      You must try to find the words of the text, but the computer also takes turns guessing. 
+      At the end, a report will show who found the most words.</p>
+    <p>Select a story to play:</p>
+
+    <form action="chgame.html" method="get">
+      <label for="story">Choose story:</label>
+      <select id="story" name="story"></select>
+      <button id="startBtn" type="submit" disabled>Start Challenge</button>
+    </form>
+    <div id="pickerError" style="color:darkred; font-style:italic; margin-top:10px;"></div>
+  </div>
+
+  <script>
+    // Story list — loaded from alltexts.txt (one story per line:
+    // "Title | filename.txt"; blank lines and #-comments are ignored).
+    function parseStoryList(text) {
+      const stories = [];
+      text.split(/\r?\n/).forEach(raw => {
+        const line = raw.trim();
+        if (!line || line.startsWith("#")) return;
+        const sep = line.indexOf("|");
+        if (sep === -1) {
+          console.warn("Skipping malformed alltexts.txt line (missing '|'):", line);
+          return;
+        }
+        const title = line.slice(0, sep).trim();
+        const file = line.slice(sep + 1).trim();
+        if (!title || !file) {
+          console.warn("Skipping malformed alltexts.txt line (empty title or filename):", line);
+          return;
+        }
+        stories.push({ title, file });
+      });
+      return stories;
+    }
+
+    fetch("alltexts.txt")
+      .then(r => {
+        if (!r.ok) throw new Error("alltexts.txt not found (" + r.status + ")");
+        return r.text();
+      })
+      .then(text => {
+        const stories = parseStoryList(text);
+        const select = document.getElementById("story");
+        select.innerHTML = "";
+        if (stories.length === 0) {
+          document.getElementById("pickerError").textContent = "No stories found in alltexts.txt.";
+          return;
+        }
+        stories.forEach(s => {
+          const opt = document.createElement("option");
+          opt.value = s.file;
+          opt.textContent = s.title;
+          select.appendChild(opt);
+        });
+        document.getElementById("startBtn").disabled = false;
+      })
+      .catch(err => {
+        document.getElementById("pickerError").textContent =
+          "Couldn't load the story list (alltexts.txt). " +
+          "If you're opening this file directly, it needs to be served over http:// — try running a local server.";
+        console.error(err);
+      });
+  </script>
+</body>
+</html>

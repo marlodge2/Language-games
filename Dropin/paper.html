@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learning with DROPIN</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        color: #222;
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 30px 20px 60px 20px;
+        line-height: 1.6;
+      }
+      a.back-link {
+        display: inline-block;
+        margin-bottom: 24px;
+        color: #3366cc;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      a.back-link:hover {
+        text-decoration: underline;
+      }
+
+      .titleblock {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .titleblock h1 {
+        margin-bottom: 4px;
+      }
+      .titleblock p {
+        margin: 2px 0;
+        color: #444;
+      }
+
+      .abstract {
+        background: #fff8dc;
+        border: 2px solid #3366cc;
+        border-radius: 8px;
+        padding: 16px 20px;
+        margin: 24px 0 34px 0;
+      }
+      .abstract strong {
+        color: #3366cc;
+      }
+
+      .version-note {
+        background: #eaf0fc;
+        border: 1px solid #3366cc;
+        border-radius: 8px;
+        padding: 10px 18px;
+        margin: 0 0 20px 0;
+        font-size: 0.9em;
+      }
+      .version-note a {
+        color: #3366cc;
+        font-weight: bold;
+      }
+
+      h2 {
+        color: #3366cc;
+        border-bottom: 2px solid #3366cc;
+        padding-bottom: 4px;
+        margin-top: 46px;
+      }
+      p {
+        margin: 16px 0;
+      }
+
+      ol.trial-groups {
+        margin: 10px 0;
+      }
+      ol.trial-groups li {
+        margin: 4px 0;
+      }
+
+      blockquote.verse {
+        margin: 20px 40px;
+        padding: 10px 16px;
+        border-left: 3px solid #b9c4de;
+        font-style: italic;
+        color: #333;
+      }
+      blockquote.verse p {
+        margin: 4px 0;
+      }
+
+      .caption {
+        text-align: center;
+        font-weight: bold;
+        margin: 30px 0 8px 0;
+      }
+      .grid-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-x: auto;
+        margin-bottom: 8px;
+      }
+      table.grid-table {
+        border-collapse: collapse;
+        font-family: "Courier New", monospace;
+        font-weight: bold;
+        margin: 0 auto;
+      }
+      table.grid-table td {
+        width: 1.7em;
+        height: 1.7em;
+        text-align: center;
+        border: 1px solid #b9c4de;
+      }
+      .grid-solved td.g-letter {
+        background: #fff;
+      }
+      .grid-solved td.g-space {
+        background: #f4f6fb;
+        border-color: #f4f6fb;
+      }
+
+      .grid-stack td.g-letter {
+        background: #fff;
+      }
+      .grid-stack td.g-empty {
+        background: #f4f6fb;
+        border-color: #f4f6fb;
+      }
+
+      .grid-puzzle {
+        margin-top: 2px;
+        border-top: 3px double #1c2331;
+      }
+      .grid-puzzle td.g-space {
+        background: #1c2331;
+      }
+      .grid-puzzle td.g-slot {
+        background: #fff;
+      }
+      .grid-puzzle td.g-punct {
+        background: #dfe6f5;
+        color: #222;
+      }
+
+      .diagram-note {
+        text-align: center;
+        font-size: 0.85em;
+        color: #666;
+        margin-top: 4px;
+        margin-bottom: 30px;
+      }
+    </style>
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+    </script>
+  </head>
+  <body>
+    <a class="back-link" href="index.html">&larr; Back to DROPIN</a>
+
+    <div class="titleblock">
+      <h1>Learning with DROPIN</h1>
+      <p>by John Higgins</p>
+      <p>CELT, University of Stirling</p>
+      <p>January 1999</p>
+    </div>
+
+    <div class="version-note">
+      An updated version of the game, playable in a web browser, is now on this
+      site &mdash; see <a href="index.html">DROPIN</a>. It behaves in a slightly
+      different way from the program described in this paper.
+    </div>
+
+    <div class="abstract">
+      <strong>ABSTRACT:</strong> This paper describes a form of
+      computer-generated word puzzle called DROPIN and reports on a series of
+      trials carried out with Bristol schoolchildren and foreign learners in
+      Bristol. The program takes a short text (up to 40 words), puts it into a
+      grid, and then shuffles the letters into columns above the grid. Letters
+      have to be &lsquo;dropped&rsquo; down to the correct line of the grid in
+      order to make sense of the text. Our experience with the program suggests
+      that the puzzle element is motivating and that the learners&rsquo;
+      engrossment leads to a very concentrated form of reading which can make
+      language forms memorable. In addition the use of the built-in text editor,
+      especially by the younger children, suggests that creating a sentence to
+      challenge one&rsquo;s friends and working within the constraints of the
+      puzzle grid can encourage competition and awareness of language.
+    </div>
+
+    <p>
+      DROPIN is a computer-generated version of a form of word-puzzle sometimes
+      seen in puzzle books under the name QUOTEFALL. We have been experimenting
+      with it as a group self-access activity for learners of both first and
+      second languages.
+    </p>
+
+    <h2>What the program does</h2>
+
+    <p>
+      DROPIN takes a short text, between 25 and 220 characters (i.e. roughly
+      between 5 and 40 words) and arranges the characters in a grid like a
+      crossword grid. If the text is
+    </p>
+
+    <blockquote class="verse">
+      <p>Roses are red, violets are blue,</p>
+      <p>Sugar is sweet, and so are you.</p>
+    </blockquote>
+
+    <p>DROPIN puts it into a grid like this one:</p>
+
+    <div class="grid-wrap">
+      <table class="grid-table grid-solved">
+        <tr>
+          <td class="g-letter">R</td>
+          <td class="g-letter">O</td>
+          <td class="g-letter">S</td>
+          <td class="g-letter">E</td>
+          <td class="g-letter">S</td>
+          <td class="g-space"></td>
+          <td class="g-letter">A</td>
+          <td class="g-letter">R</td>
+          <td class="g-letter">E</td>
+          <td class="g-space"></td>
+          <td class="g-letter">R</td>
+          <td class="g-letter">E</td>
+          <td class="g-letter">D</td>
+          <td class="g-letter">,</td>
+          <td class="g-space"></td>
+          <td class="g-letter">V</td>
+          <td class="g-letter">I</td>
+          <td class="g-letter">O</td>
+          <td class="g-letter">L</td>
+          <td class="g-letter">E</td>
+          <td class="g-letter">T</td>
+          <td class="g-letter">S</td>
+        </tr>
+        <tr>
+          <td class="g-space"></td>
+          <td class="g-letter">A</td>
+          <td class="g-letter">R</td>
+          <td class="g-letter">E</td>
+          <td class="g-space"></td>
+          <td class="g-letter">B</td>
+          <td class="g-letter">L</td>
+          <td class="g-letter">U</td>
+          <td class="g-letter">E</td>
+          <td class="g-letter">,</td>
+          <td class="g-space"></td>
+          <td class="g-letter">S</td>
+          <td class="g-letter">U</td>
+          <td class="g-letter">G</td>
+          <td class="g-letter">A</td>
+          <td class="g-letter">R</td>
+          <td class="g-space"></td>
+          <td class="g-letter">I</td>
+          <td class="g-letter">S</td>
+          <td class="g-space"></td>
+          <td class="g-letter">S</td>
+          <td class="g-letter">W</td>
+        </tr>
+        <tr>
+          <td class="g-letter">E</td>
+          <td class="g-letter">E</td>
+          <td class="g-letter">T</td>
+          <td class="g-letter">,</td>
+          <td class="g-space"></td>
+          <td class="g-letter">A</td>
+          <td class="g-letter">N</td>
+          <td class="g-letter">D</td>
+          <td class="g-space"></td>
+          <td class="g-letter">S</td>
+          <td class="g-letter">O</td>
+          <td class="g-space"></td>
+          <td class="g-letter">A</td>
+          <td class="g-letter">R</td>
+          <td class="g-letter">E</td>
+          <td class="g-space"></td>
+          <td class="g-letter">Y</td>
+          <td class="g-letter">O</td>
+          <td class="g-letter">U</td>
+          <td class="g-letter">.</td>
+          <td class="g-space"></td>
+          <td class="g-space"></td>
+        </tr>
+      </table>
+    </div>
+
+    <p>
+      Notice that the blank squares show the ends of words, and although you
+      read from left to right as on a book page, the words can be split across
+      the end of one line and the beginning of the next.
+    </p>
+
+    <p>
+      Now DROPIN takes the letters (i.e. not spaces or punctuation) in each
+      vertical column and jumbles them. What the user sees is the original grid
+      stripped of the letters and the letters from the grid arranged above it.
+      Each letter has to be dropped down to the right line so that the text
+      makes sense.
+    </p>
+
+    <div class="caption">Valentine</div>
+    <div class="grid-wrap">
+      <table class="grid-table grid-stack">
+        <tr>
+          <td class="g-letter">R</td>
+          <td class="g-letter">A</td>
+          <td class="g-letter">S</td>
+          <td class="g-letter">E</td>
+          <td class="g-letter">S</td>
+          <td class="g-letter">A</td>
+          <td class="g-letter">L</td>
+          <td class="g-letter">R</td>
+          <td class="g-letter">E</td>
+          <td class="g-letter">S</td>
+          <td class="g-letter">O</td>
+          <td class="g-letter">S</td>
+          <td class="g-letter">A</td>
+          <td class="g-letter">R</td>
+          <td class="g-letter">E</td>
+          <td class="g-letter">R</td>
+          <td class="g-letter">Y</td>
+          <td class="g-letter">O</td>
+          <td class="g-letter">S</td>
+          <td class="g-letter">E</td>
+          <td class="g-letter">S</td>
+          <td class="g-letter">W</td>
+        </tr>
+        <tr>
+          <td class="g-letter">E</td>
+          <td class="g-letter">E</td>
+          <td class="g-letter">R</td>
+          <td class="g-letter">E</td>
+          <td class="g-empty"></td>
+          <td class="g-letter">B</td>
+          <td class="g-letter">A</td>
+          <td class="g-letter">U</td>
+          <td class="g-letter">E</td>
+          <td class="g-empty"></td>
+          <td class="g-letter">R</td>
+          <td class="g-letter">E</td>
+          <td class="g-letter">U</td>
+          <td class="g-letter">G</td>
+          <td class="g-letter">A</td>
+          <td class="g-letter">V</td>
+          <td class="g-letter">I</td>
+          <td class="g-letter">O</td>
+          <td class="g-letter">L</td>
+          <td class="g-empty"></td>
+          <td class="g-letter">T</td>
+          <td class="g-letter">S</td>
+        </tr>
+        <tr>
+          <td class="g-empty"></td>
+          <td class="g-letter">O</td>
+          <td class="g-letter">T</td>
+          <td class="g-empty"></td>
+          <td class="g-empty"></td>
+          <td class="g-empty"></td>
+          <td class="g-letter">N</td>
+          <td class="g-letter">D</td>
+          <td class="g-empty"></td>
+          <td class="g-empty"></td>
+          <td class="g-empty"></td>
+          <td class="g-empty"></td>
+          <td class="g-letter">D</td>
+          <td class="g-empty"></td>
+          <td class="g-empty"></td>
+          <td class="g-empty"></td>
+          <td class="g-empty"></td>
+          <td class="g-letter">I</td>
+          <td class="g-letter">U</td>
+          <td class="g-empty"></td>
+          <td class="g-empty"></td>
+          <td class="g-empty"></td>
+        </tr>
+      </table>
+      <table class="grid-table grid-puzzle">
+        <tr>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-space"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-space"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-punct">,</td>
+          <td class="g-space"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+        </tr>
+        <tr>
+          <td class="g-space"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-space"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-punct">,</td>
+          <td class="g-space"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-space"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-space"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+        </tr>
+        <tr>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-punct">,</td>
+          <td class="g-space"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-space"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-space"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-space"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-slot"></td>
+          <td class="g-punct">.</td>
+          <td class="g-space"></td>
+          <td class="g-space"></td>
+        </tr>
+      </table>
+    </div>
+    <p class="diagram-note">
+      Jumbled letters sit above the grid; dark squares are spaces at the ends of
+      words and sentences; punctuation is filled in already.
+    </p>
+
+    <p>
+      The dark squares show spaces at the ends of words and sentences. What the
+      user has to do is to drop the letters in each vertical column down to an
+      empty square in the correct row so that the text makes sense. In some
+      cases this may be very easy: there may be only one letter in a column and
+      only one empty square underneath it. Those letters can be filled in
+      straight away. (See, for instance, columns 4, 5, 10, and 20 in the sample
+      above.) In other cases the user will have to think harder and perhaps
+      experiment.
+    </p>
+
+    <h2>The trials</h2>
+
+    <p>
+      In 1990 a small experiment was conducted in Bristol by John Higgins and
+      Anne Howell. Four different groups were brought to the computer lab and
+      were recorded for the whole of their time. They were:
+    </p>
+
+    <ol class="trial-groups" type="a">
+      <li>Top infants (8-year-olds)</li>
+      <li>Top juniors (11-year-olds)</li>
+      <li>Sixth formers (17-year-olds)</li>
+      <li>Overseas graduates (adults)</li>
+    </ol>
+
+    <p>
+      Each group had three members, apart from (d) which had only two. The two
+      younger groups came from an SPA (social priority area) school in one of
+      the city&rsquo;s poorer housing estates, but were rated as above average
+      intelligence by their teachers.
+    </p>
+
+    <p>
+      The sessions were meant to last only half an hour, but the groups were
+      working with such concentration and enjoyment that they were allowed to
+      continue as long as they wanted, which in every case was one-and-a-half to
+      two hours.
+    </p>
+
+    <p>
+      Another group of overseas graduates were observed informally but not
+      recorded while working on a dedicated group of texts designed to practise
+      one area of grammar (phrasal verbs).
+    </p>
+
+    <p>
+      With the groups of three, the child occupying the middle seat invariably
+      became the leader, though usually ready to relinquish both the seat and
+      the role after a period at the supervisor&rsquo;s suggestion.
+    </p>
+
+    <h2>Instructions</h2>
+
+    <p>
+      Each of the groups was talked through the &lsquo;Valentine&rsquo; example
+      text by way of instructions (which turned out to be familiar even to the
+      African students). In addition, we gave them an oral paraphrase of the
+      advice given in the program documentation:
+    </p>
+
+    <blockquote class="verse">
+      <p>
+        It is usually best to start with the short words. Any one-letter words
+        are almost certainly A or I. Look at the three-letter words and see if
+        any of them are likely to be THE; see if you can find a T in the column
+        of the first letter, an H in the second column, and an E in the third.
+        AND is another very common three-letter word.
+      </p>
+      <p>
+        Think about the title and see if any of the long words in the diagram
+        are the same length as words in the title. If so, can they be made up
+        from letters in the columns?
+      </p>
+    </blockquote>
+
+    <p>
+      Very few difficulties with understanding the keyboard or instructions
+      emerged during the trials, though the older participants did need constant
+      reassurance that nothing they could do was wrong. When one student from
+      group D typed in an obviously &lsquo;wrong&rsquo; letter, he turned round
+      and asked &ldquo;How do I say sorry to the computer?&rdquo;.
+    </p>
+
+    <p>
+      The youngest children had the least difficulty with the physical
+      manipulation of the keyboard and seemed least overawed by the equipment.
+      The 8- and 11-year-olds had the most carefree and risk-taking attitude to
+      the program. The 11-year-olds tended to be overawed to begin with at the
+      university setting, and were impressed with the type of computer used
+      (Opus III PC) and wanted to examine it carefully, comparing it with the
+      machines they were familiar with at school. At the beginning they were
+      aware of the tape-recorder and giggled self-consciously, but soon forgot
+      it in the excitement of play. The adults, in contrast, were not at all
+      impressed at the setting, but were extremely tentative about using the
+      machine, and took a long time to gain any confidence in using the cursor
+      keys, for instance. Interestingly, though, this group became one of the
+      most excitable and experimental of all, bombarding the machine with input.
+    </p>
+
+    <h2>Levels</h2>
+
+    <p>
+      When a text has been chosen, the computer may offer a choice of levels,
+      EASIER, NORMAL or HARDER. EASIER makes the grid as flat as possible, and
+      HARDER makes the grid as tall as possible. The actual size depends on the
+      length of the text; short texts will always be put into two or three
+      lines, while long texts must be five or six lines deep. In these cases the
+      program will only offer a choice of two levels of play or, if the texts
+      are very long or very short, will offer no choice at all since it cannot
+      change the shape of the grid.
+    </p>
+
+    <p>
+      As one would expect, nearly all the groups opted for EASIER when they
+      began. The majority went into NORMAL as they became familiar with the
+      activity, though some stayed with EASIER for the whole of a session, as
+      they have every right to do. The foreign learners who worked with the
+      dedicated grammatical texts sometimes chose to repeat a text at one of the
+      higher levels after having solved it at the EASIER level, though this
+      understandably did not happen with the native speakers. The 8-year-olds,
+      when becoming bored or frustrated at a text which was at the wrong level,
+      would not ask for the level or the text to be changed but would just start
+      talking about something else. However, when offered the choice of
+      finishing the session or changing to a new text or easier level, they
+      opted to continue until far later than expected.
+    </p>
+
+    <h2>Strategies</h2>
+
+    <p>
+      These varied a good deal, with the 8-year-olds always trying to guess
+      whole words and being very ready to call up free letters with the F1 key
+      when they were unsure of a spelling, something which the sixth-formers
+      were very reluctant to do. The younger children seemed to be
+      congratulating themselves on using all the help the computer made
+      available, while the older ones had a more rigid &lsquo;we must do it
+      ourselves&rsquo; ethic, attached to a sense of failure if the text proved
+      too difficult.
+    </p>
+
+    <p>
+      All groups followed the advice to guess short words first, and then tried
+      to make sense of the sentence by reading and re-reading aloud the
+      fragments that were visible. There was some casting around for
+      collocations: golf &ndash; irons &ndash; putted. The older children were
+      aware of repeating patterns, which helped in several cases, especially the
+      Golf text.
+    </p>
+
+    <p>
+      The overseas group made much more explicit use of grammar, punctuation and
+      morphology than the other groups. There was a lot of discussion of verb
+      usage. The phrase &ldquo;I know of &hellip;&rdquo; gave them a good deal
+      of trouble, since it sounded wrong to them. They wanted to put in &ldquo;I
+      know so &hellip;&rdquo; but this spoiled later parts of the text.
+    </p>
+
+    <h2>Editor Mode</h2>
+
+    <p>
+      The program incorporates a very simple text editor which makes it easy for
+      users to enter texts and try them out on their friends immediately. This
+      has turned out to be one of the most rewarding aspects of the program,
+      especially with the younger children.
+    </p>
+
+    <p>
+      With all groups, the Editor mode was used for challenges within the
+      groups, one member entering a text for the others to solve. This
+      immediately released an interestingly competitive, almost aggressive
+      element with the children. Comments were far more personal: &ldquo;Oh
+      Stephen would say that sort of thing&rdquo;, and there was almost a
+      delving into the writer&rsquo;s personality in order to solve the puzzle.
+      The 11-year-olds especially showed some personal hostility in the
+      competitive mode which did not occur in the collaborative mode:
+      &ldquo;Shut up, Matthew&rdquo;, &ldquo;Oh, he copied that from
+      Sir.&rdquo;, etc. One boy who wrote a sentence with a punctuation error:
+    </p>
+
+    <blockquote class="verse">
+      <p>The goldfinch is a very interesting bird for it</p>
+      <p>likes to feed on thistles it is often seen in flocks.</p>
+    </blockquote>
+
+    <p>
+      was ticked off by his team-mates for carelessness, a criticism he will
+      probably remember for a long time. However there seemed to be a danger
+      that a group interacting like this without supervision could turn into a
+      slanging match.
+    </p>
+
+    <p>Here are some examples of what was typed in by the children:</p>
+
+    <blockquote class="verse">
+      <p>There are holes in the sky where the rain gets in,</p>
+      <p>But they are ever so small, that is why the rain is thin.</p>
+    </blockquote>
+
+    <p>
+      (The scansion of the verse was slightly spoiled since the children
+      replaced They&rsquo;re and That&rsquo;s in order to avoid using the shift
+      key for the apostrophe.)
+    </p>
+
+    <blockquote class="verse">
+      <p>
+        The sun in the day, the moon in the night, Each gives us in turn the
+        gift of its light.
+      </p>
+    </blockquote>
+
+    <blockquote class="verse">
+      <p>Monkeys are really mischievous. Lions like to roar.</p>
+      <p>Elephants are very big and won&rsquo;t fit in the door.</p>
+    </blockquote>
+
+    <h2>Printer Mode</h2>
+
+    <p>
+      The Printer option allows puzzles to be produced on any Epson-compatible
+      printer and taken away to be solved at leisure with pencil and eraser. We
+      have not investigated this aspect of the program, though any future
+      project would have to look at the follow-up opportunities which the
+      printer makes available.
+    </p>
+
+    <h2>Conclusions</h2>
+
+    <p>
+      The program was manifestly &lsquo;fun&rsquo;. There was much laughter both
+      at each other&rsquo;s mistakes and at funny sentences they made up when
+      stuck for clues and at the sentences themselves when they decoded them.
+      There was also concentration and a great deal of talk.
+    </p>
+
+    <p>
+      All participants were asked to fill in a questionnaire one week after the
+      session. One remarkable point was how much they remembered of the
+      sentences they had worked through, in spite of the interval. Apart from
+      the evidence of this memorisation (which had not been demanded or
+      expected) there is no direct evidence of specific learning. That, we hope,
+      will emerge from a future study using the phrasal verb material. All the
+      questionnaire responses were very positive, with everybody saying they
+      wanted to spend more time on the program. That itself is quite remarkable,
+      given the wide range of ages and the two distinct types of learner. The
+      full analysis will be incorporated in a dissertation to be presented later
+      this year.
+    </p>
+
+    <p>
+      We see DROPIN mainly as a self-access resource, certainly not as a regular
+      whole-class activity. Exploratory activities of this kind need to be
+      carried out either solo or in small groups, and are probably vitiated by
+      continuous teacher supervision. Intermittent supervision, of course, is
+      desirable; the children need an occasional expert opinion and a court of
+      appeal. With the appropriate briefing, we believe the program can serve to
+      render sentences memorable, to make learners excited by words and
+      meanings, and to make them relish their own cleverness in decoding the
+      puzzle. It is, of course, only one small resource out of many that should
+      be available. We hope that, along with other self-access activities, it
+      can play its part in breaking down the barrier that often divides learning
+      from fun.
+    </p>
+  </body>
+</html>

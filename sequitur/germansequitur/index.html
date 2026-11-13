@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sequitur (Deutsch)</title>
+    <link rel="stylesheet" href="sequ.css?v=20240604" />
+     <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>
+</head>
+  <body>
+    <div id="title-screen">
+      <h1>Sequitur</h1>
+      <div class="subtitle">
+        Ein Sprachspiel von John und Muriel Higgins<br />Überarbeitet Sommer 2026
+      </div>
+      <div id="title-instructions">
+        Sie sehen den Anfang eines Textes und müssen ihn rekonstruieren, indem Sie
+        bei jedem Schritt die richtige Fortsetzung auswählen. Es ist eine Art
+        Geschichten-Puzzle. Wenn Sie nicht weiterkommen, klicken Sie auf
+        „Brauchen Sie Hilfe?“, um die ganze Geschichte für fünf Sekunden zu sehen.
+      </div>
+      <div id="story-list">
+        <select id="story-select" onchange="enableStartButton()">
+          <option value="" disabled selected>
+            -- Wählen Sie eine Geschichte --
+          </option>
+          <option value="ellenmass.txt">Das bedrohte Ellenmaß</option>
+          <option value="esel.txt">Der Verwandelte Esel</option>
+          <option value="fleisch.txt">Das Gewicht der Katze</option>
+        </select>
+      </div>
+
+      <button id="start-button" onclick="startGame()" disabled>
+        Spiel starten
+      </button>
+    </div>
+
+    <div id="game-screen" class="hidden">
+      <h2 id="story-title"></h2>
+      <div id="story-box"></div>
+      <p id="instruction" class="instruction">Wähle die richtige Fortsetzung</p>
+      <div id="options"></div>
+      <div id="game-controls">
+        <button id="help-button" onclick="needHelp()">Brauchen Sie Hilfe?</button>
+        <button id="quit-button" onclick="quitGame()">Beenden</button>
+      </div>
+      <div id="end-controls" class="hidden">
+        <button id="play-again-button" onclick="restartGame()">Nochmal spielen</button>
+        <button id="home-button" onclick="goHome()">
+          Startseite von John Higgins
+        </button>
+      </div>
+    </div>
+
+    <script src="sequ.js"></script>
+  </body>
+</html>

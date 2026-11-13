@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PERFECTLAND (คำแนะนำภาษาไทย)</title>
+<style>
+  :root {
+    --bg: #f2ebe0;
+    --panel: #fffcf5;
+    --ink: #3a2f22;
+    --ink-dim: #8a7860;
+    --accent: #a0522d;
+    --accent-dark: #7a3d1f;
+    --border: #e0d3bd;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Noto Sans Thai', 'Segoe UI', Arial, sans-serif;
+  }
+  .gloss { color: var(--ink-dim); font-style: italic; }
+  .lang-toggle { text-align: center; font-size: 0.85rem; }
+  #app {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 16px 16px 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  h1 {
+    margin: 0;
+    font-size: 1.7rem;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    text-align: center;
+  }
+  .subtitle {
+    text-align: center;
+    color: var(--ink-dim);
+    font-style: italic;
+    font-size: 0.9rem;
+    margin-top: -4px;
+  }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    box-shadow: 0 3px 10px rgba(58, 47, 34, 0.06);
+  }
+  .panel h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.05rem;
+    color: var(--accent-dark);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 6px;
+  }
+
+  #peopleGrid { display: flex; gap: 10px; flex-wrap: wrap; }
+  .person-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    background: #fbf6ec;
+    cursor: pointer;
+    flex: 1 1 220px;
+  }
+  .person-card:hover { background: #f5ecdc; }
+  .person-card.selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .person-card .avatar { font-size: 1.8rem; }
+  .person-card .name { font-weight: 700; display: block; }
+  .person-card .places { color: var(--ink-dim); font-size: 0.8rem; }
+
+  #transcript {
+    background: #fbf6ec;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    height: 190px;
+    overflow-y: auto;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  #transcript .line { margin: 4px 0; }
+  #transcript .learner::before { content: "You: "; color: var(--ink-dim); font-weight: 700; }
+  #transcript .auto::before { content: "(auto) You: "; color: var(--ink-dim); font-style: italic; font-weight: 400; }
+  #transcript .elder { color: var(--accent-dark); font-weight: 600; }
+  #transcript .system { color: var(--ink-dim); font-style: italic; }
+
+  form#inputForm { display: flex; gap: 8px; }
+  #inputBox {
+    flex: 1;
+    background: #fff;
+    border: 1px solid var(--border);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+  }
+  #inputBox:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+
+  button {
+    background: #fff;
+    color: var(--accent-dark);
+    border: 2px solid var(--accent);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  button:hover { background: #f5ecdc; }
+  button.primary { background: var(--accent); color: #fff; }
+  button.primary:hover { background: var(--accent-dark); }
+  #sendBtn { font-size: 1.3rem; line-height: 1; padding: 8px 14px; }
+
+  .controls { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+
+  details#help {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    font-size: 0.88rem;
+    color: var(--ink-dim);
+  }
+  details#help summary { cursor: pointer; color: var(--ink); font-weight: 700; }
+  details#help ul { margin: 8px 0 0 18px; padding: 0; }
+  details#help p { margin: 8px 0; }
+  details#help code { background: #f5ecdc; padding: 1px 6px; border-radius: 4px; color: var(--accent-dark); }
+
+  .footer { text-align: center; font-size: 0.85rem; color: var(--ink-dim); margin-top: 4px; }
+  .footer a { color: var(--accent-dark); }
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>
+</head>
+<body>
+<div id="app">
+  <p class="lang-toggle"><a href="../grammarland/perfectland.html">English version (no Thai help)</a></p>
+  <h1>PERFECTLAND</h1>
+  <div class="subtitle">a GRAMMARLAND dialogue simulator &mdash; &ldquo;I saw&hellip;&rdquo; vs &ldquo;I have seen&hellip;&rdquo;</div>
+
+  <div class="panel">
+    <h2>คุณจะสัมภาษณ์ใคร (Who are you interviewing?)</h2>
+    <div id="peopleGrid"></div>
+  </div>
+
+  <div class="panel" style="padding:0; overflow:hidden;">
+    <div id="transcript"></div>
+  </div>
+
+  <form id="inputForm" autocomplete="off">
+    <input id="inputBox" type="text" placeholder="ถามเกี่ยวกับที่ที่พวกเขาเคยอยู่ เป็นภาษาอังกฤษ (ask about the places they've lived, in English)" />
+    <button class="primary" id="sendBtn" type="submit" aria-label="Send">&#9166;</button>
+  </form>
+
+  <div class="controls">
+    <button id="clearBtn" type="button">Clear screen</button>
+  </div>
+
+  <details id="help" open>
+    <summary>นี่คืออะไร (What is this?)</summary>
+    <p>
+      Elsie และ Walter ต่างเคยอยู่หลายที่มาตลอดชีวิต ลองสัมภาษณ์คนใดคนหนึ่ง &mdash; จุดสำคัญคือต้องเลือก
+      tense ให้ถูกต้องตามสิ่งที่คุณถาม
+    </p>
+    <p class="gloss">
+      Elsie and Walter have each lived in several places over their lives. Interview one of them —
+      the trick is picking the right tense for what you're asking.
+    </p>
+    <ul>
+      <li>ใช้ <b>present perfect</b> สำหรับประสบการณ์ตลอดชีวิต หรือสิ่งที่ยังจริงอยู่ตอนนี้ โดย<em>ไม่ระบุเวลาที่สิ้นสุดแล้ว</em>
+        &mdash; <code>Where have you lived?</code>,
+        <code>Have you ever lived in Sydney?</code>, <code>How long have you lived here?</code></li>
+      <li>ใช้ <b>simple past</b> สำหรับช่วงเวลาหนึ่งที่สิ้นสุดแล้วโดยเฉพาะ &mdash; มักมีวันที่หรือคำบอกเวลา &mdash;
+        <code>When did you live in Cairo?</code>, <code>What was it like?</code></li>
+      <li>ห้ามปนกัน: <code>I have lived there in 1980</code> ผิด ถ้ามีปีที่สิ้นสุดแล้วระบุชัดเจน ต้องใช้ simple past
+        &mdash; <code>I lived there in 1980.</code> ส่วน &ldquo;since&rdquo; เป็นคำบอกเวลาคำเดียวที่ใช้กับ
+        present perfect ได้ เพราะมันหมายถึงสิ่งที่ยังดำเนินอยู่ &mdash; <code>I've lived here since 1996.</code></li>
+      <li>คุณสามารถบอกข้อมูลให้พวกเขาฟังก็ได้ &mdash; <code>You lived in Dublin from 1950 to 1968.</code>,
+        <code>You have lived in Toronto.</code> &mdash; แล้วพวกเขาจะยืนยันหรือแก้ไขให้ถูกต้อง</li>
+      <li>เว้นช่องว่างแล้วกด Enter เพื่อดูบทสัมภาษณ์ที่เกิดขึ้นเอง (leave the box empty and press Enter to watch an interview happen by itself)</li>
+    </ul>
+  </details>
+
+  <p class="footer">&larr; <a href="../grammarland/index.html">Back to Grammarland</a></p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------------------------------------------------------
+   * DATA: two elderly interviewees, each with a life history of
+   * places lived. All but the most recent home are finished periods
+   * (start/end years); the most recent is "current" (still lived in,
+   * no end year) — the natural home for present-perfect-with-"since".
+   * ------------------------------------------------------------- */
+
+  var PEOPLE = [
+    { id: "elsie", name: "Elsie", gender: "f", avatar: "👵", homes: [
+      { place: "Liverpool", start: 1948, end: 1965, current: false,
+        detail: "It was a small house near the docks. My father worked on the ships." },
+      { place: "Cairo", start: 1966, end: 1970, current: false,
+        detail: "My husband's job took us there. It was hot, and I learned some Arabic." },
+      { place: "Toronto", start: 1971, end: 1995, current: false,
+        detail: "We raised our children there. I loved the snow in winter." },
+      { place: "Bristol", start: 1996, end: null, current: true,
+        detail: "I moved back to England after my husband retired." }
+    ] },
+    { id: "walter", name: "Walter", gender: "m", avatar: "👴", homes: [
+      { place: "Dublin", start: 1950, end: 1968, current: false,
+        detail: "I grew up in a big family. We didn't have much money." },
+      { place: "London", start: 1969, end: 1980, current: false,
+        detail: "I worked as a train driver. The city was very different then." },
+      { place: "Sydney", start: 1981, end: 2001, current: false,
+        detail: "My job moved me to Australia. I learned to surf, believe it or not!" },
+      { place: "Bristol", start: 2002, end: null, current: true,
+        detail: "I came back to be near my grandchildren." }
+    ] }
+  ];
+  var byId = {};
+  PEOPLE.forEach(function (p) { byId[p.id] = p; });
+
+  var DECOY_PLACES = ["Paris", "Tokyo", "Berlin", "Madrid", "Cardiff"];
+
+  function pron(p) { return p.gender === "f" ? "she" : "he"; }
+  function poss(p) { return p.gender === "f" ? "her" : "his"; }
+
+  function currentHome(person) {
+    var hit = person.homes.filter(function (h) { return h.current; });
+    return hit[0] || null;
+  }
+  function findHome(person, raw) {
+    var w = raw.trim().toLowerCase().replace(/[?.!]+$/, "");
+    var hits = person.homes.filter(function (h) {
+      var name = h.place.toLowerCase();
+      return name === w || name.indexOf(w) !== -1 || w.indexOf(name) !== -1;
+    });
+    return hits[0] || null;
+  }
+  function yearsPhrase(home) {
+    return home.current ? ("since " + home.start) : ("from " + home.start + " to " + home.end);
+  }
+  function listPlaces(person) {
+    var names = person.homes.map(function (h) { return h.place; });
+    if (names.length === 1) return names[0];
+    if (names.length === 2) return names[0] + " and " + names[1];
+    return names.slice(0, -1).join(", ") + ", and " + names[names.length - 1];
+  }
+
+  /* ---------------------------------------------------------------
+   * UI: person selector
+   * ------------------------------------------------------------- */
+
+  var peopleGridEl = document.getElementById("peopleGrid");
+  var cardById = {};
+  var context = { currentPerson: PEOPLE[0], lastHome: null };
+
+  function renderPeopleGrid() {
+    peopleGridEl.innerHTML = "";
+    PEOPLE.forEach(function (p) {
+      var card = document.createElement("div");
+      card.className = "person-card" + (p.id === context.currentPerson.id ? " selected" : "");
+      card.innerHTML =
+        '<span class="avatar">' + p.avatar + '</span>' +
+        '<span class="who"><span class="name">' + p.name + '</span>' +
+        '<span class="places">' + listPlaces(p) + '</span></span>';
+      card.addEventListener("click", function () { selectPerson(p); });
+      peopleGridEl.appendChild(card);
+      cardById[p.id] = card;
+    });
+  }
+  function selectPerson(p) {
+    context.currentPerson = p;
+    context.lastHome = null;
+    renderPeopleGrid();
+    say("system", "(กำลังสัมภาษณ์ " + p.name + " อยู่ / Now interviewing " + p.name + ".)");
+  }
+
+  /* ---------------------------------------------------------------
+   * UI: transcript
+   * ------------------------------------------------------------- */
+
+  var transcriptEl = document.getElementById("transcript");
+  function say(role, text) {
+    var div = document.createElement("div");
+    div.className = "line " + role;
+    div.textContent = text;
+    transcriptEl.appendChild(div);
+    transcriptEl.scrollTop = transcriptEl.scrollHeight;
+  }
+
+  /* ---------------------------------------------------------------
+   * PARSER
+   * ------------------------------------------------------------- */
+
+  function normalize(input) {
+    return input.replace(/[’‘]/g, "'").trim();
+  }
+
+  // The one hard grammar rule this game exists to enforce: the present
+  // perfect ("have/has lived") can never combine with a specific finished
+  // time ("in 1980", "from 1980", "on ..."). "since" is exempt, because it
+  // marks something still going on, which is exactly what the present
+  // perfect is for.
+  function hasFinishedTimeError(lower) {
+    if (/\bsince\b/.test(lower)) return false;
+    return /\b(have|has|'ve|'s)\b[\s\S]*\blived\b[\s\S]*\b(in|from|on)\s+(19|20)\d{2}\b/.test(lower);
+  }
+
+  function handle(raw) {
+    var text = normalize(raw);
+    if (!text) return null;
+    var lower = text.toLowerCase().replace(/[?.!]+$/, "").trim();
+    var person = context.currentPerson;
+
+    if (hasFinishedTimeError(lower)) {
+      return "You can't use “have lived” with a specific year like that. For a finished time in the past, use the simple past instead — “lived”, not “have lived”.";
+    }
+
+    // -------- talk to / interview <name> --------
+    var mTalk = lower.match(/^(?:talk to|interview)\s+(elsie|walter)$/);
+    if (mTalk) {
+      selectPerson(byId[mTalk[1]]);
+      return "";
+    }
+
+    // -------- Where have you lived? --------
+    if (/^where have you lived$/.test(lower)) {
+      return "I have lived in " + listPlaces(person) + ".";
+    }
+
+    // -------- Have you ever lived in X? --------
+    var mEver = lower.match(/^have you ever lived in (.+)$/);
+    if (mEver) {
+      var homeE = findHome(person, mEver[1]);
+      if (!homeE) return "No, I've never lived in " + capitalize(mEver[1]) + ".";
+      context.lastHome = homeE;
+      return "Yes, I have. I" + (homeE.current ? "'ve lived there since " + homeE.start : " lived there " + yearsPhrase(homeE)) + ".";
+    }
+
+    // -------- How long have you lived in X? / here? --------
+    var mHowLong = lower.match(/^how long have you lived(?: in (.+)|( here))$/);
+    if (mHowLong) {
+      var wantsHere = !!mHowLong[2];
+      var homeH = wantsHere ? currentHome(person) : findHome(person, mHowLong[1]);
+      if (!homeH) return "I don't think I've ever lived " + (wantsHere ? "here" : "in " + capitalize(mHowLong[1])) + ".";
+      context.lastHome = homeH;
+      if (!homeH.current) {
+        return capitalize(homeH.place) + " isn't where I live now — try “How long did you live in " + homeH.place + "?” instead.";
+      }
+      return "I've lived here since " + homeH.start + ".";
+    }
+
+    // -------- When did you live in X? --------
+    var mWhen = lower.match(/^when did you live in (.+)$/);
+    if (mWhen) {
+      var homeW = findHome(person, mWhen[1]);
+      if (!homeW) return "I've never lived in " + capitalize(mWhen[1]) + ".";
+      context.lastHome = homeW;
+      if (homeW.current) {
+        return "I still live in " + homeW.place + "! Ask me “How long have you lived there?” instead.";
+      }
+      return "I lived there " + yearsPhrase(homeW) + ".";
+    }
+
+    // -------- What was X like? / What was it like? --------
+    var mLike = lower.match(/^what was (it|.+?) like$/);
+    if (mLike) {
+      var homeL = mLike[1] === "it" ? context.lastHome : findHome(person, mLike[1]);
+      if (!homeL) return mLike[1] === "it" ? "What was what like? Ask about a place first." : "I've never lived in " + capitalize(mLike[1]) + ".";
+      context.lastHome = homeL;
+      return homeL.detail;
+    }
+
+    // -------- Statement: You have lived in X since Y. --------
+    var mStateSince = lower.match(/^you(?:'ve| have) lived in (.+) since (\d{4})$/);
+    if (mStateSince) {
+      var homeSS = findHome(person, mStateSince[1]);
+      if (!homeSS) return "No, I've never lived in " + capitalize(mStateSince[1]) + ".";
+      context.lastHome = homeSS;
+      if (!homeSS.current) {
+        return "Not quite — I don't live in " + homeSS.place + " any more. I lived there " + yearsPhrase(homeSS) + ".";
+      }
+      return Number(mStateSince[2]) === homeSS.start
+        ? "Yes, that's right."
+        : "Not quite — I've lived here since " + homeSS.start + ", not " + mStateSince[2] + ".";
+    }
+
+    // -------- Statement: You lived in X from Y to Z. --------
+    var mStateRange = lower.match(/^you lived in (.+) from (\d{4}) to (\d{4})$/);
+    if (mStateRange) {
+      var homeSR = findHome(person, mStateRange[1]);
+      if (!homeSR) return "No, I've never lived in " + capitalize(mStateRange[1]) + ".";
+      context.lastHome = homeSR;
+      if (homeSR.current) {
+        return "Not quite — I still live in " + homeSR.place + "! I've lived there since " + homeSR.start + ".";
+      }
+      return (Number(mStateRange[2]) === homeSR.start && Number(mStateRange[3]) === homeSR.end)
+        ? "Yes, that's right."
+        : "Not quite — I lived there " + yearsPhrase(homeSR) + ".";
+    }
+
+    // -------- Statement: You lived in X in Y. --------
+    var mStateYear = lower.match(/^you lived in (.+) in (\d{4})$/);
+    if (mStateYear) {
+      var homeSY = findHome(person, mStateYear[1]);
+      if (!homeSY) return "No, I've never lived in " + capitalize(mStateYear[1]) + ".";
+      context.lastHome = homeSY;
+      if (homeSY.current) {
+        return "Not quite — I still live in " + homeSY.place + "! I've lived there since " + homeSY.start + ".";
+      }
+      var y = Number(mStateYear[2]);
+      return (y >= homeSY.start && y <= homeSY.end)
+        ? "Yes, that's right."
+        : "Not quite — I lived there " + yearsPhrase(homeSY) + ".";
+    }
+
+    // -------- Statement: You have lived in X. (no time given) --------
+    var mStateHave = lower.match(/^you(?:'ve| have) lived in (.+)$/);
+    if (mStateHave) {
+      var homeSH = findHome(person, mStateHave[1]);
+      context.lastHome = homeSH;
+      return homeSH ? "Yes, that's right." : "No, I've never lived in " + capitalize(mStateHave[1]) + ".";
+    }
+
+    // -------- Statement: You lived in X. (bare simple past, no time) --------
+    var mStateBare = lower.match(/^you lived in (.+)$/);
+    if (mStateBare) {
+      var homeSB = findHome(person, mStateBare[1]);
+      context.lastHome = homeSB;
+      return homeSB ? "Yes, that's right." : "No, I've never lived in " + capitalize(mStateBare[1]) + ".";
+    }
+
+    return null;
+  }
+
+  function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  /* ---------------------------------------------------------------
+   * SELF-TALK (blank Enter)
+   * ------------------------------------------------------------- */
+
+  var pendingSelfQuestion = null;
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function randomQuestionText() {
+    var person = context.currentPerson;
+    var kind = pick(["where", "ever-yes", "ever-no", "howlong", "when", "like"]);
+    if (kind === "where") return "Where have you lived?";
+    if (kind === "ever-yes") return "Have you ever lived in " + pick(person.homes).place + "?";
+    if (kind === "ever-no") return "Have you ever lived in " + pick(DECOY_PLACES) + "?";
+    if (kind === "howlong") return Math.random() < 0.5 ? "How long have you lived here?" : "How long have you lived in " + pick(person.homes.filter(function (h) { return !h.current; })).place + "?";
+    if (kind === "when") return "When did you live in " + pick(person.homes).place + "?";
+    // like: ask about the last home mentioned if there is one, else a random one
+    var home = context.lastHome || pick(person.homes);
+    context.lastHome = home;
+    return "What was " + home.place + " like?";
+  }
+
+  function selfTalk() {
+    if (pendingSelfQuestion) {
+      var q = pendingSelfQuestion;
+      pendingSelfQuestion = null;
+      say("elder", handle(q.text));
+      return;
+    }
+    var qText = randomQuestionText();
+    say("auto", qText);
+    pendingSelfQuestion = { text: qText };
+  }
+
+  /* ---------------------------------------------------------------
+   * WIRING
+   * ------------------------------------------------------------- */
+
+  var form = document.getElementById("inputForm");
+  var inputBox = document.getElementById("inputBox");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var raw = inputBox.value;
+    inputBox.value = "";
+
+    if (!raw.trim()) {
+      selfTalk();
+      return;
+    }
+
+    say("learner", raw);
+    pendingSelfQuestion = null; // typing anything takes over from the self-talk demo
+
+    var response = handle(raw);
+    if (response === null) {
+      say("elder", "Sorry, I don't understand that. (ขอโทษ ไม่เข้าใจ)");
+    } else if (response !== "") {
+      say("elder", response);
+    }
+  });
+
+  document.getElementById("clearBtn").addEventListener("click", function () {
+    transcriptEl.innerHTML = "";
+  });
+
+  // greet
+  renderPeopleGrid();
+  say("system", "เลือกคนที่จะสัมภาษณ์ ถามเกี่ยวกับที่ที่พวกเขาเคยอยู่ หรือเว้นช่องว่างแล้วกด Enter เพื่อดูบทสัมภาษณ์ที่เกิดขึ้นเอง (Choose who to interview, ask about the places they've lived, or leave the box empty and press Enter to watch an interview happen by itself.)");
+  inputBox.focus();
+})();
+</script>
+</body>
+</html>

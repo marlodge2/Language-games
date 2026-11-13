@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sŏm-chai &amp; Sŏm-yĭng — Grammarland</title>
+    <style>
+      :root {
+        --bg: #f5f1e6;
+        --panel: #ffffff;
+        --ink: #241b12;
+        --ink-dim: #6b6152;
+        --accent: #c9822b;
+        --accent-bright: #e0a339;
+        --border: #e3d9bd;
+        --kitchen: #dcebf3;
+        --kitchen-border: #a9c7da;
+        --living: #f6ecd2;
+        --living-border: #d8c088;
+        --garden: #e2efd8;
+        --garden-border: #a9cf95;
+        --john: #3f6fae;
+        --mary: #b1497a;
+        --rex: #8b3a2b;
+        --signal: #2f8a52;
+        --alert: #b23b23;
+        --radius: 10px;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; height: 100%; }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+      }
+      .wrap {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        max-width: 1020px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 12px 20px 10px;
+        gap: 8px;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 12px 16px;
+        box-shadow: 0 1px 3px rgba(30, 20, 10, 0.05);
+        flex: 0 0 auto;
+      }
+
+      .canvas-panel {
+        display: flex;
+        justify-content: center;
+        max-height: 50vh;
+      }
+
+      #canvas {
+        display: block;
+        margin: 0 auto;
+        border-radius: 8px;
+        max-width: 100%;
+        max-height: calc(50vh - 24px);
+        width: auto;
+        height: auto;
+      }
+
+      .transcript-panel {
+        flex: 1 1 auto;
+        min-height: 80px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      form#inputForm { display: flex; gap: 8px; flex: 0 0 auto; }
+      #inputBox {
+        flex: 1;
+        background: #ffffff;
+        border: 1px solid var(--border);
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 1rem;
+        padding: 10px 12px;
+        border-radius: 6px;
+      }
+      #inputBox:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+      button {
+        font-family: inherit;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        border: 1px solid var(--accent);
+        border-radius: 6px;
+        padding: 10px 18px;
+        background: var(--accent);
+        color: #2a1a04;
+      }
+      button:hover { background: var(--accent-bright); }
+      #sendBtn {
+        font-size: 1.3rem;
+        line-height: 1;
+        padding: 8px 14px;
+      }
+
+      #transcript {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+      #transcript .line { padding: 3px 0; border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+      #transcript .line:last-child { border-bottom: none; }
+      #transcript .you::before { content: "You: "; color: var(--ink-dim); }
+      #transcript .computer { color: var(--ink); }
+      #transcript .system { color: var(--ink-dim); font-style: italic; }
+
+      details#help {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 10px 16px;
+        font-size: 0.88rem;
+        color: var(--ink-dim);
+        flex: 0 0 auto;
+      }
+      details#help summary { cursor: pointer; color: var(--ink); font-weight: 600; }
+      details#help ul { margin: 8px 0 0 20px; padding: 0; line-height: 1.7; }
+      details#help code {
+        background: var(--kitchen);
+        padding: 1px 6px;
+        border-radius: 4px;
+        color: var(--ink);
+      }
+      details#help .gloss { color: var(--ink-dim); font-style: italic; font-size: 0.9em; }
+      details#help .caveat {
+        margin-top: 10px;
+        padding: 8px 10px;
+        background: #fdf3e2;
+        border: 1px solid var(--accent);
+        border-radius: 6px;
+        font-style: normal;
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 4px;
+        font-size: 0.8rem;
+        color: var(--ink-dim);
+        flex: 0 0 auto;
+      }
+      footer a { color: var(--accent); }
+    </style>
+ <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>
+ </head>
+  <body>
+    <div class="wrap">
+      <div class="panel canvas-panel">
+        <canvas id="canvas" width="1000" height="440"></canvas>
+      </div>
+
+      <div class="panel transcript-panel">
+        <div id="transcript"></div>
+      </div>
+
+      <form id="inputForm" autocomplete="off">
+        <input id="inputBox" type="text" placeholder="Type a command or question in romanised Thai…" />
+        <button type="submit" id="sendBtn" aria-label="Send">&#9166;</button>
+      </form>
+
+      <details id="help">
+        <summary>What is this?</summary>
+        <p class="gloss">
+          Same game as the Thai-script version, but typed and read in romanised Thai instead — no
+          Thai keyboard needed. Tone marks are shown (mid tone has none; à = low, á = high, ǎ = rising,
+          â = falling), but you can leave them out when you type and it'll still match — the marks
+          are there for you to read, not a requirement to type correctly.
+        </p>
+        <ul>
+          <li>Move someone &mdash; <code>paa Sŏm-chai bpai tîi khrua</code> <span class="gloss">(take Somchai to the kitchen)</span>,
+            <code>sòng Rex bpai tîi sŭan</code> <span class="gloss">(send Rex to the garden)</span>,
+            <code>Sŏm-yĭng, bpai tîi hông-nâng-lên</code> <span class="gloss">(Somying, go to the living room)</span></li>
+          <li>Open or close a door &mdash; there are two, say which &mdash;
+            <code>bpèrt bpra-dtoo-khrua</code> <span class="gloss">(open the kitchen door)</span>,
+            <code>bpìt bpra-dtoo-sŭan</code> <span class="gloss">(close the garden door)</span></li>
+          <li>Nobody can walk through a closed door &mdash; try it and you'll be told which one to open first</li>
+          <li>Ask where someone is &mdash; <code>Sŏm-chai yòo tîi-năi</code> <span class="gloss">(where is Somchai?)</span>,
+            <code>Sŏm-chai gàp Sŏm-yĭng yòo tîi-năi</code> <span class="gloss">(where are Somchai and Somying?)</span></li>
+          <li>Or ask who's in a room &mdash; <code>khrai yòo nai sŭan</code> <span class="gloss">(who is in the garden?)</span>
+            &mdash; the answer is <code>mâi mee khrai</code> if it's empty</li>
+          <li>Ask about a room or a door &mdash; <code>Sŏm-yĭng yòo nai khrua măi</code>,
+            <code>Sŏm-yĭng gàp Rex yòo nai sŭan măi</code>, <code>bpra-dtoo-khrua bpèrt yòo măi</code></li>
+          <li>Ask if they're together &mdash; <code>Sŏm-chai gàp Sŏm-yĭng yòo dûay-gan măi</code></li>
+          <li>Ask about sight lines &mdash; <code>Sŏm-chai hĕn Sŏm-yĭng dâi măi</code>,
+            <code>Sŏm-chai hĕn Rex dâi măi</code> &mdash; true if they're in the same room, or if every
+            door between their rooms is open</li>
+          <li>Or just tell it something &mdash; <code>Sŏm-chai yòo nai sŭan</code>, <code>bpra-dtoo-khrua bpèrt yòo</code>,
+            <code>Rex hĕn Sŏm-yĭng dâi</code> &mdash; and it'll agree or correct you</li>
+          <li>Leave the box empty and press Enter to watch it play by itself</li>
+          <li>Type <code>jòp</code> to go back to the Grammarland page</li>
+        </ul>
+        <p class="caveat">
+          Note: this is a good-faith build, not checked by a native Thai speaker yet — treat both the
+          Thai and the romanisation here as a solid first draft, not an authority.
+        </p>
+      </details>
+
+      <footer>
+        Sŏm-chai &amp; Sŏm-yĭng &middot; romanised-Thai version of &laquo;John and Mary&raquo;, after the original in <em>Computers in Language Learning</em>, Higgins &amp; Johns, 1983. New HTML edition, 2026. Also available in <a href="somchaiandsomying.html">Thai script</a>.
+        &middot; <a href="index.html">Back to Grammarland</a>
+      </footer>
+    </div>
+
+    <script>
+    (function () {
+      "use strict";
+
+      var ROOMS = ["kitchen", "living", "garden"];
+      var CHARS = ["somchai", "somying", "rex"];
+      var NAME = { somchai: "Sŏm-chai", somying: "Sŏm-yĭng", rex: "Rex" };
+      // Thai third-person pronouns don't mark gender at all (khăo covers
+      // "he" and "she" equally), so there's no GENDER map here and nothing
+      // to decide for Rex either.
+      var ROOM_TH = { kitchen: "khrua", living: "hông-nâng-lên", garden: "sŭan" };
+
+      var state = {
+        somchaiRoom: "kitchen",
+        somyingRoom: "living",
+        rexRoom: "garden",
+        doors: { kl: true, lg: true },
+      };
+
+      var DOORS = {
+        kl: { rooms: ["kitchen", "living"], label: "bpra-dtoo-khrua" },
+        lg: { rooms: ["living", "garden"], label: "bpra-dtoo-sŭan" },
+      };
+      var DOOR_BY_ROOMWORD = { kitchen: "kl", garden: "lg" };
+
+      var ROOM_X = {
+        kitchen: [30, 290],
+        living: [370, 630],
+        garden: [710, 970],
+      };
+
+      function roomOf(id) { return state[id + "Room"]; }
+
+      // As with the Thai-script version: no single pronoun safely stands in
+      // for "he"/"she" across a list of different people, so any list
+      // naming more than one person spells out real names throughout.
+      function nameLocationList(ids) {
+        return ids.map(function (id) { return NAME[id] + " yòo nai " + ROOM_TH[roomOf(id)]; }).join(" láe ");
+      }
+
+      function togetherAnswer(ids) {
+        var rooms = ids.map(roomOf);
+        var uniqueRooms = rooms.filter(function (r, i) { return rooms.indexOf(r) === i; });
+        if (uniqueRooms.length === 1) return "châi phûak-khăo yòo dûay-gan";
+        if (uniqueRooms.length === ids.length) {
+          return "mâi châi " + nameLocationList(ids);
+        }
+        var groups = {};
+        ids.forEach(function (id) {
+          var r = roomOf(id);
+          (groups[r] = groups[r] || []).push(id);
+        });
+        var pairRoom, pairIds, oddId, oddRoom;
+        for (var r in groups) {
+          if (groups[r].length > 1) { pairRoom = r; pairIds = groups[r]; }
+          else { oddRoom = r; oddId = groups[r][0]; }
+        }
+        return "mâi châi " + NAME[pairIds[0]] + " gàp " + NAME[pairIds[1]] + " yòo nai " + ROOM_TH[pairRoom] +
+          " dtàe " + NAME[oddId] + " yòo nai " + ROOM_TH[oddRoom];
+      }
+
+      function inRoomAnswer(ids, room) {
+        var inGroup = ids.filter(function (id) { return roomOf(id) === room; });
+        var outGroup = ids.filter(function (id) { return roomOf(id) !== room; });
+        if (!outGroup.length) return "châi phûak-khăo yòo tîi-nân";
+        if (!inGroup.length) return "mâi châi " + nameLocationList(ids);
+        var inNames = inGroup.map(function (id) { return NAME[id]; }).join(" gàp ");
+        return "mâi châi " + inNames + " yòo nai " + ROOM_TH[room] + " dtàe " + nameLocationList(outGroup);
+      }
+
+      function roundRect(x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
+        ctx.closePath();
+      }
+
+      function drawRoom(room, fill, border, label) {
+        var x0 = ROOM_X[room][0], x1 = ROOM_X[room][1];
+        ctx.fillStyle = fill;
+        roundRect(x0, 60, x1 - x0, 340, 10);
+        ctx.fill();
+        ctx.strokeStyle = border;
+        ctx.lineWidth = 2;
+        roundRect(x0, 60, x1 - x0, 340, 10);
+        ctx.stroke();
+        ctx.fillStyle = "#241b12";
+        ctx.font = "600 18px 'Inter', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(label, (x0 + x1) / 2, 42);
+      }
+
+      function drawStove() {
+        var bx = 80, by = 300;
+        ctx.fillStyle = "#8fa8b6";
+        roundRect(bx, by, 90, 60, 6);
+        ctx.fill();
+        ctx.fillStyle = "#5c7382";
+        [[bx + 22, by + 18], [bx + 68, by + 18], [bx + 22, by + 44], [bx + 68, by + 44]].forEach(function (p) {
+          ctx.beginPath();
+          ctx.arc(p[0], p[1], 8, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+
+      function drawSofa() {
+        var sx = 420, sy = 320;
+        ctx.fillStyle = "#c48a4a";
+        roundRect(sx, sy, 150, 46, 10);
+        ctx.fill();
+        roundRect(sx, sy - 22, 26, 30, 8);
+        ctx.fill();
+        roundRect(sx + 124, sy - 22, 26, 30, 8);
+        ctx.fill();
+        ctx.strokeStyle = "#8a7250";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(605, 340);
+        ctx.lineTo(605, 280);
+        ctx.stroke();
+        ctx.fillStyle = "#e6c15a";
+        ctx.beginPath();
+        ctx.moveTo(585, 280);
+        ctx.lineTo(625, 280);
+        ctx.lineTo(617, 255);
+        ctx.lineTo(593, 255);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      function drawTree(x, y) {
+        ctx.strokeStyle = "#7a5636";
+        ctx.lineWidth = 6;
+        ctx.beginPath();
+        ctx.moveTo(x, y + 40);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        ctx.fillStyle = "#5c9a4a";
+        [[-14, -6], [14, -6], [0, -24]].forEach(function (o) {
+          ctx.beginPath();
+          ctx.arc(x + o[0], y + o[1], 20, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+
+      function drawDoor(doorKey) {
+        var door = DOORS[doorKey];
+        var r0 = ROOM_X[door.rooms[0]], r1 = ROOM_X[door.rooms[1]];
+        var dx = r0[1], dy = 100, dw = r1[0] - r0[1], dh = 260;
+        var open = state.doors[doorKey];
+        if (open) {
+          ctx.fillStyle = "#fdfaf2";
+          ctx.fillRect(dx, dy, dw, dh);
+          ctx.strokeStyle = "#2f8a52";
+          ctx.lineWidth = 3;
+          ctx.setLineDash([8, 6]);
+          ctx.strokeRect(dx, dy, dw, dh);
+          ctx.setLineDash([]);
+        } else {
+          ctx.fillStyle = "#8a5a3c";
+          roundRect(dx + 4, dy + 4, dw - 8, dh - 8, 4);
+          ctx.fill();
+          ctx.fillStyle = "#e6c15a";
+          ctx.beginPath();
+          ctx.arc(dx + dw - 16, dy + dh / 2, 4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.fillStyle = open ? "#2f8a52" : "#b23b23";
+        ctx.font = "600 12px 'Inter', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(door.label + (open ? " (bpèrt)" : " (bpìt)"), dx + dw / 2, dy - 10);
+      }
+
+      function roomCenter(room) {
+        var x0 = ROOM_X[room][0], x1 = ROOM_X[room][1];
+        return (x0 + x1) / 2;
+      }
+
+      function drawPerson(x, y, color, name, flare) {
+        ctx.save();
+        ctx.fillStyle = "rgba(20,15,5,0.12)";
+        ctx.beginPath();
+        ctx.ellipse(x, y + 60, 26, 7, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = color;
+        if (flare) {
+          ctx.beginPath();
+          ctx.moveTo(x - 14, y - 6);
+          ctx.lineTo(x + 14, y - 6);
+          ctx.lineTo(x + 24, y + 46);
+          ctx.lineTo(x - 24, y + 46);
+          ctx.closePath();
+          ctx.fill();
+        } else {
+          roundRect(x - 18, y - 6, 36, 52, 12);
+          ctx.fill();
+        }
+
+        ctx.fillStyle = "#f2d3b6";
+        ctx.beginPath();
+        ctx.arc(x, y - 24, 17, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#241b12";
+        ctx.font = "600 15px 'Inter', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(name, x, y + 64);
+        ctx.restore();
+      }
+
+      function drawDog(x, y, color, name) {
+        ctx.save();
+        ctx.fillStyle = "rgba(20,15,5,0.12)";
+        ctx.beginPath();
+        ctx.ellipse(x, y + 26, 30, 6, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = color;
+        [-18, -6, 6, 18].forEach(function (lx) {
+          roundRect(x + lx - 3, y + 6, 6, 16, 3);
+          ctx.fill();
+        });
+        ctx.beginPath();
+        ctx.ellipse(x, y, 30, 14, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(x - 28, y - 4);
+        ctx.quadraticCurveTo(x - 42, y - 20, x - 34, y - 26);
+        ctx.quadraticCurveTo(x - 26, y - 14, x - 18, y - 6);
+        ctx.closePath();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x + 30, y - 6, 13, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.ellipse(x + 22, y - 16, 5, 9, -0.4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.ellipse(x + 38, y - 16, 5, 9, 0.4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#241b12";
+        ctx.beginPath();
+        ctx.arc(x + 41, y - 4, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.font = "600 15px 'Inter', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(name, x, y + 44);
+        ctx.restore();
+      }
+
+      function drawScene() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#faf7ee";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        drawRoom("kitchen", "#dcebf3", "#a9c7da", ROOM_TH.kitchen);
+        drawRoom("living", "#f6ecd2", "#d8c088", ROOM_TH.living);
+        drawRoom("garden", "#e2efd8", "#a9cf95", ROOM_TH.garden);
+        drawStove();
+        drawSofa();
+        drawTree(870, 200);
+        drawTree(930, 320);
+        drawDoor("kl");
+        drawDoor("lg");
+
+        drawPerson(roomCenter(state.somchaiRoom) - 40, 260, "#3f6fae", NAME.somchai, false);
+        drawPerson(roomCenter(state.somyingRoom) + (state.somyingRoom === state.somchaiRoom ? 40 : 0), 260, "#b1497a", NAME.somying, true);
+        drawDog(roomCenter(state.rexRoom) + (state.rexRoom === state.somyingRoom || state.rexRoom === state.somchaiRoom ? -80 : 0), 340, "#8b3a2b", NAME.rex);
+      }
+
+      function say(role, text) {
+        var div = document.createElement("div");
+        div.className = "line " + role;
+        div.textContent = text;
+        transcriptEl.appendChild(div);
+        transcriptEl.scrollTop = transcriptEl.scrollHeight;
+      }
+
+      function canSee(aId, bId) {
+        var ra = roomOf(aId), rb = roomOf(bId);
+        if (ra === rb) return { ok: true, reason: "same", room: ra };
+        var doorKey = null;
+        for (var k in DOORS) {
+          var rooms = DOORS[k].rooms;
+          if ((rooms[0] === ra && rooms[1] === rb) || (rooms[0] === rb && rooms[1] === ra)) doorKey = k;
+        }
+        if (doorKey) {
+          return state.doors[doorKey]
+            ? { ok: true, reason: "door", doors: [DOORS[doorKey].label] }
+            : { ok: false, doors: [DOORS[doorKey].label] };
+        }
+        var allOpen = state.doors.kl && state.doors.lg;
+        return allOpen
+          ? { ok: true, reason: "chain" }
+          : { ok: false, doors: [DOORS.kl.label, DOORS.lg.label] };
+      }
+
+      var ROOM_ORDER = ["kitchen", "living", "garden"];
+      var DOOR_BETWEEN = {
+        "kitchen|living": "kl",
+        "living|kitchen": "kl",
+        "living|garden": "lg",
+        "garden|living": "lg",
+      };
+      function pathBlocked(fromRoom, toRoom) {
+        var fromIdx = ROOM_ORDER.indexOf(fromRoom), toIdx = ROOM_ORDER.indexOf(toRoom);
+        var step = fromIdx < toIdx ? 1 : -1;
+        for (var i = fromIdx; i !== toIdx; i += step) {
+          var dKey = DOOR_BETWEEN[ROOM_ORDER[i] + "|" + ROOM_ORDER[i + step]];
+          if (!state.doors[dKey]) return dKey;
+        }
+        return null;
+      }
+
+      /* ---------------- parser ---------------- */
+      // Tone marks are stripped (and everything lowercased) before matching,
+      // so "Sŏm-chai" and "som-chai" both match the same token — but every
+      // response the game generates is still written with full, correct
+      // tone marks.
+      function stripTones(s) {
+        return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+      }
+
+      var ROOM_WORD = { "khrua": "kitchen", "hong-nang-len": "living", "suan": "garden" };
+      var NAME_WORD = { "som-chai": "somchai", "som-ying": "somying", "rex": "rex" };
+      var DOOR_WORD = { "bpra-dtoo-khrua": "kl", "bpra-dtoo-suan": "lg", "bpra-dtoo-hong-nang-len": "living-ambiguous" };
+
+      function handle(raw) {
+        var text = raw.trim();
+        if (!text) return null;
+        var lower = stripTones(text).replace(/[?.!]+$/, "").replace(/\s+/g, " ").trim();
+
+        if (/^(jop|ok)$/.test(lower)) {
+          say("system", "Laa-gòn!");
+          setTimeout(function () { window.location.href = "index.html"; }, 500);
+          return "";
+        }
+
+        // -------- movement: (paa|song) NAME bpai tii ROOM --------
+        var mMove = lower.match(/^(paa|song)\s+(som-chai|som-ying|rex)\s+bpai\s+tii\s+(khrua|hong-nang-len|suan)$/);
+        var mGo = lower.match(/^(som-chai|som-ying|rex)\s*,?\s*bpai\s+tii\s+(khrua|hong-nang-len|suan)$/);
+        var who, room;
+        if (mMove) { who = NAME_WORD[mMove[2]]; room = ROOM_WORD[mMove[3]]; }
+        else if (mGo) { who = NAME_WORD[mGo[1]]; room = ROOM_WORD[mGo[2]]; }
+        if (who) {
+          var key = who + "Room";
+          if (state[key] === room) return NAME[who] + " yòo nai " + ROOM_TH[room] + " láew";
+          var blocker = pathBlocked(state[key], room);
+          if (blocker) return "dtông bpèrt " + DOORS[blocker].label + " gòn";
+          state[key] = room;
+          drawScene();
+          return "dâi " + NAME[who] + " yòo nai " + ROOM_TH[room] + " láew";
+        }
+
+        // -------- door: (bpert|bpit) DOOR --------
+        var mDoor = lower.match(/^(bpert|bpit)\s+(bpra-dtoo-khrua|bpra-dtoo-suan|bpra-dtoo-hong-nang-len)$/);
+        if (mDoor) {
+          var dw = DOOR_WORD[mDoor[2]];
+          if (dw === "living-ambiguous") {
+            return "hông-nâng-lên mee bpra-dtoo sŏng baan khun măai-tĕung bpra-dtoo-khrua rĕu bpra-dtoo-sŭan";
+          }
+          var opening = mDoor[1] === "bpert";
+          if (state.doors[dw] === opening) return DOORS[dw].label + " " + (opening ? "bpèrt" : "bpìt") + " yòo láew";
+          state.doors[dw] = opening;
+          drawScene();
+          return "dâi " + DOORS[dw].label + " " + (opening ? "bpèrt" : "bpìt") + " yòo láew";
+        }
+
+        // -------- NAME yoo tii-nai --------
+        var mWhere = lower.match(/^(som-chai|som-ying|rex)\s+yoo\s+tii-nai$/);
+        if (mWhere) {
+          var w = NAME_WORD[mWhere[1]];
+          return "khăo yòo nai " + ROOM_TH[roomOf(w)];
+        }
+
+        // -------- NAME1 gap NAME2 (gap NAME3) yoo tii-nai --------
+        var mWhereAre = lower.match(/^(som-chai|som-ying|rex)\s+gap\s+(som-chai|som-ying|rex)(?:\s+gap\s+(som-chai|som-ying|rex))?\s+yoo\s+tii-nai$/);
+        if (mWhereAre) {
+          var waIds = [NAME_WORD[mWhereAre[1]], NAME_WORD[mWhereAre[2]]];
+          if (mWhereAre[3]) waIds.push(NAME_WORD[mWhereAre[3]]);
+          var waUnique = waIds.filter(function (id, i) { return waIds.indexOf(id) === i; });
+          if (waUnique.length !== waIds.length) return "dtông bpen khon-la-khon gan (sŏng rĕu săam khon)";
+          return nameLocationList(waIds);
+        }
+
+        // -------- khrai yoo nai ROOM --------
+        var mWhoInRoom = lower.match(/^khrai\s+yoo\s+nai\s+(khrua|hong-nang-len|suan)$/);
+        if (mWhoInRoom) {
+          var wr = ROOM_WORD[mWhoInRoom[1]];
+          var occupants = CHARS.filter(function (c) { return roomOf(c) === wr; }).map(function (c) { return NAME[c]; });
+          if (occupants.length === 0) return "mâi mee khrai";
+          return occupants.join(" gàp ") + " yòo";
+        }
+
+        // -------- DOOR bpert/bpit yoo mai --------
+        var mDoorQ = lower.match(/^(bpra-dtoo-khrua|bpra-dtoo-suan|bpra-dtoo-hong-nang-len)\s+(bpert|bpit)\s+yoo\s+mai$/);
+        if (mDoorQ) {
+          var qdw = DOOR_WORD[mDoorQ[1]];
+          if (qdw === "living-ambiguous") {
+            return "hông-nâng-lên mee bpra-dtoo sŏng baan khun măai-tĕung bpra-dtoo-khrua rĕu bpra-dtoo-sŭan";
+          }
+          var askOpen = mDoorQ[2] === "bpert";
+          var actuallyOpen = state.doors[qdw];
+          var lbl = DOORS[qdw].label;
+          return (askOpen === actuallyOpen ? "châi " : "mâi châi ") + lbl + " " + (actuallyOpen ? "bpèrt" : "bpìt") + " yòo";
+        }
+
+        // -------- Statement: DOOR bpert/bpit yoo --------
+        var mStateDoor = lower.match(/^(bpra-dtoo-khrua|bpra-dtoo-suan|bpra-dtoo-hong-nang-len)\s+(bpert|bpit)\s+yoo$/);
+        if (mStateDoor) {
+          var sdw = DOOR_WORD[mStateDoor[1]];
+          if (sdw === "living-ambiguous") {
+            return "hông-nâng-lên mee bpra-dtoo sŏng baan khun măai-tĕung bpra-dtoo-khrua rĕu bpra-dtoo-sŭan";
+          }
+          var claimOpen = mStateDoor[2] === "bpert";
+          var actual = state.doors[sdw];
+          if (claimOpen === actual) return "châi";
+          return "mâi châi " + DOORS[sdw].label + " " + (actual ? "bpèrt" : "bpìt") + " yòo";
+        }
+
+        // -------- NAME yoo nai ROOM mai --------
+        var mInRoom = lower.match(/^(som-chai|som-ying|rex)\s+yoo\s+nai\s+(khrua|hong-nang-len|suan)\s+mai$/);
+        if (mInRoom) {
+          var iw = NAME_WORD[mInRoom[1]], ir = ROOM_WORD[mInRoom[2]];
+          if (roomOf(iw) === ir) return "châi " + NAME[iw] + " yòo nai " + ROOM_TH[ir];
+          return "mâi châi " + NAME[iw] + " yòo nai " + ROOM_TH[roomOf(iw)];
+        }
+
+        // -------- NAME1 gap NAME2 (gap NAME3) yoo duay-gan mai --------
+        var mTogether = lower.match(/^(som-chai|som-ying|rex)\s+gap\s+(som-chai|som-ying|rex)(?:\s+gap\s+(som-chai|som-ying|rex))?\s+yoo\s+duay-gan\s+mai$/);
+        if (mTogether) {
+          var tIds = [NAME_WORD[mTogether[1]], NAME_WORD[mTogether[2]]];
+          if (mTogether[3]) tIds.push(NAME_WORD[mTogether[3]]);
+          var tUnique = tIds.filter(function (id, i) { return tIds.indexOf(id) === i; });
+          if (tUnique.length !== tIds.length) return "dtông bpen khon-la-khon gan (sŏng rĕu săam khon)";
+          return togetherAnswer(tIds);
+        }
+
+        // -------- NAME1 gap NAME2 (gap NAME3) yoo nai ROOM mai --------
+        var mAreInRoom = lower.match(/^(som-chai|som-ying|rex)\s+gap\s+(som-chai|som-ying|rex)(?:\s+gap\s+(som-chai|som-ying|rex))?\s+yoo\s+nai\s+(khrua|hong-nang-len|suan)\s+mai$/);
+        if (mAreInRoom) {
+          var airIds = [NAME_WORD[mAreInRoom[1]], NAME_WORD[mAreInRoom[2]]];
+          if (mAreInRoom[3]) airIds.push(NAME_WORD[mAreInRoom[3]]);
+          var airUnique = airIds.filter(function (id, i) { return airIds.indexOf(id) === i; });
+          if (airUnique.length !== airIds.length) return "dtông bpen khon-la-khon gan (sŏng rĕu săam khon)";
+          return inRoomAnswer(airIds, ROOM_WORD[mAreInRoom[4]]);
+        }
+
+        // -------- Statement: NAME yoo nai ROOM --------
+        var mStateInRoom = lower.match(/^(som-chai|som-ying|rex)\s+yoo\s+nai\s+(khrua|hong-nang-len|suan)$/);
+        if (mStateInRoom) {
+          var sw = NAME_WORD[mStateInRoom[1]], sr = ROOM_WORD[mStateInRoom[2]];
+          if (roomOf(sw) === sr) return "châi";
+          return "mâi châi khăo yòo nai " + ROOM_TH[roomOf(sw)];
+        }
+
+        // -------- NAME1 hen NAME2 dai mai --------
+        var mSee = lower.match(/^(som-chai|som-ying|rex)\s+hen\s+(som-chai|som-ying|rex)\s+dai\s+mai$/);
+        if (mSee) {
+          var a = NAME_WORD[mSee[1]], b = NAME_WORD[mSee[2]];
+          if (a === b) return NAME[a] + " hĕn dtua-eng dâi sà-mĕr";
+          var res = canSee(a, b);
+          if (res.ok && res.reason === "same") {
+            return "châi " + NAME[a] + " hĕn " + NAME[b] + " dâi " + NAME[a] + " gàp " + NAME[b] + " yòo nai " + ROOM_TH[res.room];
+          }
+          if (res.ok && res.reason === "door") {
+            return "châi " + NAME[a] + " hĕn " + NAME[b] + " dâi phráw " + res.doors[0] + " bpèrt yòo";
+          }
+          if (res.ok && res.reason === "chain") {
+            return "châi " + NAME[a] + " hĕn " + NAME[b] + " dâi " + DOORS.kl.label + " gàp " + DOORS.lg.label + " bpèrt yòo phàan " + ROOM_TH.living;
+          }
+          if (res.doors.length === 2) {
+            return "mâi châi " + NAME[a] + " hĕn " + NAME[b] + " mâi dâi dtông bpèrt " + res.doors[0] + " gàp " + res.doors[1];
+          }
+          return "mâi châi " + NAME[a] + " hĕn " + NAME[b] + " mâi dâi phráw " + res.doors[0] + " bpìt yòo";
+        }
+
+        // -------- Statement: NAME1 hen NAME2 dai --------
+        var mStateSee = lower.match(/^(som-chai|som-ying|rex)\s+hen\s+(som-chai|som-ying|rex)\s+dai$/);
+        if (mStateSee) {
+          var sa = NAME_WORD[mStateSee[1]], sb = NAME_WORD[mStateSee[2]];
+          if (sa === sb) return NAME[sa] + " hĕn dtua-eng dâi sà-mĕr";
+          var sres = canSee(sa, sb);
+          if (sres.ok) return "châi";
+          return "mâi châi khăo hĕn " + NAME[sb] + " mâi dâi";
+        }
+
+        return null;
+      }
+
+      /* ---------------- self-talk (blank Enter) ---------------- */
+
+      var pendingSelfQuestion = null;
+
+      function randomChoice(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+      function randomNamesGroup() {
+        var shuffled = CHARS.slice().sort(function () { return Math.random() - 0.5; });
+        return shuffled.slice(0, Math.random() < 0.5 ? 2 : 3).map(function (id) { return NAME[id]; });
+      }
+      function joinNamesTH(names) { return names.join(" gàp "); }
+
+      function randomQuestionText() {
+        var kind = randomChoice(["where", "inroom", "doorstate", "cansee", "together"]);
+        if (kind === "where") {
+          if (Math.random() < 0.35) return joinNamesTH(randomNamesGroup()) + " yòo tîi-năi";
+          return NAME[randomChoice(CHARS)] + " yòo tîi-năi";
+        }
+        if (kind === "inroom") {
+          if (Math.random() < 0.35) return joinNamesTH(randomNamesGroup()) + " yòo nai " + ROOM_TH[randomChoice(ROOMS)] + " măi";
+          return NAME[randomChoice(CHARS)] + " yòo nai " + ROOM_TH[randomChoice(ROOMS)] + " măi";
+        }
+        if (kind === "doorstate") {
+          var dk = randomChoice(["kl", "lg"]);
+          return DOORS[dk].label + " " + randomChoice(["bpèrt", "bpìt"]) + " yòo măi";
+        }
+        if (kind === "together") {
+          return joinNamesTH(randomNamesGroup()) + " yòo dûay-gan măi";
+        }
+        var a = randomChoice(CHARS);
+        var b = randomChoice(CHARS.filter(function (c) { return c !== a; }));
+        return NAME[a] + " hĕn " + NAME[b] + " dâi măi";
+      }
+
+      function reachableRoomFor(who) {
+        var here = roomOf(who);
+        var options = ROOMS.filter(function (r) { return r !== here && !pathBlocked(here, r); });
+        return options.length ? randomChoice(options) : null;
+      }
+
+      function selfMove() {
+        var who = randomChoice(CHARS);
+        var target = reachableRoomFor(who);
+        if (!target) return null;
+        state[who + "Room"] = target;
+        drawScene();
+        return NAME[who] + " bpai tîi " + ROOM_TH[target];
+      }
+
+      function selfDoor() {
+        var doorKey = randomChoice(["kl", "lg"]);
+        var opening = !state.doors[doorKey];
+        state.doors[doorKey] = opening;
+        drawScene();
+        return (opening ? "bpèrt " : "bpìt ") + DOORS[doorKey].label;
+      }
+
+      function selfTalk() {
+        if (pendingSelfQuestion) {
+          var q = pendingSelfQuestion;
+          pendingSelfQuestion = null;
+          say("computer", handle(q.text));
+          return;
+        }
+        var roll = Math.random();
+        if (roll < 0.35) {
+          var qText = randomQuestionText();
+          say("computer", qText);
+          pendingSelfQuestion = { text: qText };
+        } else if (roll < 0.7) {
+          say("computer", selfMove() || selfDoor());
+        } else {
+          say("computer", selfDoor());
+        }
+      }
+
+      var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext("2d");
+      var transcriptEl = document.getElementById("transcript");
+
+      var form = document.getElementById("inputForm");
+      var inputBox = document.getElementById("inputBox");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var raw = inputBox.value;
+        inputBox.value = "";
+        if (!raw.trim()) {
+          selfTalk();
+          return;
+        }
+        say("you", raw);
+        var response = handle(raw);
+        if (response === null) {
+          if (pendingSelfQuestion) {
+            var answered = pendingSelfQuestion;
+            pendingSelfQuestion = null;
+            say("computer", handle(answered.text));
+          } else {
+            say("computer", "Sorry, I don't understand that. Try “paa Sŏm-chai bpai tîi khrua”, “bpèrt bpra-dtoo-khrua”, “Sŏm-chai yòo tîi-năi”, or “jòp”.");
+          }
+        } else if (response !== "") {
+          pendingSelfQuestion = null;
+          say("computer", response);
+        }
+      });
+
+      drawScene();
+      say("system", "Sŏm-chai yòo nai khrua, Sŏm-yĭng yòo nai hông-nâng-lên, láe Rex yòo nai sŭan. Bpra-dtoo táng sŏng bpèrt yòo. Type a command or question below, or leave the box empty and press Enter to watch them get on with things by themselves.");
+      inputBox.focus();
+    })();
+    </script>
+  </body>
+</html>

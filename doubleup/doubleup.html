@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Double-Up Puzzle</title>
+    <link rel="stylesheet" href="double.css" />
+    <style></style>
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+    </script>
+  </head>
+  <body>
+    <h3 id="title"></h3>
+
+    <!-- Title selection menu -->
+    <div id="titleMenu" class="menuBox">
+      <h2>Select a text to play</h2>
+      <select id="titleSelect"></select>
+      <br /><br />
+      <button class="menuButton" onclick="startPuzzle()">Load</button>
+    </div>
+
+    <!-- Puzzle area -->
+    <div id="puzzleArea" style="display: none">
+      <div id="maskedBox" class="textBox"></div>
+
+      <h3 id="alphabetLabel">Words in alphabetical order</h3>
+      <div id="alphabetBox" class="textBox"></div>
+
+      <div class="word-bank">
+        <div id="choose-prompt">Choose two words which come together.</div>
+        <label
+          >First word:
+          <select id="firstWord"></select>
+        </label>
+        <label
+          >Second word:
+          <select id="secondWord"></select>
+        </label>
+        <button onclick="checkPair()">Submit</button>
+      </div>
+
+      <div id="feedback"></div>
+      <div id="score">Score: 0</div>
+
+      <!-- New bottom buttons -->
+      <div style="margin-top: 20px">
+        <button onclick="needHelp()">Need help?</button>
+        <button onclick="quitGame()">Quit</button>
+      </div>
+    </div>
+
+    <!-- End screen -->
+    <div id="endScreen" style="display: none; margin-top: 20px">
+      <button onclick="playAgain()">Play Again?</button>
+      <button onclick="goHome()">Higgins Home Page</button>
+    </div>
+
+    <script>
+      let score = 0;
+      let words = [];
+      let pairs = [];
+      let revealed = [];
+      let remainingIndexes = [];
+      let texts = [];
+      let correct = 0;
+      let attempts = 0;
+
+      // Load texts from localStorage (set by index.html)
+      const stored = localStorage.getItem("doubleUpTexts");
+      if (stored) {
+        texts = JSON.parse(stored);
+        const titleSelect = document.getElementById("titleSelect");
+        texts.forEach((t, idx) => {
+          titleSelect.add(new Option(t.title, idx));
+        });
+      }
+
+      function startPuzzle() {
+        score = 0;
+        document.getElementById("score").textContent = "Score: 0";
+        document.getElementById("feedback").textContent = "";
+
+        const idx = document.getElementById("titleSelect").value;
+        const chosen = texts[idx];
+        document.getElementById("title").textContent = chosen.title;
+
+        words = chosen.passage.split(/\s+/);
+        remainingIndexes = words.map((w, i) => i);
+        pairs = [];
+        for (let i = 0; i < words.length - 1; i++) {
+          pairs.push([words[i].toUpperCase(), words[i + 1].toUpperCase()]);
+        }
+
+        revealed = words.map(() => "__");
+        renderMaskedText();
+        renderAlphabetBox();
+
+        const firstSelect = document.getElementById("firstWord");
+        const secondSelect = document.getElementById("secondWord");
+        firstSelect.innerHTML = "";
+        secondSelect.innerHTML = "";
+        let uniqueWords = [
+          ...new Set(words.map((w) => w.toUpperCase())),
+        ].sort();
+        uniqueWords.forEach((w) => {
+          firstSelect.add(new Option(w, w));
+          secondSelect.add(new Option(w, w));
+        });
+
+        document.getElementById("alphabetLabel").textContent =
+          "Words in alphabetical order";
+
+        // Hide the title menu once a text is chosen
+        document.getElementById("titleMenu").style.display = "none";
+        // Show the puzzle area
+        document.getElementById("puzzleArea").style.display = "block";
+      }
+
+      function renderMaskedText() {
+        const maskedBox = document.getElementById("maskedBox");
+        maskedBox.innerHTML = "";
+        revealed.forEach((word, i) => {
+          if (word === "__") {
+            for (let char of words[i]) {
+              if (/[.,!?;:]/.test(char)) {
+                maskedBox.appendChild(document.createTextNode(char));
+              } else {
+                const square = document.createElement("span");
+                square.className = "maskSquare";
+                maskedBox.appendChild(square);
+              }
+            }
+          } else {
+            maskedBox.appendChild(document.createTextNode(word));
+          }
+          maskedBox.appendChild(document.createTextNode(" "));
+        });
+      }
+
+      function renderAlphabetBox() {
+        const alphabetBox = document.getElementById("alphabetBox");
+        alphabetBox.innerHTML = "";
+        const sortedWords = remainingIndexes
+          .map((i) => words[i])
+          .sort((a, b) => a.localeCompare(b));
+        sortedWords.forEach((word) => {
+          const span = document.createElement("span");
+          span.textContent = word + " ";
+          alphabetBox.appendChild(span);
+        });
+      }
+
+      function checkPair() {
+        const first = document.getElementById("firstWord").value;
+        const second = document.getElementById("secondWord").value;
+        attempts++; // every submit counts as a try
+
+        let found = false;
+
+        // Loop through all pairs, not just the first match
+        for (let i = 0; i < pairs.length; i++) {
+          if (pairs[i][0] === first && pairs[i][1] === second) {
+            // Reveal both words
+            revealed[i] = words[i];
+            revealed[i + 1] = words[i + 1];
+
+            // Remove these positions from remainingIndexes
+            remainingIndexes = remainingIndexes.filter(
+              (idx) => idx !== i && idx !== i + 1,
+            );
+
+            found = true;
+          }
+        }
+
+        renderMaskedText();
+        renderAlphabetBox();
+
+        if (found) {
+          if (correct === 0) {
+            document.getElementById("alphabetLabel").textContent =
+              "Remaining words";
+          }
+          correct++;
+          document.getElementById("feedback").textContent =
+            `${first} and ${second} were together.`;
+        } else {
+          document.getElementById("feedback").textContent =
+            `${first} and ${second} were not together.`;
+        }
+
+        // Update score display
+        document.getElementById("score").textContent =
+          `Score: ${correct} out of ${attempts} tries`;
+
+        // End condition: all words revealed
+        if (revealed.every((w) => w !== "__")) {
+          quitGame();
+        }
+      }
+      function needHelp() {
+        const maskedBox = document.getElementById("maskedBox");
+
+        // Temporarily show full text with fade-in
+        maskedBox.classList.add("fadeBox");
+        maskedBox.textContent = words.join(" ");
+        maskedBox.classList.remove("hidden");
+        maskedBox.classList.add("visible");
+
+        // Hide alphabet list while showing help
+        document.getElementById("alphabetBox").style.display = "none";
+
+        // After 5 seconds, fade out and restore masked state
+        setTimeout(() => {
+          maskedBox.classList.remove("visible");
+          maskedBox.classList.add("hidden");
+
+          setTimeout(() => {
+            renderMaskedText();
+            maskedBox.classList.remove("hidden");
+            maskedBox.classList.add("visible");
+            document.getElementById("alphabetBox").style.display = "block";
+          }, 1000); // wait for fade-out before remasking
+        }, 5000);
+      }
+
+      function quitGame() {
+        // Show full text unmasked
+        document.getElementById("maskedBox").textContent = words.join(" ");
+
+        // Hide alphabet list and its heading
+        document.getElementById("alphabetBox").style.display = "none";
+        document.getElementById("alphabetLabel").style.display = "none";
+
+        // Hide word-bank controls
+        document.querySelector(".word-bank").style.display = "none";
+
+        // Hide Need help / Quit buttons
+        const bottomButtons = document.querySelector(
+          "#puzzleArea div[style*='margin-top']",
+        );
+        if (bottomButtons) bottomButtons.style.display = "none";
+
+        // Show end screen options
+        document.getElementById("endScreen").style.display = "block";
+      }
+      function playAgain() {
+        location.reload();
+      }
+
+      function goHome() {
+        window.location.href = "https://marlodge.net/";
+      }
+    </script>
+  </body>
+</html>

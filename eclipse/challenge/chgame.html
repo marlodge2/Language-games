@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Challenge Game</title>
+  <link rel="stylesheet" href="soclip.css">
+  <script src="chclip.js" defer></script>
+  <style>
+    /* Layout tweaks for aligned input row */
+    #inputRow {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+    #wordInput, #computerInput {
+      width: 200px;
+    }
+    #computerInput {
+      background-color: #f0f0f0;
+      color: #333;
+    }
+    #scores {
+      display: none;
+    }
+    #feedbackRow {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+      padding: 0 4px;
+    }
+    #feedback {
+      font-style: italic;
+      flex: 1;
+      text-align: left;
+    }
+    #computerFeedback {
+      font-style: italic;
+      flex: 1;
+      text-align: right;
+    }
+  </style>
+ <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+    </script>
+  </head>
+  
+  <body>
+  <div id="pageWrapper">
+    <!-- Summary overlay, shown once when a text with a ### summary loads -->
+    <div id="summaryOverlay" style="display:none;">
+      <div id="summaryBox">
+        <p id="summaryText"></p>
+        <button id="summaryDismissButton">Continue</button>
+      </div>
+    </div>
+
+    <!-- Title bar -->
+    <div id="titleBar">
+      <h1 id="storyTitle">Loading story...</h1>
+    </div>
+
+    <!-- Story text -->
+    <div id="textBox">
+      Loading text...
+    </div>
+
+    <!-- Challenge play area -->
+    <div id="playArea">
+      <div id="challengeBox" style="display:none;">
+        
+        <!-- Single input row: word input | Help | Quit | computer input -->
+        <div id="inputRow">
+          <input id="wordInput" type="text" placeholder="Enter a word">
+          <button id="challengeHelpButton">Help (5s)</button>
+          <button id="giveUpButton">Quit</button>
+          <button id="homeButton" style="display:none;" onclick="window.location.href='https://marlodge.net'">Back to home page</button>
+          <input id="computerInput" type="text" readonly placeholder="Computer typing...">
+        </div>
+
+        <!-- Feedback row -->
+        <div id="feedbackRow">
+          <div id="feedback"></div>
+          <div id="computerFeedback"></div>
+        </div>
+
+        <!-- Scores (hidden, kept for JS references) -->
+        <div id="scores">
+          <p>Your score: <span id="playerScore">0</span></p>
+          <p>Computer score: <span id="computerScore">0</span></p>
+        </div>
+      </div>
+
+      <!-- End screen -->
+      <div id="endScreen"></div>
+    </div>
+  </div>
+</body>
+</html>

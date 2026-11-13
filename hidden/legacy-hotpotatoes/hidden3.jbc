@@ -1,0 +1,197 @@
+[FileInfo]
+Version=3
+
+[Title]
+strQuizTitle=Weather Forecast
+
+[NextEx]
+strNextExURL=hidden2.htm
+
+[Reading]
+IncludeReading=0
+IncludeTimer=0
+Timer=1
+ReadingInternal=1
+ReadingPath=
+ReadingTitle=
+ReadingTextLength=0
+
+[Question1]
+Question=<EMBED src="QW01.wav" autostart=false height=55 width=145>
+AnswerA=heather
+AnswerB=very
+AnswerC=die
+AnswerD=hypotenuse
+AnswerE=
+FeedbackA=No: The weather ....
+FeedbackB=CORRECT: The weather hasn't been <FONT COLOR="green"> very </FONT> nice today, and I wish I could give you better news for tomorrow.
+FeedbackC=NO: ... and I wish ....
+FeedbackD=No: .. give you better news  ..
+FeedbackE=
+CorrectA=0
+CorrectB=1
+CorrectC=0
+CorrectD=0
+CorrectE=0
+
+[Question2]
+Question=<EMBED src="QW02.wav" autostart=false height=55 width=145>
+AnswerA=It
+AnswerB=morrow
+AnswerC=fuel
+AnswerD=costings
+AnswerE=
+FeedbackA=CORRECT: But <FONT COLOR="green">it</FONT> looks like more of the same for most of us, though if you live on the west coast things should be better.
+FeedbackB=No: ... more of ...
+FeedbackC=No: ... if you live ...
+FeedbackD=No: ...coast, things ....
+FeedbackE=
+CorrectA=1
+CorrectB=0
+CorrectC=0
+CorrectD=0
+CorrectE=0
+
+[Question3]
+Question=<EMBED src="QW03.wav" autostart=false height=55 width=145>
+AnswerA=star
+AnswerB=rainy
+AnswerC=sleeve
+AnswerD=showery
+AnswerE=
+FeedbackA=NO: Let's start ...
+FeedbackB=NO: ... rain is ...
+FeedbackC=NO: ... is leaving ...
+FeedbackD=CORRECT: Let's start there. The front that  brought the heavy rain is moving east and is leaving <FONT COLOR="green">showery</FONT> weather behind.
+FeedbackE=
+CorrectA=0
+CorrectB=0
+CorrectC=0
+CorrectD=1
+CorrectE=0
+
+[Question4]
+Question=<EMBED src="QW04.wav" autostart=false height=55 width=145>
+AnswerA=twill
+AnswerB=India
+AnswerC=but
+AnswerD=seize
+AnswerE=
+FeedbackA=NO: It will...
+FeedbackB=NO: .. windy tonight ...
+FeedbackC=CORRECT: It will be a bit windy tonight with some rain, <FONT COLOR="green">but</FONT> in the morning you should get some drier weather and maybe even see some sunshine.
+FeedbackD=No: ... see some ...
+FeedbackE=
+CorrectA=0
+CorrectB=0
+CorrectC=1
+CorrectD=0
+CorrectE=0
+
+[Question5]
+Question=<EMBED src="QW05.wav" autostart=false height=55 width=145>
+AnswerA=sand
+AnswerB=will
+AnswerC=very
+AnswerD=wit
+AnswerE=
+FeedbackA=No: ... Borders and  ...
+FeedbackB=CORRECT: The Borders and the south  <FONT COLOR="green">will</FONT> have a wet day, with overcast skies, though it may clear up by the late afternoon.
+FeedbackC=No: ... have a wet ....
+FeedbackD=No: ... though it ...
+FeedbackE=
+CorrectA=0
+CorrectB=1
+CorrectC=0
+CorrectD=0
+CorrectE=0
+
+[Question6]
+Question=<EMBED src="QW06.wav" autostart=false height=55 width=145>
+AnswerA=region
+AnswerB=regional
+AnswerC=raining
+AnswerD=fallers
+AnswerE=
+FeedbackA=CORRECT: Central <FONT COLOR="green">region</FONT> will have plenty of cloud and rain, and the further north you go the more likely it is to fall as sleet or snow.
+FeedbackB=No: ... region will ...
+FeedbackC=No: ... rain and ...
+FeedbackD=No: ... fall as ..
+FeedbackE=
+CorrectA=1
+CorrectB=0
+CorrectC=0
+CorrectD=0
+CorrectE=0
+
+[Question7]
+Question=<EMBED src="QW07.wav" autostart=false height=55 width=145>
+AnswerA=farm
+AnswerB=worsen
+AnswerC=so
+AnswerD=tome
+AnswerE=
+FeedbackA=No: The far north ..
+FeedbackB=No: .. showers and  ...
+FeedbackC=CORRECT: The far north will certainly have wintry showers, and driving conditions may well be hazardous,  <FONT COLOR="green">so</FONT> stay at home if you can.
+FeedbackD=No: ... at home  ...
+FeedbackE=
+CorrectA=0
+CorrectB=0
+CorrectC=1
+CorrectD=0
+CorrectE=0
+
+[Question8]
+Question=<EMBED src="QW08.wav" autostart=false height=55 width=145>
+AnswerA=night-time
+AnswerB=tour
+AnswerC=northern
+AnswerD=almost
+AnswerE=
+FeedbackA=No: Overnight temperatures  ...
+FeedbackB=No: ... two or three ..
+FeedbackC=No: .. north and ..
+FeedbackD=CORRECT: Overnight temperatures will range from two or three in the south to minus one in the north, and there could be frost <FONT COLOR="green">almost </FONT> anywhere.
+FeedbackE=
+CorrectA=0
+CorrectB=0
+CorrectC=0
+CorrectD=1
+CorrectE=0
+
+[Question9]
+Question=<EMBED src="QW09.wav" autostart=false height=55 width=145>
+AnswerA=be
+AnswerB=beer
+AnswerC=sigh
+AnswerD=awful
+AnswerE=
+FeedbackA=CORRECT: Tomorrow's temperatures will  <FONT COLOR="green">be</FONT> a bit better, getting up as high as seven in the Borders, but staying down at three or four in the north.
+FeedbackB=No: ... be a bit ...
+FeedbackC=No: ... as high ...
+FeedbackD=No: .. or four ..
+FeedbackE=
+CorrectA=1
+CorrectB=0
+CorrectC=0
+CorrectD=0
+CorrectE=0
+
+[Question10]
+Question=<EMBED src="QW10.wav" autostart=false height=55 width=145>
+AnswerA=further
+AnswerB=more
+AnswerC=butter
+AnswerD=timer
+AnswerE=
+FeedbackA=No: ... for the  ...
+FeedbackB=CORRECT: The outlook for the weekend is for <FONT COLOR="green"> more </FONT> unsettled weather, with strong winds and rain, but the temperatures at least staying close to the average for the time of year.
+FeedbackC=No: ... but the ...
+FeedbackD=No: ... time of  ...
+FeedbackE=
+CorrectA=0
+CorrectB=1
+CorrectC=0
+CorrectD=0
+CorrectE=0

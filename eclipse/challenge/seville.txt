@@ -1,0 +1,6 @@
+The Barber of Seville
+Bertrand Russell's famous paradox asks us to imagine the city of Seville in the days when it was just a small village. In those days the village had just one barber, who was a man, and that barber shaved all the men of the village except the men who shaved themselves.    
+Now, if you believe the last sentence is true, you are left with a problem: who shaved the barber?  If he shaved himself, then it cannot be true that he shaved all the men EXCEPT those who shaved themselves. If somebody else shaved him or if he wore a beard, then it cannot be true that the barber shaved ALL the men except those who shaved themselves. 
+###
+This text describes a famous mathematical paradox      discovered by Bertrand Russell. It has nothing to do  with Rossini's opera or the character Figaro.   
+                                                                                                                     

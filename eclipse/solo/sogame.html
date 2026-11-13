@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Solo Game</title>
+  <link rel="stylesheet" href="soclip.css">
+  <script src="soclip.js" defer></script>
+ <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+    </script>
+  </head>
+<body>
+  <div id="pageWrapper">
+    <!-- Summary overlay, shown once when a text with a ### summary loads -->
+    <div id="summaryOverlay" style="display:none;">
+      <div id="summaryBox">
+        <p id="summaryText"></p>
+        <button id="summaryDismissButton">Continue</button>
+      </div>
+    </div>
+
+    <!-- Title bar -->
+    <div id="titleBar">
+      <h1 id="storyTitle">Loading story...</h1>
+    </div>
+
+    <!-- Story text -->
+    <div id="textBox">
+      Loading text...
+    </div>
+
+    <!-- Solo play area -->
+    <div id="playArea">
+      <div id="soloBox" style="display:none;">
+      <div class="inputRow">
+  <input id="wordInput" type="text" placeholder="Enter a word">
+  <button id="soloHelpButton">Help</button>
+  <button id="soloFirstLetterButton">First Letters</button>
+  <button id="giveUpButton">Quit</button>
+</div>  <div id="feedback"></div>
+      </div>
+
+      <!-- End screen -->
+      <div id="endScreen"></div>
+    </div>
+  </div>
+</body>
+</html>

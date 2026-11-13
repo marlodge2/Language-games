@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Tours Puzzle</title>
+  <link rel="stylesheet" href="trip.css">
+</head>
+<body>
+  <h2 id="introLine">Last week's Happy Tours took a party round …</h2>
+
+  <!-- Towns will be injected here -->
+  <div class="towns">
+    <div class="town-row" id="townRow"></div>
+  </div>
+
+  <!-- Days grid -->
+  <div class="days">
+    <div class="day" data-day="Day1"><span>Day 1</span><div class="assignment"></div></div>
+    <div class="day" data-day="Day2"><span>Day 2</span><div class="assignment"></div></div>
+    <div class="day" data-day="Day3"><span>Day 3</span><div class="assignment"></div></div>
+    <div class="day" data-day="Day4"><span>Day 4</span><div class="assignment"></div></div>
+    <div class="day" data-day="Day5"><span>Day 5</span><div class="assignment"></div></div>
+    <div class="day" data-day="Day6"><span>Day 6</span><div class="assignment"></div></div>
+    <div class="day" data-day="Day7"><span>Day 7</span><div class="assignment"></div></div>
+  </div>
+
+  <!-- Clue panel -->
+  <button id="showCluesBtn">Click here for clues</button>
+  <div id="cluePanel" class="hidden">
+    <h3>Clues</h3>
+    <ul></ul>
+  </div>
+
+    <!-- Scoreboard -->
+  <div id="scoreBoard" class="score-board">Found: 0 | Wrong guesses: 0</div>
+
+  <script src="trip.js"></script>
+</body>
+</html>

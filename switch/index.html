@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Text Selection for Switch</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: lightgoldenrodyellow;
+      margin: 40px;
+      text-align: center;
+    }
+    h1 { margin-bottom: 20px; }
+    .infoBox {
+      background-color: #fff8dc;
+      border: 2px solid #3366cc;
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 700px;
+      margin: 0 auto 30px auto;
+      text-align: left;
+      font-size: 1.1em;
+      line-height: 1.4em;
+    }
+    .row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    select {
+      font-size: 1.2em;
+      padding: 8px;
+    }
+    button {
+      font-size: 1.2em;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #confirmBtn {
+      background-color: #3366cc;
+      color: white;
+      border: none;
+    }
+    #confirmBtn:hover { background-color: #254a99; }
+    #homeBtn {
+      background-color: #eee;
+      border: 2px solid #3366cc;
+      color: #3366cc;
+    }
+    #homeBtn:hover { background-color: #3366cc; color: white; }
+  </style>
+   <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>   
+</head>
+</head>
+<body>
+  <h1>Switch</h1>
+  <h2>A game for language learners by John and Muriel Higgins</h2>
+
+  <div class="infoBox">
+    The program shows a short piece of English in which some words or phrases have been altered.
+    Sometimes the tenses have been changed, or articles inserted or omitted.
+    Sometimes the style is altered from casual to formal or British to American or vice versa.
+    You can move a highlight through the text showing you the alternatives at the bottom of the screen.
+    Pick the one you think the original writer used.
+    Click <strong>Ready</strong> when you think you have found all the right choices.
+    Then compare your answer.
+  </div>
+
+  <div class="row">
+    <select id="textSelect">
+      <option value="cows1.txt">About some cows (simple/continuous)</option>
+      <option value="cows2.txt">More about cows (simple/continuous)</option>
+      <option value="technico.txt">Technico invites (simple/continuous)</option>
+      <option value="studying.txt">Our new course (infinitive/gerund)</option>
+      <option value="economics.txt">News story (tenses)</option>
+      <option value="ken_clarke.txt">Another news story (active/passive)</option>
+      <option value="formal.txt">The reprimand (formal language)</option>
+      <option value="informal.txt">The telling off (casual language)</option>
+      <option value="us_uk.txt">Somewhere to live (British or American)</option>
+      <option value="neighbour.txt">My helpful neighbour (phrasal verbs)</option>
+      <option value="liverpool.txt">Born in Liverpool (articles)</option>
+      <!-- Add more options here as needed -->
+    </select>
+    <button id="confirmBtn" onclick="confirmSelection()">Choose</button>
+  </div>
+
+  <div>
+    <button id="homeBtn" onclick="goHome()">Higgins home page</button>
+  </div>
+
+<script>
+function confirmSelection() {
+  const select = document.getElementById("textSelect");
+  const file = select.value;
+  if (file) {
+    window.location.href = "switch.html?file=" + encodeURIComponent(file);
+  } else {
+    alert("Please select a text file first.");
+  }
+}
+function goHome() {
+  window.location.href = "https://marlodge.net";
+}
+</script>
+</body>
+</html>

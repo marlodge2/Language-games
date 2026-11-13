@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Supermarket Announcement — Hidden Word Listening</title>
+<link rel="stylesheet" href="hidden-engine.css" />
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"></script>
+<script>
+  ((window.plausible = window.plausible || function () { (plausible.q = plausible.q || []).push(arguments); }),
+   (plausible.init = plausible.init || function (i) { plausible.o = i || {}; }));
+  plausible.init();
+</script>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script src="hidden-engine.js"></script>
+<script>
+  HiddenWordEngine.render({
+    title: "Supermarket Announcement",
+    next: "hidden3.html",
+    questions: [
+      { audio: "QS1", before: "Good evening. ", after: " is a customer announcement.",
+        words: ["even", "this", "suck", "ounce"], correct: 1,
+        hints: ["Good evening. ....", null, "... is a customer ....", ".. announcement."] },
+      { audio: "QS2", before: "", after: " we have freshly caught wild salmon and £8.45 a kilo, as well as fillets of sole for £7.80 a kilo reduced from £9.20.",
+        words: ["Tonight", "while", "eighteen", "lowered"], correct: 0,
+        hints: [null, "... wild  ...", "... seven pounds eighty ...", "... kilo reduced ...."] },
+      { audio: "QS3", before: "There is a further range of fresh fish and seafood at attractive prices, like whole prawns at 90p. for ", after: " grams.",
+        words: ["angel", "utter", "coal", "hundred"], correct: 3, highlight: "100",
+        hints: ["... range of  ...", "... at attractive ...", "... like whole ...", null] },
+      { audio: "QS4", before: "Our in-store bakery has crusty white loaves reduced ", after: " 90 p. to 55 p. and Irish soda bread at £1.80 reduced from £2.50.",
+        words: ["careers", "diary", "from", "fifteen"], correct: 2,
+        hints: ["... bakery has ...", ".. and Irish ...", null, "... £2.50."] },
+      { audio: "QS5", before: "They have ", after: " made reductions on cup cakes and Swiss rolls.",
+        words: ["there", "also", "up", "strolls"], correct: 1,
+        hints: ["They have   ...", null, "... cup  ....", "... Swiss rolls ..."] },
+      { audio: "QS6", before: "We ", after: " a number of real bargains at the frozen goods counter.",
+        words: ["have", "oven", "Bovril", "scout"], correct: 0,
+        hints: [null, "... have a number ...", "... number of real ...", "... goods counter."] },
+      { audio: "QS7", before: "Buy one of our pepperoni pizzas and you ", after: " a second one free.",
+        words: ["by", "sundew", "get", "us"], correct: 2,
+        hints: ["Buy ..", ".. pizzas and you  ...", null, "... a second  ..."] },
+      { audio: "QS8", before: "and if you buy a packet of Chinese special fried rice you can have a Thai chicken curry at ", after: " price.",
+        words: ["kit", "never", "concur", "half"], correct: 3,
+        hints: ["... packet  ...", "... can have a ...", ".. chicken curry ..", null] },
+      { audio: "QS9", before: "Don't ", after: " we now have late night shopping on Thursday, Friday and Saturday, when the store stays open till eleven p.m.",
+        words: ["forget", "chopping", "fried", "this"], correct: 0,
+        hints: [null, "... night shopping ...", "... Friday ...", ".. the store .."] }
+    ]
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Accueil du jeu de langue</title>
+  <link rel="stylesheet" href="soclip.css">
+ <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+    </script>
+  </head>
+<body>
+  <div id="pageWrapper">
+    <h1>Bienvenue dans ECLIPSE</h1>
+    <h2>Un jeu de reconstruction de texte par John et Muriel Higgins<br>Juillet 2026</h2>
+    <p>Cette version est le mode SOLO où une personne essaie de trouver tous les mots. Vous pouvez obtenir de l’aide quand vous en avez besoin sous la forme d’un aperçu de 5 secondes du texte complet, ou si cela ne suffit pas, les premières lettres de tous les mots restants non résolus. Deux autres versions, le mode COMPETITION et le mode CHALLENGE, sont en préparation.</p>
+    <p>Sélectionnez une histoire à jouer :</p>
+
+    <form action="sogame.html" method="get">
+      <label for="story">Choisissez une histoire :</label>
+      <select id="story" name="story"></select>
+      <button id="startBtn" type="submit" disabled>Commencer le jeu</button>
+    </form>
+    <div id="pickerError" style="color:darkred; font-style:italic; margin-top:10px;"></div>
+  </div>
+
+  <script>
+    // Liste des histoires — chargée depuis alltexts.txt (une histoire par ligne :
+    // "Titre | fichier.txt" ; les lignes vides et les commentaires # sont ignorés).
+    function parseStoryList(text) {
+      const stories = [];
+      text.split(/\r?\n/).forEach(raw => {
+        const line = raw.trim();
+        if (!line || line.startsWith("#")) return;
+        const sep = line.indexOf("|");
+        if (sep === -1) {
+          console.warn("Ligne alltexts.txt ignorée (séparateur '|' manquant) :", line);
+          return;
+        }
+        const title = line.slice(0, sep).trim();
+        const file = line.slice(sep + 1).trim();
+        if (!title || !file) {
+          console.warn("Ligne alltexts.txt ignorée (titre ou fichier vide) :", line);
+          return;
+        }
+        stories.push({ title, file });
+      });
+      return stories;
+    }
+
+    fetch("alltexts.txt")
+      .then(r => {
+        if (!r.ok) throw new Error("alltexts.txt introuvable (" + r.status + ")");
+        return r.text();
+      })
+      .then(text => {
+        const stories = parseStoryList(text);
+        const select = document.getElementById("story");
+        select.innerHTML = "";
+        if (stories.length === 0) {
+          document.getElementById("pickerError").textContent = "Aucune histoire trouvée dans alltexts.txt.";
+          return;
+        }
+        stories.forEach(s => {
+          const opt = document.createElement("option");
+          opt.value = s.file;
+          opt.textContent = s.title;
+          select.appendChild(opt);
+        });
+        document.getElementById("startBtn").disabled = false;
+      })
+      .catch(err => {
+        document.getElementById("pickerError").textContent =
+          "Impossible de charger la liste des histoires (alltexts.txt). " +
+          "Si vous ouvrez ce fichier directement, il doit être servi via http:// — essayez un serveur local.";
+        console.error(err);
+      });
+  </script>
+</body>
+</html>

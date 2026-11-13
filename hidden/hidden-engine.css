@@ -1,0 +1,126 @@
+/* Shared styling for all "Hidden Word" listening exercises.
+   One file, included by every exercise page — see hidden-engine.js for
+   how to add a new exercise. */
+
+:root {
+  --bg: #eef3f7;
+  --panel: #ffffff;
+  --ink: #1f2d3a;
+  --ink-dim: #5c7183;
+  --accent: #2f6690;
+  --accent-dark: #204a68;
+  --border: #d7e3ea;
+  --right: #2f8a52;
+  --wrong: #b23b23;
+  --radius: 10px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Sans Thai', 'Segoe UI', Arial, sans-serif;
+  line-height: 1.5;
+}
+details.help .gloss { color: var(--ink-dim); font-style: italic; }
+.wrap {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 20px 18px 50px;
+}
+h1 {
+  text-align: center;
+  color: var(--accent-dark);
+  margin: 0 0 4px;
+}
+.subtitle {
+  text-align: center;
+  color: var(--ink-dim);
+  font-style: italic;
+  margin: 0 0 16px;
+}
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 3px rgba(20, 30, 40, 0.06);
+}
+#scoreLine {
+  text-align: center;
+  font-weight: 600;
+  color: var(--accent-dark);
+  margin-bottom: 14px;
+}
+.question-card.solved { border-color: var(--right); }
+.q-num {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 999px;
+  width: 26px;
+  height: 26px;
+  line-height: 26px;
+  text-align: center;
+  margin-right: 8px;
+}
+audio {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  margin: 10px 0 14px;
+}
+.word-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.word-btn {
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 8px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: #f7fafc;
+  cursor: pointer;
+}
+.word-btn:hover { background: #eaf2f7; }
+.word-btn.chosen-right { border-color: var(--right); background: #e9f7ee; color: var(--right); font-weight: 700; }
+.word-btn.chosen-wrong { border-color: var(--wrong); background: #fbecea; color: var(--wrong); }
+.feedback { min-height: 1.3em; font-weight: 600; }
+.feedback.right { color: var(--right); }
+.feedback.wrong { color: var(--wrong); }
+.feedback mark { background: #cdeedc; color: var(--right); padding: 0 2px; border-radius: 3px; }
+
+.nav-buttons { text-align: center; margin-top: 10px; }
+button.nav {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 10px 20px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  margin: 4px 6px;
+}
+button.nav:hover { background: var(--accent-dark); }
+button.nav.secondary { background: #fff; color: var(--accent-dark); }
+button.nav.secondary:hover { background: #eaf2f7; }
+
+details.help {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  color: var(--ink-dim);
+}
+details.help summary { cursor: pointer; color: var(--ink); font-weight: 700; }
+
+footer {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--ink-dim);
+  margin-top: 20px;
+}
+footer a { color: var(--accent-dark); }

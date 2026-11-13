@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ÊTRE OU AVOIR</title>
+<style>
+  :root {
+    --bg: #f3efe9;
+    --panel: #ffffff;
+    --ink: #2c2620;
+    --ink-dim: #7a6f60;
+    --accent: #6b4e8e;
+    --accent-dark: #52396e;
+    --etre: #2f7d5c;
+    --avoir: #b5651d;
+    --border: #e2dccf;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Segoe UI', Arial, sans-serif;
+  }
+  #app {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 16px 16px 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  h1 {
+    margin: 0;
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    text-align: center;
+  }
+  .subtitle {
+    text-align: center;
+    color: var(--ink-dim);
+    font-style: italic;
+    font-size: 0.9rem;
+    margin-top: -4px;
+  }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    box-shadow: 0 3px 10px rgba(44, 38, 32, 0.06);
+  }
+  .panel h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.05rem;
+    color: var(--accent-dark);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 6px;
+  }
+
+  #peopleGrid { display: flex; flex-direction: column; gap: 10px; }
+  .person-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .person-row .who { display: flex; align-items: center; gap: 6px; min-width: 90px; font-weight: 700; }
+  .person-row .avatar { font-size: 1.4rem; }
+  .actions { display: flex; gap: 6px; flex-wrap: wrap; }
+  .action-icon {
+    position: relative;
+    width: 40px; height: 40px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.25rem;
+    background: #faf8f4;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .action-icon:hover { background: #f1ecdf; }
+  .action-icon.active { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .action-icon.learned-etre { border-color: var(--etre); }
+  .action-icon.learned-avoir { border-color: var(--avoir); }
+  .action-icon .dot {
+    position: absolute;
+    bottom: -4px; right: -4px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+  }
+  .action-icon.learned-etre .dot { background: var(--etre); }
+  .action-icon.learned-avoir .dot { background: var(--avoir); }
+
+  #status {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--ink-dim);
+  }
+  #status b { color: var(--accent-dark); }
+
+  #transcript {
+    background: #faf8f4;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    height: 170px;
+    overflow-y: auto;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  #transcript .line { margin: 4px 0; }
+  #transcript .prompt { color: var(--accent-dark); font-weight: 700; }
+  #transcript .prompt::before { content: "Question : "; color: var(--ink-dim); font-weight: 700; }
+  #transcript .learner::before { content: "Toi : "; color: var(--ink-dim); font-weight: 700; }
+  #transcript .ok { color: var(--etre); font-weight: 600; }
+  #transcript .no { color: var(--avoir); font-weight: 600; }
+  #transcript .system { color: var(--ink-dim); font-style: italic; }
+
+  form#inputForm { display: flex; gap: 8px; }
+  #inputBox {
+    flex: 1;
+    background: #fff;
+    border: 1px solid var(--border);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+  }
+  #inputBox:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+
+  button {
+    background: #fff;
+    color: var(--accent-dark);
+    border: 2px solid var(--accent);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  button:hover { background: #f1ecdf; }
+  button.primary { background: var(--accent); color: #fff; }
+  button.primary:hover { background: var(--accent-dark); }
+
+  .controls { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+
+  details#help {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    font-size: 0.88rem;
+    color: var(--ink-dim);
+  }
+  details#help summary { cursor: pointer; color: var(--ink); font-weight: 700; }
+  details#help ul { margin: 8px 0 0 18px; padding: 0; }
+  details#help p { margin: 8px 0; }
+  details#help code { background: #f1ecdf; padding: 1px 6px; border-radius: 4px; color: var(--accent-dark); }
+  details#help b.etre { color: var(--etre); }
+  details#help b.avoir { color: var(--avoir); }
+
+  .footer { text-align: center; font-size: 0.85rem; color: var(--ink-dim); margin-top: 4px; }
+  .footer a { color: var(--accent-dark); }
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>
+</head>
+<body>
+<div id="app">
+  <h1>ÊTRE OU AVOIR</h1>
+  <div class="subtitle">un jeu Grammarland &mdash; choisir le bon auxiliaire (et le bon accord) au passé composé</div>
+
+  <div class="panel">
+    <h2>Hier&hellip;</h2>
+    <div id="peopleGrid"></div>
+    <div id="status"></div>
+  </div>
+
+  <div class="panel" style="padding:0; overflow:hidden;">
+    <div id="transcript"></div>
+  </div>
+
+  <form id="inputForm" autocomplete="off">
+    <input id="inputBox" type="text" placeholder="Écris ta réponse au passé composé… (ou laisse vide et appuie sur Entrée)" />
+    <button class="primary" type="submit">Envoyer</button>
+  </form>
+
+  <div class="controls">
+    <button id="quizBtn" type="button">Interroge-moi</button>
+    <button id="clearBtn" type="button">Effacer l'écran</button>
+  </div>
+
+  <details id="help">
+    <summary>Comment ça marche ?</summary>
+    <p>
+      Chaque personne a fait plusieurs choses hier. Pour chacune, il faut choisir le bon auxiliaire au
+      passé composé &mdash; <b class="avoir">AVOIR</b> ou <b class="etre">ÊTRE</b> &mdash; et, avec
+      ÊTRE, accorder le participe passé avec le sujet (ajouter un <code>e</code> si le sujet est féminin).
+    </p>
+    <ul>
+      <li>La plupart des verbes utilisent <b class="avoir">AVOIR</b> &mdash; <code>Léa a mangé un sandwich.</code></li>
+      <li>Un petit groupe de verbes de mouvement ou de changement d'état utilisent <b class="etre">ÊTRE</b> :
+        aller, venir, arriver, partir, entrer, sortir, monter, descendre, rester, tomber, retourner,
+        rentrer, naître, mourir, devenir, revenir &mdash; <code>Chloé est montée dans le train.</code></li>
+      <li>Tous les verbes pronominaux (<code>se</code> + infinitif) utilisent toujours <b class="etre">ÊTRE</b> &mdash;
+        <code>Léa s'est réveillée à 7 heures.</code></li>
+      <li>Avec ÊTRE, le participe s'accorde avec le sujet : <code>il est allé</code> mais
+        <code>elle est allée</code>. Avec AVOIR, le participe ne change pas.</li>
+    </ul>
+    <p>
+      Clique sur une icône, ou sur <b>Interroge-moi</b>, pour recevoir une question. Écris ta réponse
+      complète (par exemple <code>Marc est arrivé en retard.</code>) et appuie sur Entrée. Si tu te
+      trompes, tu peux réessayer &mdash; et si tu laisses la case vide, la réponse te sera donnée.
+    </p>
+    <p>Tu peux aussi demander <code>Qu'est-ce que Léa a fait hier ?</code> pour tout revoir d'un coup.</p>
+  </details>
+
+  <p class="footer">&larr; <a href="index.html">Retour à Grammarland</a></p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------------------------------------------------------
+   * DATA
+   * Each person has a short "hier" (yesterday) itinerary of actions.
+   * "base" is the accent-stripped masculine-singular participle, used
+   * for lenient matching; "participle" is the same form with correct
+   * accents, used for display. "reflexive" verbs always take être
+   * regardless of "aux". Every subject here is a single named person
+   * (never "ils"/"elles"), so the only agreement in play is the
+   * masculine-singular vs feminine-singular participle.
+   * ------------------------------------------------------------- */
+
+  var PEOPLE = [
+    { id: "lea", name: "Léa", gender: "f", avatar: "👧", actions: [
+      { id: "reveil", icon: "⏰", verb: "se réveiller", extra: "à 7 heures", reflexive: true, aux: "etre", base: "reveille", participle: "réveillé" },
+      { id: "ecole", icon: "🏫", verb: "aller", extra: "à l'école", reflexive: false, aux: "etre", base: "alle", participle: "allé" },
+      { id: "sandwich", icon: "🥪", verb: "manger", extra: "un sandwich", reflexive: false, aux: "avoir", base: "mange", participle: "mangé" },
+      { id: "amie", icon: "🤝", verb: "rencontrer", extra: "une amie", reflexive: false, aux: "avoir", base: "rencontre", participle: "rencontré" },
+      { id: "maison", icon: "🏠", verb: "rentrer", extra: "à la maison", reflexive: false, aux: "etre", base: "rentre", participle: "rentré" },
+      { id: "film", icon: "🎬", verb: "regarder", extra: "un film", reflexive: false, aux: "avoir", base: "regarde", participle: "regardé" }
+    ] },
+    { id: "marc", name: "Marc", gender: "m", avatar: "🧑", actions: [
+      { id: "lever", icon: "⏰", verb: "se lever", extra: "tard", reflexive: true, aux: "etre", base: "leve", participle: "levé" },
+      { id: "bus", icon: "🚌", verb: "prendre", extra: "le bus", reflexive: false, aux: "avoir", base: "pris", participle: "pris" },
+      { id: "retard", icon: "🏃", verb: "arriver", extra: "en retard", reflexive: false, aux: "etre", base: "arrive", participle: "arrivé" },
+      { id: "cafe1", icon: "☕", verb: "acheter", extra: "un café", reflexive: false, aux: "avoir", base: "achete", participle: "acheté" },
+      { id: "escalier", icon: "🤕", verb: "tomber", extra: "dans l'escalier", reflexive: false, aux: "etre", base: "tombe", participle: "tombé" },
+      { id: "tel", icon: "📞", verb: "téléphoner", extra: "à sa mère", reflexive: false, aux: "avoir", base: "telephone", participle: "téléphoné" }
+    ] },
+    { id: "chloe", name: "Chloé", gender: "f", avatar: "👩", actions: [
+      { id: "tot", icon: "🚪", verb: "partir", extra: "tôt", reflexive: false, aux: "etre", base: "parti", participle: "parti" },
+      { id: "train", icon: "🚆", verb: "monter", extra: "dans le train", reflexive: false, aux: "etre", base: "monte", participle: "monté" },
+      { id: "livre", icon: "📖", verb: "lire", extra: "un livre", reflexive: false, aux: "avoir", base: "lu", participle: "lu" },
+      { id: "gare", icon: "🚉", verb: "descendre", extra: "à la gare", reflexive: false, aux: "etre", base: "descendu", participle: "descendu" },
+      { id: "tennis", icon: "🎾", verb: "jouer", extra: "au tennis", reflexive: false, aux: "avoir", base: "joue", participle: "joué" },
+      { id: "coucher", icon: "🌙", verb: "se coucher", extra: "tôt", reflexive: true, aux: "etre", base: "couche", participle: "couché" }
+    ] },
+    { id: "theo", name: "Théo", gender: "m", avatar: "🧔", actions: [
+      { id: "resteMaison", icon: "🏠", verb: "rester", extra: "à la maison", reflexive: false, aux: "etre", base: "reste", participle: "resté" },
+      { id: "musique", icon: "🎵", verb: "écouter", extra: "de la musique", reflexive: false, aux: "avoir", base: "ecoute", participle: "écouté" },
+      { id: "amis", icon: "🚶", verb: "sortir", extra: "avec des amis", reflexive: false, aux: "etre", base: "sorti", participle: "sorti" },
+      { id: "cafe2", icon: "☕", verb: "boire", extra: "un café", reflexive: false, aux: "avoir", base: "bu", participle: "bu" },
+      { id: "habiller", icon: "👕", verb: "s'habiller", extra: "vite", reflexive: true, aux: "etre", base: "habille", participle: "habillé" },
+      { id: "travail", icon: "💼", verb: "travailler", extra: "toute la journée", reflexive: false, aux: "avoir", base: "travaille", participle: "travaillé" }
+    ] }
+  ];
+
+  var byId = {};
+  PEOPLE.forEach(function (p) { byId[p.id] = p; p.actions.forEach(function (a) { a.person = p; }); });
+
+  var ALL_ACTIONS = [];
+  PEOPLE.forEach(function (p) { p.actions.forEach(function (a) { ALL_ACTIONS.push(a); }); });
+
+  function pron(p) { return p.gender === "f" ? "elle" : "il"; }
+  function PRON(p) { var s = pron(p); return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  /* ---------------------------------------------------------------
+   * SENTENCE BUILDING
+   * ------------------------------------------------------------- */
+
+  function needsAgreement(item) {
+    return item.reflexive || item.aux === "etre";
+  }
+  function agreedParticiple(item, person) {
+    return (needsAgreement(item) && person.gender === "f") ? item.participle + "e" : item.participle;
+  }
+  function expectedStem(item, person) {
+    return (needsAgreement(item) && person.gender === "f") ? item.base + "e" : item.base;
+  }
+  function auxWord(item) {
+    return item.reflexive ? "s'est" : (item.aux === "etre" ? "est" : "a");
+  }
+  function fullSentence(item, person, subjectText) {
+    var subj = subjectText || person.name;
+    return subj + " " + auxWord(item) + " " + agreedParticiple(item, person) +
+      (item.extra ? " " + item.extra : "") + ".";
+  }
+
+  /* ---------------------------------------------------------------
+   * UI: people grid
+   * ------------------------------------------------------------- */
+
+  var peopleGridEl = document.getElementById("peopleGrid");
+  var iconElsById = {};
+  var learned = {}; // action.id -> true, once answered correctly or revealed
+  var score = { correct: 0, attempts: 0 };
+  var statusEl = document.getElementById("status");
+
+  function renderPeopleGrid() {
+    peopleGridEl.innerHTML = "";
+    PEOPLE.forEach(function (p) {
+      var row = document.createElement("div");
+      row.className = "person-row";
+      var who = document.createElement("div");
+      who.className = "who";
+      who.innerHTML = '<span class="avatar">' + p.avatar + '</span><span>' + p.name + '</span>';
+      row.appendChild(who);
+      var actionsEl = document.createElement("div");
+      actionsEl.className = "actions";
+      p.actions.forEach(function (a) {
+        var el = document.createElement("div");
+        el.className = "action-icon";
+        el.title = a.verb + (a.extra ? " " + a.extra : "");
+        el.textContent = a.icon;
+        if (learned[a.id]) {
+          el.classList.add(a.reflexive || a.aux === "etre" ? "learned-etre" : "learned-avoir");
+          var dot = document.createElement("span");
+          dot.className = "dot";
+          el.appendChild(dot);
+        }
+        el.addEventListener("click", function () { askAbout(a); });
+        actionsEl.appendChild(el);
+        iconElsById[a.id] = el;
+      });
+      row.appendChild(actionsEl);
+      peopleGridEl.appendChild(row);
+    });
+    updateStatus();
+  }
+
+  function updateStatus() {
+    statusEl.innerHTML = "Score : <b>" + score.correct + "</b> / " + score.attempts +
+      " &nbsp;&middot;&nbsp; appris : <b>" + Object.keys(learned).length + "</b> / " + ALL_ACTIONS.length;
+  }
+
+  function highlightAction(action) {
+    Object.keys(iconElsById).forEach(function (id) { iconElsById[id].classList.remove("active"); });
+    iconElsById[action.id].classList.add("active");
+  }
+
+  /* ---------------------------------------------------------------
+   * UI: transcript
+   * ------------------------------------------------------------- */
+
+  var transcriptEl = document.getElementById("transcript");
+  function say(role, text) {
+    var div = document.createElement("div");
+    div.className = "line " + role;
+    div.textContent = text;
+    transcriptEl.appendChild(div);
+    transcriptEl.scrollTop = transcriptEl.scrollHeight;
+  }
+
+  /* ---------------------------------------------------------------
+   * QUIZ FLOW
+   * ------------------------------------------------------------- */
+
+  var context = { lastPerson: null };
+  var pending = null; // the action currently being quizzed
+
+  function askAbout(action) {
+    pending = action;
+    context.lastPerson = action.person;
+    highlightAction(action);
+    say("prompt", action.person.name + " — " + action.verb + (action.extra ? " " + action.extra : ""));
+  }
+
+  function randomUnlearnedOrAny() {
+    var pool = ALL_ACTIONS.filter(function (a) { return !learned[a.id]; });
+    if (!pool.length) pool = ALL_ACTIONS;
+    var others = pool.filter(function (a) { return !pending || a.id !== pending.id; });
+    if (others.length) pool = others;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  function markLearned(action) {
+    if (!learned[action.id]) {
+      learned[action.id] = true;
+      renderPeopleGrid();
+    }
+  }
+
+  /* ---------------------------------------------------------------
+   * ANSWER CHECKING
+   * Only the auxiliary and the participle matter — the subject name
+   * doesn't need to be typed, and word order after the participle is
+   * never checked. Accents are stripped only when comparing the
+   * participle itself, never when scanning for "a" vs "est" (so that
+   * "à" in a complement like "à 7 heures" can never be mistaken for
+   * the auxiliary "a").
+   * ------------------------------------------------------------- */
+
+  function stripAccents(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, ""); }
+  function normalizeQuotes(s) { return s.replace(/[’‘]/g, "'"); }
+
+  function checkAnswer(action, raw) {
+    var person = action.person;
+    var text = normalizeQuotes(raw).toLowerCase().replace(/[.,!?;:]/g, "");
+    var tokens = text.split(/\s+/).filter(Boolean);
+
+    var auxIdx = -1, auxType = null, reflexiveDetected = false;
+    for (var i = 0; i < tokens.length; i++) {
+      var t = tokens[i];
+      if (t === "a") { auxIdx = i; auxType = "avoir"; break; }
+      if (t === "est") { auxIdx = i; auxType = "etre"; break; }
+      if (t === "s'est" || t === "sest") { auxIdx = i; auxType = "etre"; reflexiveDetected = true; break; }
+      if ((t === "s" || t === "se") && tokens[i + 1] === "est") { auxIdx = i + 1; auxType = "etre"; reflexiveDetected = true; break; }
+    }
+
+    if (auxIdx === -1) {
+      return { ok: false, text: "Je ne vois pas d'auxiliaire (« a » ou « est ») — réessaie." };
+    }
+
+    var expectedAux = action.reflexive ? "etre" : action.aux;
+    if (auxType !== expectedAux) {
+      return { ok: false, text: "Non — avec «" + action.verb + "», il faut " +
+        (expectedAux === "etre" ? "ÊTRE" : "AVOIR") + ", pas " + (expectedAux === "etre" ? "AVOIR" : "ÊTRE") + "." };
+    }
+    if (action.reflexive && !reflexiveDetected) {
+      return { ok: false, text: "Presque — « " + action.verb + " » est un verbe pronominal : il faut « s'est », pas seulement « est »." };
+    }
+    if (!action.reflexive && reflexiveDetected) {
+      return { ok: false, text: "« " + action.verb + " » n'est pas un verbe pronominal — pas besoin de « se »." };
+    }
+
+    var rawParticiple = tokens[auxIdx + 1];
+    if (!rawParticiple) {
+      return { ok: false, text: "Il manque le participe passé après « " + tokens[auxIdx] + " »." };
+    }
+    var participle = stripAccents(rawParticiple);
+    var expected = expectedStem(action, person);
+
+    if (participle === expected) {
+      return { ok: true, text: "Parfait ! " + fullSentence(action, person) };
+    }
+
+    if (!needsAgreement(action)) {
+      // avoir never agrees with the subject, regardless of gender — the
+      // only wrong-but-close answer here is an unwanted "e" tacked on.
+      if (participle === action.base + "e") {
+        return { ok: false, text: "Presque ! Avec AVOIR, le participe ne s'accorde pas avec le sujet : pas de « e » ici — " + action.participle + "." };
+      }
+    } else {
+      var otherGenderForm = person.gender === "f" ? action.base : action.base + "e";
+      if (participle === otherGenderForm) {
+        return { ok: false, text: person.gender === "f"
+          ? "Presque ! " + person.name + " est féminin : il faut ajouter un « e » — " + action.participle + "e."
+          : "Presque ! " + person.name + " est masculin : pas de « e » — " + action.participle + "." };
+      }
+    }
+    if (participle.indexOf(action.base) === 0) {
+      return { ok: false, text: "Presque ! Vérifie la terminaison du participe : " + agreedParticiple(action, person) + "." };
+    }
+    return { ok: false, text: "Ce n'est pas le bon participe. L'infinitif est « " + action.verb +
+      " », le participe passé est « " + action.participle + " »." };
+  }
+
+  /* ---------------------------------------------------------------
+   * "Qu'est-ce que X a fait hier ?" — full recap
+   * ------------------------------------------------------------- */
+
+  function findPerson(word) {
+    var w = stripAccents(word.toLowerCase());
+    if (w === "elle") return context.lastPerson && context.lastPerson.gender === "f" ? context.lastPerson : null;
+    if (w === "il") return context.lastPerson && context.lastPerson.gender === "m" ? context.lastPerson : null;
+    var hit = PEOPLE.filter(function (p) { return stripAccents(p.name.toLowerCase()) === w; });
+    return hit.length === 1 ? hit[0] : null;
+  }
+
+  var CONNECTORS = ["D'abord, ", "Ensuite, ", "Puis, ", "Après ça, ", "Plus tard, ", "Enfin, "];
+
+  function recapDay(person) {
+    context.lastPerson = person;
+    var lines = person.actions.map(function (a, i) {
+      var subj = i === 0 ? person.name : pron(a.person);
+      var sentence = fullSentence(a, person, subj);
+      // lower-case the subject pronoun's sentence-initial letter only when a
+      // connector is going to supply the capital instead
+      if (i > 0) sentence = sentence.charAt(0).toLowerCase() + sentence.slice(1);
+      return CONNECTORS[i % CONNECTORS.length] + sentence;
+    });
+    return lines.join(" ");
+  }
+
+  function tryHandle(raw) {
+    var text = normalizeQuotes(raw.trim());
+    var m = text.match(/^qu('|’)est-ce que\s+(.+?)\s+a fait(?:\s+hier)?\s*\??$/i);
+    if (m) {
+      var person = findPerson(m[2].trim());
+      if (!person) return "Je ne sais pas de qui tu parles.";
+      return recapDay(person);
+    }
+    return null;
+  }
+
+  /* ---------------------------------------------------------------
+   * WIRING
+   * ------------------------------------------------------------- */
+
+  var form = document.getElementById("inputForm");
+  var inputBox = document.getElementById("inputBox");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var raw = inputBox.value;
+    inputBox.value = "";
+
+    if (!raw.trim()) {
+      if (pending) {
+        say("system", "La réponse : " + fullSentence(pending, pending.person));
+        markLearned(pending);
+        pending = null;
+      } else {
+        askAbout(randomUnlearnedOrAny());
+      }
+      return;
+    }
+
+    say("learner", raw);
+
+    if (pending) {
+      var result = checkAnswer(pending, raw);
+      score.attempts++;
+      if (result.ok) {
+        score.correct++;
+        say("ok", result.text);
+        markLearned(pending);
+        pending = null;
+      } else {
+        say("no", result.text);
+      }
+      updateStatus();
+      return;
+    }
+
+    var response = tryHandle(raw);
+    if (response !== null) {
+      say("system", response);
+    } else {
+      say("system", "Clique une icône, appuie sur « Interroge-moi », ou demande « Qu'est-ce que " +
+        PEOPLE[Math.floor(Math.random() * PEOPLE.length)].name + " a fait hier ? ».");
+    }
+  });
+
+  document.getElementById("quizBtn").addEventListener("click", function () {
+    askAbout(randomUnlearnedOrAny());
+  });
+
+  document.getElementById("clearBtn").addEventListener("click", function () {
+    transcriptEl.innerHTML = "";
+  });
+
+  // greet
+  renderPeopleGrid();
+  say("system", "Bonjour ! Clique sur une icône ou appuie sur « Interroge-moi » pour commencer.");
+  inputBox.focus();
+})();
+</script>
+</body>
+</html>

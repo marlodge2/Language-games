@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Line Comparison</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 15px;
+    }
+    .line {
+      height: 25px;
+      margin: 15px auto;
+    }
+    #lineA { background-color: red; }
+    #lineB { background-color: blue; }
+    #comparison {
+      margin-top: 20px;
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+    #feedback { font-weight: bold; margin-top: 12px; }
+    #score { margin-top: 8px; }
+    #timer { margin-top: 8px; font-weight: bold; color: darkgreen; }
+    button {
+      margin: 8px;
+      padding: 8px 16px;
+      font-size: 0.95em;
+    }
+    #endControls {
+      margin-top: 25px;
+      display: none;
+    }
+    #playAgain {
+      background-color: darkblue;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #quit {
+      background-color: darkred;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #progressContainer {
+      width: 80%;
+      height: 20px;
+      background-color: #ddd;
+      margin: 20px auto;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    #progressBar {
+      height: 100%;
+      width: 0%;
+      background-color: green;
+      transition: width 0.3s;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <div id="lineA" class="line"></div>
+    <div id="labelA">A</div>
+    <div id="lineB" class="line"></div>
+    <div id="labelB">B</div>
+  </div>
+  <div id="comparison"></div>
+  <div>
+    <button onclick="checkAnswer(true)">True</button>
+    <button onclick="checkAnswer(false)">False</button>
+  </div>
+  <div id="feedback"></div>
+  <div id="score">Score: 0</div>
+  <div id="timer">Time left: 5s</div>
+
+  <div id="progressContainer">
+    <div id="progressBar"></div>
+  </div>
+
+  <div id="endControls">
+    <button id="playAgain" onclick="restartGame()">PLAY AGAIN</button>
+    <button id="quit" onclick="exitGame()">QUIT</button>
+  </div>
+
+  <script>
+    let widthA, widthB;
+    let currentStatement;
+    let lastStatement = "";
+    let correctAnswer;
+    let score = 0;
+    let countdown;
+    let timeLeft;
+    let gameActive = true;
+
+    function getRandomWidth() {
+      return Math.floor(Math.random() * 5) + 3; // 3–7 em
+    }
+
+    function newRound() {
+      if (!gameActive) return;
+
+      if (score >= 10) {
+        endGame("🎉 Congratulations! You reached 10 correct answers!");
+        return;
+      }
+
+      widthA = getRandomWidth();
+      widthB = getRandomWidth();
+
+      document.getElementById('lineA').style.width = widthA + 'em';
+      document.getElementById('lineB').style.width = widthB + 'em';
+
+      const statements = [
+        "A is longer than B",
+        "A is shorter than B",
+        "A and B are the same length",
+        "A and B are different in length"
+      ];
+
+      // Ensure no identical statement twice in a row
+      do {
+        currentStatement = statements[Math.floor(Math.random() * statements.length)];
+      } while (currentStatement === lastStatement);
+      lastStatement = currentStatement;
+
+      document.getElementById('comparison').textContent = currentStatement;
+
+      if (currentStatement === "A is longer than B") {
+        correctAnswer = (widthA > widthB);
+      } else if (currentStatement === "A is shorter than B") {
+        correctAnswer = (widthA < widthB);
+      } else if (currentStatement === "A and B are the same length") {
+        correctAnswer = (widthA === widthB);
+      } else {
+        correctAnswer = (widthA !== widthB);
+      }
+
+      document.getElementById('feedback').textContent = "";
+      startTimer();
+    }
+
+    function startTimer() {
+      clearInterval(countdown);
+      timeLeft = 10;
+      document.getElementById('timer').textContent = "Time left: " + timeLeft + "s";
+      countdown = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timer').textContent = "Time left: " + timeLeft + "s";
+        if (timeLeft <= 0) {
+          clearInterval(countdown);
+          document.getElementById('feedback').textContent = "⏰ Time's up! ❌ Incorrect!";
+          setTimeout(newRound, 1000);
+        }
+      }, 1000);
+    }
+
+    function checkAnswer(answer) {
+      if (!gameActive) return;
+      clearInterval(countdown);
+      if (answer === correctAnswer) {
+        document.getElementById('feedback').textContent = "✅ Correct!";
+        score++;
+      } else {
+        document.getElementById('feedback').textContent = "❌ Incorrect!";
+      }
+      document.getElementById('score').textContent = "Score: " + score;
+      updateProgress();
+      setTimeout(newRound, 1000);
+    }
+
+    function updateProgress() {
+      const progress = (score / 10) * 100;
+      document.getElementById('progressBar').style.width = progress + "%";
+    }
+
+    function endGame(message) {
+      gameActive = false;
+      clearInterval(countdown);
+      document.getElementById('comparison').textContent = message;
+      document.getElementById('timer').textContent = "";
+      document.getElementById('endControls').style.display = "block";
+    }
+
+    function restartGame() {
+      score = 0;
+      gameActive = true;
+      document.getElementById('score').textContent = "Score: 0";
+      document.getElementById('progressBar').style.width = "0%";
+      document.getElementById('endControls').style.display = "none";
+      newRound();
+    }
+
+    function exitGame() {
+      window.location.href = "index.html";
+    }
+
+    document.addEventListener('keydown', event => {
+      if (event.key.toLowerCase() === 't') checkAnswer(true);
+      if (event.key.toLowerCase() === 'f') checkAnswer(false);
+    });
+
+    newRound();
+  </script>
+</body>
+</html>

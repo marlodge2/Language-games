@@ -1,0 +1,179 @@
+[FileInfo]
+Version=3
+
+[Title]
+strQuizTitle=Supermarket announcement
+
+[NextEx]
+strNextExURL=hidden3.htm
+
+[Reading]
+IncludeReading=0
+IncludeTimer=0
+Timer=1
+ReadingInternal=1
+ReadingPath=
+ReadingTitle=
+ReadingTextLength=0
+
+[Question1]
+Question=<EMBED src="QS1.wav" autostart=false height=55 width=145>
+AnswerA=even
+AnswerB=this
+AnswerC=suck
+AnswerD=ounce
+AnswerE=
+FeedbackA=No: Good evening. ....
+FeedbackB=CORRECT: Good evening. <FONT COLOR="green">This</FONT> is a customer announcement.
+FeedbackC=NO: ... is a customer ....
+FeedbackD=No: .. announcement.
+FeedbackE=
+CorrectA=0
+CorrectB=1
+CorrectC=0
+CorrectD=0
+CorrectE=0
+
+[Question2]
+Question=<EMBED src="QS2.wav" autostart=false height=55 width=145>
+AnswerA=Tonight
+AnswerB=while
+AnswerC=eighteen
+AnswerD=lowered
+AnswerE=
+FeedbackA=CORRECT: <FONT COLOR="green">Tonight</FONT> we have freshly caught wild salmon and £8.45 a kilo, as well as fillets of sole for £7.80 a kilo reduced from £9.20.
+FeedbackB=No: ... wild  ...
+FeedbackC=No: ... seven pounds eighty ...
+FeedbackD=No: ... kilo reduced ....
+FeedbackE=
+CorrectA=1
+CorrectB=0
+CorrectC=0
+CorrectD=0
+CorrectE=0
+
+[Question3]
+Question=<EMBED src="QS3.wav" autostart=false height=55 width=145>
+AnswerA=angel
+AnswerB=utter
+AnswerC=coal
+AnswerD=hundred
+AnswerE=
+FeedbackA=NO: ... range of  ...
+FeedbackB=NO: ... at attractive ...
+FeedbackC=NO: ... like whole ...
+FeedbackD=CORRECT: There is a further range of fresh fish and seafood at attractive prices, like whole prawns at 90p. for <FONT COLOR="green"> 100 </FONT>grams.
+FeedbackE=
+CorrectA=0
+CorrectB=0
+CorrectC=0
+CorrectD=1
+CorrectE=0
+
+[Question4]
+Question=<EMBED src="QS4.wav" autostart=false height=55 width=145>
+AnswerA=careers
+AnswerB=diary
+AnswerC=from
+AnswerD=fifteen
+AnswerE=
+FeedbackA=NO: ... bakery has ...
+FeedbackB=NO: .. and Irish ...
+FeedbackC=CORRECT: Our in-store bakery has crusty white loaves reduced <FONT COLOR="green"> from </FONT> 90 p. to 55 p.and Irish soda bread at £1.80 reduced <FONT COLOR="green"> from </FONT> £2.50.
+FeedbackD=No: ... £2.50.
+FeedbackE=
+CorrectA=0
+CorrectB=0
+CorrectC=1
+CorrectD=0
+CorrectE=0
+
+[Question5]
+Question=<EMBED src="QS5.wav" autostart=false height=55 width=145>
+AnswerA=there
+AnswerB=also
+AnswerC=up
+AnswerD=strolls
+AnswerE=
+FeedbackA=No: They have   ...
+FeedbackB=CORRECT: They have <FONT COLOR="green">also </FONT> made reductions on cup cakes and Swiss rolls.
+FeedbackC=No: ... cup  ....
+FeedbackD=No: ... Swiss rolls ...
+FeedbackE=
+CorrectA=0
+CorrectB=1
+CorrectC=0
+CorrectD=0
+CorrectE=0
+
+[Question6]
+Question=<EMBED src="QS6.wav" autostart=false height=55 width=145>
+AnswerA=have
+AnswerB=oven
+AnswerC=Bovril
+AnswerD=scout
+AnswerE=
+FeedbackA=CORRECT: We <FONT COLOR="green">have</FONT> a number of real bargains at the frozen goods counter.
+FeedbackB=No: ... have a number ...
+FeedbackC=No: ... number of real ...
+FeedbackD=No: ... goods counter.
+FeedbackE=
+CorrectA=1
+CorrectB=0
+CorrectC=0
+CorrectD=0
+CorrectE=0
+
+[Question7]
+Question=<EMBED src="QS7.wav" autostart=false height=55 width=145>
+AnswerA=by
+AnswerB=sundew
+AnswerC=get
+AnswerD=us
+AnswerE=
+FeedbackA=No: Buy ..
+FeedbackB=No: .. pizzas and you  ...
+FeedbackC=CORRECT: Buy one of our pepperoni pizzas and you <FONT COLOR="green">get</FONT> a second one free.
+FeedbackD=No: ... a second  ...
+FeedbackE=
+CorrectA=0
+CorrectB=0
+CorrectC=1
+CorrectD=0
+CorrectE=0
+
+[Question8]
+Question=<EMBED src="QS8.wav" autostart=false height=55 width=145>
+AnswerA=kit
+AnswerB=never
+AnswerC=concur
+AnswerD=half
+AnswerE=
+FeedbackA=No: ... packet  ...
+FeedbackB=No: ... can have a ..
+FeedbackC=No: .. chicken curry ..
+FeedbackD=CORRECT: and if you buy a packet of Chinese special fried rice you can have a Thai chicken curry at <FONT COLOR="green">half </FONT> price.
+FeedbackE=
+CorrectA=0
+CorrectB=0
+CorrectC=0
+CorrectD=1
+CorrectE=0
+
+[Question9]
+Question=<EMBED src="QS9.wav" autostart=false height=55 width=145>
+AnswerA=forget
+AnswerB=chopping
+AnswerC=fried
+AnswerD=this
+AnswerE=
+FeedbackA=CORRECT: Don't <FONT COLOR="green">forget</FONT> we now have late night shopping on Thursday, Friday and Saturday, when the store stays open till eleven p.m.
+FeedbackB=No: ... night shopping ...
+FeedbackC=No: ... Friday ...
+FeedbackD=No: .. the store ..
+FeedbackE=
+CorrectA=1
+CorrectB=0
+CorrectC=0
+CorrectD=0
+CorrectE=0

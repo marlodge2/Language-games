@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Jeu Solo</title>
+  <link rel="stylesheet" href="soclip.css">
+  <script src="soclip.js" defer></script>
+</head>
+<body>
+  <div id="pageWrapper">
+    <!-- Résumé, affiché une fois si le texte contient une section ### -->
+    <div id="summaryOverlay" style="display:none;">
+      <div id="summaryBox">
+        <p id="summaryText"></p>
+        <button id="summaryDismissButton">Continuer</button>
+      </div>
+    </div>
+
+    <!-- Barre de titre -->
+    <div id="titleBar">
+      <h1 id="storyTitle">Chargement de l'histoire...</h1>
+    </div>
+
+    <!-- Texte de l'histoire -->
+    <div id="textBox">
+      Chargement du texte...
+    </div>
+
+    <!-- Zone de jeu solo -->
+    <div id="playArea">
+      <div id="soloBox" style="display:none;">
+        <div class="inputRow">
+          <input id="wordInput" type="text" placeholder="Entrez un mot">
+          <button id="soloHelpButton">Aide</button>
+          <button id="soloFirstLetterButton">Premières lettres</button>
+          <button id="giveUpButton">Quitter</button>
+        </div>
+        <div id="feedback"></div>
+      </div>
+
+      <!-- Écran de fin -->
+      <div id="endScreen"></div>
+    </div>
+  </div>
+</body>
+</html>

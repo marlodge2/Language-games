@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sequitur (Français)</title>
+    <link rel="stylesheet" href="sequ.css?v=20240604" />
+     <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>   
+</head>
+  </head>
+  <body>
+    <div id="title-screen">
+      <h1>Sequitur</h1>
+      <div class="subtitle">
+        Un jeu de langue par John et Muriel Higgins<br />Révisé été 2026
+      </div>
+      <div id="title-instructions">
+        Vous voyez le début d'un texte et devez le reconstituer en choisissant
+        la bonne suite à chaque étape. C'est une sorte de puzzle narratif. Si
+        vous êtes bloquée, cliquez sur « Besoin d'aide ? » pour voir l'histoire
+        complète pendant cinq secondes.
+      </div>
+      <div id="story-list">
+        <select id="story-select" onchange="enableStartButton()">
+          <option value="" disabled selected>
+            -- Sélectionnez une histoire --
+          </option>
+          <option value="ducksoup.txt">Les visiteurs de Nasreddin</option>
+          <option value="pot.txt">Emprunter une marmite</option>
+          <option value="shirt.txt">La chemise de Nasreddin</option>
+        </select>
+      </div>
+
+      <button id="start-button" onclick="startGame()" disabled>
+        Démarrer le jeu
+      </button>
+    </div>
+
+    <div id="game-screen" class="hidden">
+      <h2 id="story-title"></h2>
+      <div id="story-box"></div>
+      <p id="instruction" class="instruction">Choisissez la bonne suite</p>
+      <div id="options"></div>
+      <div id="game-controls">
+        <button id="help-button" onclick="needHelp()">Besoin d'aide ?</button>
+        <button id="quit-button" onclick="quitGame()">Quitter</button>
+      </div>
+      <div id="end-controls" class="hidden">
+        <button id="play-again-button" onclick="restartGame()">Rejouer</button>
+        <button id="home-button" onclick="goHome()">
+          Page d'accueil de John Higgins
+        </button>
+      </div>
+    </div>
+
+    <script src="sequ.js"></script>
+  </body>
+</html>

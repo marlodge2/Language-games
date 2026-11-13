@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Seesaw Weight Game</title>
+<meta name="author" content="John Higgins">
+
+<style>
+/* ---------------------------
+   COLOUR SYSTEM
+   (This is the shared palette — reuse these variables
+   when bringing other pages onto the same look.)
+---------------------------- */
+
+:root {
+  --color-bg: #f6f5f1;
+  --color-surface: #ffffff;
+  --color-text: #22262b;
+  --color-muted: #5b6570;
+  --color-border: #e3e0d8;
+  --color-accent: #0e8c62;
+  --color-accent-dark: #0a6b4a;
+  --shadow-sm: 0 2px 6px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 14px rgba(0,0,0,0.12);
+  --radius: 12px;
+}
+
+
+/* ---------------------------
+   GENERAL PAGE LAYOUT
+---------------------------- */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  margin: 20px;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+a {
+  color: var(--color-accent);
+}
+
+a:hover {
+  color: var(--color-accent-dark);
+}
+
+#startup-screen {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 25px 30px;
+  background-color: var(--color-surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+
+#startup-screen h2 {
+  margin-top: 0;
+  color: var(--color-text);
+}
+
+#startup-screen p {
+  text-align: justify;
+  line-height: 1.5em;
+  color: var(--color-text);
+}
+
+#startup-screen button {
+  padding: 10px 16px;
+  margin: 6px;
+  font-size: 1em;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--color-accent);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+#startup-screen button:hover {
+  background-color: var(--color-accent-dark);
+}
+
+#children-area {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 10;
+}
+
+
+/* ---------------------------
+   CHILD BOXES
+---------------------------- */
+
+.child-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 8px 4px;
+  margin: 0;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 120px;
+  text-align: center;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  transition: transform 0.2s, border 0.2s;
+  cursor: pointer;
+  border: 3px solid transparent;
+}
+
+.child-box:hover {
+  transform: scale(1.05);
+}
+
+.child-box.on-left {
+  border-color: #4a90d9;
+}
+
+.child-box.on-right {
+  border-color: #d9704a;
+}
+
+.child-placement-hint {
+  font-size: 0.7em;
+  font-weight: bold;
+  min-height: 1.2em;
+  margin-top: 2px;
+}
+
+.child-box.on-left .child-placement-hint {
+  color: #4a90d9;
+}
+
+.child-box.on-right .child-placement-hint {
+  color: #d9704a;
+}
+
+.child-avatar {
+  width: 60px;
+  height: 60px;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #ddd url('default-avatar.png') center/cover no-repeat;
+  border-radius: 50%;
+  margin: 0 auto 6px auto;
+}
+
+.child-name {
+  font-weight: bold;
+}
+
+.child-weight {
+  margin-top: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--color-muted);
+}
+
+.child-guess-row {
+  margin-top: 4px;
+  text-align: center;
+  cursor: default;
+}
+
+.child-box .guess-input {
+  width: 45px;
+  font-size: 0.9em;
+}
+
+.child-box .guess-feedback {
+  margin-left: 6px;
+  font-weight: bold;
+}
+
+@media (max-width: 900px) {
+  #children-area {
+    overflow-x: auto;
+  }
+  .child-avatar {
+    width: 44px;
+    height: 44px;
+  }
+  .child-name {
+    font-size: 0.85em;
+  }
+  .child-weight {
+    font-size: 12px;
+  }
+  .child-placement-hint {
+    font-size: 0.6em;
+  }
+  .child-box .guess-input {
+    width: 34px;
+    font-size: 0.8em;
+  }
+}
+
+
+/* ---------------------------
+   SEESAW CONTAINER
+---------------------------- */
+
+#seesaw-container {
+  position: relative;
+  margin-top: 20px;
+  height: 200px;
+}
+
+#seesaw {
+  position: relative;
+  width: 500px;
+  height: 200px;
+  margin: 0 auto;
+  z-index: 1;
+}
+
+
+/* ---------------------------
+   SEESAW PLANK
+---------------------------- */
+
+#seesaw-bar {
+  width: 400px;
+  height: 20px;
+  background: linear-gradient(90deg, #c89b53, #d8b16a, #c89b53);
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.25);
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  transform-origin: 50% 50%;
+  transition: transform 0.6s cubic-bezier(.25,.8,.25,1);
+}
+
+
+/* ---------------------------
+   SEESAW SEATS
+---------------------------- */
+
+.side {
+  position: absolute;
+  top: 20px;
+  width: 120px;
+  height: 28px;
+  background: #eee;
+  border-radius: 6px;
+  box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+  padding-top: 2px;
+  border: 2px solid transparent;
+}
+
+#left-side { left: 50px; border-color: #4a90d9; }
+#right-side { right: 50px; border-color: #d9704a; }
+
+.side-label {
+  position: absolute;
+  top: -18px;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.8em;
+}
+
+.drop-zone {
+  position: absolute;
+  top: 4px;
+  left: 5px;
+  right: 5px;
+  height: 20px;
+  border: 1px dashed #999;
+  border-radius: 4px;
+  font-size: 0.7em;
+  color: #666;
+  line-height: 1.1em;
+  overflow: hidden;
+}
+
+.side-children {
+  position: absolute;
+  top: 4px;
+  left: 5px;
+  right: 5px;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+
+/* ---------------------------
+   PIVOT
+---------------------------- */
+
+#pivot {
+  width: 0;
+  height: 0;
+  border-left: 35px solid transparent;
+  border-right: 35px solid transparent;
+  border-top: 60px solid #555;
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 3px 4px rgba(0,0,0,0.3));
+}
+
+
+/* ---------------------------
+   REPORT + STATUS BOXES
+---------------------------- */
+
+#controls {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+#controls button {
+  padding: 8px 14px;
+  margin: 4px;
+  font-size: 0.95em;
+  border: 1px solid var(--color-accent);
+  border-radius: 8px;
+  background-color: var(--color-surface);
+  color: var(--color-accent);
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+#controls button:hover {
+  background-color: var(--color-accent);
+  color: #fff;
+}
+
+#report-box {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 10px;
+  height: 120px;
+  overflow-y: auto;
+  background: var(--color-surface);
+  margin-bottom: 10px;
+}
+
+#status-box {
+  font-weight: bold;
+  color: var(--color-accent-dark);
+  text-align: center;
+  margin-top: 10px;
+}
+
+.final-button {
+  display: block;
+  width: 200px;
+  margin: 10px auto;
+  padding: 10px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--color-accent);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.final-button:hover {
+  background-color: var(--color-accent-dark);
+}
+
+#print-button {
+  display: none;
+}
+
+#print-area {
+  display: none;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #print-area, #print-area * {
+    visibility: visible;
+  }
+  #print-area {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+  #print-area h2 {
+    margin-bottom: 4px;
+  }
+  #print-area ul {
+    margin: 0 0 16px 0;
+    padding-left: 20px;
+  }
+}
+</style>
+ <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>   
+</head>
+<body>
+
+
+<div id="startup-screen">
+  <p style="text-align:center;"><a href="Thai-Seesaw.html">ภาษาไทย (Thai version)</a> &middot; <a href="Thai-Seesaw-roman.html">romanized Thai</a></p>
+  <h2>Seesaw<br>a game for language learners<br>by John Higgins, 2026</h2>
+  <p>
+    You see six children and know the weights of one, two or three of them.<br>
+    Click a child to put them on the seesaw &mdash; click again to move them to the other side,
+    and a third time to take them off. The seesaw reacts as soon as you place someone.<br>
+    Use the results to deduce the hidden weights. <br>Enter your guesses below each child. <br>
+    Remember that <em>a little more/less</em> means that the difference is 1 to 3 kilos,<br>
+    <em>more/less</em> means 4 to 6 kilos, and <em>a lot more/less</em> means 7 or more kilos.
+  </p>
+  <p>Select a difficulty:</p>
+
+  <button onclick="startGame('easy')">EASY (3 weights shown)</button>
+  <button onclick="startGame('moderate')">MODERATE (2 weights shown)</button>
+  <button onclick="startGame('hard')">HARD (1 weight shown)</button>
+</div>
+
+
+<!-- EVERYTHING BELOW HERE MUST BE INSIDE game-container -->
+<div id="game-container" style="display:none;">
+
+  <div id="children-area"></div>
+
+  <div id="seesaw-container">
+    <div id="seesaw">
+      <div id="seesaw-bar"></div>
+      <div id="pivot"></div>
+
+      <div id="left-side" class="side">
+        <div class="side-label">Left side</div>
+        <div class="drop-zone">Click a child once to place here</div>
+        <div class="side-children" id="left-children"></div>
+      </div>
+
+      <div id="right-side" class="side">
+        <div class="side-label">Right side</div>
+        <div class="drop-zone">Click a child twice to place here</div>
+        <div class="side-children" id="right-children"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="controls">
+    <button onclick="clearSeesaw()">Clear Seesaw</button>
+    <button onclick="giveUp()">Give Up</button>
+    <button id="print-button" onclick="printClues()">Print Children &amp; Clues</button>
+  </div>
+
+  <div id="report-box"></div>
+  <div id="status-box"></div>
+
+  <div id="print-area"></div>
+
+</div>
+
+<script>
+// ---------------------------
+// GAME DATA
+// ---------------------------
+
+const childNames = ["ALICE", "BEN", "CHARLIE", "DAVID", "EMMA", "FRED"];
+let children = [];
+let leftSideChildren = [];
+let rightSideChildren = [];
+let revealedChildren = [];
+let weighedCombos = new Set();
+
+// Wrong guess counter
+let totalWrongGuesses = 0;
+
+
+// ---------------------------
+// STARTUP + DIFFICULTY
+// ---------------------------
+
+function startGame(level) {
+  document.getElementById("startup-screen").style.display = "none";
+  document.getElementById("game-container").style.display = "block";
+  initGame(level);
+}
+
+function weightsValid(weights, maxPairs) {
+  const counts = {};
+  weights.forEach(w => counts[w] = (counts[w] || 0) + 1);
+
+  let pairCount = 0;
+  for (const w in counts) {
+    if (counts[w] > 2) return false;
+    if (counts[w] === 2) pairCount++;
+  }
+  return pairCount <= maxPairs;
+}
+
+function generateWeights(count, min, max) {
+  // Narrow ranges (e.g. hard mode) may not have enough distinct values to
+  // keep duplicates down to 2 pairs, so relax the limit just enough to stay solvable.
+  const distinctValues = max - min + 1;
+  const maxPairs = Math.max(2, count - distinctValues);
+
+  let weights;
+  do {
+    weights = [];
+    for (let i = 0; i < count; i++) {
+      weights.push(min + Math.floor(Math.random() * (max - min + 1)));
+    }
+  } while (!weightsValid(weights, maxPairs));
+  return weights;
+}
+
+function initGame(level) {
+  children = [];
+  leftSideChildren = [];
+  rightSideChildren = [];
+  revealedChildren = [];
+  weighedCombos = new Set();
+
+  totalWrongGuesses = 0;
+
+  document.getElementById("left-children").innerHTML = "";
+  document.getElementById("right-children").innerHTML = "";
+  document.getElementById("report-box").innerHTML = "";
+  document.getElementById("status-box").textContent = "";
+  document.getElementById("print-button").style.display = "none";
+
+  const bar = document.getElementById("seesaw-bar");
+  bar.style.transform = "translateX(-50%) rotate(0deg)";
+
+  // Difficulty: how many weights to reveal
+  let revealCount = 1;
+  if (level === "easy") revealCount = 3;
+  if (level === "moderate") revealCount = 2;
+
+  // Difficulty: weight range (harder difficulty = narrower, closer weights)
+  const [minWeight, maxWeight] = level === "hard" ? [24, 26] : [22, 28];
+
+  // Assign random weights (no more than 2 pairs of identical weights)
+  const weights = generateWeights(childNames.length, minWeight, maxWeight);
+  childNames.forEach((name, i) => {
+    children.push({ name, weight: weights[i], revealed: false, guesses: [], side: null });
+  });
+
+  const shuffled = [...children].sort(() => Math.random() - 0.5);
+  revealedChildren = shuffled.slice(0, revealCount);
+
+  children.forEach(c => {
+    c.revealed = revealedChildren.includes(c);
+  });
+
+  renderChildren();
+  updateSideDisplays();
+}
+
+
+// ---------------------------
+// RENDERING CHILDREN + INPUTS
+// ---------------------------
+
+function renderChildren() {
+  const area = document.getElementById("children-area");
+  area.innerHTML = "";
+
+  children.forEach(child => {
+
+    const div = document.createElement("div");
+    div.className = "child-box";
+    if (child.side === "left") div.classList.add("on-left");
+    if (child.side === "right") div.classList.add("on-right");
+    div.id = "child-" + child.name;
+    div.onclick = () => placeChild(child.name);
+
+    // Avatar
+    const avatar = document.createElement("div");
+    avatar.className = "child-avatar";
+    avatar.style.background = `url('avatars/${child.name.toLowerCase()}.png') center/cover no-repeat`;
+    div.appendChild(avatar);
+
+    // Name
+    const nameSpan = document.createElement("div");
+    nameSpan.className = "child-name";
+    nameSpan.textContent = child.name;
+    div.appendChild(nameSpan);
+
+    // Weight or ?
+    const weightSpan = document.createElement("div");
+    weightSpan.className = "child-weight";
+    weightSpan.textContent = child.revealed ? child.weight + " kg" : "? kg";
+    div.appendChild(weightSpan);
+
+    // Placement hint (click to cycle left -> right -> off)
+    const hint = document.createElement("div");
+    hint.className = "child-placement-hint";
+    if (child.side === "left") hint.textContent = "On left — click for right";
+    else if (child.side === "right") hint.textContent = "On right — click to remove";
+    else hint.textContent = "Click to place on left";
+    div.appendChild(hint);
+
+    // Guess input
+    if (!child.revealed) {
+      const guessInput = document.createElement("input");
+      guessInput.type = "text";
+      guessInput.className = "guess-input";
+      guessInput.dataset.childName = child.name;
+
+      const guessButton = document.createElement("button");
+      guessButton.textContent = "OK";
+      guessButton.className = "guess-submit";
+      guessButton.onclick = () => {
+        checkGuess(child.name, guessInput.value);
+      };
+
+      const feedback = document.createElement("span");
+      feedback.className = "guess-feedback";
+      feedback.id = "feedback-" + child.name;
+
+      const guessRow = document.createElement("div");
+      guessRow.className = "child-guess-row";
+      guessRow.onclick = (e) => e.stopPropagation();
+      guessRow.appendChild(guessInput);
+      guessRow.appendChild(guessButton);
+      guessRow.appendChild(feedback);
+
+      div.appendChild(guessRow);
+    }
+
+    area.appendChild(div);
+  });
+}
+
+
+// ---------------------------
+// CLICK TO PLACE
+// ---------------------------
+
+function placeChild(childName) {
+  const child = children.find(c => c.name === childName);
+
+  // Cycle: unplaced -> left -> right -> unplaced
+  if (child.side === null) child.side = "left";
+  else if (child.side === "left") child.side = "right";
+  else child.side = null;
+
+  leftSideChildren = children.filter(c => c.side === "left");
+  rightSideChildren = children.filter(c => c.side === "right");
+
+  renderChildren();
+  updateSideDisplays();
+  weighNow();
+}
+
+function updateSideDisplays() {
+  const leftBox = document.getElementById("left-children");
+  const rightBox = document.getElementById("right-children");
+
+  const leftZone = document.querySelector("#left-side .drop-zone");
+  const rightZone = document.querySelector("#right-side .drop-zone");
+
+  leftBox.textContent = sideNames(leftSideChildren);
+  rightBox.textContent = sideNames(rightSideChildren);
+
+  leftZone.style.display = leftSideChildren.length > 0 ? "none" : "block";
+  rightZone.style.display = rightSideChildren.length > 0 ? "none" : "block";
+}
+
+function sideNames(arr) {
+  if (arr.length === 0) return "";
+  return arr.map(c => c.name).join(" and ");
+}
+
+
+// ---------------------------
+// CLEAR SEESAW
+// ---------------------------
+
+function clearSeesaw() {
+  children.forEach(c => c.side = null);
+  leftSideChildren = [];
+  rightSideChildren = [];
+
+  renderChildren();
+  updateSideDisplays();
+
+  const bar = document.getElementById("seesaw-bar");
+  bar.style.transform = "translateX(-50%) rotate(0deg)";
+}
+
+
+// ---------------------------
+// GRAMMAR + REPORT TEXT
+// ---------------------------
+
+function verbFor(childrenArray) {
+  return childrenArray.length === 1 ? "weighs" : "weigh";
+}
+
+function describeDifference(diff) {
+  if (diff === 0) return "weigh the same";
+  if (diff <= 3) return "a little";
+  if (diff <= 6) return "";
+  return "a lot";
+}
+
+function reportSideNames(arr) {
+  if (arr.length === 0) return "no one";
+  return arr.map(c => c.name).join(" and ");
+}
+
+function makeReportText(leftChildren, rightChildren, relation, diff) {
+  const leftNames = reportSideNames(leftChildren);
+  const rightNames = reportSideNames(rightChildren);
+
+  if (diff === 0) {
+    return `${leftNames} and ${rightNames} weigh the same.`;
+  }
+
+  const degree = describeDifference(diff);
+  const degreeText = degree ? degree + " " : "";
+
+  return `${leftNames} ${verbFor(leftChildren)} ${degreeText}${relation} than ${rightNames}.`;
+}
+
+
+// ---------------------------
+// WEIGH NOW (auto-triggered on every placement change)
+// ---------------------------
+
+function weighNow() {
+  const leftWeight = leftSideChildren.reduce((s, c) => s + c.weight, 0);
+  const rightWeight = rightSideChildren.reduce((s, c) => s + c.weight, 0);
+
+  let angle = 0;
+  let relation = "";
+  const diff = Math.abs(leftWeight - rightWeight);
+
+  if (leftWeight > rightWeight) {
+    angle = -10;          // left side heavier -> left down
+    relation = "more";
+  } else if (rightWeight > leftWeight) {
+    angle = 10;            // right side heavier -> right down
+    relation = "less";
+  }
+
+  // Smooth animation
+  const bar = document.getElementById("seesaw-bar");
+  bar.style.transform = `translateX(-50%) rotate(${angle}deg)`;
+
+  // Only log a report line once both sides have at least one child
+  // and the same number of children on each side
+  if (leftSideChildren.length === 0 || rightSideChildren.length === 0 ||
+      leftSideChildren.length !== rightSideChildren.length) {
+    return;
+  }
+
+  // Skip groupings that have already been weighed (in either left/right
+  // arrangement) — re-testing the same combination isn't a new clue.
+  const leftKey = leftSideChildren.map(c => c.name).sort().join(",");
+  const rightKey = rightSideChildren.map(c => c.name).sort().join(",");
+  const comboKey = [leftKey, rightKey].sort().join("|");
+  if (weighedCombos.has(comboKey)) {
+    return;
+  }
+  weighedCombos.add(comboKey);
+
+  const report = makeReportText(
+    leftSideChildren,
+    rightSideChildren,
+    relation,
+    diff
+  );
+
+  const box = document.getElementById("report-box");
+  const entry = document.createElement("div");
+  entry.textContent = report;
+  box.appendChild(entry);
+  box.scrollTop = box.scrollHeight;
+
+  if (weighedCombos.size >= 6) {
+    document.getElementById("print-button").style.display = "inline-block";
+  }
+}
+
+
+// ---------------------------
+// PRINT CHILDREN + CLUES
+// ---------------------------
+
+function printClues() {
+  const childLines = children.map(c => {
+    const weightText = c.revealed ? `${c.weight} kg` : "? kg";
+    return `<li>${c.name}: ${weightText}</li>`;
+  }).join("");
+
+  const clueLines = Array.from(document.getElementById("report-box").children)
+    .map(entry => `<li>${entry.textContent}</li>`)
+    .join("");
+
+  const printArea = document.getElementById("print-area");
+  printArea.innerHTML = `
+    <h2>Children and known weights</h2>
+    <ul>${childLines}</ul>
+    <h2>Clues so far</h2>
+    <ul>${clueLines}</ul>
+  `;
+
+  window.print();
+}
+
+
+// ---------------------------
+// FINAL REPORT HELPERS
+// ---------------------------
+
+function allChildrenRevealed() {
+  return children.every(c => c.revealed);
+}
+
+function addFinalButtons(box) {
+  // --- PLAY AGAIN BUTTON ---
+  const playAgainBtn = document.createElement("button");
+  playAgainBtn.textContent = "Play Again";
+  playAgainBtn.className = "final-button";
+  playAgainBtn.onclick = () => {
+    location.reload();   // simplest reset
+  };
+  box.appendChild(playAgainBtn);
+
+  // --- BACK TO HOME BUTTON ---
+  const homeBtn = document.createElement("button");
+  homeBtn.textContent = "Back to Higgins Home Page";
+  homeBtn.className = "final-button";
+  homeBtn.onclick = () => {
+    window.location.href = "https://marlodge.net";
+  };
+  box.appendChild(homeBtn);
+}
+
+function showFinalReport() {
+  const box = document.getElementById("status-box");
+
+  // Count weighings by counting report lines
+  const totalWeighings = document.getElementById("report-box").children.length;
+
+  // Correct singular/plural for wrong guesses
+  const wrongLabel = (totalWrongGuesses === 1) ? "wrong guess" : "wrong guesses";
+
+  // Build final message
+  box.innerHTML =
+    `Congratulations! You measured their weights in ${totalWeighings} weighings with ${totalWrongGuesses} ${wrongLabel}.<br><br>`;
+
+  addFinalButtons(box);
+}
+
+function giveUp() {
+  children.forEach(c => c.revealed = true);
+  renderChildren();
+
+  const box = document.getElementById("status-box");
+  box.innerHTML = `Here are everyone's weights.<br><br>`;
+
+  addFinalButtons(box);
+}
+
+
+// ---------------------------
+// GUESS CHECKING
+// ---------------------------
+
+function checkGuess(childName, guessValue) {
+  const child = children.find(c => c.name === childName);
+  const feedback = document.getElementById("feedback-" + childName);
+
+  const guess = Number(guessValue);
+  if (isNaN(guess)) {
+    feedback.textContent = "✗";
+    feedback.style.color = "red";
+    return;
+  }
+
+  // Record guess
+  child.guesses.push(guess);
+
+  if (guess === child.weight) {
+    child.revealed = true;
+    feedback.textContent = "✓";
+    feedback.style.color = "green";
+    renderChildren();
+
+    if (allChildrenRevealed()) {
+      showFinalReport();
+    }
+
+  } else {
+    feedback.textContent = "✗";
+    feedback.style.color = "red";
+    totalWrongGuesses++;
+  }
+}
+</script>
+
+</body>
+</html>

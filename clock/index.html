@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CLOCK — telling the time in six languages</title>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+<style>
+  :root {
+    --bg: #f6f5f1;
+    --surface: #ffffff;
+    --ink: #22262b;
+    --muted: #5b6570;
+    --border: #e3e0d8;
+    --accent: #0e8c62;
+    --accent-dark: #0a6b4a;
+    --radius: 12px;
+    --shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  #app {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+  }
+  h1 { text-align: center; margin-bottom: 4px; letter-spacing: 2px; }
+  .subtitle { text-align: center; color: var(--muted); margin-bottom: 24px; font-size: 0.95rem; }
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 22px;
+    margin-bottom: 20px;
+  }
+  .lang-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .lang-row label { font-weight: 600; }
+  select {
+    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .clocks-row {
+    display: flex;
+    justify-content: center;
+    gap: 36px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .clock-wrap { text-align: center; }
+  .clock-label {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+  }
+  .clock-face { transition: opacity 0.2s, filter 0.2s; cursor: pointer; }
+  .clock-face.dim { opacity: 0.3; filter: grayscale(1); }
+  .clock-circle { fill: var(--surface); stroke: var(--border); stroke-width: 3; }
+  .clock-tick { stroke: var(--muted); stroke-width: 2; }
+  .clock-hand-hour { stroke: var(--ink); stroke-width: 5; stroke-linecap: round; }
+  .clock-hand-minute { stroke: var(--accent); stroke-width: 3; stroke-linecap: round; }
+  .clock-centre { fill: var(--ink); }
+
+  .digital {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin: 10px 0 18px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .arrow-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .arrow-row button {
+    font-size: 1.1rem;
+    padding: 6px 16px;
+    border: none;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+  }
+  .arrow-row button:hover { background: var(--accent-dark); }
+
+  .register-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .register-row button {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .register-row button.selected {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .time-box {
+    background: #faf8f2;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    text-align: center;
+  }
+  .time-box .main-text { font-size: 1.3rem; margin: 0; }
+  .time-box .roman-text { font-size: 1.05rem; color: var(--muted); font-style: italic; margin: 8px 0 0; }
+
+  .footer-link { text-align: center; margin-top: 24px; font-size: 0.9rem; }
+  .footer-link a { color: var(--accent-dark); }
+
+  details.about {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+  }
+  details.about summary { cursor: pointer; font-weight: 600; }
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>CLOCK</h1>
+  <div class="subtitle">telling the time, across six languages</div>
+
+  <div class="panel">
+    <div class="lang-row">
+      <label for="langSelect">I am learning:</label>
+      <select id="langSelect"></select>
+    </div>
+
+    <div class="clocks-row">
+      <div class="clock-wrap">
+        <div class="clock-label">AM</div>
+        <svg class="clock-face" id="amClock" width="150" height="150" viewBox="0 0 150 150"></svg>
+      </div>
+      <div class="clock-wrap">
+        <div class="clock-label">PM</div>
+        <svg class="clock-face" id="pmClock" width="150" height="150" viewBox="0 0 150 150"></svg>
+      </div>
+    </div>
+
+    <div class="digital" id="digitalReadout"></div>
+
+    <div class="arrow-row">
+      <button id="leftBtn" type="button">&larr; &minus;1 min</button>
+      <button id="rightBtn" type="button">+1 min &rarr;</button>
+    </div>
+
+    <div class="register-row" id="registerRow" style="display:none;">
+      <button id="formalBtn" type="button" class="selected">Formal</button>
+      <button id="casualBtn" type="button">Casual</button>
+    </div>
+
+    <div class="time-box">
+      <p class="main-text" id="mainText"></p>
+      <p class="roman-text" id="romanText" style="display:none;"></p>
+    </div>
+
+    <label id="speakToggleRow" style="display:none; text-align:center; font-size:0.85rem; color:var(--muted); margin-top:10px;">
+      <input type="checkbox" id="speakToggle" /> <span id="speakToggleLabel">Sound On</span>
+    </label>
+  </div>
+
+  <details class="about">
+    <summary>About this page</summary>
+    <p>
+      Two clock faces rather than one, because a single analogue face can't tell you whether it's
+      morning or evening &mdash; whichever half of the day isn't current is greyed out, and the figures
+      underneath give the unambiguous 24-hour version. The left/right arrows move by one minute at a
+      time, so you can land on any exact time.
+    </p>
+    <p>
+      Thai has a genuinely different system worth knowing about: the hour-word changes shape four
+      times across the day (<em>dtee</em> for 1&ndash;5am, <em>...moong-chaao</em> for 6&ndash;11am,
+      <em>baai...moong</em> for early afternoon, <em>...moong-yen</em> for early evening, and
+      <em>...thum</em> from 7pm on), and the hour-count itself resets partway through some of those
+      instead of counting straight through to 24. German and Croatian both have their own classic trap
+      too &mdash; <em>halb sieben</em> and <em>pola sedam</em> both mean 6:30, not 7:30, since they
+      count the half-hour as &ldquo;halfway to seven,&rdquo; not &ldquo;half past six.&rdquo;
+    </p>
+    <p>
+      This is a good-faith build, not checked by a native speaker yet for any of the five non-English
+      languages &mdash; treat the wording as a solid first draft, not an authority, especially for Thai.
+    </p>
+  </details>
+
+  <p class="footer-link">&larr; <a href="../index.html">Back to main page</a></p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------------------------------------------------------
+   * Number-word helpers, one set per language, enough for 0-59
+   * (minutes) and hour names. Kept deliberately simple rather than
+   * fully idiomatic everywhere — see the "About" panel for the one
+   * real grammar point each language gets right on purpose.
+   * ------------------------------------------------------------- */
+
+  var EN_ONES = ["zero","one","two","three","four","five","six","seven","eight","nine","ten",
+    "eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+  var EN_TENS = ["", "", "twenty", "thirty", "forty", "fifty"];
+  function numEN(n) {
+    if (n < 20) return EN_ONES[n];
+    var t = Math.floor(n / 10), o = n % 10;
+    return EN_TENS[t] + (o ? "-" + EN_ONES[o] : "");
+  }
+
+  var FR_ONES = ["zéro","un","deux","trois","quatre","cinq","six","sept","huit","neuf","dix",
+    "onze","douze","treize","quatorze","quinze","seize","dix-sept","dix-huit","dix-neuf"];
+  var FR_TENS = ["", "", "vingt", "trente", "quarante", "cinquante"];
+  function numFR(n) {
+    if (n < 20) return FR_ONES[n];
+    var t = Math.floor(n / 10), o = n % 10;
+    if (o === 1 && t < 5) return FR_TENS[t] + "-et-un";
+    return FR_TENS[t] + (o ? "-" + FR_ONES[o] : "");
+  }
+
+  var DE_ONES = ["null","eins","zwei","drei","vier","fünf","sechs","sieben","acht","neun","zehn",
+    "elf","zwölf","dreizehn","vierzehn","fünfzehn","sechzehn","siebzehn","achtzehn","neunzehn"];
+  var DE_TENS = ["", "", "zwanzig", "dreißig", "vierzig", "fünfzig"];
+  function numDE(n) {
+    if (n < 20) return DE_ONES[n];
+    var t = Math.floor(n / 10), o = n % 10;
+    return (o ? DE_ONES[o] + "und" : "") + DE_TENS[t];
+  }
+
+  var ES_ONES = ["cero","uno","dos","tres","cuatro","cinco","seis","siete","ocho","nueve","diez",
+    "once","doce","trece","catorce","quince","dieciséis","diecisiete","dieciocho","diecinueve"];
+  var ES_TENS = ["", "", "veinte", "treinta", "cuarenta", "cincuenta"];
+  function numES(n) {
+    if (n < 20) return ES_ONES[n];
+    var t = Math.floor(n / 10), o = n % 10;
+    if (t === 2) return o ? "veinti" + ES_ONES[o] : "veinte";
+    return ES_TENS[t] + (o ? " y " + ES_ONES[o] : "");
+  }
+
+  var HR_ONES = ["nula","jedan","dva","tri","četiri","pet","šest","sedam","osam","devet","deset",
+    "jedanaest","dvanaest","trinaest","četrnaest","petnaest","šesnaest","sedamnaest","osamnaest","devetnaest"];
+  var HR_TENS = ["", "", "dvadeset", "trideset", "četrdeset", "pedeset"];
+  function numHR(n) {
+    if (n < 20) return HR_ONES[n];
+    var t = Math.floor(n / 10), o = n % 10;
+    return HR_TENS[t] + (o ? " i " + HR_ONES[o] : "");
+  }
+
+  // Thai: returns {script, roman}. 20 is irregular (yii-sip, not song-sip);
+  // the unit digit 1 becomes "et" rather than "neung" once there's a tens
+  // word in front, same pattern as eleven/twenty-one etc. elsewhere.
+  var TH_ONES = ["", "หนึ่ง","สอง","สาม","สี่","ห้า","หก","เจ็ด","แปด","เก้า"];
+  var TH_ONES_R = ["", "neung","song","saam","sii","haa","hok","jed","bpaad","gaao"];
+  function numTH(n) {
+    if (n === 0) return { script: "", roman: "" };
+    if (n < 10) return { script: TH_ONES[n], roman: TH_ONES_R[n] };
+    if (n === 10) return { script: "สิบ", roman: "sip" };
+    var tens = Math.floor(n / 10), ones = n % 10;
+    var tensScript = tens === 1 ? "สิบ" : tens === 2 ? "ยี่สิบ" : (TH_ONES[tens] + "สิบ");
+    var tensRoman = tens === 1 ? "sip" : tens === 2 ? "yii-sip" : (TH_ONES_R[tens] + "-sip");
+    if (ones === 0) return { script: tensScript, roman: tensRoman };
+    var onesScript = ones === 1 ? "เอ็ด" : TH_ONES[ones];
+    var onesRoman = ones === 1 ? "et" : TH_ONES_R[ones];
+    return { script: tensScript + onesScript, roman: tensRoman + "-" + onesRoman };
+  }
+
+  /* ---------------------------------------------------------------
+   * Per-language time-in-words. hour24: 0-23, minute: 0-59.
+   * English takes a third "register" argument ("formal"/"casual");
+   * everything else ignores it. Thai returns {script, roman};
+   * everything else returns a plain string.
+   * ------------------------------------------------------------- */
+
+  function hour12Of(hour24) {
+    var h = hour24 % 12;
+    return h === 0 ? 12 : h;
+  }
+  function nextHour12Of(hour24) {
+    return (hour12Of(hour24) % 12) + 1;
+  }
+
+  // Casual English phrase for a point that's an exact multiple of 5 minutes
+  // past the hour (0, 5, 10, ... 60), with no "just gone"/"coming up to"
+  // wrapper — used both for exact times and inside those wrappers.
+  function casualNear(totalMin, h, nh) {
+    if (totalMin === 0) return numEN(h);
+    if (totalMin === 60) return numEN(nh);
+    if (totalMin <= 30) {
+      if (totalMin === 15) return "quarter past " + numEN(h);
+      if (totalMin === 30) return "half " + numEN(h);
+      return numEN(totalMin) + " past " + numEN(h);
+    }
+    var rem = 60 - totalMin;
+    if (rem === 15) return "quarter to " + numEN(nh);
+    return numEN(rem) + " to " + numEN(nh);
+  }
+
+  function timeEN(hour24, minute, register) {
+    var h = hour12Of(hour24), nh = nextHour12Of(hour24);
+    if (register === "casual") {
+      var mod = minute % 5;
+      var base = minute - mod;
+      if (mod === 0) {
+        if (base === 0) return numEN(h) + " o'clock";
+        return casualNear(base, h, nh);
+      }
+      if (mod === 1 || mod === 2) return "just gone " + casualNear(base, h, nh);
+      return "coming up to " + casualNear(base + 5, h, nh);
+    }
+    // formal
+    if (minute === 0) {
+      if (hour24 === 0) return "midnight";
+      if (hour24 === 12) return "midday";
+      return numEN(h) + " o'clock";
+    }
+    if (minute <= 30) {
+      if (minute === 15) return "quarter past " + numEN(h);
+      if (minute === 30) return "half past " + numEN(h);
+      return numEN(minute) + (minute === 1 ? " minute" : " minutes") + " past " + numEN(h);
+    }
+    var rem2 = 60 - minute;
+    if (rem2 === 15) return "quarter to " + numEN(nh);
+    return numEN(rem2) + (rem2 === 1 ? " minute" : " minutes") + " to " + numEN(nh);
+  }
+
+  function timeFR(hour24, minute) {
+    var h = hour12Of(hour24), nh = nextHour12Of(hour24);
+    if (hour24 === 0 && minute === 0) return "minuit";
+    if (hour24 === 12 && minute === 0) return "midi";
+    function heure(x) { return x === 1 ? "une heure" : numFR(x) + " heures"; }
+    if (minute === 0) return heure(h);
+    if (minute <= 30) {
+      if (minute === 15) return heure(h) + " et quart";
+      if (minute === 30) return heure(h) + " et demie";
+      return heure(h) + " " + numFR(minute);
+    }
+    var rem = 60 - minute;
+    if (rem === 15) return heure(nh) + " moins le quart";
+    return heure(nh) + " moins " + numFR(rem);
+  }
+
+  function timeDE(hour24, minute) {
+    var h = hour12Of(hour24), nh = nextHour12Of(hour24);
+    function uhr(x) { return (x === 1 ? "ein" : DE_ONES[x]) + " Uhr"; }
+    if (minute === 0) return uhr(h);
+    if (minute === 15) return "viertel nach " + DE_ONES[h];
+    if (minute === 30) return "halb " + DE_ONES[nh];
+    if (minute === 45) return "viertel vor " + DE_ONES[nh];
+    if (minute < 45) return numDE(minute) + " nach " + DE_ONES[h];
+    var rem = 60 - minute;
+    return numDE(rem) + " vor " + DE_ONES[nh];
+  }
+
+  function timeES(hour24, minute) {
+    var h = hour12Of(hour24), nh = nextHour12Of(hour24);
+    if (hour24 === 0 && minute === 0) return "medianoche";
+    if (hour24 === 12 && minute === 0) return "mediodía";
+    function hora(x) { return x === 1 ? "la una" : "las " + numES(x); }
+    if (minute === 0) return hora(h);
+    if (minute <= 30) {
+      if (minute === 15) return hora(h) + " y cuarto";
+      if (minute === 30) return hora(h) + " y media";
+      return hora(h) + " y " + numES(minute);
+    }
+    var rem = 60 - minute;
+    if (rem === 15) return hora(nh) + " menos cuarto";
+    return hora(nh) + " menos " + numES(rem);
+  }
+
+  function timeHR(hour24, minute) {
+    var h = hour12Of(hour24), nh = nextHour12Of(hour24);
+    if (minute === 0) return numHR(h) + " sati";
+    if (minute === 15) return "četvrt poslije " + numHR(h);
+    if (minute === 30) return "pola " + numHR(nh);
+    if (minute === 45) return "četvrt do " + numHR(nh);
+    if (minute < 45) return numHR(h) + " i " + numHR(minute);
+    var rem = 60 - minute;
+    return numHR(rem) + " do " + numHR(nh);
+  }
+
+  function hourPhraseTH(hour24) {
+    if (hour24 === 0) return { script: "เที่ยงคืน", roman: "thiang-kheun" };
+    if (hour24 === 12) return { script: "เที่ยง", roman: "thiang" };
+    if (hour24 >= 1 && hour24 <= 5) {
+      var n1 = numTH(hour24);
+      return { script: "ตี" + n1.script, roman: "dtee-" + n1.roman };
+    }
+    if (hour24 >= 6 && hour24 <= 11) {
+      var n2 = numTH(hour24);
+      return { script: n2.script + "โมงเช้า", roman: n2.roman + "-moong-chaao" };
+    }
+    if (hour24 === 13) {
+      return { script: "บ่ายโมง", roman: "baai-moong" };
+    }
+    if (hour24 >= 14 && hour24 <= 16) {
+      var n3 = numTH(hour24 - 12);
+      return { script: "บ่าย" + n3.script + "โมง", roman: "baai-" + n3.roman + "-moong" };
+    }
+    if (hour24 >= 17 && hour24 <= 18) {
+      var n4 = numTH(hour24 - 12);
+      return { script: n4.script + "โมงเย็น", roman: n4.roman + "-moong-yen" };
+    }
+    var n5 = numTH(hour24 - 18);
+    return { script: n5.script + "ทุ่ม", roman: n5.roman + "-thum" };
+  }
+
+  function timeTH(hour24, minute) {
+    var hp = hourPhraseTH(hour24);
+    if (minute === 0) return { script: hp.script, roman: hp.roman };
+    var mn = numTH(minute);
+    return {
+      script: hp.script + " " + mn.script + " นาที",
+      roman: hp.roman + " " + mn.roman + " naathii"
+    };
+  }
+
+  var LANGUAGES = {
+    en: { native: "English", font: "", speechLang: "en-GB", time: timeEN, hasRegister: true },
+    fr: { native: "Français", font: "", speechLang: "fr-FR", time: function (h, m) { return timeFR(h, m); } },
+    de: { native: "Deutsch", font: "", speechLang: "de-DE", time: function (h, m) { return timeDE(h, m); } },
+    es: { native: "Español", font: "", speechLang: "es-ES", time: function (h, m) { return timeES(h, m); } },
+    hr: { native: "Hrvatski", font: "", speechLang: "hr-HR", time: function (h, m) { return timeHR(h, m); } },
+    th: { native: "ไทย", font: "'Noto Sans Thai', sans-serif", speechLang: "th-TH", time: timeTH, isThai: true }
+  };
+
+  /* ---------------------------------------------------------------
+   * UI wiring
+   * ------------------------------------------------------------- */
+
+  var state = { hour: 6, minute: 0, langKey: "en", register: "formal" };
+
+  var langSelect = document.getElementById("langSelect");
+  var amClock = document.getElementById("amClock");
+  var pmClock = document.getElementById("pmClock");
+  var digitalReadout = document.getElementById("digitalReadout");
+  var leftBtn = document.getElementById("leftBtn");
+  var rightBtn = document.getElementById("rightBtn");
+  var registerRow = document.getElementById("registerRow");
+  var formalBtn = document.getElementById("formalBtn");
+  var casualBtn = document.getElementById("casualBtn");
+  var mainText = document.getElementById("mainText");
+  var romanText = document.getElementById("romanText");
+
+  /* ---------------- optional text-to-speech for the time-in-words ---------------- */
+
+  var speechSupported = "speechSynthesis" in window;
+  var speakEnabled = false;
+  var speakToggle = document.getElementById("speakToggle");
+  var speakToggleRow = document.getElementById("speakToggleRow");
+  var speakToggleLabel = document.getElementById("speakToggleLabel");
+
+  function updateSpeakLabel() {
+    speakToggleLabel.textContent = speakEnabled ? "Sound Off" : "Sound On";
+  }
+
+  if (speechSupported) {
+    speakToggleRow.style.display = "block";
+    try {
+      speakEnabled = localStorage.getItem("clock_speak") === "1";
+    } catch (e) {}
+    speakToggle.checked = speakEnabled;
+    updateSpeakLabel();
+    speakToggle.addEventListener("change", function () {
+      speakEnabled = speakToggle.checked;
+      try {
+        localStorage.setItem("clock_speak", speakEnabled ? "1" : "0");
+      } catch (e) {}
+      updateSpeakLabel();
+      if (!speakEnabled) window.speechSynthesis.cancel();
+    });
+  }
+
+  // Holding the arrows down re-renders every ~120ms, which would be far
+  // too rapid-fire to actually speak each intermediate value — but since
+  // this cancels any in-flight utterance before queuing the next one,
+  // holding just stays silent until you let go, and the final value you
+  // land on is the one that actually gets spoken.
+  function speak(text, lang) {
+    if (!speechSupported || !speakEnabled || !text) return;
+    window.speechSynthesis.cancel();
+    setTimeout(function () {
+      var utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = lang;
+      window.speechSynthesis.speak(utterance);
+    }, 50);
+  }
+
+  Object.keys(LANGUAGES).forEach(function (key) {
+    var opt = document.createElement("option");
+    opt.value = key;
+    opt.textContent = LANGUAGES[key].native;
+    if (key === state.langKey) opt.selected = true;
+    langSelect.appendChild(opt);
+  });
+
+  function buildClockFace(svg) {
+    svg.innerHTML = "";
+    var ns = "http://www.w3.org/2000/svg";
+    var circle = document.createElementNS(ns, "circle");
+    circle.setAttribute("cx", 75); circle.setAttribute("cy", 75); circle.setAttribute("r", 70);
+    circle.setAttribute("class", "clock-circle");
+    svg.appendChild(circle);
+    for (var i = 0; i < 12; i++) {
+      var angle = (i * 30) * Math.PI / 180;
+      var x1 = 75 + 60 * Math.sin(angle), y1 = 75 - 60 * Math.cos(angle);
+      var x2 = 75 + 66 * Math.sin(angle), y2 = 75 - 66 * Math.cos(angle);
+      var tick = document.createElementNS(ns, "line");
+      tick.setAttribute("x1", x1); tick.setAttribute("y1", y1);
+      tick.setAttribute("x2", x2); tick.setAttribute("y2", y2);
+      tick.setAttribute("class", "clock-tick");
+      svg.appendChild(tick);
+    }
+    var hourHand = document.createElementNS(ns, "line");
+    hourHand.setAttribute("id", svg.id + "_hourHand");
+    hourHand.setAttribute("class", "clock-hand-hour");
+    hourHand.setAttribute("x1", 75); hourHand.setAttribute("y1", 75);
+    svg.appendChild(hourHand);
+    var minuteHand = document.createElementNS(ns, "line");
+    minuteHand.setAttribute("id", svg.id + "_minuteHand");
+    minuteHand.setAttribute("class", "clock-hand-minute");
+    minuteHand.setAttribute("x1", 75); minuteHand.setAttribute("y1", 75);
+    svg.appendChild(minuteHand);
+    var centre = document.createElementNS(ns, "circle");
+    centre.setAttribute("cx", 75); centre.setAttribute("cy", 75); centre.setAttribute("r", 4);
+    centre.setAttribute("class", "clock-centre");
+    svg.appendChild(centre);
+  }
+  buildClockFace(amClock);
+  buildClockFace(pmClock);
+  setHand(amClock, "_hourHand", 38, 0);
+  setHand(amClock, "_minuteHand", 55, 0);
+  setHand(pmClock, "_hourHand", 38, 0);
+  setHand(pmClock, "_minuteHand", 55, 0);
+
+  function setHand(svg, idSuffix, length, angleDeg) {
+    var rad = angleDeg * Math.PI / 180;
+    var x2 = 75 + length * Math.sin(rad), y2 = 75 - length * Math.cos(rad);
+    var el = document.getElementById(svg.id + idSuffix);
+    el.setAttribute("x2", x2);
+    el.setAttribute("y2", y2);
+  }
+
+  function render() {
+    var lang = LANGUAGES[state.langKey];
+    var hour12 = hour12Of(state.hour);
+    var hourAngle = (hour12 % 12) * 30 + state.minute * 0.5;
+    var minuteAngle = state.minute * 6;
+
+    var isPM = state.hour >= 12;
+    var activeClock = isPM ? pmClock : amClock;
+    setHand(activeClock, "_hourHand", 38, hourAngle);
+    setHand(activeClock, "_minuteHand", 55, minuteAngle);
+
+    amClock.classList.toggle("dim", isPM);
+    pmClock.classList.toggle("dim", !isPM);
+
+    digitalReadout.textContent =
+      String(state.hour).padStart(2, "0") + ":" + String(state.minute).padStart(2, "0");
+
+    registerRow.style.display = lang.hasRegister ? "flex" : "none";
+
+    document.body.style.fontFamily = lang.font || "";
+
+    if (lang.isThai) {
+      var result = lang.time(state.hour, state.minute);
+      mainText.textContent = result.script;
+      romanText.textContent = result.roman;
+      romanText.style.display = "block";
+      if (!isHolding) speak(result.script, lang.speechLang);
+    } else {
+      var text = lang.time(state.hour, state.minute, state.register);
+      mainText.textContent = text;
+      romanText.style.display = "none";
+      if (!isHolding) speak(text, lang.speechLang);
+    }
+  }
+
+  function stepMinute(delta) {
+    state.minute += delta;
+    if (state.minute < 0) { state.minute = 59; state.hour = (state.hour + 23) % 24; }
+    if (state.minute > 59) { state.minute = 0; state.hour = (state.hour + 1) % 24; }
+    render();
+  }
+
+  // Holding a button down accelerates: a single immediate step on press,
+  // then repeated steps that grow from 1 minute per tick to 5, the longer
+  // it's held — so a quick tap still moves by one minute, but holding down
+  // sweeps faster without running away to many hours per second.
+  var holdTimer = null;
+  var holdStartTime = 0;
+  var isHolding = false;
+  function startHold(direction) {
+    stopHold();
+    isHolding = true;
+    holdStartTime = Date.now();
+    stepMinute(direction);
+    holdTimer = setInterval(function () {
+      var elapsed = Date.now() - holdStartTime;
+      var stepSize = elapsed > 6000 ? 5 : elapsed > 2500 ? 2 : 1;
+      stepMinute(direction * stepSize);
+    }, 200);
+  }
+  function stopHold() {
+    if (holdTimer) {
+      clearInterval(holdTimer);
+      holdTimer = null;
+    }
+    if (isHolding) {
+      isHolding = false;
+      render();
+    }
+  }
+
+  leftBtn.addEventListener("pointerdown", function (e) { e.preventDefault(); startHold(-1); });
+  rightBtn.addEventListener("pointerdown", function (e) { e.preventDefault(); startHold(1); });
+  ["pointerup", "pointerleave", "pointercancel"].forEach(function (evt) {
+    leftBtn.addEventListener(evt, stopHold);
+    rightBtn.addEventListener(evt, stopHold);
+  });
+
+  // Click a clock face to jump straight to that half of the day, keeping
+  // the same hour/minute — e.g. clicking PM while it's 6:15am jumps to
+  // 6:15pm. Clicking the half that's already current does nothing.
+  amClock.addEventListener("click", function () {
+    if (state.hour >= 12) { state.hour -= 12; render(); }
+  });
+  pmClock.addEventListener("click", function () {
+    if (state.hour < 12) { state.hour += 12; render(); }
+  });
+
+  langSelect.addEventListener("change", function () {
+    state.langKey = langSelect.value;
+    render();
+  });
+
+  formalBtn.addEventListener("click", function () {
+    state.register = "formal";
+    formalBtn.classList.add("selected");
+    casualBtn.classList.remove("selected");
+    render();
+  });
+  casualBtn.addEventListener("click", function () {
+    state.register = "casual";
+    casualBtn.classList.add("selected");
+    formalBtn.classList.remove("selected");
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JACKASS</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6fb;
+    margin: 0;
+    padding: 20px 16px 60px 16px;
+    text-align: center;
+    color: #222;
+  }
+  h1 { margin-bottom: 4px; }
+  .byline { color: #555; margin-top: 0; }
+  .note {
+    max-width: 640px;
+    margin: 14px auto 20px auto;
+    background: #fff8dc;
+    border: 2px solid #3366cc;
+    border-radius: 8px;
+    padding: 12px 18px;
+    text-align: left;
+    font-size: 0.92em;
+    line-height: 1.5em;
+  }
+  .menubar {
+    max-width: 900px;
+    margin: 0 auto 14px auto;
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .menubar select, .menubar button {
+    font-size: 0.95em;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 2px solid #3366cc;
+    background: #fff;
+    color: #3366cc;
+    cursor: pointer;
+  }
+  .menubar button:hover, .menubar select:hover { background: #eaf0fc; }
+  .screen { display: none; max-width: 760px; margin: 0 auto; }
+  .screen.active { display: block; }
+
+  .big-button {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 14px auto;
+    padding: 22px;
+    font-size: 1.3em;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 2px solid #3366cc;
+    background: #fff;
+    color: #7a3b00;
+    cursor: pointer;
+  }
+  .big-button:hover { background: #eaf0fc; }
+  .topic-label {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #3366cc;
+    margin: 16px 0;
+  }
+
+  .learn-box {
+    background: #fff;
+    border: 2px solid #b9c4de;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 16px 0;
+    font-size: 1.15em;
+    font-weight: bold;
+    color: #7a3b00;
+    min-height: 1.4em;
+  }
+  .learn-controls { display: flex; justify-content: center; gap: 16px; margin: 16px 0; flex-wrap: wrap; }
+  .learn-controls button {
+    font-size: 1.3em;
+    padding: 16px 28px;
+    border-radius: 10px;
+    border: 2px solid #3366cc;
+    background: #fff;
+    color: #3366cc;
+    cursor: pointer;
+  }
+  .learn-controls button:hover { background: #eaf0fc; }
+  .learn-controls button.yes { color: #1a7a1a; border-color: #1a7a1a; }
+  .learn-controls button.no { color: #c0392b; border-color: #c0392b; }
+  .learn-controls input[type=text] {
+    font-size: 1.1em;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #b9c4de;
+    width: 280px;
+  }
+  .reminder {
+    text-align: left;
+    background: #fff8dc;
+    border: 1px solid #d4c98a;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin: 10px 0;
+    font-style: italic;
+  }
+  .edit-link {
+    font-size: 0.85em;
+    color: #3366cc;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-top: 8px;
+    display: inline-block;
+  }
+  .q-reminder { color: #3366cc; }
+
+  .write-controls { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
+  #animalSelect { font-size: 1em; padding: 6px; min-width: 220px; }
+  .essay-box {
+    background: #fff;
+    border: 1px solid #b9c4de;
+    border-radius: 8px;
+    padding: 20px;
+    min-height: 200px;
+    text-align: left;
+    font-size: 1.2em;
+    font-style: italic;
+    color: #7a3b00;
+    margin-bottom: 16px;
+  }
+  .options-box {
+    text-align: left;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 0.9em;
+  }
+  .options-box label { display: block; margin: 6px 0; cursor: pointer; }
+
+  button.plain {
+    font-size: 1em;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 2px solid #3366cc;
+    background: #fff;
+    color: #3366cc;
+    cursor: pointer;
+  }
+  button.plain:hover { background: #eaf0fc; }
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>   
+
+</head>
+<body>
+
+  <h1>JACKASS</h1>
+  <p class="byline">by John and Muriel Higgins &mdash; based on ANIMAL by Arthur Luehrmann</p>
+
+  <div class="note">
+    Teach the computer to tell things apart by playing a guessing game, then have it write
+    a little essay using everything it has learned. Your teaching is saved in this browser so it
+    keeps growing next time you visit.
+  </div>
+
+  <!-- ============ LAUNCH SCREEN ============ -->
+  <div id="launchScreen" class="screen active">
+    <div class="menubar">
+      <select id="topicPicker">
+        <option value="1">Living creatures</option>
+        <option value="2">Transport</option>
+        <option value="3">Food</option>
+        <option value="0">Famous people</option>
+        <option value="4">Build your own&hellip;</option>
+      </select>
+      <button id="newTopicBtn">New</button>
+      <button id="restoreBtn">Restore last</button>
+    </div>
+    <div class="topic-label" id="topicLabel">Today's topic is: living creatures</div>
+    <button id="learnBtn" class="big-button">Click here if you want the computer to learn.</button>
+    <button id="writeBtn" class="big-button">Click here if you want the computer to write a paragraph.</button>
+    <p style="margin-top:20px;"><a href="../meaninggames.html">&larr; Back to main page</a></p>
+  </div>
+
+  <!-- ============ LEARNING SCREEN ============ -->
+  <div id="learningScreen" class="screen">
+    <div class="menubar">
+      <button id="learnMainMenuBtn">Main menu</button>
+    </div>
+    <div class="learn-box" id="learnLabel">Think of &hellip; and I will ask you some questions about it.</div>
+    <div id="reminderBox"></div>
+    <div class="learn-controls" id="learnControls"></div>
+    <div id="editLink" class="edit-link" style="display:none;">Edit this text</div>
+  </div>
+
+  <!-- ============ WRITING SCREEN ============ -->
+  <div id="writingScreen" class="screen">
+    <div class="menubar">
+      <button id="writeMainMenuBtn">Main menu</button>
+    </div>
+    <h2 id="writingTitle">All about living creatures</h2>
+    <div class="write-controls">
+      <label for="animalSelect">Choose:</label>
+      <select id="animalSelect"></select>
+    </div>
+    <div class="essay-box" id="essayBox">Choose an item from the list and you will see a paragraph about it here.</div>
+    <div class="options-box">
+      <strong>Options</strong> &mdash; switch these grammar rules on and off to compare the effect:
+      <label><input type="checkbox" id="optOr" checked> DOESN'T X AND DOESN'T Y &rarr; DOESN'T X OR Y</label>
+      <label><input type="checkbox" id="optBut" checked> DOESN'T X AND DOES Y &rarr; DOESN'T X BUT IT DOES Y</label>
+      <label><input type="checkbox" id="optBut2" checked> DOES X AND DOESN'T Y &rarr; DOES X BUT IT DOESN'T Y</label>
+    </div>
+  </div>
+
+<script>
+// ==================================================================
+// Morphology engine (see morphology.js source comments for the full
+// bug-fix writeup — three real grammar bugs in the original plus one
+// undocumented-but-real missing feature, all fixed/implemented here).
+// ==================================================================
+// ------------------------------------------------------------------
+// Morphology engine, ported from inflect.bas.
+//
+// Two bugs in the original are fixed here (see README / chat writeup
+// for the full investigation):
+//
+// 1. The original referenced a bare variable `syllable` (never
+//    assigned — VB defaults it to 0 forever) in several places where
+//    it clearly meant to call the `syllables()` function it also
+//    defines but never actually calls. This silently broke the
+//    consonant-doubling logic for regular past tenses (e.g. produced
+//    "happenned" instead of "happened", "visitted" instead of
+//    "visited") for any qualifying verb. Fixed here by actually
+//    calling syllableCount().
+// 2. In Sending$, a copy-paste slip set `z$ = ""` in the branch that
+//    was clearly meant to initialise `zz$` for short words, wiping
+//    out the correctly-computed third-last-letter value moments
+//    after it was set. Fixed here by assigning the right variable.
+// ------------------------------------------------------------------
+
+function isVowel(ch) {
+  return "AEIOUaeiou".indexOf(ch) >= 0;
+}
+
+// Port of syllables() — a heuristic vowel-cluster counter, not
+// linguistically perfect but matches the original's intent.
+function syllableCount(a) {
+  if (a.length === 1) return 1;
+  let n = 0;
+  let count = 0;
+  while (n < a.length - 1) {
+    if (isVowel(a[n])) {
+      if (!isVowel(a[n + 1])) {
+        count++;
+      } else if (isVowel(a[n + 1]) && n + 1 === a.length - 1) {
+        count++;
+      }
+    }
+    n++;
+  }
+  return count;
+}
+
+// Port of Hasaprefix — detects a Latin-style prefix so the doubling
+// rules in Regular$ can tell "preFER" (doubles) from "OFfer" (doesn't).
+function hasLatinPrefix(a) {
+  const syll = syllableCount(a);
+  if (a.length > 3 && syll < 3) {
+    if (a.slice(0, 2) === "re") {
+      const c = isVowel(a[2]);
+      const cc = isVowel(a[3]);
+      if ((c || cc) && a !== "reason") return true;
+      return false;
+    }
+    if ("ab/ad/be/de/ex/in/im/oc/un".indexOf(a.slice(0, 2)) >= 0 && a !== "exit") {
+      return true;
+    }
+    if (a.length > 4 && syll < 3) {
+      if ("con/com/for/mis/out/pre/per/sub".indexOf(a.slice(0, 3)) >= 0) return true;
+    }
+    if (a.length > 5) {
+      if ("over".indexOf(a.slice(0, 4)) >= 0) return true;
+    }
+    if (a.length > 6) {
+      if ("handi/inter/super/trans/under".indexOf(a.slice(0, 5)) >= 0) return true;
+    }
+  }
+  return false;
+}
+
+// Port of Sending$ — adds the 3rd-person -s ending.
+function sEnding(a) {
+  if (a === "have") return "has";
+
+  const x = a.slice(-1);
+  let y = a.length > 1 ? a[a.length - 2] : "";
+  if (a.length <= 1) return a.toUpperCase() + "s";
+  let z = a.length > 2 ? a[a.length - 3] : "";
+  let zz = a.length > 3 ? a[a.length - 4] : "";
+  const syll = syllableCount(a);
+
+  switch (x) {
+    case "s":
+    case "z":
+      if (isVowel(y) && (!isVowel(z) || zz === "q")) {
+        if (syll < 3) return a + a.slice(-1) + "es"; // double the s after a single vowel
+        return a + "es";
+      }
+      return a + "es";
+    case "x":
+      return a + "es";
+    case "h":
+      if (y === "c" && z !== "i" && (isVowel(z) || z === "y") && !isVowel(zz)) {
+        return a + "s";
+      } else if (y === "c" || y === "s") {
+        return a + "es";
+      }
+      return a + "s";
+    case "y":
+      if (!isVowel(y)) return a.slice(0, -1) + "ies";
+      return a + "s";
+    case "o":
+      if (!isVowel(y)) return a + "es";
+      return a + "s";
+    default:
+      return a + "s";
+  }
+}
+
+// Port of Regular$ — adds the -ed ending for weak verbs.
+function regularPast(a) {
+  const x = a.slice(-1);
+  let y;
+  if (a.length > 1) {
+    y = a[a.length - 2];
+  } else {
+    return a.toUpperCase() + "ed";
+  }
+  const z = a.length > 2 ? a[a.length - 3] : "a";
+  const syll = syllableCount(a);
+
+  if (a === "be") return "was";
+
+  switch (x) {
+    case "e":
+      if (y === "r" && !isVowel(z)) {
+        return a.slice(0, -2) + "ered";
+      }
+      return a + "d";
+    case "y":
+      if (!isVowel(y)) return a.slice(0, -1) + "ied";
+      return a + "ed";
+    case "a":
+    case "f":
+    case "h":
+    case "i":
+    case "j":
+    case "o":
+    case "q":
+    case "u":
+    case "w":
+    case "x":
+      return a + "ed";
+    default:
+      // b, c, d, g, k, l, m, n, p, r, s, t, v, z
+      if (isVowel(y) && !isVowel(z)) {
+        switch (x) {
+          case "r":
+            if (y === "e") {
+              if (syll > 2) return a + "ed";
+              // Bug fix: the original used `Hasaprefix(a$) Or a$ <> "conquer"`,
+              // which is true for virtually any word (since almost nothing
+              // equals "conquer"), so it doubled ~every -er verb regardless
+              // of whether it actually carries a Latin prefix. The clear
+              // intent — visible from the "conquer" special case existing
+              // at all — was AND: double only when there IS a prefix, unless
+              // it's the specific false-positive "conquer" (stressed on the
+              // first syllable despite Hasaprefix flagging its "con-").
+              if (hasLatinPrefix(a) && a !== "conquer") return a + a.slice(-1) + "ed";
+              return a + "ed"; // offer, utter, cater, conquer
+            }
+            return a + a.slice(-1) + "ed";
+          case "n":
+          case "t":
+            if ((syll > 2 && !hasLatinPrefix(a)) || a === "interpret") {
+              return a + "ed";
+            } else if (syll === 2) {
+              if (hasLatinPrefix(a) || a === "emit" || a === "omit") {
+                return a + a.slice(-1) + "ed";
+              }
+              return a + "ed"; // visit, listen, audit
+            }
+            return a + a.slice(-1) + "ed"; // one syllable, double
+          case "c":
+            return a + "ked"; // frolic, panic, picnic
+          case "l":
+            if (syll > 2) return a + "ed";
+            return a + a.slice(-1) + "ed";
+          default:
+            // b, d, g, j, k, m, p, s, v, z
+            return a + a.slice(-1) + "ed";
+        }
+      }
+      return a + "ed";
+  }
+}
+
+function capitalize(a) {
+  return a.charAt(0).toUpperCase() + a.slice(1);
+}
+
+// Port of Makeneg$.
+function makeNeg(x) {
+  switch (x) {
+    case "can": return "can't";
+    case "shall": return "shan't";
+    case "will": return "won't";
+    case "may": return " may not";
+    default: return x + "n't";
+  }
+}
+
+// Port of Discover$ — a simple lookup here (the original used a
+// binary search purely as a BASIC-era performance technique over a
+// fixed array; a Map is the direct modern equivalent).
+function discoverStrongVerb(x, strongVerbMap) {
+  const hit = strongVerbMap.get(x);
+  return hit ? hit[0] : x; // returns past-tense form, or the verb unchanged if not found
+}
+
+// Port of inflects() — handles pre-verb adverbs, then adds -s.
+function inflectPresent(x) {
+  x = x + " ";
+  let y = "";
+  let split = x.indexOf(" ");
+  let verb = x.slice(0, split);
+
+  if (verb === "ever") { y += "sometimes "; x = x.slice(5); split = x.indexOf(" "); verb = x.slice(0, split); }
+  if (verb === "often") { y += "often "; x = x.slice(6); split = x.indexOf(" "); verb = x.slice(0, split); }
+  if (verb === "only") { y += "only "; x = x.slice(5); split = x.indexOf(" "); verb = x.slice(0, split); }
+  if (verb === "really") { y += "really "; x = x.slice(7); split = x.indexOf(" "); verb = x.slice(0, split); }
+
+  x = x.slice(split);
+  verb = sEnding(verb);
+  return (y + verb + x).trim();
+}
+
+// Port of inflected() — handles pre-verb adverbs, then makes the verb past.
+function inflectPast(x, strongVerbMap) {
+  x = x + " ";
+  let y = "";
+  let split = x.indexOf(" ");
+  let verb = x.slice(0, split);
+
+  if (verb === "ever") { y += "sometimes "; x = x.slice(5); split = x.indexOf(" "); verb = x.slice(0, split); }
+  if (verb === "often") { y += "often "; x = x.slice(6); split = x.indexOf(" "); verb = x.slice(0, split); }
+  if (verb === "only") { y += "only "; x = x.slice(5); split = x.indexOf(" "); verb = x.slice(0, split); }
+  if (verb === "really") { y += "really "; x = x.slice(7); split = x.indexOf(" "); verb = x.slice(0, split); }
+
+  x = x.slice(split);
+
+  let found = strongVerbMap.has(verb);
+  if (!found) {
+    verb = verb === "have" ? "had" : regularPast(verb);
+  } else {
+    verb = discoverStrongVerb(verb, strongVerbMap);
+  }
+  return (y + verb + x).trim();
+}
+
+// ------------------------------------------------------------------
+// Essay generation.
+//
+// This is a from-spec reimplementation, not a straight port. The
+// original had three real problems here:
+//
+// 1. writing.frm calls the simple `Essay()` (one fact per sentence,
+//    no and/or/but combining at all) instead of the fully-featured
+//    `Fullessay()` that actually implements the documented combining
+//    rules. Since the .frm on disk is dated 18 months before the
+//    shipped .exe, this looks like a stale source file rather than
+//    the .exe's real behaviour — the real screenshot (a sheep essay)
+//    clearly shows sentences combining two facts with "and"/"or",
+//    which only Fullessay's structure produces. So this uses
+//    Fullessay's approach.
+// 2. Even Fullessay has a real bug: whenever the auxiliary of the
+//    second half of a pair gets folded into the verb ending (i.e. any
+//    ordinary affirmative "Does X?" or "Did X?" phrase), its `auxil$`
+//    becomes "" and the `If auxil$ <> ""` guard around the whole
+//    and/or/but logic is skipped entirely — silently dropping the
+//    connector word. Traced against the real screenshot ("It doesn't
+//    moo and lives on a farm") to confirm "and" belongs there, then
+//    fixed so a connector is always inserted for the second phrase of
+//    a pair, regardless of whether that phrase's own auxiliary got
+//    folded into the verb.
+// 3. `buton`/`buton2` (the documented BUT-insertion rules) are
+//    declared, toggled by the Options menu, and initialised True —
+//    but never actually read anywhere in either essay function, so
+//    the two BUT rules described in both documentation files never
+//    fired in the shipped program at all. Implemented fresh here from
+//    the documented examples. The real screenshot only demonstrates
+//    the AND and OR cases, not BUT, so this part is inference from
+//    the written spec rather than something verified against real
+//    output — flagged clearly for that reason. To stay consistent
+//    with the one piece of hard evidence available (the screenshot's
+//    plain "and" between a negative and an ordinary affirmative
+//    does-phrase), BUT only fires when *both* halves already carry an
+//    explicit, distinct auxiliary (i.e. neither is an ordinary
+//    does/did phrase whose auxiliary would otherwise be folded away).
+// ------------------------------------------------------------------
+function generateEssay(nodeIndex, data, strongVerbMap, options) {
+  const { textitems, pointer, human } = data;
+  const oron = options.oron !== false;
+  const buton = options.buton !== false;
+  const buton2 = options.buton2 !== false;
+
+  let male = false;
+  if (human) {
+    let whence = nodeIndex;
+    while (true) {
+      const source = pointer[whence][2];
+      if (source === 1) break;
+      whence = source;
+    }
+    male = whence === 2;
+  }
+
+  const pronoun = human ? (male ? "he" : "she") : "it";
+
+  let essaytext = capitalize(textitems[nodeIndex]);
+  let evennumber = true;
+  let wasneg = false;
+  let prev = null; // { auxilShown, dropsAuxil }
+
+  let thisanimal = nodeIndex;
+  while (true) {
+    evennumber = !evennumber;
+    const neg = pointer[thisanimal][3] === 3;
+    const whither = pointer[thisanimal][2];
+    thisanimal = whither;
+
+    const parsed = qparse(textitems[whither]);
+    const auxilSurface = parsed.aux;
+    const baseVerbPhrase = parsed.rest;
+
+    let auxilShown, verbForNoAuxil, dropsAuxil;
+    if (neg) {
+      auxilShown = makeNeg(auxilSurface);
+      verbForNoAuxil = null;
+      dropsAuxil = false;
+    } else if (auxilSurface === "does") {
+      auxilShown = "does";
+      verbForNoAuxil = inflectPresent(baseVerbPhrase);
+      dropsAuxil = true;
+    } else if (auxilSurface === "did") {
+      auxilShown = "did";
+      verbForNoAuxil = inflectPast(baseVerbPhrase, strongVerbMap);
+      dropsAuxil = true;
+    } else {
+      auxilShown = auxilSurface; // can, must, is, are, ...
+      verbForNoAuxil = null;
+      dropsAuxil = false;
+    }
+
+    essaytext += " ";
+
+    if (!evennumber) {
+      // First phrase of a pair (or a lone trailing phrase): no connector.
+      essaytext += dropsAuxil ? verbForNoAuxil : auxilShown + " " + baseVerbPhrase;
+    } else {
+      const samePolarity = neg === wasneg;
+      const canShareWording = !dropsAuxil && prev && !prev.dropsAuxil && auxilShown === prev.auxilShown;
+
+      if (canShareWording && samePolarity) {
+        const connector = neg && oron ? "or" : "and";
+        essaytext += connector + " " + baseVerbPhrase;
+      } else if (!samePolarity && wasneg && !neg && buton) {
+        essaytext += "but " + pronoun + " " + auxilShown + " " + baseVerbPhrase;
+      } else if (!samePolarity && !wasneg && neg && buton2) {
+        essaytext += "but " + pronoun + " " + auxilShown + " " + baseVerbPhrase;
+      } else {
+        essaytext += "and " + (dropsAuxil ? verbForNoAuxil : auxilShown + " " + baseVerbPhrase);
+      }
+    }
+
+    prev = { auxilShown, dropsAuxil };
+    wasneg = neg;
+
+    if (pointer[whither][2] === 0 || (human && pointer[whither][2] < 4)) {
+      essaytext = essaytext.trim() + ".";
+      break;
+    } else if (evennumber) {
+      if (human && male) essaytext = essaytext.trim() + ". He";
+      else if (human && !male) essaytext = essaytext.trim() + ". She";
+      else essaytext = essaytext.trim() + ". It";
+    }
+  }
+
+  return essaytext;
+}
+
+// Port of Qparse — pulls the auxiliary verb and pronoun off a
+// question, validating both.
+const AUX_WORDS = "DOES DO DID MUST MAY MIGHT CAN COULD SHALL SHOULD WILL WOULD HAVE HAS HAD WAS WERE IS ARE";
+const PRON_WORDS = "IT HE SHE ";
+
+function qparse(a) {
+  a = a.trim();
+  let clip = a.indexOf(" ");
+  if (clip === -1) return { aux: "", pron: "", error: "aux" };
+  let aux = a.slice(0, clip).toUpperCase();
+  a = a.slice(clip + 1);
+
+  if (AUX_WORDS.indexOf(aux) === -1) {
+    return { aux: "", pron: "", error: "aux" };
+  }
+
+  clip = a.indexOf(" ");
+  if (clip === -1) return { aux: aux.toLowerCase(), pron: "", error: "pron" };
+  let pron = a.slice(0, clip).toUpperCase();
+  const rest = a.slice(clip + 1);
+
+  if (PRON_WORDS.indexOf(pron) === -1) {
+    return { aux: aux.toLowerCase(), pron: "", error: "pron" };
+  }
+
+  return { aux: aux.toLowerCase(), pron, rest, error: null };
+}
+
+
+const STRONG_VERBS = [["abide","abode","abided"],["arise","arose","arisen"],["awake","awoke","awoken"],["bear","bore","borne"],["beat","beat","beaten"],["become","became","become"],["befall","befell","befallen"],["beget","begot","begotten"],["begin","began","begun"],["behold","beheld","beheld"],["bend","bent","bent"],["bereave","bereft","bereft"],["beseech","besought","besought"],["beset","beset","beset"],["bestride","bestrode","bestridden"],["bet","bet","bet"],["betake","betook","betaken"],["bethink","bethought","bethought"],["bid","bid","bid"],["bind","bound","bound"],["bite","bit","bitten"],["bleed","bled","bled"],["blow","blew","blown"],["break","broke","broken"],["breed","bred","bred"],["bring","brought","brought"],["broadcast","broadcast","broadcast"],["build","built","built"],["burst","burst","burst"],["buy","bought","bought"],["cast","cast","cast"],["catch","caught","caught"],["chide","chid","chidden"],["choose","chose","chosen"],["cleave","clove","cloven"],["cling","clung","clung"],["come","came","come"],["cost","cost","cost"],["creep","crept","crept"],["crow","crew","crowed"],["cut","cut","cut"],["deal","dealt","dealt"],["dig","dug","dug"],["do","did","done"],["draw","drew","drawn"],["drink","drank","drunk"],["drive","drove","driven"],["eat","ate","eaten"],["fall","fell","fallen"],["feed","fed","fed"],["feel","felt","felt"],["fight","fought","fought"],["find","found","found"],["flee","fled","fled"],["fly","flew","flown"],["forbear","forbore","forborne"],["forbid","forbade","forbidden"],["forecast","forecast","forecast"],["forego","forewent","foregone"],["foresee","foresaw","foreseen"],["foretell","foretold","foretold"],["forget","forgot","forgotten"],["forgive","forgave","forgiven"],["forsake","forsook","forsaken"],["forswear","forswore","forsworn"],["freeze","froze","frozen"],["gainsay","gainsaid","gainsaid"],["get","got","got"],["give","gave","given"],["go","went","gone"],["grind","ground","ground"],["grow","grew","grown"],["hang","hung","hung"],["have","had","had"],["hear","heard","heard"],["hide","hid","hidden"],["hit","hit","hit"],["hold","held","held"],["hurt","hurt","hurt"],["input","input","input"],["keep","kept","kept"],["kneel","knelt","knelt"],["know","knew","known"],["lay","laid","laid"],["lead","led","led"],["leave","left","left"],["lend","lent","lent"],["let","let","let"],["lie","lay","lain"],["light","lit","lit"],["lipread","lipread","lipread"],["lose","lost","lost"],["make","made","made"],["mean","meant","meant"],["meet","met","met"],["miscast","miscast","miscast"],["misdeal","misdealt","misdealt"],["misgive","misgave","misgiven"],["mishit","mishit","mishit"],["mislay","mislaid","mislaid"],["mislead","misled","misled"],["misread","misread","misread"],["misspend","misspent","misspent"],["mistake","mistook","mistaken"],["misunderstand","misunderstood","misunderstood"],["mow","mowed","mown"],["offset","offset","offset"],["outdo","outdid","outdone"],["outgrow","outgrew","outgrown"],["output","output","output"],["outrun","outran","outrun"],["outshine","outshone","outshone"],["overbid","overbid","overbid"],["overcome","overcame","overcome"],["overdo","overdid","overdone"],["overdraw","overdrew","overdrawn"],["overeat","overate","overeaten"],["overfeed","overfed","overfed"],["overfly","overflew","overflown"],["overhang","overhung","overhung"],["overlie","overlay","overlain"],["overpay","overpaid","overpaid"],["override","overrode","overridden"],["overrun","overran","overrun"],["oversee","oversaw","overseen"],["oversell","oversold","oversold"],["overspend","overspent","overspent"],["overtake","overtook","overtaken"],["pay","paid","paid"],["put","put","put"],["quit","quit","quit"],["read","read","read"],["reawake","reawoke","reawoken"],["rebid","rebid","rebid"],["rebuild","rebuilt","rebuilt"],["recut","recut","recut"],["redeal","redealt","redealt"],["redo","redid","redone"],["redraw","redrew","redrawn"],["refight","refought","refought"],["regrow","regrew","regrown"],["rehang","rehung","rehung"],["rehear","reheard","reheard"],["relet","relet","relet"],["remake","remade","remade"],["rend","rent","rent"],["repay","repaid","repaid"],["reread","reread","reread"],["rerun","reran","rerun"],["resell","resold","resold"],["reset","reset","reset"],["reshoot","reshot","reshot"],["reshut","reshut","reshut"],["resit","resat","resat"],["restring","restrang","restrung"],["retake","retook","retaken"],["reteach","retaught","retaught"],["retell","retold","retold"],["rethink","rethought","rethought"],["rewind","rewound","rewound"],["rewrite","rewrote","rewritten"],["rid","rid","rid"],["ride","rode","ridden"],["ring","rang","rung"],["rise","rose","risen"],["run","ran","run"],["say","said","said"],["see","saw","seen"],["seek","sought","sought"],["sell","sold","sold"],["send","sent","sent"],["set","set","set"],["sew","sewed","sewn"],["shake","shook","shaken"],["shed","shed","shed"],["shine","shone","shone"],["shoe","shod","shod"],["shoot","shot","shot"],["show","showed","shown"],["shrink","shrank","shrunk"],["shut","shut","shut"],["sing","sang","sung"],["sink","sank","sunk"],["sit","sat","sat"],["slay","slew","slain"],["sleep","slept","slept"],["slide","slid","slid"],["sling","slung","slung"],["slink","slunk","slunk"],["slit","slit","slit"],["smite","smote","smitten"],["speak","spoke","spoken"],["speed","sped","sped"],["spend","spent","spent"],["spin","span","spun"],["spit","spat","spit"],["split","split","split"],["spread","spread","spread"],["spring","sprang","sprung"],["stand","stood","stood"],["steal","stole","stolen"],["stick","stuck","stuck"],["sting","stung","stung"],["stink","stank","stunk"],["strew","strewed","strewn"],["stride","strode","stridden"],["strike","struck","struck"],["string","strung","strung"],["strive","strove","striven"],["sublet","sublet","sublet"],["swear","swore","sworn"],["sweep","swept","swept"],["swell","swelled","swollen"],["swim","swam","swum"],["swing","swung","swung"],["take","took","taken"],["teach","taught","taught"],["tear","tore","torn"],["tell","told","told"],["think","thought","thought"],["thrive","throve","thriven"],["throw","threw","thrown"],["thrust","thrust","thrust"],["tread","trod","trodden"],["unbend","unbent","unbent"],["unbind","unbound","unbound"],["underbid","underbid","underbid"],["undercut","undercut","undercut"],["undergo","underwent","undergone"],["understand","understood","understood"],["undertake","undertook","undertaken"],["underwrite","underwrote","underwritten"],["undo","undid","undone"],["unfreeze","unfroze","unfrozen"],["unmake","unmade","unmade"],["unwind","unwound","unwound"],["uphold","upheld","upheld"],["upset","upset","upset"],["wake","woke","wakened"],["wear","wore","worn"],["weave","wove","woven"],["wed","wed","wed"],["weep","wept","wept"],["wet","wet","wet"],["win","won","won"],["wind","wound","wound"],["withdraw","withdrew","withdrawn"],["withhold","withheld","withheld"],["withstand","withstood","withstood"],["wring","wrung","wrung"],["write","wrote","written"]]
+;
+const strongVerbMap = new Map(STRONG_VERBS.map(([b, p, pt]) => [b, [p, pt]]));
+
+
+// ==================================================================
+// Famous-people starting names, loaded from people.json so they can
+// be refreshed (someone in "living men/women" inevitably dies
+// eventually) by editing one small standalone file, without touching
+// any code — the same fix the original documentation recommended
+// ("edit the text file... to enter new questions and people").
+// ==================================================================
+const FALLBACK_PEOPLE = {
+  questions: {
+    livingMen: "Does he live in America", deadMen: "Was he in a Shakespeare play",
+    livingWomen: "Can she sing well", deadWomen: "Did she write novels",
+  },
+  people: {
+    livingMen: { yes: "a living man", no: "another living man" },
+    deadMen: { yes: "a dead man", no: "another dead man" },
+    livingWomen: { yes: "a living woman", no: "another living woman" },
+    deadWomen: { yes: "a dead woman", no: "another dead woman" },
+  },
+};
+let peopleData = null;
+let peopleDataPromise = null;
+function ensurePeopleData() {
+  if (!peopleDataPromise) {
+    peopleDataPromise = fetch("people.json")
+      .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(data => { peopleData = data; })
+      .catch(err => {
+        console.warn("Could not load people.json — using placeholder names instead.", err);
+        peopleData = FALLBACK_PEOPLE;
+      });
+  }
+  return peopleDataPromise;
+}
+ensurePeopleData(); // kick off early so it's usually already resolved by the time it's needed
+
+
+// ==================================================================
+// Default topic data (ported from Makedata in Jackfile.bas)
+// ==================================================================
+function defaultTopicData(topicId) {
+  switch (Number(topicId)) {
+    case 0: {
+      const p = peopleData || FALLBACK_PEOPLE;
+      return {
+        human: true, countable: false, topic: "famous people",
+        superord: "a famous person", super1: "person", total: 15,
+        textitems: {
+          1: "Is he a man", 2: "Is he alive", 3: "Is she alive",
+          4: p.questions.livingMen, 5: p.questions.deadMen,
+          6: p.questions.livingWomen, 7: p.questions.deadWomen,
+          8: p.people.livingMen.yes, 9: p.people.livingMen.no,
+          10: p.people.deadMen.yes, 11: p.people.deadMen.no,
+          12: p.people.livingWomen.yes, 13: p.people.livingWomen.no,
+          14: p.people.deadWomen.yes, 15: p.people.deadWomen.no,
+        },
+        pointer: {
+          1: [2, 3, 0, 0],
+          2: [4, 5, 1, 2], 3: [6, 7, 1, 3],
+          4: [8, 9, 2, 2], 5: [10, 11, 2, 3],
+          6: [12, 13, 3, 2], 7: [14, 15, 3, 3],
+          8: [-1, -1, 4, 2], 9: [-1, -1, 4, 3],
+          10: [-1, -1, 5, 2], 11: [-1, -1, 5, 3],
+          12: [-1, -1, 6, 2], 13: [-1, -1, 6, 3],
+          14: [-1, -1, 7, 2], 15: [-1, -1, 7, 3],
+        },
+      };
+    }
+    case 1:
+      return {
+        human: false, countable: true, topic: "living creatures",
+        superord: "a living creature (a kind of animal, bird, fish or insect)", super1: "creature", total: 3,
+        textitems: { 1: "Does it have wings", 2: "an eagle", 3: "an elephant" },
+        pointer: { 1: [2, 3, 0, 0], 2: [-1, -1, 1, 2], 3: [-1, -1, 1, 3] },
+      };
+    case 2:
+      return {
+        human: false, countable: true, topic: "transport",
+        superord: "a vehicle", super1: "vehicle", total: 3,
+        textitems: { 1: "Does it have four wheels", 2: "a minibus", 3: "a bicycle" },
+        pointer: { 1: [2, 3, 0, 0], 2: [-1, -1, 1, 2], 3: [-1, -1, 1, 3] },
+      };
+    case 3:
+    default:
+      return {
+        human: false, countable: false, topic: "food",
+        superord: "a kind of food", super1: "food", total: 3,
+        textitems: { 1: "Does it come from cows", 2: "cheese", 3: "rice" },
+        pointer: { 1: [2, 3, 0, 0], 2: [-1, -1, 1, 2], 3: [-1, -1, 1, 3] },
+      };
+  }
+}
+
+
+// ==================================================================
+// Persistence — localStorage stands in for ANIMAL.DAT / ANIMAL.OLD.
+// Unlike Dropin's custom texts, the taught tree here IS the whole
+// point of the game (it's meant to grow across many sessions, per
+// the documentation — "you are unlikely to reach the program's limit
+// of 10,000 questions"), so this one genuinely warrants persisting.
+// ==================================================================
+const CURRENT_KEY = "jackassCurrent";
+const OLD_KEY = "jackassOld";
+const OWNCAT_KEY = "jackassOwnCategory";
+
+function loadJSON(key) {
+  try { return JSON.parse(localStorage.getItem(key)); } catch (e) { return null; }
+}
+function saveJSON(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
+
+let game = loadJSON(CURRENT_KEY) || defaultTopicData(1);
+
+function writeData() { saveJSON(CURRENT_KEY, game); }
+
+
+// ==================================================================
+// DOM references
+// ==================================================================
+const launchScreen = document.getElementById("launchScreen");
+const learningScreen = document.getElementById("learningScreen");
+const writingScreen = document.getElementById("writingScreen");
+const topicPicker = document.getElementById("topicPicker");
+const topicLabel = document.getElementById("topicLabel");
+const newTopicBtn = document.getElementById("newTopicBtn");
+const restoreBtn = document.getElementById("restoreBtn");
+const learnBtn = document.getElementById("learnBtn");
+const writeBtn = document.getElementById("writeBtn");
+const learnLabel = document.getElementById("learnLabel");
+const reminderBox = document.getElementById("reminderBox");
+const learnControls = document.getElementById("learnControls");
+const editLink = document.getElementById("editLink");
+const learnMainMenuBtn = document.getElementById("learnMainMenuBtn");
+const writeMainMenuBtn = document.getElementById("writeMainMenuBtn");
+const writingTitle = document.getElementById("writingTitle");
+const animalSelect = document.getElementById("animalSelect");
+const essayBox = document.getElementById("essayBox");
+const optOr = document.getElementById("optOr");
+const optBut = document.getElementById("optBut");
+const optBut2 = document.getElementById("optBut2");
+
+function showScreen(name) {
+  [launchScreen, learningScreen, writingScreen].forEach(s => s.classList.remove("active"));
+  ({ launch: launchScreen, learning: learningScreen, writing: writingScreen }[name]).classList.add("active");
+}
+
+
+// ==================================================================
+// Launch screen
+// ==================================================================
+function refreshLaunch() {
+  topicPicker.value = String(topicIdFor(game.topic));
+  topicLabel.textContent = "Today's topic is: " + game.topic + ".";
+}
+function topicIdFor(topicName) {
+  switch (topicName) {
+    case "famous people": return 0;
+    case "living creatures": return 1;
+    case "transport": return 2;
+    case "food": return 3;
+    default: return 4;
+  }
+}
+
+topicPicker.addEventListener("change", async () => {
+  const id = Number(topicPicker.value);
+  if (id === 0) await ensurePeopleData();
+  if (id === 4) {
+    const own = loadJSON(OWNCAT_KEY);
+    if (own) {
+      game = own;
+    } else {
+      const built = buildOwnCategory();
+      if (!built) { refreshLaunch(); return; }
+      game = built;
+      saveJSON(OWNCAT_KEY, game);
+    }
+  } else {
+    game = defaultTopicData(id);
+  }
+  writeData();
+  refreshLaunch();
+});
+
+newTopicBtn.addEventListener("click", async () => {
+  saveJSON(OLD_KEY, game);
+  const id = topicIdFor(game.topic);
+  if (id === 0) await ensurePeopleData();
+  if (id === 4) {
+    const own = loadJSON(OWNCAT_KEY);
+    game = own ? JSON.parse(JSON.stringify(own)) : defaultTopicData(1);
+  } else {
+    game = defaultTopicData(id);
+  }
+  writeData();
+  refreshLaunch();
+});
+
+restoreBtn.addEventListener("click", () => {
+  const old = loadJSON(OLD_KEY);
+  if (!old) { alert("No previous version to restore yet."); return; }
+  saveJSON(OLD_KEY, game);
+  game = old;
+  writeData();
+  refreshLaunch();
+});
+
+learnBtn.addEventListener("click", () => { showScreen("learning"); startLearning(); });
+writeBtn.addEventListener("click", () => { showScreen("writing"); startWriting(); });
+learnMainMenuBtn.addEventListener("click", () => { showScreen("launch"); refreshLaunch(); });
+writeMainMenuBtn.addEventListener("click", () => { showScreen("launch"); refreshLaunch(); });
+
+
+// ==================================================================
+// Build-your-own category (ported from Builddata in Jackfile.bas).
+// Uses native prompt()/confirm() dialogs, the direct web equivalent
+// of VB's InputBox/MsgBox that the original used for this wizard.
+// ==================================================================
+function buildOwnCategory() {
+  const countableAns = confirm("Will all the items be singular count nouns like 'a cat' or 'a lorry'?\n\nOK = Yes, Cancel = No");
+  const countable = countableAns;
+
+  const topic = prompt("Complete the sentence: 'Today's topic is ...'");
+  if (!topic) return null;
+
+  const superordPrompt = countable
+    ? "Complete the sentence: 'Think of a .... and I will try to guess it.'"
+    : "Complete the sentence: 'Think of a kind of .... and I will try to guess it.'";
+  let superord = prompt(superordPrompt);
+  if (!superord) return null;
+  superord = "a kind of " + superord;
+
+  const super1 = prompt("Complete the sentence: 'Does your ... do something?'");
+  if (!super1) return null;
+
+  const exPrompt1 = countable ? `Give me an example of ${super1}. (Include A or AN.)` : `Give me an example of ${super1}.`;
+  const b = prompt(exPrompt1);
+  if (!b) return null;
+
+  const exPrompt2 = countable ? `Give me another example of ${super1}. (Include A or AN.)` : `Give me another example of ${super1}.`;
+  const d = prompt(exPrompt2);
+  if (!d) return null;
+
+  let auxil, pron, rest;
+  while (true) {
+    const f = prompt(`Give me a YES/NO question to distinguish ${b} from ${d}.`);
+    if (!f) return null;
+    const parsed = qparse(f);
+    if (parsed.error === null) { auxil = parsed.aux; pron = parsed.pron; rest = parsed.rest; break; }
+    alert("That needs to start with an auxiliary verb (like DOES or CAN) and a pronoun (IT, HE or SHE). Try again.");
+  }
+
+  const wayround = confirm(`${capitalize(auxil)} ${b} ${rest}?\n\nOK = Yes, Cancel = No`);
+  const stored = auxil + " " + pron.toLowerCase() + " " + rest;
+
+  const textitems = { 1: stored };
+  if (wayround) { textitems[2] = b; textitems[3] = d; }
+  else { textitems[2] = d; textitems[3] = b; }
+
+  return {
+    human: false, countable, topic, superord, super1, total: 3,
+    textitems,
+    pointer: { 1: [2, 3, 0, 0], 2: [-1, -1, 1, 2], 3: [-1, -1, 1, 3] },
+  };
+}
+
+
+// ==================================================================
+// Learning screen — a direct port of learning.frm's phase machine.
+//   phase 1 = ready to start / post-game
+//   phase 2 = answering "Does it...?" questions
+//   phase 3 = "I know, it's X. Is that right?"
+//   phase 4 = entering a new distinguishing question + its answer
+// ==================================================================
+let phase = 1;
+let current = 0, editcurrent = 0;
+let yesPtr = 2, noPtr = 3;
+let fromyes = false;
+let oldanimal = "", oldtextitems = "";
+let newanimal = "", newtextitems = "";
+let male = false;
+
+// Same backward-tracking as generateEssay's gender detection, but usable
+// mid-teaching (before a leaf has necessarily settled its own pointer
+// links) by starting from whichever question node is passed in.
+function determineGender(nodeIndex) {
+  let whence = nodeIndex;
+  while (true) {
+    const source = game.pointer[whence][2];
+    if (source === 1) break;
+    whence = source;
+  }
+  return whence === 2; // true = male, false = female
+}
+
+function startLearning() {
+  phase = 1;
+  current = 0;
+  yesPtr = 2; noPtr = 3;
+  reminderBox.innerHTML = "";
+  editLink.style.display = "none";
+  learnLabel.textContent = "Think of " + game.superord + " and I will try to guess it.";
+  learnControls.innerHTML = "";
+  const readyBtn = document.createElement("button");
+  readyBtn.textContent = "Click here when ready";
+  readyBtn.addEventListener("click", onReady);
+  learnControls.appendChild(readyBtn);
+}
+
+function onReady() {
+  phase = 2;
+  current = 1; editcurrent = 1;
+  const parsed = qparse(game.textitems[1]);
+  const aux = capitalize(parsed.aux);
+  learnLabel.textContent = `${aux} your ${game.super1} ${parsed.rest}?`;
+  renderYesNo();
+}
+
+function renderYesNo() {
+  learnControls.innerHTML = "";
+  const yesBtn = document.createElement("button");
+  yesBtn.textContent = "Yes"; yesBtn.className = "yes";
+  yesBtn.addEventListener("click", onYes);
+  const noBtn = document.createElement("button");
+  noBtn.textContent = "No"; noBtn.className = "no";
+  noBtn.addEventListener("click", onNo);
+  learnControls.appendChild(yesBtn);
+  learnControls.appendChild(noBtn);
+  if (phase === 2 || phase === 3) {
+    editLink.style.display = "inline-block";
+  } else {
+    editLink.style.display = "none";
+  }
+}
+
+function onYes() { answer(true); }
+function onNo() { answer(false); }
+
+function answer(isYes) {
+  if (phase === 2) {
+    const branch = isYes ? yesPtr : noPtr;
+    const goesTo = isYes ? game.pointer[yesPtr][0] : game.pointer[noPtr][1];
+    if (goesTo === -1) {
+      learnLabel.textContent = "I know. It's " + game.textitems[branch] + ". Is that right?";
+      editcurrent = branch;
+      phase = 3;
+      fromyes = isYes;
+      game.pointer[branch][2] = current;
+      game.pointer[branch][3] = isYes ? 2 : 3;
+      renderYesNo();
+    } else {
+      if (topicIdFor(game.topic) === 0 && branch === (isYes ? 2 : 3)) {
+        male = isYes;
+      }
+      learnLabel.textContent = game.textitems[branch] + "?";
+      current = branch; editcurrent = branch;
+      if (isYes) { noPtr = game.pointer[branch][1]; yesPtr = game.pointer[branch][0]; }
+      else { yesPtr = game.pointer[branch][0]; noPtr = game.pointer[branch][1]; }
+      renderYesNo();
+    }
+  } else if (phase === 3) {
+    if (isYes) {
+      learnLabel.textContent = "Aren't I clever! Do you want to try again?";
+      phase = 1;
+      renderPlayAgain();
+    } else {
+      beginTeaching(isYes);
+    }
+  } else if (phase === 4) {
+    finishTeaching(isYes);
+  } else {
+    // phase 1 handled by renderPlayAgain buttons directly
+  }
+}
+
+function renderPlayAgain() {
+  editLink.style.display = "none";
+  reminderBox.innerHTML = "";
+  learnControls.innerHTML = "";
+  const yesBtn = document.createElement("button");
+  yesBtn.textContent = "Yes"; yesBtn.className = "yes";
+  yesBtn.addEventListener("click", () => {
+    learnLabel.textContent = "Think of " + game.superord + " and I will try to guess it.";
+    phase = 1; current = 0; yesPtr = 2; noPtr = 3;
+    const readyBtn = document.createElement("button");
+    readyBtn.textContent = "Click here when ready";
+    readyBtn.addEventListener("click", onReady);
+    learnControls.innerHTML = "";
+    learnControls.appendChild(readyBtn);
+  });
+  const noBtn = document.createElement("button");
+  noBtn.textContent = "No"; noBtn.className = "no";
+  noBtn.addEventListener("click", () => { showScreen("launch"); refreshLaunch(); });
+  learnControls.appendChild(yesBtn);
+  learnControls.appendChild(noBtn);
+}
+
+function beginTeaching(fromYesBranch) {
+  editLink.style.display = "none";
+  oldtextitems = game.textitems[current];
+  oldanimal = fromyes ? game.textitems[yesPtr] : game.textitems[noPtr];
+
+  const parsed = qparse(oldtextitems);
+  let pron = parsed.pron.charAt(0) + parsed.pron.slice(1).toLowerCase();
+  let auxil = parsed.aux;
+  let reminder;
+  if (fromyes) {
+    reminder = pron + " " + auxil + " " + parsed.rest + ".";
+  } else {
+    auxil = makeNeg(auxil);
+    reminder = pron + " " + auxil + " " + parsed.rest + ".";
+  }
+  reminderBox.innerHTML = `<div class="reminder">It's not ${oldanimal}. ${reminder}</div>`;
+
+  learnLabel.textContent = "Please tell me your " + game.super1 + ".";
+  learnControls.innerHTML = "";
+  const input = document.createElement("input");
+  input.type = "text";
+  input.value = game.countable ? "a " : "";
+  const ok = document.createElement("button");
+  ok.textContent = "OK";
+  ok.addEventListener("click", () => submitAnimal(input.value));
+  input.addEventListener("keydown", e => { if (e.key === "Enter") submitAnimal(input.value); });
+  learnControls.appendChild(input);
+  learnControls.appendChild(ok);
+  input.focus();
+  input.setSelectionRange(input.value.length, input.value.length);
+}
+
+function submitAnimal(raw) {
+  newanimal = raw.trim();
+  if (newanimal.length <= 2) return;
+  if (game.countable) {
+    const first = newanimal.charAt(0).toLowerCase();
+    const startsWithArticle = newanimal.slice(0, 2).toLowerCase() === "a " || newanimal.slice(0, 3).toLowerCase() === "an ";
+    if (!startsWithArticle) {
+      if ("aei".indexOf(first) >= 0) newanimal = "an " + newanimal;
+      else if (first === "o") {
+        newanimal = (newanimal.slice(0, 3).toLowerCase() === "one" || newanimal.slice(0, 4).toLowerCase() === "once") ? "a " + newanimal : "an " + newanimal;
+      } else if (first === "u") {
+        newanimal = newanimal.slice(0, 3).toLowerCase() === "uni" ? "a " + newanimal : "an " + newanimal;
+      } else {
+        newanimal = "a " + newanimal;
+      }
+    }
+  }
+  learnLabel.textContent = `Please give me a question to distinguish ${oldanimal} from ${newanimal}.`;
+  learnControls.innerHTML = "";
+  const input = document.createElement("input");
+  input.type = "text";
+  const pronoun = game.human ? (determineGender(current) ? "he" : "she") : "it";
+  input.value = "Does " + pronoun + " ";
+  const ok = document.createElement("button");
+  ok.textContent = "OK";
+  ok.addEventListener("click", () => submitQuestion(input.value));
+  input.addEventListener("keydown", e => { if (e.key === "Enter") submitQuestion(input.value); });
+  learnControls.appendChild(input);
+  learnControls.appendChild(ok);
+  input.focus();
+  input.setSelectionRange(input.value.length, input.value.length);
+}
+
+function submitQuestion(raw) {
+  let text = raw.trim();
+  const parsed = qparse(text);
+  if (parsed.error) { return; }
+  let auxil = capitalize(parsed.aux);
+  let pron = parsed.pron.toLowerCase();
+  let rest = parsed.rest;
+  if (rest.endsWith("?")) rest = rest.slice(0, -1);
+  newtextitems = auxil + " " + pron + " " + rest;
+
+  learnLabel.innerHTML = `For ${newanimal}, what is the answer to &ldquo;<span class="q-reminder">${newtextitems}?</span>&rdquo;`;
+  phase = 4;
+  renderYesNo();
+}
+
+function finishTeaching(isYes) {
+  const puthere = fromyes ? yesPtr : noPtr;
+  game.textitems[puthere] = newtextitems;
+  const t = game.total;
+  if (isYes) {
+    game.textitems[t + 1] = newanimal;
+    game.textitems[t + 2] = oldanimal;
+  } else {
+    game.textitems[t + 1] = oldanimal;
+    game.textitems[t + 2] = newanimal;
+  }
+  game.pointer[t + 1] = [-1, -1, puthere, 2];
+  game.pointer[t + 2] = [-1, -1, puthere, 3];
+  if (fromyes) { game.pointer[yesPtr][0] = t + 1; game.pointer[yesPtr][1] = t + 2; }
+  else { game.pointer[noPtr][0] = t + 1; game.pointer[noPtr][1] = t + 2; }
+  game.total = t + 2;
+  writeData();
+
+  learnLabel.textContent = "Thank you. Do you want to try again?";
+  reminderBox.innerHTML = "";
+  phase = 1;
+  yesPtr = 2; noPtr = 3;
+  renderPlayAgain();
+}
+
+editLink.addEventListener("click", () => {
+  const currentText = game.textitems[editcurrent];
+  const edited = prompt("Edit this text:", currentText);
+  if (edited === null || edited === "") return;
+  game.textitems[editcurrent] = edited;
+  if (phase === 2) learnLabel.textContent = edited + "?";
+  else if (phase === 3) learnLabel.textContent = "I know. It's " + edited + ". Is that right?";
+  writeData();
+});
+
+
+// ==================================================================
+// Writing screen — ported from writing.frm, wired to the corrected
+// full essay generator (see morphology.js header comment).
+// ==================================================================
+function startWriting() {
+  writingTitle.textContent = "All about " + game.topic;
+  animalSelect.innerHTML = "";
+  const placeholder = game.countable ? "Choose a " : "Choose a kind of ";
+  essayBox.textContent = placeholder + game.super1 + " from the list and you will see a paragraph about it here.";
+
+  Object.keys(game.pointer).forEach(key => {
+    const idx = Number(key);
+    if (game.pointer[idx][0] === -1) {
+      const opt = document.createElement("option");
+      opt.value = idx;
+      opt.textContent = game.textitems[idx];
+      animalSelect.appendChild(opt);
+    }
+  });
+}
+
+function renderEssayFor(idx) {
+  const options = { oron: optOr.checked, buton: optBut.checked, buton2: optBut2.checked };
+  essayBox.textContent = generateEssay(idx, game, strongVerbMap, options);
+}
+
+animalSelect.addEventListener("change", () => {
+  if (animalSelect.value) renderEssayFor(Number(animalSelect.value));
+});
+[optOr, optBut, optBut2].forEach(cb => cb.addEventListener("change", () => {
+  if (animalSelect.value) renderEssayFor(Number(animalSelect.value));
+}));
+
+
+// ==================================================================
+// Startup
+// ==================================================================
+refreshLaunch();
+</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fish and Rice</title>
+<link rel="stylesheet" href="../engine.css" />
+<!-- Privacy-friendly analytics by Plausible -->
+<script
+  async
+  src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+></script>
+<script>
+  ((window.plausible =
+    window.plausible ||
+    function () {
+      (plausible.q = plausible.q || []).push(arguments);
+    }),
+    (plausible.init =
+      plausible.init ||
+      function (i) {
+        plausible.o = i || {};
+      }));
+  plausible.init();
+</script>
+
+</head>
+<body>
+<div id="app">
+  <h1 id="gameTitle"></h1>
+  <div class="subtitle" id="gameSubtitle"></div>
+
+  <div id="gameScreen" class="panel">
+    <div class="progress" id="progress"></div>
+    <div class="task" id="taskText"></div>
+
+    <div class="controls-row">
+      <button id="playBtn">▶ Play</button>
+      <button id="revealBtn" class="secondary">👁 Show text (3s)</button>
+    </div>
+
+    <div class="reveal-text" id="revealText"></div>
+
+    <div class="order-row">
+      <button id="btnA"></button>
+      <button id="btnB"></button>
+    </div>
+
+    <div class="feedback" id="feedback"></div>
+
+    <div class="continue-row">
+      <button id="continueBtn" class="secondary" disabled>Continue &rarr;</button>
+    </div>
+
+    <audio id="player"></audio>
+  </div>
+
+  <div id="scoreScreen" class="panel">
+    <h2 id="scoreHeading"></h2>
+    <ul id="scoreList"></ul>
+    <button id="restartBtn">Play again</button>
+  </div>
+
+  <div class="back-link"><a href="../index.html">&larr; All listening sets</a></div>
+</div>
+
+<script src="../engine.js"></script>
+<script>
+ListeningSet.run({
+  title: "Fish and Rice",
+  subtitle: "a listening exercise — which comes first?",
+  task: "Listen to the speaker and decide the order of the subjects:<br><strong>FISH then RICE</strong> or <strong>RICE then FISH</strong>.",
+  labelA: "FISH &rarr; RICE",
+  labelB: "RICE &rarr; FISH",
+  items: [
+    { audio: "fish1.m4a", text: "Today's talk is going to cover two subjects, rice, and then fish.", answer: "B" },
+    { audio: "fish2.m4a", text: "This talk will cover rice and fish in that order.", answer: "B" },
+    { audio: "fish3.m4a", text: "I'll be talking quite a lot about rice, but before we do that, I'm going to say a few words about fish.", answer: "A" },
+    { audio: "fish4.m4a", text: "We'll be covering rice mainly, but if there's time at the end, I'll have a few words to say about fish.", answer: "B" },
+    { audio: "fish5.m4a", text: "Today's talk is about rice and fish, but I'm going to make a start with the second of these.", answer: "A" },
+    { audio: "fish6.m4a", text: "Rice and fish are both important topics, but we'll get around to the second of these once we've covered the first.", answer: "B" },
+    { audio: "fish7.m4a", text: "You'll be hearing a great deal about rice on this course, but we'll begin with fish.", answer: "A" },
+    { audio: "fish8.m4a", text: "Fish and rice are our subjects but we'll get around to the former when we've had a few words to say about the latter.", answer: "B" }
+  ]
+});
+</script>
+</body>
+</html>

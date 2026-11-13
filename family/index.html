@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FAMILY — three generations of kinship terms</title>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+<style>
+  :root {
+    --bg: #f6f5f1;
+    --surface: #ffffff;
+    --ink: #22262b;
+    --muted: #5b6570;
+    --border: #e3e0d8;
+    --accent: #0e8c62;
+    --accent-dark: #0a6b4a;
+    --radius: 12px;
+    --shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  #app {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+  }
+  h1 { text-align: center; margin-bottom: 4px; letter-spacing: 2px; }
+  .subtitle { text-align: center; color: var(--muted); margin-bottom: 24px; font-size: 0.95rem; }
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 22px;
+    margin-bottom: 20px;
+  }
+  .lang-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .lang-row label { font-weight: 600; }
+  select {
+    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  h2.generation {
+    font-size: 1rem;
+    color: var(--accent-dark);
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 6px;
+    margin: 22px 0 10px;
+  }
+  .kin-row {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .kin-btn {
+    font-size: 0.9rem;
+    padding: 9px 11px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .kin-btn:hover { background: #efece3; }
+  .kin-btn.selected {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .sentence-box {
+    background: #faf8f2;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin: 20px 0 18px;
+    min-height: 70px;
+  }
+  .sentence-box p { margin: 6px 0; font-size: 1.15rem; }
+  .sentence-box p.gloss-line { font-size: 0.9rem; color: var(--muted); margin-bottom: 10px; }
+  .sentence-box p.roman-line { font-size: 0.95rem; font-style: italic; color: var(--muted); margin-top: 4px; }
+  #speakToggleRow { display: none; text-align: center; font-size: 0.85rem; color: var(--muted); margin-bottom: 8px; }
+  .blank-letter {
+    display: inline-block;
+    min-width: 0.65em;
+    border-bottom: 2px solid var(--accent);
+    text-align: center;
+  }
+  .blank-letter.filled { border-bottom-color: transparent; }
+
+  .controls-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+  .controls-row button {
+    font-size: 1rem;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+  }
+  .controls-row button:hover { background: var(--accent-dark); }
+  .controls-row button.secondary {
+    background: var(--surface);
+    color: var(--accent-dark);
+    border: 1px solid var(--border);
+  }
+  .controls-row button.secondary:hover { background: #efece3; }
+
+  .hint {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 10px;
+  }
+
+  details.about {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+  }
+  details.about summary { cursor: pointer; font-weight: 600; }
+  .footer-link { text-align: center; margin-top: 24px; font-size: 0.9rem; }
+  .footer-link a { color: var(--accent-dark); }
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>FAMILY</h1>
+  <div class="subtitle">three generations of kinship terms, across six languages</div>
+
+  <div class="panel">
+    <div class="lang-row">
+      <label for="langSelect">I am learning:</label>
+      <select id="langSelect"></select>
+    </div>
+
+    <h2 class="generation">Grandparents</h2>
+    <div class="kin-row" data-gen="0"></div>
+
+    <h2 class="generation">Parents, aunts and uncles</h2>
+    <div class="kin-row" data-gen="1"></div>
+
+    <h2 class="generation">Your generation</h2>
+    <div class="kin-row" data-gen="2"></div>
+
+    <label id="speakToggleRow">
+      <input type="checkbox" id="speakToggle" /> <span id="speakToggleLabel">Sound On</span>
+    </label>
+
+    <div class="sentence-box" id="sentenceBox"></div>
+
+    <div class="controls-row">
+      <button id="testBtn" type="button">Test me</button>
+      <button id="browseBtn" type="button" class="secondary" style="display:none;">Back to browsing</button>
+    </div>
+    <div class="hint" id="hintText"></div>
+  </div>
+
+  <details class="about">
+    <summary>About this page</summary>
+    <p>
+      Uses the same quiet, judgement-free testing approach as <a href="../weekdays/">WEEKDAYS</a> and
+      <a href="../months/">MONTHS</a>: click a relative to see the term, click &ldquo;Test me&rdquo; to
+      have it blanked out, and type it letter by letter (space reveals a letter if you're stuck). No
+      marks for right answers, no scolding for wrong ones.
+    </p>
+    <p>
+      The real point of this one is the aunts and uncles. English, French, German and Spanish just say
+      uncle/aunt regardless of anything else. Croatian splits uncles by which side of the family they're
+      on (<em>stric</em> vs <em>ujak</em>) but not by age. Thai splits by two different things at once:
+      whether the aunt or uncle is older or younger than your parent, and &mdash; only for the younger
+      ones &mdash; which side of the family. Older aunts/uncles get the same word (<em>lung</em>/<em>pâa</em>)
+      regardless of side; younger ones split into paternal (<em>aa</em>) and maternal (<em>náa</em>).
+      Cousins, after all that, are just one word in every language here.
+    </p>
+  </details>
+
+  <p class="footer-link">&larr; <a href="../index.html">Back to main page</a></p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // Each kin node: id, generation (0=grandparents,1=parents+auntsuncles,
+  // 2=self generation), role, side ("p"/"m"/null), age ("older"/"younger"/null),
+  // gender ("m"/"f").
+  var NODES = [
+    { id: "pgf", gen: 0, role: "grandparent", side: "p", gender: "m" },
+    { id: "pgm", gen: 0, role: "grandparent", side: "p", gender: "f" },
+    { id: "mgf", gen: 0, role: "grandparent", side: "m", gender: "m" },
+    { id: "mgm", gen: 0, role: "grandparent", side: "m", gender: "f" },
+
+    { id: "father", gen: 1, role: "parent", gender: "m" },
+    { id: "mother", gen: 1, role: "parent", gender: "f" },
+    { id: "fob", gen: 1, role: "auntuncle", side: "p", age: "older", gender: "m" },
+    { id: "fyb", gen: 1, role: "auntuncle", side: "p", age: "younger", gender: "m" },
+    { id: "fos", gen: 1, role: "auntuncle", side: "p", age: "older", gender: "f" },
+    { id: "fys", gen: 1, role: "auntuncle", side: "p", age: "younger", gender: "f" },
+    { id: "mob", gen: 1, role: "auntuncle", side: "m", age: "older", gender: "m" },
+    { id: "myb", gen: 1, role: "auntuncle", side: "m", age: "younger", gender: "m" },
+    { id: "mos", gen: 1, role: "auntuncle", side: "m", age: "older", gender: "f" },
+    { id: "mys", gen: 1, role: "auntuncle", side: "m", age: "younger", gender: "f" },
+
+    { id: "obro", gen: 2, role: "sibling", age: "older", gender: "m" },
+    { id: "ybro", gen: 2, role: "sibling", age: "younger", gender: "m" },
+    { id: "osis", gen: 2, role: "sibling", age: "older", gender: "f" },
+    { id: "ysis", gen: 2, role: "sibling", age: "younger", gender: "f" },
+    { id: "cousinM", gen: 2, role: "cousin", gender: "m" },
+    { id: "cousinF", gen: 2, role: "cousin", gender: "f" }
+  ];
+
+  function describe(node) {
+    if (node.role === "grandparent") {
+      var sideWord = node.side === "p" ? "paternal" : "maternal";
+      return "Your " + sideWord + " " + (node.gender === "m" ? "grandfather" : "grandmother");
+    }
+    if (node.role === "parent") {
+      return "Your " + (node.gender === "m" ? "father" : "mother");
+    }
+    if (node.role === "auntuncle") {
+      var parent = node.side === "p" ? "father's" : "mother's";
+      return "Your " + parent + " " + node.age + " " + (node.gender === "m" ? "brother" : "sister");
+    }
+    if (node.role === "sibling") {
+      return "Your " + node.age + " " + (node.gender === "m" ? "brother" : "sister");
+    }
+    return "A " + (node.gender === "m" ? "male" : "female") + " cousin";
+  }
+
+  var LANGUAGES = {
+    en: {
+      native: "English", font: "", speechLang: "en-GB",
+      term: function (n) {
+        if (n.role === "grandparent") return n.gender === "m" ? "Grandfather" : "Grandmother";
+        if (n.role === "parent") return n.gender === "m" ? "Father" : "Mother";
+        if (n.role === "auntuncle") return n.gender === "m" ? "Uncle" : "Aunt";
+        if (n.role === "sibling") return n.gender === "m" ? "Brother" : "Sister";
+        return "Cousin";
+      },
+      before: function (n) { return (n.gender === "m" ? "He" : "She") + " is your "; },
+      after: "."
+    },
+    fr: {
+      native: "Français", font: "", speechLang: "fr-FR",
+      term: function (n) {
+        if (n.role === "grandparent") return n.gender === "m" ? "grand-père" : "grand-mère";
+        if (n.role === "parent") return n.gender === "m" ? "père" : "mère";
+        if (n.role === "auntuncle") return n.gender === "m" ? "oncle" : "tante";
+        if (n.role === "sibling") return n.gender === "m" ? "frère" : "sœur";
+        return n.gender === "m" ? "cousin" : "cousine";
+      },
+      before: function (n) { return n.gender === "m" ? "Il est ton " : "Elle est ta "; },
+      after: "."
+    },
+    de: {
+      native: "Deutsch", font: "", speechLang: "de-DE",
+      term: function (n) {
+        if (n.role === "grandparent") return n.gender === "m" ? "Großvater" : "Großmutter";
+        if (n.role === "parent") return n.gender === "m" ? "Vater" : "Mutter";
+        if (n.role === "auntuncle") return n.gender === "m" ? "Onkel" : "Tante";
+        if (n.role === "sibling") return n.gender === "m" ? "Bruder" : "Schwester";
+        return n.gender === "m" ? "Cousin" : "Kusine";
+      },
+      before: function (n) { return n.gender === "m" ? "Er ist dein " : "Sie ist deine "; },
+      after: "."
+    },
+    es: {
+      native: "Español", font: "", speechLang: "es-ES",
+      term: function (n) {
+        if (n.role === "grandparent") return n.gender === "m" ? "abuelo" : "abuela";
+        if (n.role === "parent") return n.gender === "m" ? "padre" : "madre";
+        if (n.role === "auntuncle") return n.gender === "m" ? "tío" : "tía";
+        if (n.role === "sibling") return n.gender === "m" ? "hermano" : "hermana";
+        return n.gender === "m" ? "primo" : "prima";
+      },
+      before: function (n) { return n.gender === "m" ? "Él es tu " : "Ella es tu "; },
+      after: "."
+    },
+    hr: {
+      native: "Hrvatski", font: "", speechLang: "hr-HR",
+      term: function (n) {
+        if (n.role === "grandparent") return n.gender === "m" ? "djed" : "baka";
+        if (n.role === "parent") return n.gender === "m" ? "otac" : "majka";
+        if (n.role === "auntuncle") {
+          if (n.gender === "f") return "teta";
+          return n.side === "p" ? "stric" : "ujak";
+        }
+        if (n.role === "sibling") return n.gender === "m" ? "brat" : "sestra";
+        return n.gender === "m" ? "bratić" : "sestrična";
+      },
+      before: function (n) { return n.gender === "m" ? "On je tvoj " : "Ona je tvoja "; },
+      after: "."
+    },
+    th: {
+      native: "ไทย", font: "'Noto Sans Thai', sans-serif", speechLang: "th-TH",
+      before: function () { return "เขาคือ"; },
+      after: "ของคุณ",
+      beforeRoman: function () { return "khao khue "; },
+      afterRoman: " khong khun",
+      term: function (n) {
+        if (n.role === "grandparent") {
+          if (n.side === "p") return n.gender === "m" ? "ปู่" : "ย่า";
+          return n.gender === "m" ? "ตา" : "ยาย";
+        }
+        if (n.role === "parent") return n.gender === "m" ? "พ่อ" : "แม่";
+        if (n.role === "auntuncle") {
+          if (n.age === "older") return n.gender === "m" ? "ลุง" : "ป้า";
+          return n.side === "p" ? "อา" : "น้า";
+        }
+        if (n.role === "sibling") {
+          if (n.age === "older") return n.gender === "m" ? "พี่ชาย" : "พี่สาว";
+          return n.gender === "m" ? "น้องชาย" : "น้องสาว";
+        }
+        return "ลูกพี่ลูกน้อง";
+      },
+      roman: function (n) {
+        if (n.role === "grandparent") {
+          if (n.side === "p") return n.gender === "m" ? "bpoo" : "yaa";
+          return n.gender === "m" ? "dtaa" : "yaai";
+        }
+        if (n.role === "parent") return n.gender === "m" ? "phaw" : "mae";
+        if (n.role === "auntuncle") {
+          if (n.age === "older") return n.gender === "m" ? "lung" : "paa";
+          return n.side === "p" ? "aa" : "naa";
+        }
+        if (n.role === "sibling") {
+          if (n.age === "older") return n.gender === "m" ? "phii chaai" : "phii saao";
+          return n.gender === "m" ? "nawng chaai" : "nawng saao";
+        }
+        return "luuk phii luuk nawng";
+      }
+    }
+  };
+
+  var langSelect = document.getElementById("langSelect");
+  var sentenceBox = document.getElementById("sentenceBox");
+  var testBtn = document.getElementById("testBtn");
+  var browseBtn = document.getElementById("browseBtn");
+  var hintText = document.getElementById("hintText");
+  var kinRows = document.querySelectorAll(".kin-row");
+
+  /* ---------------- optional text-to-speech for the sentence ---------------- */
+
+  var speechSupported = "speechSynthesis" in window;
+  var speakEnabled = false;
+  var speakToggle = document.getElementById("speakToggle");
+  var speakToggleRow = document.getElementById("speakToggleRow");
+  var speakToggleLabel = document.getElementById("speakToggleLabel");
+
+  if (speechSupported) {
+    speakToggleRow.style.display = "block";
+    try {
+      speakEnabled = localStorage.getItem("family_speak") === "1";
+    } catch (e) {}
+    speakToggle.checked = speakEnabled;
+    updateSpeakToggleLabel();
+    speakToggle.addEventListener("change", function () {
+      speakEnabled = speakToggle.checked;
+      try {
+        localStorage.setItem("family_speak", speakEnabled ? "1" : "0");
+      } catch (e) {}
+      updateSpeakToggleLabel();
+      if (!speakEnabled) window.speechSynthesis.cancel();
+    });
+  }
+
+  function updateSpeakToggleLabel() {
+    speakToggleLabel.textContent = speakEnabled ? "Sound Off" : "Sound On";
+  }
+
+  function speak(text, lang) {
+    if (!speechSupported || !speakEnabled || !text) return;
+    window.speechSynthesis.cancel();
+    setTimeout(function () {
+      var utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = lang.speechLang || "en-GB";
+      window.speechSynthesis.speak(utterance);
+    }, 50);
+  }
+
+  var state = { langKey: "en", nodeId: "pgf", mode: "browse", typed: "" };
+
+  Object.keys(LANGUAGES).forEach(function (key) {
+    var opt = document.createElement("option");
+    opt.value = key;
+    opt.textContent = LANGUAGES[key].native;
+    if (key === state.langKey) opt.selected = true;
+    langSelect.appendChild(opt);
+  });
+
+  function currentLang() { return LANGUAGES[state.langKey]; }
+  function currentNode() {
+    var found = null;
+    NODES.forEach(function (n) { if (n.id === state.nodeId) found = n; });
+    return found;
+  }
+  function testWordFor(lang, node) {
+    return lang.roman ? lang.roman(node) : lang.term(node);
+  }
+
+  function renderKinRows() {
+    kinRows.forEach(function (row) {
+      var gen = Number(row.getAttribute("data-gen"));
+      row.innerHTML = "";
+      NODES.filter(function (n) { return n.gen === gen; }).forEach(function (n) {
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "kin-btn" + (n.id === state.nodeId ? " selected" : "");
+        btn.textContent = describe(n).replace(/^Your /, "").replace(/^A /, "a ");
+        btn.addEventListener("click", function () {
+          state.nodeId = n.id;
+          state.mode = "browse";
+          state.typed = "";
+          render();
+        });
+        row.appendChild(btn);
+      });
+    });
+  }
+
+  function renderSentence() {
+    var lang = currentLang();
+    var node = currentNode();
+    sentenceBox.style.fontFamily = lang.font || "";
+    sentenceBox.innerHTML = "";
+
+    // Always-shown English gloss, so you still know which relative this
+    // is regardless of target language — it never reveals the term itself.
+    var pGloss = document.createElement("p");
+    pGloss.className = "gloss-line";
+    pGloss.textContent = describe(node);
+    sentenceBox.appendChild(pGloss);
+
+    var term = lang.term(node);
+
+    if (state.mode === "test") {
+      // Typing always happens in the script actually used for the test
+      // word — Thai's roman spelling for Thai, the target script itself
+      // otherwise — so the wrapper text matches whichever one that is.
+      var useRoman = !!lang.roman;
+      var before = useRoman ? lang.beforeRoman(node) : lang.before(node);
+      var after = useRoman ? lang.afterRoman : lang.after;
+      var testWord = testWordFor(lang, node);
+
+      var p = document.createElement("p");
+      p.appendChild(document.createTextNode(before));
+      for (var i = 0; i < testWord.length; i++) {
+        var span = document.createElement("span");
+        span.className = "blank-letter" + (i < state.typed.length ? " filled" : "");
+        span.textContent = i < state.typed.length ? testWord[i] : "—";
+        p.appendChild(span);
+      }
+      p.appendChild(document.createTextNode(after));
+      sentenceBox.appendChild(p);
+    } else {
+      var pMain = document.createElement("p");
+      var mainSentence = lang.before(node) + term + lang.after;
+      pMain.textContent = mainSentence;
+      sentenceBox.appendChild(pMain);
+
+      var spoken = mainSentence;
+      if (lang.roman) {
+        var romanSentence = lang.beforeRoman(node) + lang.roman(node) + lang.afterRoman;
+        var pRoman = document.createElement("p");
+        pRoman.className = "roman-line";
+        pRoman.textContent = romanSentence;
+        sentenceBox.appendChild(pRoman);
+      }
+      speak(spoken, lang);
+    }
+  }
+
+  function render() {
+    renderKinRows();
+    renderSentence();
+    testBtn.style.display = state.mode === "test" ? "none" : "";
+    browseBtn.style.display = state.mode === "test" ? "" : "none";
+    hintText.textContent = state.mode === "test"
+      ? "Type the missing word, letter by letter. Press space if you're stuck."
+      : "Click a relative to see the term. Click “Test me” to practise it.";
+  }
+
+  langSelect.addEventListener("change", function () {
+    state.langKey = langSelect.value;
+    state.mode = "browse";
+    state.typed = "";
+    render();
+  });
+
+  testBtn.addEventListener("click", function () {
+    state.mode = "test";
+    state.typed = "";
+    render();
+  });
+  browseBtn.addEventListener("click", function () {
+    state.mode = "browse";
+    state.typed = "";
+    render();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (state.mode !== "test") return;
+    var lang = currentLang();
+    var node = currentNode();
+    var testWord = testWordFor(lang, node);
+    if (state.typed.length >= testWord.length) return;
+
+    var nextChar = testWord[state.typed.length];
+    var matched = false;
+
+    if (e.key === " ") {
+      e.preventDefault();
+      state.typed += nextChar;
+      matched = true;
+    } else if (e.key.length === 1 && e.key.toLowerCase() === nextChar.toLowerCase()) {
+      state.typed += nextChar;
+      matched = true;
+    }
+
+    if (!matched) return;
+
+    if (state.typed.length >= testWord.length) {
+      state.mode = "browse";
+      state.typed = "";
+      render();
+    } else {
+      renderSentence();
+    }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

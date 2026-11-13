@@ -1,0 +1,17 @@
+{
+  "_readme": "Famous-people starting data for JACKASS. When one of the eight names below is no longer accurate (most likely: someone in 'livingMen' or 'livingWomen' has died), just replace their name with someone else who fits the same question. Leave everything else — the four question strings, the object keys, and the JSON punctuation — exactly as it is. 'yes' is the answer when the question is true of them, 'no' is the answer when it's false.",
+
+  "questions": {
+    "livingMen": "Does he live in America",
+    "deadMen": "Was he in a Shakespeare play",
+    "livingWomen": "Can she sing well",
+    "deadWomen": "Did she write novels"
+  },
+
+  "people": {
+    "livingMen": { "yes": "Timothée Chalamet", "no": "Cristiano Ronaldo" },
+    "deadMen": { "yes": "Julius Caesar", "no": "Oliver Cromwell" },
+    "livingWomen": { "yes": "Taylor Swift", "no": "Simone Biles" },
+    "deadWomen": { "yes": "Jane Austen", "no": "Catherine the Great" }
+  }
+}

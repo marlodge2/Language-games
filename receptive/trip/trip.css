@@ -1,0 +1,334 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background: #fdfdfd;
+  color: #333;
+}
+
+.instruction {
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 6px 12px;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+/* Diary days row */
+.diary {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.day {
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  background: #fafafa;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 8px;
+}
+
+.day-name {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.assignment {
+  flex: 1;
+  width: 100%;
+  border-top: 1px dashed #aaa;
+  padding-top: 8px;
+  font-style: italic;
+  color: #555;
+}
+
+.day.drag-over {
+  background: #e0f7ff;
+  border-color: #00aaff;
+}
+
+/* Towns row */
+.town-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.town {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  background: #eee;
+  cursor: grab;
+}
+
+.town:active {
+  cursor: grabbing;
+}
+
+/* Clues panel */
+.clues {
+  margin-top: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #f9f9f9;
+}
+
+.clues.hidden {
+  display: none;
+}
+.assignment {
+  flex: 1;
+  width: 100%;
+  border-top: 1px dashed #aaa;
+  padding-top: 8px;
+  min-height: 24px; /* ensures space even when empty */
+  text-align: center;
+}
+/* Clue toggle button styling */
+.clue-toggle {
+  text-align: center;
+  margin: 20px 0;
+}
+
+#showCluesBtn {
+  display: inline-block;
+  background:#001f3f;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.score-board {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #007acc;
+}
+
+.town.disabled {
+  background: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.win-message {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #007acc;
+  margin: 20px 0;
+}
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.clues li {
+  animation: fadeIn 0.5s ease;
+}
+
+.win-message {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #007acc;
+  margin: 20px 0;
+  animation: fadeIn 1s ease;
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.town-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.town {
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  cursor: grab;
+  border-radius: 4px;
+}
+
+.town.disabled {
+  background: #ddd;
+  cursor: not-allowed;
+}
+
+.days {
+  display: flex;              /* put days side by side */
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.day {
+  flex: 1;                    /* each day box takes equal width */
+  min-width: 100px;
+  background: #fafafa;
+  border: 2px dashed #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  text-align: center;
+}
+
+.day.drag-over {
+  border-color: #007acc;
+  background: #e6f2ff;
+}
+
+.assignment {
+  margin-top: 8px;
+  min-height: 20px;
+}
+
+.correct {
+  color: green;
+  font-weight: bold;
+}
+
+.wrong {
+  color: red;
+  font-weight: bold;
+}
+
+.score-board {
+  margin: 15px 0;
+  font-weight: bold;
+}
+
+#cluePanel {
+  margin-top: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.win-message {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #007acc;
+  margin: 20px 0;
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.score-board {
+  margin-top: 15px;
+  font-weight: bold;
+}
+#showCluesBtn,
+.win-message + button {
+  display: block;        /* make them block-level */
+  margin: 10px auto;     /* auto margins center them */
+  text-align: center;
+}
+
+.win-message {
+  text-align: center;
+}
+.center-buttons {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.center-buttons button {
+  margin: 0 10px auto;
+}
+/* General page background */
+body {
+  background: #fdfcf7; /* warm paper tone */
+  font-family: "Georgia", serif;
+  color: #333;
+}
+
+/* Clue panel styled like a diary page */
+#cluePanel {
+  background: #fffef9;
+  border: 2px solid #d4c9a1;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Clue list spacing */
+#cluePanel ul {
+  list-style: disc;
+  padding-left: 25px;
+  line-height: 1.6;
+}
+
+/* Scoreboard below clue panel */
+.score-board {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+  color: #2a4d8f;
+}
+
+/* Centered buttons */
+#showCluesBtn {
+  display: block;
+  margin: 15px auto;
+  padding: 10px 20px;
+  background: #2a70b6;
+  border: 1px solid #b8a46a;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.center-buttons {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.center-buttons button {
+  margin: 0 10px;
+  padding: 8px 16px;
+  background: #e6d9b3;
+  border: 1px solid #b8a46a;
+  border-radius: 5px;
+  cursor: pointer;
+}
+#cluePanel {
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+#cluePanel.hidden {
+  opacity: 0;
+}
+#cluePanel {
+  margin: 20px auto;   /* centers horizontally */
+  max-width: 600px;    /* keeps it neat */
+  text-align: left;    /* clue text aligned left inside */
+}

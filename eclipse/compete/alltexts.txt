@@ -1,0 +1,19 @@
+# ECLIPSE story list — one story per line, in the format:
+#   Title | filename.txt
+# Blank lines and lines starting with # are ignored. Add new stories by
+# adding a new line here — the filename must match a .txt file in this
+# same folder, with the story's own title as its first line.
+
+Nasreddin's Visitors | visitors.txt
+Nasreddin borrows Ali's Pot | pot.txt
+Nasreddin's Shirt | shirt.txt
+Nasreddin's Punishment | whipping.txt
+At the Museum | museum.txt
+Nasreddin's Donkey | donkey.txt
+Nasreddin's Sermon | sermon.txt
+Going to Market | market.txt
+Churchill and Shaw | churchill.txt
+Zeno's Paradox | zeno.txt
+A Doctor's Day | doctor.txt
+A Strange Concert | enesco.txt
+The Barber of Seville | seville.txt

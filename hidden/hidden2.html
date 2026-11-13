@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Answering Machine Message — Hidden Word Listening</title>
+<link rel="stylesheet" href="hidden-engine.css" />
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"></script>
+<script>
+  ((window.plausible = window.plausible || function () { (plausible.q = plausible.q || []).push(arguments); }),
+   (plausible.init = plausible.init || function (i) { plausible.o = i || {}; }));
+  plausible.init();
+</script>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script src="hidden-engine.js"></script>
+<script>
+  HiddenWordEngine.render({
+    title: "Answering Machine Message",
+    next: null,
+    questions: [
+      { audio: "qq1", before: "Thanks for your message, but I'm afraid I'll not be ", after: " to make it to the concert at the Holy Rude on Thursday.",
+        words: ["mess", "time", "able", "whole"], correct: 2,
+        hints: ["... message...", "... but I'm  ....", null, ".. Holy Rude .."] },
+      { audio: "qq2", before: "", after: " evening I've arranged to be at Edinburgh Airport.",
+        words: ["that", "Ivor", "beer", "Teddy"], correct: 0,
+        hints: [null, "... I've arranged ...", "... be at ...", "...at Edinburgh ..."] },
+      { audio: "qq3", before: "... to pick up Lorraine who's up for a long ", after: ".",
+        words: ["couple", "sup", "along", "weekend"], correct: 3,
+        hints: [".. to pick up Lorraine ...", "... who's up ...", "... a long  ...", null] },
+      { audio: "qq4", before: "I'll definitely see you at the Highland Hotel a week ", after: " Friday.",
+        words: ["deaf", "your", "tell", "on"], correct: 3,
+        hints: ["... definitely...", "... you at ...", "...Hotel  ...", null] },
+      { audio: "qq5", before: "... for the aerobics ", after: " as usual.",
+        words: ["zero", "class", "sir", "shall"], correct: 1,
+        hints: [".. the aerobics ...", null, "... class as ...", "... usual."] },
+      { audio: "qq6", before: "", after: " the concert; I'd love to have come.",
+        words: ["Enjoy", "join", "tide", "laugh"], correct: 0,
+        hints: [null, "Enjoy the ...", "... concert; I'd ...", "... love .."] },
+      { audio: "qq7", before: "Thanks again ", after: " the invite.",
+        words: ["anxious", "gain", "for", "thin"], correct: 2,
+        hints: ["Thanks again ..", ".. again ...", null, "... the invite ..."] }
+    ]
+  });
+</script>
+</body>
+</html>

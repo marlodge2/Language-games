@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WEEKDAYS — a multilingual revival</title>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+<style>
+  :root {
+    --bg: #f6f5f1;
+    --surface: #ffffff;
+    --ink: #22262b;
+    --muted: #5b6570;
+    --border: #e3e0d8;
+    --accent: #0e8c62;
+    --accent-dark: #0a6b4a;
+    --radius: 12px;
+    --shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  #app {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+  }
+  h1 { text-align: center; margin-bottom: 4px; letter-spacing: 2px; }
+  .subtitle { text-align: center; color: var(--muted); margin-bottom: 24px; font-size: 0.95rem; }
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 22px;
+    margin-bottom: 20px;
+  }
+  .lang-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .lang-row label { font-weight: 600; }
+  select {
+    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .days-row {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .day-btn {
+    font-size: 0.95rem;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+    min-width: 64px;
+  }
+  .day-btn:hover { background: #efece3; }
+  .day-btn.selected {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+  }
+  .arrow-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .arrow-row button {
+    font-size: 1.1rem;
+    padding: 6px 16px;
+    border: none;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+  }
+  .arrow-row button:hover { background: var(--accent-dark); }
+  .arrow-row button:disabled { opacity: 0.4; cursor: default; }
+
+  .sentence-box {
+    background: #faf8f2;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 18px;
+    min-height: 90px;
+  }
+  .sentence-box p { margin: 6px 0; font-size: 1.15rem; }
+  .sentence-box p.roman-line { margin: 0 0 10px; font-size: 0.95rem; font-style: italic; color: var(--muted); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  #speakToggleRow { display: none; text-align: center; font-size: 0.85rem; color: var(--muted); margin-bottom: 8px; }
+  .blank-letter {
+    display: inline-block;
+    min-width: 0.65em;
+    border-bottom: 2px solid var(--accent);
+    text-align: center;
+  }
+  .blank-letter.filled { border-bottom-color: transparent; }
+
+  .controls-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+  .controls-row button {
+    font-size: 1rem;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+  }
+  .controls-row button:hover { background: var(--accent-dark); }
+  .controls-row button.secondary {
+    background: var(--surface);
+    color: var(--accent-dark);
+    border: 1px solid var(--border);
+  }
+  .controls-row button.secondary:hover { background: #efece3; }
+
+  .hint {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 10px;
+  }
+
+  details.about {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+  }
+  details.about summary { cursor: pointer; font-weight: 600; }
+  details.about blockquote {
+    border-left: 3px solid var(--accent);
+    margin: 14px 0;
+    padding: 2px 16px;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .footer-link { text-align: center; margin-top: 24px; font-size: 0.9rem; }
+  .footer-link a { color: var(--accent-dark); }
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>WEEKDAYS</h1>
+  <div class="subtitle" id="subtitleText"></div>
+
+  <div class="panel">
+    <div class="lang-row">
+      <label for="baseSelect" id="speakLabel">I speak:</label>
+      <select id="baseSelect"></select>
+    </div>
+    <div class="lang-row">
+      <label for="langSelect" id="learningLabel">I am learning:</label>
+      <select id="langSelect"></select>
+    </div>
+
+    <div class="days-row" id="daysRow"></div>
+
+    <div class="arrow-row">
+      <button id="leftBtn" type="button">&larr; left</button>
+      <button id="rightBtn" type="button">right &rarr;</button>
+    </div>
+
+    <label id="speakToggleRow">
+      <input type="checkbox" id="speakToggle" /> <span id="speakToggleLabel">Sound On</span>
+    </label>
+
+    <div class="sentence-box" id="sentenceBox"></div>
+
+    <div class="controls-row">
+      <button id="testBtn" type="button">Test me</button>
+      <button id="browseBtn" type="button" class="secondary" style="display:none;">Back to browsing</button>
+    </div>
+    <div class="hint" id="hintText"></div>
+  </div>
+
+  <details class="about">
+    <summary>About this program</summary>
+    <p>
+      This is a modern, multilingual rebuild of a memory-aid program John Higgins called SERBDAYS
+      &mdash; named for where he was working, not for what it taught everyone who uses it now. He
+      wrote it during a programming course in Yugoslavia, with the help of one of his Serbian
+      students, to help himself learn the days of the week in Serbo-Croatian. From his own
+      description of it:
+    </p>
+    <blockquote>
+      &ldquo;How nice it would be to have a slave to tell me what I wanted to know in context on
+      demand and then to test me if, but only if, I wanted to be tested. &hellip; The user points the
+      arrow at a day, and the three relevant sentences (&ldquo;Today is &hellip; Tomorrow is &hellip;
+      Yesterday was &hellip;&rdquo;) appear in the box. One can spend as long as one likes just
+      shifting the arrow and looking at what comes up. The program also incorporates a testing phase
+      in which the word for the relevant day in the first sentence is blanked out and has to be typed
+      in. The unusual thing about this phase is that the input is controlled so that only the correct
+      letter is accepted, although it will supply the next letter if you are baffled and press the
+      space bar. If you press something else, nothing happens at all: no bells ring; no little
+      messages appear telling you what a bad girl or boy you are. Similarly, no congratulations appear
+      when you get it right. If I employ a slave, I do not want the slave to criticize me or to
+      congratulate me. I just want the slave to obey orders and report facts. I do not want my
+      computer to be user-friendly &hellip; I do not want my slave to be master-friendly.&rdquo;
+    </blockquote>
+    <p>
+      This version keeps that same quiet, judgement-free testing behaviour, and adds a choice of
+      target language: French, German, Spanish and Thai alongside the original Croatian, plus English
+      for comparison. Croatian keeps the original's grammar point too &mdash; &ldquo;yesterday&rdquo;
+      needs <em>bio</em> or <em>bila</em> depending on whether the day's name is grammatically
+      masculine or feminine.
+    </p>
+  </details>
+
+  <p class="footer-link">&larr; <a href="../index.html">Back to main page</a></p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var LANGUAGES = {
+    en: {
+      label: "English", native: "English", speechLang: "en-GB",
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      today: function (day) { return "Today is " + day + "."; },
+      tomorrow: function (day) { return "Tomorrow will be " + day + "."; },
+      yesterday: function (day) { return "Yesterday was " + day + "."; }
+    },
+    fr: {
+      label: "French", native: "Français", speechLang: "fr-FR",
+      days: ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"],
+      today: function (day) { return "Aujourd'hui, c'est " + day + "."; },
+      tomorrow: function (day) { return "Demain, c'est " + day + "."; },
+      yesterday: function (day) { return "Hier, c'était " + day + "."; }
+    },
+    de: {
+      label: "German", native: "Deutsch", speechLang: "de-DE",
+      days: ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"],
+      today: function (day) { return "Heute ist " + day + "."; },
+      tomorrow: function (day) { return "Morgen ist " + day + "."; },
+      yesterday: function (day) { return "Gestern war " + day + "."; }
+    },
+    es: {
+      label: "Spanish", native: "Español", speechLang: "es-ES",
+      days: ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"],
+      today: function (day) { return "Hoy es " + day + "."; },
+      tomorrow: function (day) { return "Mañana es " + day + "."; },
+      yesterday: function (day) { return "Ayer fue " + day + "."; }
+    },
+    hr: {
+      label: "Croatian", native: "Hrvatski", speechLang: "hr-HR",
+      days: ["ponedjeljak", "utorak", "srijeda", "četvrtak", "petak", "subota", "nedjelja"],
+      genders: ["m", "m", "f", "m", "m", "f", "f"],
+      today: function (day) { return "Danas je " + day + "."; },
+      tomorrow: function (day) { return "Sutra je " + day + "."; },
+      yesterday: function (day, gender) {
+        return "Jučer je " + (gender === "f" ? "bila" : "bio") + " " + day + ".";
+      }
+    },
+    th: {
+      label: "Thai", native: "ไทย", speechLang: "th-TH",
+      days: ["วันจันทร์", "วันอังคาร", "วันพุธ", "วันพฤหัสบดี", "วันศุกร์", "วันเสาร์", "วันอาทิตย์"],
+      roman: ["wan jan", "wan ang-kaan", "wan put", "wan pa-ru-hat-sa-baw-dee", "wan suk", "wan sao", "wan aa-tit"],
+      today: function (day) { return "วันนี้" + day; },
+      tomorrow: function (day) { return "พรุ่งนี้" + day; },
+      yesterday: function (day) { return "เมื่อวาน" + day; },
+      todayRoman: function (dayRoman) { return "wan-nii " + dayRoman; },
+      tomorrowRoman: function (dayRoman) { return "phrung-nii " + dayRoman; },
+      yesterdayRoman: function (dayRoman) { return "muea-waan " + dayRoman; },
+      font: "'Noto Sans Thai', sans-serif"
+    }
+  };
+
+  // UI chrome text, per base language ("I speak: ..."). Kept separate
+  // from LANGUAGES (the target/content side) so the two selectors are
+  // fully independent — base language never affects the day-sentences,
+  // and target language never affects button/hint wording.
+  var BASE_UI = {
+    en: {
+      subtitle: "a multilingual revival — days of the week, with a memory aid and a test",
+      speak: "I speak:", learn: "I am learning:",
+      hintBrowse: "Click a day, or use the arrows, to see today / tomorrow / yesterday.",
+      hintTest: "Type the missing word, letter by letter. Press space if you're stuck.",
+      test: "Test me", browse: "Back to browsing", left: "← left", right: "right →",
+      speakOn: "Sound On", speakOff: "Sound Off",
+      font: ""
+    },
+    fr: {
+      subtitle: "une résurrection multilingue — les jours de la semaine, avec une aide-mémoire et un test",
+      speak: "Je parle :", learn: "J'apprends :",
+      hintBrowse: "Cliquez sur un jour, ou utilisez les flèches, pour voir aujourd'hui / demain / hier.",
+      hintTest: "Tapez le mot manquant, lettre par lettre. Appuyez sur espace si vous êtes bloqué(e).",
+      test: "Interroge-moi", browse: "Retour à l'exploration", left: "← gauche", right: "droite →",
+      speakOn: "Son activé", speakOff: "Son coupé",
+      font: ""
+    },
+    de: {
+      subtitle: "eine mehrsprachige Wiederbelebung — die Wochentage, mit Gedächtnishilfe und Test",
+      speak: "Ich spreche:", learn: "Ich lerne:",
+      hintBrowse: "Klicken Sie auf einen Tag, oder benutzen Sie die Pfeile, um heute / morgen / gestern zu sehen.",
+      hintTest: "Tippen Sie das fehlende Wort, Buchstabe für Buchstabe. Drücken Sie die Leertaste, wenn Sie nicht weiterkommen.",
+      test: "Teste mich", browse: "Zurück zum Durchsehen", left: "← links", right: "rechts →",
+      speakOn: "Ton an", speakOff: "Ton aus",
+      font: ""
+    },
+    es: {
+      subtitle: "una resurrección multilingüe — los días de la semana, con una ayuda de memoria y una prueba",
+      speak: "Hablo:", learn: "Estoy aprendiendo:",
+      hintBrowse: "Haz clic en un día, o usa las flechas, para ver hoy / mañana / ayer.",
+      hintTest: "Escribe la palabra que falta, letra por letra. Pulsa espacio si te quedas atascado/a.",
+      test: "Ponme a prueba", browse: "Volver a explorar", left: "← izquierda", right: "derecha →",
+      speakOn: "Sonido activado", speakOff: "Sonido desactivado",
+      font: ""
+    },
+    hr: {
+      subtitle: "višejezično oživljavanje — dani u tjednu, s pomoću za pamćenje i testom",
+      speak: "Govorim:", learn: "Učim:",
+      hintBrowse: "Kliknite na dan, ili koristite strelice, da vidite danas / sutra / jučer.",
+      hintTest: "Upišite riječ koja nedostaje, slovo po slovo. Pritisnite razmak ako ne znate dalje.",
+      test: "Testiraj me", browse: "Natrag na pregledavanje", left: "← lijevo", right: "desno →",
+      speakOn: "Zvuk uključen", speakOff: "Zvuk isključen",
+      font: ""
+    },
+    th: {
+      subtitle: "ฟื้นคืนชีพแบบหลายภาษา — วันในสัปดาห์ พร้อมตัวช่วยจำและแบบทดสอบ",
+      speak: "ฉันพูด:", learn: "ฉันกำลังเรียน:",
+      hintBrowse: "คลิกวันใดวันหนึ่ง หรือใช้ลูกศร เพื่อดูวันนี้ / พรุ่งนี้ / เมื่อวาน",
+      hintTest: "พิมพ์คำที่หายไปทีละตัวอักษร กด space หากติดขัด",
+      test: "ทดสอบฉัน", browse: "กลับไปดูเหมือนเดิม", left: "← ซ้าย", right: "ขวา →",
+      speakOn: "เปิดเสียง", speakOff: "ปิดเสียง",
+      font: "'Noto Sans Thai', sans-serif"
+    }
+  };
+
+  var baseSelect = document.getElementById("baseSelect");
+  var langSelect = document.getElementById("langSelect");
+  var daysRow = document.getElementById("daysRow");
+  var leftBtn = document.getElementById("leftBtn");
+  var rightBtn = document.getElementById("rightBtn");
+  var sentenceBox = document.getElementById("sentenceBox");
+  var testBtn = document.getElementById("testBtn");
+  var browseBtn = document.getElementById("browseBtn");
+  var hintText = document.getElementById("hintText");
+  var subtitleText = document.getElementById("subtitleText");
+  var speakLabel = document.getElementById("speakLabel");
+  var learningLabel = document.getElementById("learningLabel");
+
+  /* ---------------- optional text-to-speech for the sentences ---------------- */
+
+  var speechSupported = "speechSynthesis" in window;
+  var speakEnabled = false;
+  var speakToggle = document.getElementById("speakToggle");
+  var speakToggleRow = document.getElementById("speakToggleRow");
+  var speakToggleLabel = document.getElementById("speakToggleLabel");
+
+  if (speechSupported) {
+    speakToggleRow.style.display = "block";
+    try {
+      speakEnabled = localStorage.getItem("weekdays_speak") === "1";
+    } catch (e) {}
+    speakToggle.checked = speakEnabled;
+    speakToggle.addEventListener("change", function () {
+      speakEnabled = speakToggle.checked;
+      try {
+        localStorage.setItem("weekdays_speak", speakEnabled ? "1" : "0");
+      } catch (e) {}
+      updateSpeakToggleLabel();
+      if (!speakEnabled) window.speechSynthesis.cancel();
+    });
+  }
+
+  function updateSpeakToggleLabel() {
+    var ui = BASE_UI[state.baseKey];
+    speakToggleLabel.textContent = speakEnabled ? ui.speakOff : ui.speakOn;
+  }
+
+  function speak(text, lang) {
+    if (!speechSupported || !speakEnabled || !text) return;
+    window.speechSynthesis.cancel();
+    setTimeout(function () {
+      var utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = lang.speechLang || "en-GB";
+      window.speechSynthesis.speak(utterance);
+    }, 50);
+  }
+
+  var state = { baseKey: "en", langKey: "en", dayIndex: 0, mode: "browse", typed: "" };
+
+  // Names of each language as said IN each base language (exonyms) — so
+  // the "I am learning" list relabels itself: an English speaker sees
+  // "German", a German speaker sees "Englisch" for the same option.
+  var LANG_NAMES = {
+    en: { en: "English", fr: "French", de: "German", es: "Spanish", hr: "Croatian", th: "Thai" },
+    fr: { en: "anglais", fr: "français", de: "allemand", es: "espagnol", hr: "croate", th: "thaïlandais" },
+    de: { en: "Englisch", fr: "Französisch", de: "Deutsch", es: "Spanisch", hr: "Kroatisch", th: "Thailändisch" },
+    es: { en: "inglés", fr: "francés", de: "alemán", es: "español", hr: "croata", th: "tailandés" },
+    hr: { en: "engleski", fr: "francuski", de: "njemački", es: "španjolski", hr: "hrvatski", th: "tajlandski" },
+    th: { en: "อังกฤษ", fr: "ฝรั่งเศส", de: "เยอรมัน", es: "สเปน", hr: "โครเอเชีย", th: "ไทย" }
+  };
+
+  Object.keys(LANGUAGES).forEach(function (key) {
+    var opt = document.createElement("option");
+    opt.value = key;
+    if (key === state.langKey) opt.selected = true;
+    langSelect.appendChild(opt);
+
+    var baseOpt = document.createElement("option");
+    baseOpt.value = key;
+    baseOpt.textContent = LANGUAGES[key].native;
+    if (key === state.baseKey) baseOpt.selected = true;
+    baseSelect.appendChild(baseOpt);
+  });
+
+  function currentLang() { return LANGUAGES[state.langKey]; }
+  function currentBase() { return BASE_UI[state.baseKey]; }
+
+  function relabelTargetOptions() {
+    var names = LANG_NAMES[state.baseKey] || LANG_NAMES.en;
+    Array.prototype.forEach.call(langSelect.options, function (opt) {
+      opt.textContent = names[opt.value] || LANGUAGES[opt.value].native;
+    });
+  }
+
+  function testWordFor(lang, dayIndex) {
+    return lang.roman ? lang.roman[dayIndex] : lang.days[dayIndex];
+  }
+
+  function renderDays() {
+    // The row of day buttons is the learner's point of reference, so it's
+    // shown in the base ("I speak") language, not the target one — the
+    // two day-name arrays are always in the same Monday..Sunday order,
+    // so the index lines up regardless of which pair is chosen.
+    var base = LANGUAGES[state.baseKey];
+    var lang = currentLang();
+    daysRow.innerHTML = "";
+    daysRow.style.fontFamily = base.font || "";
+    base.days.forEach(function (day, i) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "day-btn" + (i === state.dayIndex ? " selected" : "");
+      btn.textContent = day;
+      btn.addEventListener("click", function () {
+        state.dayIndex = i;
+        state.mode = "browse";
+        state.typed = "";
+        render();
+      });
+      daysRow.appendChild(btn);
+    });
+    leftBtn.disabled = state.mode === "test" || state.dayIndex === 0;
+    rightBtn.disabled = state.mode === "test" || state.dayIndex === lang.days.length - 1;
+  }
+
+  function renderSentences() {
+    var lang = currentLang();
+    var n = lang.days.length;
+    var tomorrowIndex = (state.dayIndex + 1) % n;
+    var yesterdayIndex = (state.dayIndex + n - 1) % n;
+
+    var day = lang.days[state.dayIndex];
+    var tomorrowDay = lang.days[tomorrowIndex];
+    var yesterdayDay = lang.days[yesterdayIndex];
+    var yesterdayGender = lang.genders ? lang.genders[yesterdayIndex] : null;
+
+    var todaySentence = lang.today(day);
+    var tomorrowSentence = lang.tomorrow(tomorrowDay);
+    var yesterdaySentence = lang.yesterday(yesterdayDay, yesterdayGender);
+
+    sentenceBox.style.fontFamily = lang.font || "";
+    sentenceBox.innerHTML = "";
+
+    var pToday = document.createElement("p");
+    if (state.mode === "test") {
+      var testWord = testWordFor(lang, state.dayIndex);
+      var idx = todaySentence.indexOf(day);
+      var before = idx >= 0 ? todaySentence.slice(0, idx) : "";
+      var after = idx >= 0 ? todaySentence.slice(idx + day.length) : "";
+      pToday.appendChild(document.createTextNode(before));
+      for (var i = 0; i < testWord.length; i++) {
+        var span = document.createElement("span");
+        span.className = "blank-letter" + (i < state.typed.length ? " filled" : "");
+        span.textContent = i < state.typed.length ? testWord[i] : "—";
+        pToday.appendChild(span);
+      }
+      pToday.appendChild(document.createTextNode(after));
+    } else {
+      pToday.textContent = todaySentence;
+    }
+    sentenceBox.appendChild(pToday);
+
+    var pTomorrow = document.createElement("p");
+    pTomorrow.textContent = tomorrowSentence;
+    sentenceBox.appendChild(pTomorrow);
+
+    var pYesterday = document.createElement("p");
+    pYesterday.textContent = yesterdaySentence;
+    sentenceBox.appendChild(pYesterday);
+
+    // Thai also gets a romanized line under each — doesn't affect the
+    // test mode's blanked word, which always targets the script/roman
+    // test word already handled above via testWordFor.
+    if (lang.roman && lang.todayRoman) {
+      var dayRoman = lang.roman[state.dayIndex];
+      var tomorrowRoman = lang.roman[tomorrowIndex];
+      var yesterdayRoman = lang.roman[yesterdayIndex];
+
+      var rToday = document.createElement("p");
+      rToday.className = "roman-line";
+      rToday.textContent = state.mode === "test" ? "" : lang.todayRoman(dayRoman);
+      sentenceBox.appendChild(rToday);
+
+      var rTomorrow = document.createElement("p");
+      rTomorrow.className = "roman-line";
+      rTomorrow.textContent = lang.tomorrowRoman(tomorrowRoman);
+      sentenceBox.appendChild(rTomorrow);
+
+      var rYesterday = document.createElement("p");
+      rYesterday.className = "roman-line";
+      rYesterday.textContent = lang.yesterdayRoman(yesterdayRoman);
+      sentenceBox.appendChild(rYesterday);
+    }
+
+    // Never speak the "today" sentence in test mode — it would just say
+    // the blanked word out loud and give the answer away.
+    if (state.mode !== "test") {
+      speak(todaySentence + ". " + tomorrowSentence + ". " + yesterdaySentence, lang);
+    } else {
+      speak(tomorrowSentence + ". " + yesterdaySentence, lang);
+    }
+  }
+
+  function renderChrome() {
+    var ui = currentBase();
+    document.body.style.fontFamily = ui.font || "";
+    subtitleText.textContent = ui.subtitle;
+    speakLabel.textContent = ui.speak;
+    learningLabel.textContent = ui.learn;
+    testBtn.textContent = ui.test;
+    browseBtn.textContent = ui.browse;
+    leftBtn.innerHTML = ui.left;
+    rightBtn.innerHTML = ui.right;
+    hintText.textContent = state.mode === "test" ? ui.hintTest : ui.hintBrowse;
+    relabelTargetOptions();
+    if (speechSupported) updateSpeakToggleLabel();
+  }
+
+  function render() {
+    renderChrome();
+    renderDays();
+    renderSentences();
+    testBtn.style.display = state.mode === "test" ? "none" : "";
+    browseBtn.style.display = state.mode === "test" ? "" : "none";
+  }
+
+  baseSelect.addEventListener("change", function () {
+    state.baseKey = baseSelect.value;
+    render();
+  });
+
+  langSelect.addEventListener("change", function () {
+    state.langKey = langSelect.value;
+    state.dayIndex = 0;
+    state.mode = "browse";
+    state.typed = "";
+    render();
+  });
+
+  leftBtn.addEventListener("click", function () {
+    if (state.dayIndex > 0) {
+      state.dayIndex--;
+      state.mode = "browse";
+      state.typed = "";
+      render();
+    }
+  });
+  rightBtn.addEventListener("click", function () {
+    var lang = currentLang();
+    if (state.dayIndex < lang.days.length - 1) {
+      state.dayIndex++;
+      state.mode = "browse";
+      state.typed = "";
+      render();
+    }
+  });
+
+  testBtn.addEventListener("click", function () {
+    state.mode = "test";
+    state.typed = "";
+    render();
+  });
+  browseBtn.addEventListener("click", function () {
+    state.mode = "browse";
+    state.typed = "";
+    render();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (state.mode !== "test") return;
+    var lang = currentLang();
+    var testWord = testWordFor(lang, state.dayIndex);
+    if (state.typed.length >= testWord.length) return;
+
+    var nextChar = testWord[state.typed.length];
+    var matched = false;
+
+    if (e.key === " ") {
+      e.preventDefault();
+      state.typed += nextChar;
+      matched = true;
+    } else if (e.key.length === 1 && e.key.toLowerCase() === nextChar.toLowerCase()) {
+      state.typed += nextChar;
+      matched = true;
+    }
+    // any other key: nothing happens, deliberately — no bells, no error messages
+
+    if (!matched) return;
+
+    if (state.typed.length >= testWord.length) {
+      // Full word entered — drop back to browsing automatically.
+      state.mode = "browse";
+      state.typed = "";
+      render();
+    } else {
+      renderSentences();
+    }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

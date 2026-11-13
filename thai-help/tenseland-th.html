@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TENSELAND (คำแนะนำภาษาไทย)</title>
+<style>
+  :root {
+    --bg: #f5f1e6;
+    --panel: #ffffff;
+    --ink: #14201a;
+    --ink-dim: #45564b;
+    --accent: #8a5c0d;
+    --machine: #000000;
+    --learner: #22221c;
+    --border: #d8d2ba;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Courier New", Consolas, monospace;
+  }
+  #app {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-height: 100%;
+  }
+  h1 {
+    margin: 0;
+    letter-spacing: 0.15em;
+    font-size: 1.3rem;
+    color: var(--accent);
+    text-align: center;
+  }
+  .subtitle {
+    text-align: center;
+    color: var(--ink-dim);
+    font-size: 0.75rem;
+    margin-top: -2px;
+  }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 8px;
+  }
+  .panel h2 {
+    margin: 0 0 5px 0;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+  }
+
+  #peopleGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 6px;
+  }
+  .person-card {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 7px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    background: #f6f2e4;
+  }
+  .person-card:hover { background: #ece5cd; }
+  .person-card.highlight {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  .person-card .photos {
+    display: flex;
+    gap: 4px;
+    flex: none;
+  }
+  .person-card .photo {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    line-height: 1;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .person-card .who { min-width: 0; }
+  .person-card .name {
+    color: var(--ink);
+    font-size: 0.88rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .person-card .profession {
+    color: var(--ink-dim);
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  #transcript {
+    background: #fbf9f0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 10px;
+    height: 190px;
+    overflow-y: auto;
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+  #transcript .line { margin: 1px 0; white-space: pre-wrap; }
+  #transcript .learner { color: var(--learner); font-weight: 700; }
+  #transcript .learner::before { content: "> "; color: var(--ink-dim); }
+  #transcript .machine { color: var(--machine); font-weight: 700; }
+  #transcript .system { color: var(--ink-dim); font-style: italic; font-weight: 600; }
+
+  form#inputForm {
+    display: flex;
+    gap: 8px;
+  }
+  #inputBox {
+    flex: 1;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    color: var(--learner);
+    font-family: inherit;
+    font-size: 0.95rem;
+    padding: 6px 10px;
+    border-radius: 4px;
+  }
+  #inputBox:focus { outline: 1px solid var(--accent); }
+  button {
+    background: #eef1e6;
+    color: var(--ink);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+  #sendBtn { font-size: 1.3rem; line-height: 1; padding: 6px 10px; }
+  button:hover { background: #e2e7d8; }
+  button.primary { color: var(--accent); border-color: var(--accent); }
+
+  .controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .controls .group { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  details#help {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 0.78rem;
+    color: var(--ink-dim);
+  }
+  details#help summary {
+    cursor: pointer;
+    color: var(--ink);
+  }
+  details#help ul { margin: 6px 0 0 18px; padding: 0; }
+  details#help p { margin: 6px 0; }
+  details#help code {
+    background: #eef1e6;
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--accent);
+  }
+  .tenseland-footer {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--ink-dim);
+    margin: 4px 0 0;
+  }
+  .tenseland-footer a { color: var(--accent); }
+  .thai, .thai code { font-family: 'Noto Sans Thai', 'Nunito', sans-serif; }
+  .lang-toggle { text-align: center; font-size: 0.78rem; }
+  .gloss { color: var(--ink-dim); font-style: italic; font-family: 'Inter', sans-serif; }
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>   
+</head>
+<body>
+<div id="app">
+  <p class="lang-toggle thai"><a href="../grammarland/tenseland.html">English version (no Thai help)</a></p>
+  <h1>TENSELAND</h1>
+  <div class="subtitle">a GRAMMARLAND dialogue simulator &mdash; after John Higgins, 1985</div>
+
+  <div class="panel">
+    <h2>Inhabitants</h2>
+    <div id="peopleGrid"></div>
+  </div>
+
+  <div class="panel" style="padding:0; overflow:hidden;">
+    <div id="transcript"></div>
+  </div>
+
+  <form id="inputForm" autocomplete="off">
+    <input id="inputBox" type="text" class="thai" placeholder="พิมพ์หรือถามเป็นภาษาอังกฤษ (ask or tell TENSELAND something in English)" />
+    <button class="primary" id="sendBtn" type="submit" aria-label="Send">&#9166;</button>
+  </form>
+
+  <div class="controls">
+    <div class="group">
+      <button id="askBtn" type="button">ASK ME SOMETHING</button>
+      <button id="clearBtn" type="button">Clear screen</button>
+    </div>
+    <div class="group">
+      <button id="forgetBtn" type="button">Forget what you've taught it</button>
+      <button id="restartBtn" type="button">Restart TENSELAND</button>
+    </div>
+  </div>
+
+  <details id="help" open class="thai">
+    <summary>นี่คืออะไร (What is this?)</summary>
+    <p>
+      TENSELAND เป็นพื้นที่ฝึกภาษาอังกฤษเล็กๆ ที่ไม่มีการให้คะแนนหรือบอกว่า "ผิด" คนแต่ละคนข้างบนกำลังทำ
+      กิจกรรมที่ไม่เกี่ยวกับอาชีพของตัวเองเลย &mdash; ภาพนั้น ไม่ใช่ข้อความนี้ คือหลักฐานสำหรับทุกคำถามที่คุณถาม
+      คุณสามารถ:
+    </p>
+    <ul>
+      <li>ถามเกี่ยวกับพวกเขา (ask about them) &mdash; <code>What is Susan?</code>, <code>What does Bob do for a living?</code>, <code>What is Bob doing?</code>, <code>Who is watching TV?</code>, <code>Is Maria playing the guitar?</code>, <code>Does Bob paint?</code>, <code>What is Jim's surname?</code></li>
+      <li>บอกข้อมูลให้มัน (tell it things) &mdash; <code>Bob is singing.</code> &mdash; มันจะจำสิ่งที่คุณพูด (นำหน้าด้วย &ldquo;YOU THINK&rdquo; เพราะมันแค่เชื่อตามที่คุณบอก)</li>
+      <li>สั่งให้มันทำ (give commands) &mdash; <code>Show me Bob.</code> หรือ <code>Show me Mr Matthews.</code></li>
+      <li>พิมพ์ <code>ASK ME SOMETHING</code> (หรือกดปุ่ม) เพื่อให้มันถามคำถามคุณแทน</li>
+      <li>เว้นช่องว่างแล้วกด Enter เพื่อฟังมันพูดคนเดียว (watch the machine talk to itself)</li>
+      <li><code>I don't know</code> ใช้ตอบได้เสมอ &mdash; มันไม่รู้ด้วยซ้ำว่าคำตอบที่ถูกคืออะไร</li>
+    </ul>
+    <p class="gloss">The parser only understands simple English built from what it already knows, plus whatever new verbs you teach it. If it doesn't understand a word, it will say so plainly rather than guess.</p>
+  </details>
+  <p class="tenseland-footer">&larr; <a href="../grammarland/index.html">Back to Grammarland</a></p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------------------------------------------------------
+   * DATA: the inhabitants of TENSELAND.
+   * Each has a profession (their "job truth") and a pictured
+   * activity that is deliberately unconnected to that profession.
+   * ------------------------------------------------------------- */
+
+  function verbForms(base, thirdPerson, gerund) {
+    return { base: base, s: thirdPerson, ing: gerund };
+  }
+
+  var PEOPLE = [
+    {
+      id: "jim", first: "Jim", last: "Brown", gender: "m",
+      profession: "taxi-driver", article: "a",
+      professionVerb: verbForms("drive", "drives", "driving"),
+      professionObj: "a taxi",
+      livingAnswer: "JIM DRIVES A TAXI.",
+      activityVerb: verbForms("watch", "watches", "watching"),
+      activityObj: "TV",
+      activityKind: "everyday",
+      activityEmoji: "📺"
+    },
+    {
+      id: "maria", first: "Maria", last: "Moreno", gender: "f",
+      profession: "tennis champion", article: "a",
+      professionVerb: verbForms("play", "plays", "playing"),
+      professionObj: "tennis",
+      livingAnswer: "MARIA PLAYS TENNIS.",
+      activityVerb: verbForms("play", "plays", "playing"),
+      activityObj: "the guitar",
+      activityKind: "hobby",
+      activityEmoji: "🎸"
+    },
+    {
+      id: "susan", first: "Susan", last: "Dandridge", gender: "f",
+      profession: "novelist", article: "a",
+      professionVerb: verbForms("write", "writes", "writing"),
+      professionObj: "novels",
+      livingAnswer: "SUSAN WRITES BOOKS.",
+      activityVerb: verbForms("cook", "cooks", "cooking"),
+      activityObj: "dinner",
+      activityKind: "everyday",
+      activityEmoji: "🍳"
+    },
+    {
+      id: "bob", first: "Bob", last: "Matthews", gender: "m",
+      profession: "maths teacher", article: "a",
+      professionVerb: verbForms("teach", "teaches", "teaching"),
+      professionObj: "maths",
+      livingAnswer: "BOB TEACHES MATHS.",
+      activityVerb: verbForms("paint", "paints", "painting"),
+      activityObj: "a picture",
+      activityKind: "hobby",
+      activityEmoji: "🎨"
+    },
+    {
+      id: "anna", first: "Anna", last: "Kim", gender: "f",
+      profession: "airline pilot", article: "an",
+      professionVerb: verbForms("fly", "flies", "flying"),
+      professionObj: "a plane",
+      livingAnswer: "ANNA FLIES PLANES.",
+      activityVerb: verbForms("read", "reads", "reading"),
+      activityObj: "a book",
+      activityKind: "everyday",
+      activityEmoji: "📖"
+    },
+    {
+      id: "elena", first: "Elena", last: "Petrov", gender: "f",
+      profession: "lawyer", article: "a",
+      livingAnswer: "ELENA GIVES LEGAL ADVICE.",
+      professionVerb: verbForms("defend", "defends", "defending"),
+      professionObj: "clients",
+      activityVerb: verbForms("garden", "gardens", "gardening"),
+      activityObj: "",
+      activityKind: "hobby",
+      activityEmoji: "🌱"
+    }
+  ];
+
+  // give each person a simple, distinct "face" avatar rather than a job icon,
+  // since the job icon would give away the profession before it's asked about
+  var FACES = {
+    jim: "🙂", maria: "😊", susan: "🙋‍♀️", bob: "🧔", anna: "👩", elena: "👩‍🦰"
+  };
+  PEOPLE.forEach(function (p) { p.avatar = FACES[p.id]; });
+
+  var byId = {};
+  PEOPLE.forEach(function (p) { byId[p.id] = p; });
+
+  function pron(p) { return p.gender === "f" ? "she" : "he"; }
+  function PRON(p) { return p.gender === "f" ? "She" : "He"; }
+  function poss(p) { return p.gender === "f" ? "her" : "his"; }
+
+  /* ---------------------------------------------------------------
+   * VOCABULARY: starts limited to the verbs TENSELAND already has
+   * evidence for. New verbs are learned the moment the user teaches
+   * the machine a fact using them — mirroring the original program's
+   * "I don't understand X" -> teach it -> now understood behaviour.
+   * ------------------------------------------------------------- */
+
+  var vocab = {}; // base -> {s, ing}
+  function learnVerb(forms) { vocab[forms.base] = forms; }
+  PEOPLE.forEach(function (p) {
+    learnVerb(p.professionVerb);
+    learnVerb(p.activityVerb);
+  });
+  learnVerb(verbForms("be", "is", "being"));
+  learnVerb(verbForms("know", "knows", "knowing"));
+
+  function verbFromIng(word) {
+    for (var base in vocab) { if (vocab[base].ing === word) return vocab[base]; }
+    return null;
+  }
+  function verbFromS(word) {
+    for (var base in vocab) { if (vocab[base].s === word || vocab[base].base === word) return vocab[base]; }
+    return null;
+  }
+
+  // Guess -ing / -s forms for a brand-new verb the user types, so it can
+  // be taught even though TENSELAND has never seen it before.
+  function guessForms(base) {
+    base = base.toLowerCase();
+    var ing;
+    if (/e$/.test(base) && base !== "be") ing = base.slice(0, -1) + "ing";
+    else if (/[^aeiou][aeiou][^aeiouwxy]$/.test(base)) ing = base + base.slice(-1) + "ing";
+    else ing = base + "ing";
+    var s;
+    if (/(s|sh|ch|x|z|o)$/.test(base)) s = base + "es";
+    else if (/[^aeiou]y$/.test(base)) s = base.slice(0, -1) + "ies";
+    else s = base + "s";
+    return verbForms(base, s, ing);
+  }
+
+  // Undo simple-present -s/-es/-ies inflection, so a brand-new verb typed
+  // already inflected (e.g. "Susan likes bananas") gets guessed from its
+  // base ("like"), not from the surface word ("likes") itself.
+  function baseFromSWord(word) {
+    word = word.toLowerCase();
+    if (/ies$/.test(word) && word.length > 3) return word.slice(0, -3) + "y";
+    if (/(ses|zes|xes|ches|shes|oes)$/.test(word)) return word.slice(0, -2);
+    if (/s$/.test(word)) return word.slice(0, -1);
+    return word;
+  }
+
+  // Undo -ing inflection for the reliable case only: a doubled final
+  // consonant (e.g. "sitting" -> "sit", "running" -> "run"). Bases that
+  // dropped a silent e (e.g. "liking" -> "like") are left as the bare
+  // stem ("lik") for now — recovering that "e" isn't reliably decidable
+  // from spelling alone without a dictionary.
+  function baseFromIngWord(word) {
+    word = word.toLowerCase();
+    if (!/ing$/.test(word)) return word;
+    var stem = word.slice(0, -3);
+    if (!stem) return word;
+    var last = stem.slice(-1), secondLast = stem.slice(-2, -1);
+    if (last && secondLast && last === secondLast && !/[aeiou]/.test(last)) {
+      return stem.slice(0, -1);
+    }
+    return stem;
+  }
+
+  /* ---------------------------------------------------------------
+   * LEARNED KNOWLEDGE: facts the learner has told TENSELAND.
+   * Stored as {personId, verbBase, obj (may be ""), mode: "ing"|"s"}
+   * ------------------------------------------------------------- */
+
+  var learnedFacts = [];
+
+  function factsAbout(personId, verbBase) {
+    return learnedFacts.filter(function (f) {
+      return f.personId === personId && (!verbBase || f.verbBase === verbBase);
+    });
+  }
+  function factsForVerb(verbBase) {
+    return learnedFacts.filter(function (f) { return f.verbBase === verbBase; });
+  }
+
+  /* ---------------------------------------------------------------
+   * CONTEXT: for pronoun resolution ("Is she ...?" after "Susan").
+   * ------------------------------------------------------------- */
+
+  var context = { lastPerson: null };
+
+  /* ---------------------------------------------------------------
+   * TRANSCRIPT / PEOPLE GRID UI
+   * All ten pictures stay on screen at all times; "showing" someone
+   * just highlights their card instead of swapping content in and out.
+   * ------------------------------------------------------------- */
+
+  var transcriptEl = document.getElementById("transcript");
+  var peopleGridEl = document.getElementById("peopleGrid");
+  var cardById = {};
+
+  function say(role, text) {
+    var div = document.createElement("div");
+    div.className = "line " + role;
+    div.textContent = text;
+    transcriptEl.appendChild(div);
+    transcriptEl.scrollTop = transcriptEl.scrollHeight;
+  }
+
+  function highlightPerson(person) {
+    context.lastPerson = person;
+    PEOPLE.forEach(function (p) { cardById[p.id].classList.remove("highlight"); });
+    var card = cardById[person.id];
+    card.classList.add("highlight");
+    card.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }
+
+  function renderPeopleGrid() {
+    peopleGridEl.innerHTML = "";
+    PEOPLE.forEach(function (p) {
+      var card = document.createElement("div");
+      card.className = "person-card";
+      card.innerHTML =
+        '<span class="photos">' +
+          '<span class="photo portrait" title="' + p.first + '">' + p.avatar + '</span>' +
+          '<span class="photo activity" title="' + p.first + ' ' + p.activityVerb.ing +
+            (p.activityObj ? ' ' + p.activityObj : '') + '">' + p.activityEmoji + '</span>' +
+        '</span>' +
+        '<span class="who">' +
+          '<span class="name">' + p.first + ' ' + p.last + '</span>' +
+          '<span class="profession">' + p.article + ' ' + p.profession + '</span>' +
+        '</span>';
+      card.addEventListener("click", function () {
+        highlightPerson(p);
+        say("system", "(shown: " + p.first + " " + p.last + ")");
+      });
+      peopleGridEl.appendChild(card);
+      cardById[p.id] = card;
+    });
+  }
+  renderPeopleGrid();
+
+  /* ---------------------------------------------------------------
+   * NAME MATCHING
+   * ------------------------------------------------------------- */
+
+  var TITLES = { mr: "m", mrs: "f", ms: "f", miss: "f" };
+
+  function findPerson(rawWord) {
+    if (!rawWord) return null;
+    var w = rawWord.toLowerCase().replace(/[.,!?;:]/g, "");
+    if (w === "she" || w === "her") {
+      return context.lastPerson && context.lastPerson.gender === "f" ? context.lastPerson : null;
+    }
+    if (w === "he" || w === "him") {
+      return context.lastPerson && context.lastPerson.gender === "m" ? context.lastPerson : null;
+    }
+    var byFirst = PEOPLE.filter(function (p) { return p.first.toLowerCase() === w; });
+    if (byFirst.length === 1) return byFirst[0];
+    var byLast = PEOPLE.filter(function (p) { return p.last.toLowerCase() === w; });
+    if (byLast.length === 1) return byLast[0];
+    return null;
+  }
+
+  // find a person referenced anywhere in a token list, honouring "Mr/Mrs X"
+  function findPersonInTokens(tokens) {
+    for (var i = 0; i < tokens.length; i++) {
+      var t = tokens[i].toLowerCase().replace(/[.,!?;:]/g, "");
+      if (TITLES[t] && tokens[i + 1]) {
+        var p = findPerson(tokens[i + 1]);
+        if (p) return p;
+      }
+      var p2 = findPerson(tokens[i]);
+      if (p2) return p2;
+    }
+    return null;
+  }
+
+  /* ---------------------------------------------------------------
+   * NORMALISATION
+   * ------------------------------------------------------------- */
+
+  function normalize(input) {
+    return input
+      .replace(/[’‘]/g, "'")
+      .replace(/’s\b/g, "'s")
+      .trim();
+  }
+  function tokens(s) {
+    return s.replace(/[.?!]/g, "").split(/\s+/).filter(Boolean);
+  }
+
+  /* ---------------------------------------------------------------
+   * RESPONSE HELPERS
+   * ------------------------------------------------------------- */
+
+  function dontUnderstand(word) {
+    return "I'M SORRY. I DON'T UNDERSTAND '" + word.toUpperCase() + "'.";
+  }
+
+  function currentActivityMatches(p, forms, obj) {
+    if (p.activityVerb.base === forms.base) {
+      if (!obj) return true;
+      return (p.activityObj || "").toLowerCase().replace(/^(a|an|the)\s+/, "") ===
+             obj.toLowerCase().replace(/^(a|an|the)\s+/, "");
+    }
+    return false;
+  }
+  function professionMatches(p, forms, obj) {
+    if (p.professionVerb.base === forms.base) {
+      if (!obj) return true;
+      return (p.professionObj || "").toLowerCase().replace(/^(a|an|the)\s+/, "") ===
+             obj.toLowerCase().replace(/^(a|an|the)\s+/, "");
+    }
+    return false;
+  }
+  function learnedMatches(p, forms) {
+    return factsAbout(p.id, forms.base).length > 0;
+  }
+
+  /* ---------------------------------------------------------------
+   * PARSER
+   * Returns a response string, or null if totally unparseable.
+   * ------------------------------------------------------------- */
+
+  function handleInput(raw) {
+    var text = normalize(raw);
+    var lower = text.toLowerCase();
+    var t = tokens(text);
+    var lowerTokens = t.map(function (w) { return w.toLowerCase(); });
+
+    if (!text) return null; // caller handles blank specially
+
+    // -------- SHOW ME <name> --------
+    if (/^show me\b/i.test(text)) {
+      var rest = t.slice(2);
+      var person = findPersonInTokens(rest);
+      if (!person) return "I DON'T KNOW WHO YOU MEAN.";
+      highlightPerson(person);
+      return "OK.";
+    }
+
+    // -------- ASK ME SOMETHING --------
+    if (/^ask me something\.?$/i.test(text)) {
+      return null; // handled by caller (machineAsk)
+    }
+
+    // -------- "I don't know" (as a free-standing reply) --------
+    if (/^i don'?t know\.?$/i.test(lower)) {
+      return "THAT'S FINE. NOT KNOWING IS ALLOWED.";
+    }
+
+    // -------- What is <Name>? / What is <Name>'s surname? --------
+    var mSurname = text.match(/^what(?:'s| is)\s+(.+?)'s\s+surname\??$/i);
+    if (mSurname) {
+      var per = findPerson(mSurname[1]);
+      if (!per) return "I DON'T KNOW WHO YOU MEAN.";
+      highlightPerson(per);
+      return per.last.toUpperCase() + ".";
+    }
+    // -------- What is <Name> doing? --------
+    var mDoing = text.match(/^what(?:'s| is)\s+(.+?)\s+doing\??$/i);
+    if (mDoing) {
+      var perD = findPerson(mDoing[1].trim());
+      if (!perD) return "I DON'T KNOW WHO YOU MEAN.";
+      highlightPerson(perD);
+      return PRON(perD).toUpperCase() + " IS " + perD.activityVerb.ing.toUpperCase() +
+        (perD.activityObj ? " " + perD.activityObj.toUpperCase() : "") + ".";
+    }
+
+    var mWhatIs = text.match(/^what(?:'s| is)\s+(.+?)\??$/i);
+    if (mWhatIs) {
+      var per2 = findPerson(mWhatIs[1].trim());
+      if (!per2) return "I DON'T KNOW WHO YOU MEAN.";
+      highlightPerson(per2);
+      return (per2.gender === "f" ? "SHE'S " : "HE'S ") + per2.article.toUpperCase() + " " + per2.profession.toUpperCase() + ".";
+    }
+
+    // -------- What does <Name> do? / What does <Name> do for a living? --------
+    var mLiving = text.match(/^what does\s+(\S+)\s+do(?:\s+for a living)?\??$/i);
+    if (mLiving) {
+      var per3 = findPerson(mLiving[1]);
+      if (!per3) return "I DON'T KNOW WHO YOU MEAN.";
+      highlightPerson(per3);
+      return per3.livingAnswer;
+    }
+
+    // -------- Who is <verb-ing> [obj]? --------
+    var mWho = text.match(/^who(?:'s| is)\s+(\w+)(?:\s+(.+?))?\??$/i);
+    if (mWho) {
+      var ingWord = mWho[1].toLowerCase();
+      var objPart = (mWho[2] || "").replace(/\?$/, "").trim();
+      var forms = verbFromIng(ingWord);
+      if (!forms) return dontUnderstand(ingWord);
+      var matches = PEOPLE.filter(function (p) { return currentActivityMatches(p, forms, objPart); });
+      var learnedHits = factsForVerb(forms.base).filter(function (f) { return f.mode === "ing"; });
+      if (matches.length === 0 && learnedHits.length === 0) return "NOBODY.";
+      var names = matches.map(function (p) { highlightPerson(p); return p.first.toUpperCase(); });
+      learnedHits.forEach(function (f) {
+        var p = byId[f.personId];
+        if (names.indexOf(p.first.toUpperCase()) === -1) {
+          names.push(p.first.toUpperCase());
+          highlightPerson(p);
+        }
+      });
+      var verbPhrase = matches.length ? "IS." : "IS (SO YOU SAY).";
+      if (names.length === 1) return names[0] + " " + (matches.length ? "IS." : "IS, YOU SAY.");
+      return names.join(" AND ") + " ARE.";
+    }
+
+    // -------- Does/Can <name/pronoun> <verb> [obj]? --------
+    var mDoes = text.match(/^(does|can)\s+(\S+)\s+(\w+)(?:\s+(.+?))?\??$/i);
+    if (mDoes) {
+      var modal = mDoes[1].toLowerCase();
+      var subj = findPerson(mDoes[2]);
+      var vbase = mDoes[3].toLowerCase();
+      var obj3 = (mDoes[4] || "").replace(/\?$/, "").trim();
+      var vforms = verbFromS(vbase);
+      if (!vforms) return dontUnderstand(vbase);
+      if (!subj) return "I DON'T KNOW WHO YOU MEAN.";
+      highlightPerson(subj);
+      var yesWord = modal === "can" ? "CAN" : "DOES";
+      var noWord = modal === "can" ? "CAN'T" : "DOESN'T";
+
+      if (professionMatches(subj, vforms, obj3) || currentActivityMatches(subj, vforms, obj3)) {
+        return "YES, " + pron(subj).toUpperCase() + " " + yesWord + ".";
+      }
+      if (learnedMatches(subj, vforms)) {
+        return "YES, " + pron(subj).toUpperCase() + " " + yesWord + " (YOU TOLD ME SO).";
+      }
+
+      // A profession verb (e.g. "play" tennis, "drive" a taxi) belongs to
+      // whichever inhabitant has it as their job; an activity verb (e.g.
+      // "play" the guitar, "read" a book) belongs to whoever is pictured
+      // doing it. Prefer an exact object match (so "play the guitar" reads
+      // as Maria's hobby, not her job); only fall back to a bare verb-base
+      // match — ignoring the object — when that verb isn't ambiguous
+      // between a job and a hobby (so "drive a car" still counts as Jim's
+      // job even though his actual object is "a taxi").
+      var jobOwner = PEOPLE.filter(function (p) { return professionMatches(p, vforms, obj3); })[0] || null;
+      var activityOwner = PEOPLE.filter(function (p) { return currentActivityMatches(p, vforms, obj3); })[0] || null;
+      if (!jobOwner && !activityOwner && obj3) {
+        var verbJobOwners = PEOPLE.filter(function (p) { return p.professionVerb.base === vforms.base; });
+        var verbActivityOwners = PEOPLE.filter(function (p) { return p.activityVerb.base === vforms.base; });
+        if (verbJobOwners.length === 1 && verbActivityOwners.length === 0) jobOwner = verbJobOwners[0];
+        else if (verbActivityOwners.length === 1 && verbJobOwners.length === 0) activityOwner = verbActivityOwners[0];
+      }
+
+      // A lenient match (wrong object, right person) is really just a YES —
+      // e.g. "Does Jim drive a car?" when Jim's own object is "a taxi".
+      if (jobOwner && jobOwner.id === subj.id) {
+        return "YES, " + pron(subj).toUpperCase() + " " + yesWord + ".";
+      }
+      if (activityOwner && activityOwner.id === subj.id) {
+        return "YES, " + pron(subj).toUpperCase() + " " + yesWord + ".";
+      }
+
+      if (jobOwner) {
+        return "I DON'T KNOW. IT'S NOT " + poss(subj).toUpperCase() + " JOB.";
+      }
+      if (activityOwner) {
+        var actIng = activityOwner.activityVerb.ing.toUpperCase();
+        var actObj = (obj3 || activityOwner.activityObj || "").toUpperCase();
+        if (activityOwner.activityKind === "everyday") {
+          return "I DON'T KNOW BUT I EXPECT SO. HOWEVER, " + PRON(subj).toUpperCase() + " ISN'T " +
+            actIng + (actObj ? " " + actObj : "") + " NOW.";
+        }
+        return "I DON'T KNOW, BUT " + PRON(subj).toUpperCase() + " ISN'T " +
+          actIng + (actObj ? " " + actObj : "") + " NOW.";
+      }
+      return "NO, " + pron(subj).toUpperCase() + " " + noWord + ". " + PRON(subj).toUpperCase() + " " +
+        subj.professionVerb.s.toUpperCase() + (subj.professionObj ? " " + subj.professionObj.toUpperCase() : "") + ".";
+    }
+
+    // -------- Is <name/pronoun> <verb-ing> [obj]? --------
+    var mIs = text.match(/^is\s+(\S+)\s+(\w+)(?:\s+(.+?))?\??$/i);
+    if (mIs) {
+      var subj2 = findPerson(mIs[1]);
+      var ing2 = mIs[2].toLowerCase();
+      var obj2 = (mIs[3] || "").replace(/\?$/, "").trim();
+      var vforms2 = verbFromIng(ing2);
+      if (!vforms2) return dontUnderstand(ing2);
+      if (!subj2) return "I DON'T KNOW WHO YOU MEAN.";
+      highlightPerson(subj2);
+      if (currentActivityMatches(subj2, vforms2, obj2)) {
+        return "YES, " + pron(subj2).toUpperCase() + " IS.";
+      }
+      if (learnedMatches(subj2, vforms2)) {
+        return "YOU THINK SO, YES.";
+      }
+      if (professionMatches(subj2, vforms2, obj2)) {
+        return "NOT AT THIS MOMENT.";
+      }
+      return "NO, " + pron(subj2).toUpperCase() + " ISN'T. " + PRON(subj2).toUpperCase() + "'S " +
+        subj2.activityVerb.ing.toUpperCase() + (subj2.activityObj ? " " + subj2.activityObj.toUpperCase() : "") + ".";
+    }
+
+    // -------- Statement: <Name> is <verb-ing> [obj]. --------
+    var mStateIng = text.match(/^(\S+)\s+is\s+(\w+)(?:\s+(.+?))?\.?$/i);
+    if (mStateIng) {
+      var who = findPerson(mStateIng[1]);
+      if (who) {
+        var vbaseIng = mStateIng[2].toLowerCase();
+        var objIng = (mStateIng[3] || "").trim();
+        var f2 = verbFromIng(vbaseIng);
+        // Only treat this as a present-continuous statement if the word is
+        // already a recognised -ing form, or at least looks like one — so
+        // "Maria is Spanish." doesn't get force-fitted into a fake verb
+        // ("SPANISHING"); it falls through to the simple-present handler
+        // below instead, which treats "is" itself as the verb.
+        if (!f2 && /ing$/.test(vbaseIng)) {
+          f2 = guessForms(baseFromIngWord(vbaseIng));
+          learnVerb(f2);
+        }
+        if (f2) {
+          highlightPerson(who);
+          learnedFacts.push({ personId: who.id, verbBase: f2.base, obj: objIng, mode: "ing" });
+          return "YOU THINK " + who.first.toUpperCase() + " IS " + f2.ing.toUpperCase() +
+            (objIng ? " " + objIng.toUpperCase() : "") + ".";
+        }
+      }
+    }
+
+    // -------- Statement: <Name> <verb-s> [obj]. (simple present) --------
+    var mStateS = text.match(/^(\S+)\s+(\w+)(?:\s+(.+?))?\.?$/i);
+    if (mStateS) {
+      var who2 = findPerson(mStateS[1]);
+      if (who2) {
+        var vwordS = mStateS[2].toLowerCase();
+        var objS = (mStateS[3] || "").trim();
+        var f3 = verbFromS(vwordS);
+        if (!f3) { f3 = guessForms(baseFromSWord(vwordS)); learnVerb(f3); }
+        highlightPerson(who2);
+        learnedFacts.push({ personId: who2.id, verbBase: f3.base, obj: objS, mode: "s" });
+        return "YOU THINK " + who2.first.toUpperCase() + " " + f3.s.toUpperCase() +
+          (objS ? " " + objS.toUpperCase() : "") + ".";
+      }
+    }
+
+    return null;
+  }
+
+  /* ---------------------------------------------------------------
+   * MACHINE-INITIATED QUESTIONS (ASK ME SOMETHING)
+   * ------------------------------------------------------------- */
+
+  var pendingMachineQuestion = null; // {answerCheck: fn(text)->response}
+
+  function randomPerson() { return PEOPLE[Math.floor(Math.random() * PEOPLE.length)]; }
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function machineAsk() {
+    var p = randomPerson();
+    highlightPerson(p);
+    var kind = pick(["profession", "living", "whois", "isVing", "does", "surname"]);
+    var questionText, evaluate;
+
+    // for a false-premise pick, borrow another inhabitant's activity/profession
+    // as the foil, so the honest answer has to name the real one instead
+    function foilPerson() {
+      var others = PEOPLE.filter(function (o) { return o.id !== p.id; });
+      return pick(others);
+    }
+
+    if (kind === "profession") {
+      questionText = "What is " + p.first + "?";
+      evaluate = function () {
+        return (p.gender === "f" ? "SHE'S " : "HE'S ") + p.article.toUpperCase() + " " + p.profession.toUpperCase() + ".";
+      };
+    } else if (kind === "living") {
+      questionText = "What does " + p.first + " do for a living?";
+      evaluate = function () { return p.livingAnswer; };
+    } else if (kind === "surname") {
+      questionText = "What is " + p.first + "'s surname?";
+      evaluate = function () { return p.last.toUpperCase() + "."; };
+    } else if (kind === "whois") {
+      questionText = "Who is " + p.activityVerb.ing + (p.activityObj ? " " + p.activityObj : "") + "?";
+      evaluate = function () { return p.first.toUpperCase() + " IS."; };
+    } else if (kind === "does") {
+      if (Math.random() < 0.5) {
+        questionText = "Does " + p.first + " " + p.professionVerb.base + (p.professionObj ? " " + p.professionObj : "") + "?";
+        evaluate = function () { return "YES, " + pron(p).toUpperCase() + " DOES."; };
+      } else {
+        var foilD = foilPerson();
+        questionText = "Does " + p.first + " " + foilD.professionVerb.base + (foilD.professionObj ? " " + foilD.professionObj : "") + "?";
+        evaluate = function () {
+          return "NO, " + pron(p).toUpperCase() + " DOESN'T. " + PRON(p).toUpperCase() + " " +
+            p.professionVerb.s.toUpperCase() + (p.professionObj ? " " + p.professionObj.toUpperCase() : "") + ".";
+        };
+      }
+    } else { // isVing
+      if (Math.random() < 0.6) {
+        questionText = "Is " + p.first + " " + p.activityVerb.ing + (p.activityObj ? " " + p.activityObj : "") + "?";
+        evaluate = function () { return "YES, " + pron(p).toUpperCase() + " IS."; };
+      } else {
+        var foilI = foilPerson();
+        questionText = "Is " + p.first + " " + foilI.activityVerb.ing + (foilI.activityObj ? " " + foilI.activityObj : "") + "?";
+        evaluate = function () {
+          return "NO, " + pron(p).toUpperCase() + " ISN'T. " + PRON(p).toUpperCase() + "'S " +
+            p.activityVerb.ing.toUpperCase() + (p.activityObj ? " " + p.activityObj.toUpperCase() : "") + ".";
+        };
+      }
+    }
+
+    say("machine", questionText);
+    pendingMachineQuestion = { evaluate: evaluate };
+  }
+
+  /* ---------------------------------------------------------------
+   * WIRING
+   * ------------------------------------------------------------- */
+
+  var form = document.getElementById("inputForm");
+  var inputBox = document.getElementById("inputBox");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var raw = inputBox.value;
+    inputBox.value = "";
+
+    if (!raw.trim()) {
+      // blank Enter: if the machine is holding a question, it answers it now;
+      // otherwise it asks a new one (which the next blank Enter will answer).
+      if (pendingMachineQuestion) {
+        var selfPq = pendingMachineQuestion;
+        pendingMachineQuestion = null;
+        say("machine", selfPq.evaluate());
+      } else {
+        machineAsk();
+      }
+      return;
+    }
+
+    say("learner", raw);
+
+    if (/^ask me something\.?$/i.test(raw.trim())) {
+      machineAsk();
+      return;
+    }
+
+    if (pendingMachineQuestion) {
+      var pq = pendingMachineQuestion;
+      pendingMachineQuestion = null;
+      if (/^i\s*don'?t\s*know\.?$/i.test(raw.trim())) {
+        say("machine", "THAT'S FINE. HERE IS WHAT I KNOW: " + pq.evaluate());
+      } else {
+        say("machine", pq.evaluate());
+      }
+      return;
+    }
+
+    var response = handleInput(raw);
+    if (response === null) {
+      say("machine", "I'M SORRY. I DON'T UNDERSTAND THAT. (ขอโทษ ไม่เข้าใจ)");
+    } else {
+      say("machine", response);
+    }
+  });
+
+  document.getElementById("askBtn").addEventListener("click", function () {
+    say("learner", "ASK ME SOMETHING");
+    machineAsk();
+  });
+
+  document.getElementById("clearBtn").addEventListener("click", function () {
+    transcriptEl.innerHTML = "";
+  });
+
+  document.getElementById("forgetBtn").addEventListener("click", function () {
+    learnedFacts = [];
+    say("system", "(TENSELAND has forgotten everything you taught it. — ลืมทุกอย่างที่คุณสอนแล้ว)");
+  });
+
+  document.getElementById("restartBtn").addEventListener("click", function () {
+    if (confirm("Restart TENSELAND? This clears the screen and everything it has learned.")) {
+      learnedFacts = [];
+      context.lastPerson = null;
+      pendingMachineQuestion = null;
+      transcriptEl.innerHTML = "";
+      PEOPLE.forEach(function (p) { cardById[p.id].classList.remove("highlight"); });
+      say("system", "TENSELAND พร้อมแล้ว ถามคำถาม สั่งให้ทำ หรือพิมพ์ ASK ME SOMETHING (TENSELAND is ready. Ask a question, give a command, or type ASK ME SOMETHING.)");
+    }
+  });
+
+  // greet
+  say("system", "TENSELAND พร้อมแล้ว ถามคำถาม สั่งให้ทำ หรือพิมพ์ ASK ME SOMETHING (TENSELAND is ready. Ask a question, give a command, or type ASK ME SOMETHING.)");
+  inputBox.focus();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,529 @@
+<HTML>
+<HEAD><META NAME="Author" CONTENT="Produced using Hot Potatoes by Half-Baked Software, registered to John Higgins.">
+<TITLE>Answering machine message</TITLE>
+<SCRIPT language="JavaScript">
+
+var min
+var sec
+var ShowReadingAgain = 'Show reading again'
+var platform = 'win'
+if (navigator.appVersion.indexOf('Mac') != -1) {platform = 'mac'}
+
+macrightchar = ':-)'
+macwrongchar = 'X'
+winrightchar = ':-)'
+winwrongchar = 'X'
+
+
+DoneStatus = new Array();
+DoneStatus[1] = '0';
+DoneStatus[2] = '0';
+DoneStatus[3] = '0';
+DoneStatus[4] = '0';
+DoneStatus[5] = '0';
+DoneStatus[6] = '0';
+DoneStatus[7] = '0';
+
+
+Responses = new Array();
+Responses[1] = 'No: ... message...';
+Responses[2] = 'No: ... but I\'m  ....';
+Responses[3] = 'CORRECT: Thanks for your message, but I\'m afraid I\'ll not be <FONT COLOR="green">able</FONT> to make it to the concert at the Holy Rude on Thursday.';
+Responses[4] = 'No: .. Holy Rude ..';
+Responses[6] = 'CORRECT: <FONT COLOR="green">That </FONT> evening I\'ve arranged to be at Edinburgh Airport';
+Responses[7] = 'No: ... I\'ve arranged ...';
+Responses[8] = 'No: ... be at ...';
+Responses[9] = 'No: ...at Edinburgh ...';
+Responses[11] = 'No: .. to pick up Lorraine ...';
+Responses[12] = 'No: ... who\'s up ...';
+Responses[13] = 'No: ... a long  ...';
+Responses[14] = 'CORRECT: .. to pick up Lorraine who\'s up for a long <FONT COLOR="green">weekend.</FONT>';
+Responses[16] = 'No: ... definitely...';
+Responses[17] = 'No: ... you at ...';
+Responses[18] = 'No: ...Hotel  ...';
+Responses[19] = 'CORRECT: I\'ll definitely see you at the Highland Hotel a week <FONT COLOR="green">on</FONT> Friday.';
+Responses[21] = 'No: .. the aerobics ...';
+Responses[22] = 'CORRECT: for the aerobics  <FONT COLOR="green">class</FONT> as usual.';
+Responses[23] = 'No: ... class as ...';
+Responses[24] = 'No: ... usual.';
+Responses[26] = 'CORRECT: <FONT COLOR="green">Enjoy </FONT> the concert; I\'d love to have come.';
+Responses[27] = 'No: Enjoy the ...';
+Responses[28] = 'No: ... concert; I\'d ...';
+Responses[29] = 'No: ... love ..';
+Responses[31] = 'No: Thanks again ..';
+Responses[32] = 'No: .. again ...';
+Responses[33] = 'CORRECT: Thanks again  <FONT COLOR="green">for</FONT> the invite.';
+Responses[34] = 'No: ... the invite ...';
+
+
+IndicatorName = new Array();
+IndicatorName[1] = 'document.QuizForm.Q1A';
+IndicatorName[2] = 'document.QuizForm.Q1B';
+IndicatorName[3] = 'document.QuizForm.Q1C';
+IndicatorName[4] = 'document.QuizForm.Q1D';
+IndicatorName[6] = 'document.QuizForm.Q2A';
+IndicatorName[7] = 'document.QuizForm.Q2B';
+IndicatorName[8] = 'document.QuizForm.Q2C';
+IndicatorName[9] = 'document.QuizForm.Q2D';
+IndicatorName[11] = 'document.QuizForm.Q3A';
+IndicatorName[12] = 'document.QuizForm.Q3B';
+IndicatorName[13] = 'document.QuizForm.Q3C';
+IndicatorName[14] = 'document.QuizForm.Q3D';
+IndicatorName[16] = 'document.QuizForm.Q4A';
+IndicatorName[17] = 'document.QuizForm.Q4B';
+IndicatorName[18] = 'document.QuizForm.Q4C';
+IndicatorName[19] = 'document.QuizForm.Q4D';
+IndicatorName[21] = 'document.QuizForm.Q5A';
+IndicatorName[22] = 'document.QuizForm.Q5B';
+IndicatorName[23] = 'document.QuizForm.Q5C';
+IndicatorName[24] = 'document.QuizForm.Q5D';
+IndicatorName[26] = 'document.QuizForm.Q6A';
+IndicatorName[27] = 'document.QuizForm.Q6B';
+IndicatorName[28] = 'document.QuizForm.Q6C';
+IndicatorName[29] = 'document.QuizForm.Q6D';
+IndicatorName[31] = 'document.QuizForm.Q7A';
+IndicatorName[32] = 'document.QuizForm.Q7B';
+IndicatorName[33] = 'document.QuizForm.Q7C';
+IndicatorName[34] = 'document.QuizForm.Q7D';
+
+
+var Score = 0;
+var Tries = 0;
+var Percent = 0;
+var YourScore = 'Your score is';
+var DefaultRight = 'Correct!';
+var DefaultWrong = 'Sorry! Try again.';
+
+if (platform == 'mac') {
+	rightchar = unescape(macrightchar)
+	wrongchar = unescape(macwrongchar)
+}
+else {
+	rightchar = unescape(winrightchar)
+	wrongchar = unescape(winwrongchar)
+}
+
+function DownTime(mm,ss){
+min=mm
+sec=ss
+if (sec==0) {
+     sec = 60
+     min--
+}
+ sec--
+if (sec<10){
+      sec="0" + sec
+}
+parent.Timer.document.TimerForm.face.value= min+":"+sec
+if ((min==0) && (sec==0)){
+TimesUp()
+}
+else{
+        setTimeout('DownTime(min,sec)',1000)
+}
+}
+
+function SetUp(){
+if (parent.Timer != null) {
+Stuff='<HTML><BODY BGCOLOR="#FFFFFF" BACKGROUND="image.gif"><CENTER><FORM NAME="TimerForm"><INPUT TYPE="Button"';
+Stuff+=' NAME="StartIt" VALUE="Start reading" onClick="parent.Code.StartReading()"></FORM></CENTER></BODY></HTML>';
+WriteToReading('Click on the button to see the reading.');
+WriteToTimer(Stuff);
+}
+}
+
+function StartReading(){
+Stuff='<HTML><BODY TEXT="#BA050A" BGCOLOR="FFFFFF" BACKGROUND="image.gif"><CENTER><FORM NAME="TimerForm" onSubmit="return false">';
+Stuff+='<strong>Remaining time:</strong> <INPUT TYPE=text NAME="face" SIZE=6 VALUE="1:00"></FORM></CENTER></BODY></HTML>';
+WriteToTimer(Stuff);
+parent.Reading.location.href='hidden2r.html';
+timeoutID=setTimeout('DownTime(1,0)',1000);
+}
+
+function TimesUp() {
+if (ShowReadingAgain.length > 0) {
+Stuff='<HTML><BODY BGCOLOR="FFFFFF" BACKGROUND="image.gif"><CENTER><FORM NAME="TimerForm">';
+Stuff+='<INPUT TYPE="Hidden" NAME="ThisAvoidsNavigator3Bug">';
+Stuff+='<INPUT TYPE="Button" NAME="StartIt" VALUE="Show reading again" onClick="parent.Code.StartReading()">';
+Stuff+='</FORM></CENTER></BODY></HTML>';
+WriteToTimer(Stuff);
+}
+WriteToReading('Your time is over!');
+}
+
+function WriteToReading(Stuff){
+parent.Reading.document.clear();
+parent.Reading.document.open();
+parent.Reading.document.writeln ("<html><body bgcolor=#FFFFFF text=#BA050A BACKGROUND=\"image.gif\">");
+parent.Reading.document.writeln ("<font size=+1>");
+parent.Reading.document.writeln ("<center><strong>");
+parent.Reading.document.writeln (Stuff);
+parent.Reading.document.writeln ("</strong></center></font></body></html>");
+parent.Reading.document.close();
+}
+
+function WriteToTimer(Stuff){
+parent.Timer.document.clear();
+parent.Timer.document.open();
+parent.Timer.document.writeln (Stuff);
+parent.Timer.document.close();
+}
+
+function CheckAnswer(QNum, AnsNum, Correct) {
+whichfb = (5*(QNum-1) + AnsNum)
+
+ if (Correct == 1) {
+	if (DoneStatus[QNum] != '1'){
+		Tries = Tries + 1;
+		DoneStatus[QNum] = '1';
+		Score = Score + 1;}
+	if (eval(IndicatorName[whichfb]) != null){
+		eval(IndicatorName[whichfb]).value = rightchar}
+	Feedback = Responses[whichfb]
+	if (Feedback == '') {Feedback = DefaultRight}
+	Percent = Math.floor(Score*100/Tries) + '%';
+	Feedback = Feedback + '<BR>' + YourScore + ' ' + Percent + '.';
+
+	var i = 0;
+	var AllDone = true;
+	for (i=1; i<DoneStatus.length; i++){
+		if (DoneStatus[i] == '0'){
+			AllDone = false;
+		}
+	}
+	if (AllDone == true){
+		Feedback += '<BR>';
+	}
+
+	WriteFeedback(Feedback);
+	}
+
+ else {
+	if (DoneStatus[QNum] != '1'){
+		Tries = Tries + 1;}
+	if (eval(IndicatorName[whichfb]) != null){
+		eval(IndicatorName[whichfb]).value = wrongchar}
+	Feedback = Responses[whichfb]
+	if (Feedback == '') {Feedback = DefaultWrong}
+	WriteFeedback(Feedback)
+ }
+}
+
+function WriteFeedback(Feedback) {
+  parent.FeedbackFrame.document.clear();
+  parent.FeedbackFrame.document.open();
+  parent.FeedbackFrame.document.writeln("<html>");
+  parent.FeedbackFrame.document.writeln("<body bgcolor=#FFFFFF text=#BA050A BACKGROUND=\"image.gif\">");
+  parent.FeedbackFrame.document.writeln("<font size = +1><center><strong>");
+  parent.FeedbackFrame.document.writeln(Feedback);
+  parent.FeedbackFrame.document.writeln("</strong></center></font></body></html>");
+  parent.FeedbackFrame.document.close();
+}
+
+</SCRIPT>
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" BACKGROUND="image.gif" onLoad='SetUp()'>
+
+<CENTER>
+
+<h2>Answering machine message</h2>
+<strong><em>Listen to each sentence and find the word the speaker used. You can listen as often as you like.</em></strong></CENTER><br>
+
+<FORM name="QuizForm">
+
+<INPUT TYPE="button" VALUE="Instructions" onClick="parent.FeedbackFrame.location='hidden2w.html#help'"><BR>
+
+<BR>
+
+<CENTER>
+<TABLE border=0 WIDTH=85%>
+
+<TR><TD colspan=4>
+<CENTER><HR width=80%></CENTER>
+</TD></TR>
+
+
+<TR>
+<TD VALIGN=TOP><FONT COLOR="#150890"><strong>1</strong></FONT COLOR></TD>
+<TD COLSPAN=3 VALIGN=TOP><FONT COLOR="#150890"><strong><EMBED src="qq1.wav" autostart="0" autoplay="0" height="55" width="145" type="audio/wav"></strong></FONT COLOR></TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q1A"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   A   " OnClick="CheckAnswer(1,1,0)"></TD>
+<TD VALIGN=TOP WIDTH=100%>mess</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q1B"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   B   " OnClick="CheckAnswer(1,2,0)"></TD>
+<TD VALIGN=TOP>time</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q1C"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   C   " OnClick="CheckAnswer(1,3,1)"></TD>
+<TD VALIGN=TOP>able</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q1D"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   D   " OnClick="CheckAnswer(1,4,0)"></TD>
+<TD VALIGN=TOP>whole</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP></TD>
+<TD VALIGN=TOP></TD>
+<TD VALIGN=TOP></TD>
+</TR>
+<TR><TD colspan=4>
+<CENTER><HR width=80%></CENTER>
+</TD></TR>
+
+<TR>
+<TD VALIGN=TOP><FONT COLOR="#150890"><strong>2</strong></FONT COLOR></TD>
+<TD COLSPAN=3 VALIGN=TOP><FONT COLOR="#150890"><strong><EMBED type="audio/wav" src="qq2.wav" autostart=false height=55 width=145></strong></FONT COLOR></TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q2A"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   A   " OnClick="CheckAnswer(2,1,1)"></TD>
+<TD VALIGN=TOP WIDTH=100%>that</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q2B"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   B   " OnClick="CheckAnswer(2,2,0)"></TD>
+<TD VALIGN=TOP>Ivor</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q2C"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   C   " OnClick="CheckAnswer(2,3,0)"></TD>
+<TD VALIGN=TOP>beer</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q2D"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   D   " OnClick="CheckAnswer(2,4,0)"></TD>
+<TD VALIGN=TOP>Teddy</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP></TD>
+<TD VALIGN=TOP></TD>
+<TD VALIGN=TOP></TD>
+</TR>
+<TR><TD colspan=4>
+<CENTER><HR width=80%></CENTER>
+</TD></TR>
+
+<TR>
+<TD VALIGN=TOP><FONT COLOR="#150890"><strong>3</strong></FONT COLOR></TD>
+<TD COLSPAN=3 VALIGN=TOP><FONT COLOR="#150890"><strong><EMBED type="audio/wav" src="qq3.wav" autostart=false height=55 width=145></strong></FONT COLOR></TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q3A"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   A   " OnClick="CheckAnswer(3,1,0)"></TD>
+<TD VALIGN=TOP WIDTH=100%>couple</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q3B"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   B   " OnClick="CheckAnswer(3,2,0)"></TD>
+<TD VALIGN=TOP>sup</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q3C"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   C   " OnClick="CheckAnswer(3,3,0)"></TD>
+<TD VALIGN=TOP>along</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q3D"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   D   " OnClick="CheckAnswer(3,4,1)"></TD>
+<TD VALIGN=TOP>weekend</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP></TD>
+<TD VALIGN=TOP></TD>
+<TD VALIGN=TOP></TD>
+</TR>
+<TR><TD colspan=4>
+<CENTER><HR width=80%></CENTER>
+</TD></TR>
+
+<TR>
+<TD VALIGN=TOP><FONT COLOR="#150890"><strong>4</strong></FONT COLOR></TD>
+<TD COLSPAN=3 VALIGN=TOP><FONT COLOR="#150890"><strong><EMBED type="audio/wav" src="qq4.wav" autostart=false height=55 width=145></strong></FONT COLOR></TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q4A"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   A   " OnClick="CheckAnswer(4,1,0)"></TD>
+<TD VALIGN=TOP WIDTH=100%>deaf</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q4B"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   B   " OnClick="CheckAnswer(4,2,0)"></TD>
+<TD VALIGN=TOP>your</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q4C"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   C   " OnClick="CheckAnswer(4,3,0)"></TD>
+<TD VALIGN=TOP>tell</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q4D"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   D   " OnClick="CheckAnswer(4,4,1)"></TD>
+<TD VALIGN=TOP>on</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP></TD>
+<TD VALIGN=TOP></TD>
+<TD VALIGN=TOP></TD>
+</TR>
+<TR><TD colspan=4>
+<CENTER><HR width=80%></CENTER>
+</TD></TR>
+
+<TR>
+<TD VALIGN=TOP><FONT COLOR="#150890"><strong>5</strong></FONT COLOR></TD>
+<TD COLSPAN=3 VALIGN=TOP><FONT COLOR="#150890"><strong><EMBED type="audio/wav" src="qq5.wav" autostart=false height=55 width=145></strong></FONT COLOR></TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q5A"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   A   " OnClick="CheckAnswer(5,1,0)"></TD>
+<TD VALIGN=TOP WIDTH=100%>zero</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q5B"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   B   " OnClick="CheckAnswer(5,2,1)"></TD>
+<TD VALIGN=TOP>class</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q5C"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   C   " OnClick="CheckAnswer(5,3,0)"></TD>
+<TD VALIGN=TOP>sir</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q5D"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   D   " OnClick="CheckAnswer(5,4,0)"></TD>
+<TD VALIGN=TOP>shall</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP></TD>
+<TD VALIGN=TOP></TD>
+<TD VALIGN=TOP></TD>
+</TR>
+<TR><TD colspan=4>
+<CENTER><HR width=80%></CENTER>
+</TD></TR>
+
+<TR>
+<TD VALIGN=TOP><FONT COLOR="#150890"><strong>6</strong></FONT COLOR></TD>
+<TD COLSPAN=3 VALIGN=TOP><FONT COLOR="#150890"><strong><EMBED type="audio/wav" src="qq6.wav" autostart=false height=55 width=145></strong></FONT COLOR></TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q6A"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   A   " OnClick="CheckAnswer(6,1,1)"></TD>
+<TD VALIGN=TOP WIDTH=100%>enjoy</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q6B"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   B   " OnClick="CheckAnswer(6,2,0)"></TD>
+<TD VALIGN=TOP>join</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q6C"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   C   " OnClick="CheckAnswer(6,3,0)"></TD>
+<TD VALIGN=TOP>tide</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q6D"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   D   " OnClick="CheckAnswer(6,4,0)"></TD>
+<TD VALIGN=TOP>laugh</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP></TD>
+<TD VALIGN=TOP></TD>
+<TD VALIGN=TOP></TD>
+</TR>
+<TR><TD colspan=4>
+<CENTER><HR width=80%></CENTER>
+</TD></TR>
+
+<TR>
+<TD VALIGN=TOP><FONT COLOR="#150890"><strong>7</strong></FONT COLOR></TD>
+<TD COLSPAN=3 VALIGN=TOP><FONT COLOR="#150890"><strong><EMBED type="audio/wav" src="qq7.wav" autostart=false height=55 width=145></strong></FONT COLOR></TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q7A"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   A   " OnClick="CheckAnswer(7,1,0)"></TD>
+<TD VALIGN=TOP WIDTH=100%>anxious</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q7B"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   B   " OnClick="CheckAnswer(7,2,0)"></TD>
+<TD VALIGN=TOP>gain</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q7C"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   C   " OnClick="CheckAnswer(7,3,1)"></TD>
+<TD VALIGN=TOP>for</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP><INPUT TYPE=text VALUE=" " size=3 NAME="Q7D"></TD>
+<TD VALIGN=TOP><INPUT TYPE=button VALUE="   D   " OnClick="CheckAnswer(7,4,0)"></TD>
+<TD VALIGN=TOP>thin</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD VALIGN=TOP></TD>
+<TD VALIGN=TOP></TD>
+<TD VALIGN=TOP></TD>
+</TR>
+<TR><TD colspan=4>
+<CENTER><HR width=80%></CENTER>
+</TD></TR>
+
+
+</TABLE>
+</CENTER>
+</FORM>
+
+<BR>
+
+<CENTER><FORM NAME="NavigationButtons">
+<INPUT TYPE="button" VALUE="Go back to contents" onClick="parent.location='index.html'">
+</FORM></CENTER>
+
+</BODY>
+</HTML>
+
+
+
+

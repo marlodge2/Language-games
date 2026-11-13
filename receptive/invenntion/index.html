@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="John Higgins">
+<meta name="description" content="INVENNTION — a Venn-diagram deduction puzzle for language learners.">
+<title>INVENNTION — a Venn diagram puzzle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+<style>
+:root{
+  --bg:#f5f3ec;
+  --paper:#fffdf8;
+  --ink:#1c2b2e;
+  --ink-dim:#5c6b6a;
+  --line:#dcd6c6;
+  --line-soft:#eae5d7;
+  --a:#c33f56;      --a-soft:#f0c9d0;
+  --b:#1f8a8a;       --b-soft:#c3e4e0;
+  --c:#c98a2c;       --c-soft:#f0dcb0;
+  --good:#2f7a4a;
+  --bad:#b23b2e;
+  --focus:#1c2b2e;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Public Sans',ui-sans-serif,system-ui,sans-serif;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1040px;margin:0 auto;padding:2rem 1.25rem 4rem;}
+h1,h2,h3{font-family:'Fraunces',Georgia,serif; margin:0; text-wrap:balance;}
+.site-title{
+  font-size:clamp(2.2rem,6vw,3.1rem);
+  font-weight:700;
+  letter-spacing:.01em;
+  margin-bottom:.15rem;
+}
+.site-title .venn{color:var(--b); font-style:italic;}
+.tag{color:var(--ink-dim); font-size:.95rem; margin-bottom:1.75rem;}
+.tag a{color:var(--ink-dim);}
+
+.puzzle-card{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:1.5rem 1.6rem;
+  box-shadow:0 1px 0 rgba(28,43,46,.03);
+}
+.statement{font-size:1.08rem; max-width:62ch;}
+.statement b{font-family:'Fraunces',serif; font-weight:600;}
+
+.layout{
+  display:grid;
+  grid-template-columns:minmax(300px,1fr) minmax(240px,320px);
+  gap:1.75rem;
+  margin-top:1.5rem;
+  align-items:start;
+}
+@media (max-width:760px){
+  .layout{grid-template-columns:1fr;}
+}
+
+/* ---------- diagram ---------- */
+.diagram-area{position:relative;}
+.venn-frame{
+  position:relative;
+  width:100%;
+  aspect-ratio:460/420;
+}
+.venn-frame svg{position:absolute; inset:0; width:100%; height:100%; overflow:visible;}
+.set-label{
+  position:absolute;
+  transform:translate(-50%,-50%);
+  font-family:'Fraunces',serif;
+  font-weight:600;
+  font-size:clamp(.78rem,2.1vw,1rem);
+  padding:.15rem .55rem;
+  border-radius:20px;
+  white-space:nowrap;
+  pointer-events:none;
+}
+.set-label.a{color:var(--a); background:var(--a-soft);}
+.set-label.b{color:var(--b); background:var(--b-soft);}
+.set-label.c{color:var(--c); background:var(--c-soft);}
+
+.cell{
+  position:absolute;
+  transform:translate(-50%,-50%);
+  display:flex; flex-direction:column; align-items:center; gap:.15rem;
+}
+.cell input{
+  width:2.6rem; height:2.6rem;
+  border-radius:8px;
+  border:2px solid var(--line);
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-weight:700;
+  font-size:1.05rem;
+  text-align:center;
+  -moz-appearance:textfield;
+}
+.cell input::-webkit-outer-spin-button,.cell input::-webkit-inner-spin-button{-webkit-appearance:none; margin:0;}
+.cell input:focus{outline:none; border-color:var(--focus); box-shadow:0 0 0 3px rgba(28,43,46,.12);}
+.cell.solved input{
+  background:var(--good); border-color:var(--good); color:#fff;
+}
+.cell.hint-solved input{
+  background:var(--c); border-color:var(--c); color:#fff;
+}
+.cell.wrong input{animation:shake .32s;}
+.cell.solvable input{
+  border-color:var(--focus);
+  animation:pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(28,43,46,.22);}
+  50%{box-shadow:0 0 0 7px rgba(28,43,46,0);}
+}
+@keyframes shake{
+  20%{transform:translateX(-5px);}
+  60%{transform:translateX(5px);}
+  100%{transform:translateX(0);}
+}
+@media (prefers-reduced-motion: reduce){
+  .cell.solvable input{animation:none; box-shadow:0 0 0 3px rgba(28,43,46,.18);}
+  .cell.wrong input{animation:none;}
+}
+.none-row{display:flex; justify-content:center; margin-top:1.4rem;}
+.cell.cell-static{position:static; transform:none;}
+.cell-label{
+  font-size:.68rem; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.08em;
+  text-align:center; max-width:6rem;
+}
+
+/* ---------- clue panel ---------- */
+.panel-title{
+  font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-dim);
+  margin-bottom:.6rem;
+}
+.clue-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.55rem;}
+.clue-list li{
+  font-size:.9rem;
+  padding:.55rem .7rem;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-left:3px solid var(--line-soft);
+  border-radius:0 8px 8px 0;
+}
+.clue-list li b{font-family:'JetBrains Mono',monospace; color:var(--ink);}
+.clue-list li.done{border-left-color:var(--good); opacity:.55;}
+
+.status-row{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-top:1.5rem; gap:1rem; flex-wrap:wrap;
+}
+.progress{
+  flex:1; min-width:160px;
+  height:10px; border-radius:6px; background:var(--line-soft); overflow:hidden;
+}
+.progress .fill{height:100%; background:var(--b); width:0%; transition:width .3s ease;}
+.progress-text{font-family:'JetBrains Mono',monospace; font-size:.85rem; color:var(--ink-dim); white-space:nowrap;}
+
+.btn-row{display:flex; gap:.6rem; margin-top:1.1rem; flex-wrap:wrap;}
+button.action{
+  font-family:'Public Sans',sans-serif;
+  font-weight:600;
+  font-size:.88rem;
+  padding:.6rem 1.1rem;
+  border-radius:8px;
+  border:1px solid var(--line);
+  background:var(--paper);
+  color:var(--ink);
+  cursor:pointer;
+  transition:border-color .12s, transform .08s;
+}
+button.action:hover{border-color:var(--ink-dim);}
+button.action:active{transform:translateY(1px);}
+button.action.primary{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+button.action.primary:hover{background:#324242;}
+button.action:disabled{opacity:.4; cursor:default;}
+
+.score{font-size:.82rem; color:var(--ink-dim); margin-top:.6rem;}
+
+.win-banner{
+  display:none;
+  margin-top:1.25rem;
+  padding:1rem 1.2rem;
+  border-radius:10px;
+  background:var(--b-soft);
+  color:#0e4f4f;
+  font-family:'Fraunces',serif;
+  font-size:1.05rem;
+  font-weight:600;
+}
+.win-banner.show{display:block;}
+
+footer{margin-top:2.5rem; font-size:.78rem; color:var(--ink-dim);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="site-title">IN<span class="venn">VENN</span>TION</div>
+  <div class="tag">by John Higgins, 1990, revised 2026</div>
+
+  <div class="puzzle-card">
+    <p class="statement" id="statement"></p>
+
+    <div class="layout">
+      <div class="diagram-area">
+        <div class="venn-frame" id="vennFrame">
+          <svg viewBox="0 0 460 420" aria-hidden="true">
+            <rect x="10" y="10" width="440" height="400" rx="16" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+            <circle cx="185" cy="175" r="150" fill="var(--a)" fill-opacity="0.22"/>
+            <circle cx="275" cy="175" r="150" fill="var(--b)" fill-opacity="0.22"/>
+            <circle cx="230" cy="250" r="150" fill="var(--c)" fill-opacity="0.22"/>
+            <circle cx="185" cy="175" r="150" fill="none" stroke="var(--a)" stroke-width="2.5"/>
+            <circle cx="275" cy="175" r="150" fill="none" stroke="var(--b)" stroke-width="2.5"/>
+            <circle cx="230" cy="250" r="150" fill="none" stroke="var(--c)" stroke-width="2.5"/>
+          </svg>
+          <div class="set-label a" style="left:21.7%; top:9.5%;" id="labelA"></div>
+          <div class="set-label b" style="left:78.3%; top:9.5%;" id="labelB"></div>
+          <div class="set-label c" style="left:50%; top:96.5%;" id="labelC"></div>
+
+          <div class="cell" data-region="onlyA" style="left:20.4%; top:27.6%;"><input type="text" inputmode="numeric" maxlength="3"></div>
+          <div class="cell" data-region="onlyB" style="left:79.6%; top:27.6%;"><input type="text" inputmode="numeric" maxlength="3"></div>
+          <div class="cell" data-region="onlyC" style="left:50.2%; top:85.7%;"><input type="text" inputmode="numeric" maxlength="3"></div>
+          <div class="cell" data-region="AB" style="left:49.6%; top:16.2%;"><input type="text" inputmode="numeric" maxlength="3"></div>
+          <div class="cell" data-region="AC" style="left:25.4%; top:63.6%;"><input type="text" inputmode="numeric" maxlength="3"></div>
+          <div class="cell" data-region="BC" style="left:74.6%; top:63.6%;"><input type="text" inputmode="numeric" maxlength="3"></div>
+          <div class="cell" data-region="ABC" style="left:50.0%; top:47.4%;"><input type="text" inputmode="numeric" maxlength="3"></div>
+        </div>
+
+        <div class="none-row">
+          <div class="cell cell-static" data-region="none">
+            <input type="text" inputmode="numeric" maxlength="3">
+            <div class="cell-label">none of these</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="clue-panel">
+        <div class="panel-title">Clues</div>
+        <ul class="clue-list" id="clueList"></ul>
+      </div>
+    </div>
+
+    <div class="status-row">
+      <div class="progress"><div class="fill" id="progressFill"></div></div>
+      <div class="progress-text" id="progressText">0 / 8 solved</div>
+    </div>
+    <div class="score" id="scoreText">Correct: 0 &nbsp;·&nbsp; Wrong guesses: 0 &nbsp;·&nbsp; Hints used: 0</div>
+    <div class="win-banner" id="winBanner"></div>
+
+    <div class="btn-row">
+      <button class="action primary" id="hintBtn">Give me a hint</button>
+      <button class="action" id="newBtn">New puzzle</button>
+    </div>
+  </div>
+
+  <footer>A highlighted cell means it can be worked out from what you already know. Press Enter, or click away, to check a number.</footer>
+</div>
+
+<script>
+/* ===================== themes ===================== */
+const THEMES = [
+  {club:"New Town Summer Sports Club", people:"members", verb:"play", category:"sports",
+   sets:["tennis","golf","cricket"]},
+  {club:"Riverside Reading Group", people:"members", verb:"read", category:"kinds of book",
+   sets:["mysteries","biographies","poetry"]},
+  {club:"Elmwood Language Institute", people:"students", verb:"study", category:"languages",
+   sets:["French","Spanish","Japanese"]},
+  {club:"Northside Music Society", people:"members", verb:"play", category:"instruments",
+   sets:["piano","violin","guitar"]},
+  {club:"Willow Farm Pet Club", people:"members", verb:"keep", category:"pets",
+   sets:["dogs","cats","rabbits"]},
+  {club:"Grand Central Film Club", people:"members", verb:"watch", category:"kinds of film",
+   sets:["comedies","dramas","documentaries"]},
+  {club:"Old Mill Allotment Society", people:"members", verb:"grow", category:"crops",
+   sets:["tomatoes","potatoes","carrots"]},
+  {club:"Harbourview Sailing Club", people:"members", verb:"sail", category:"boats",
+   sets:["dinghies","kayaks","yachts"]},
+  {club:"Town Amateur Dramatic Society", people:"members", verbPast:"took part in", category:"productions",
+   sets:["Macbeth","The Importance of Being Earnest","last year's pantomime"],
+   minTotals:[15,9]}, // Macbeth needs a cast of at least 15, Earnest at least 9
+];
+
+/* ===================== helpers ===================== */
+const $ = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>Array.from(r.querySelectorAll(s));
+const rnd = (min,max)=> min + Math.floor(Math.random()*(max-min+1));
+const pick = arr => arr[Math.floor(Math.random()*arr.length)];
+
+/* primitive order: onlyA,onlyB,onlyC,AB,AC,BC,ABC,none */
+const PRIMS = ['onlyA','onlyB','onlyC','AB','AC','BC','ABC','none'];
+const REGION_KEYS = ['onlyA','onlyB','onlyC','AB','AC','BC','ABC']; // 'none' is handled via the total, not its own clue
+const EXPR_TOTAL = {onlyA:1,onlyB:1,onlyC:1,AB:1,AC:1,BC:1,ABC:1,none:1};
+
+/* ===================== puzzle generation ===================== */
+let puzzle = null;
+
+function generatePuzzle(){
+  const theme = pick(THEMES);
+  let regions;
+  let tries=0;
+  do{
+    regions = {
+      onlyA: rnd(2,11), onlyB: rnd(2,11), onlyC: rnd(2,11),
+      AB: rnd(1,7), AC: rnd(1,7), BC: rnd(1,7),
+      ABC: rnd(0,5),
+      none: rnd(0,6),
+    };
+    tries++;
+  } while (tries<10 && regions.ABC===0 && Math.random()<0.6);
+
+  // Some scenarios have a real-world floor on how many people could possibly
+  // be "in" a set — eg a play needs at least as many people as it has parts.
+  // Top up the "only" region for that set until its total clears the floor.
+  if (theme.minTotals){
+    const totals = [
+      regions.onlyA+regions.AB+regions.AC+regions.ABC,
+      regions.onlyB+regions.AB+regions.BC+regions.ABC,
+      regions.onlyC+regions.AC+regions.BC+regions.ABC,
+    ];
+    const onlyKeys = ['onlyA','onlyB','onlyC'];
+    theme.minTotals.forEach((min, i) => {
+      if (min && totals[i] < min) regions[onlyKeys[i]] += (min - totals[i]);
+    });
+  }
+
+  const total = PRIMS.reduce((s,k)=> s+regions[k], 0);
+
+  const conjugate3sg = (verb) => {
+    if (/[^aeiou]y$/.test(verb)) return verb.slice(0,-1)+'ies';
+    if (/(ch|sh|x|s|z|o)$/.test(verb)) return verb+'es';
+    return verb+'s';
+  };
+  // number agreement: "1 member plays" vs "5 members play" — past-tense
+  // themes (verbPast) skip conjugation, since "took part in" doesn't change
+  // for a singular subject the way a present-tense verb does.
+  const phrase = (n) => {
+    const singular = n===1;
+    const people = singular ? theme.people.slice(0,-1) : theme.people;
+    const verb = theme.verbPast ? theme.verbPast : (singular ? conjugate3sg(theme.verb) : theme.verb);
+    return {people, verb};
+  };
+
+  // Every clue names an EXCLUSIVE region explicitly — "X only", or "X and Y
+  // but not Z" — never an ambiguous running total that might or might not
+  // include overlaps. This is deliberate: the puzzle is a receptive drill,
+  // so the point is repeated exposure to "n did X only" / "n more did X than
+  // did Y" sentence patterns, not arithmetic subtraction.
+  const regionPhrase = (key) => {
+    const [x,y,z] = theme.sets;
+    switch(key){
+      case 'onlyA': return `${x} only`;
+      case 'onlyB': return `${y} only`;
+      case 'onlyC': return `${z} only`;
+      case 'AB': return `${x} and ${y} but not ${z}`;
+      case 'AC': return `${x} and ${z} but not ${y}`;
+      case 'BC': return `${y} and ${z} but not ${x}`;
+      case 'ABC': return `all three ${theme.category}`;
+    }
+  };
+
+  // Visit the 7 regions in random order. The first is always given directly
+  // (an anchor); each later region is usually given as a comparison against
+  // some EARLIER region in this same order — never a later one — so the
+  // reference graph is a simple tree/forest with no cycles, and the solver
+  // can always resolve it by simple one-step substitution.
+  const order = REGION_KEYS.slice().sort(()=>Math.random()-0.5);
+  const clues = []; // {text, expr:{...}, value:N}
+
+  order.forEach((key, idx) => {
+    const wantComparison = idx>0 && Math.random() < 0.8;
+    let ref = null, diff = 0;
+    if (wantComparison){
+      ref = order[Math.floor(Math.random()*idx)];
+      diff = regions[key]-regions[ref];
+    }
+    if (!wantComparison || diff===0){
+      const ph = phrase(regions[key]);
+      clues.push({ text:`${regions[key]} ${ph.people} ${ph.verb} ${regionPhrase(key)}.`, expr:{[key]:1}, value:regions[key] });
+    } else if (diff>0){
+      const ph = phrase(diff);
+      clues.push({ text:`${diff} more ${ph.people} ${ph.verb} ${regionPhrase(key)} than ${ph.verb} ${regionPhrase(ref)}.`, expr:{[key]:1,[ref]:-1}, value:diff });
+    } else {
+      const ph = phrase(-diff);
+      clues.push({ text:`${-diff} fewer ${ph.people} ${ph.verb} ${regionPhrase(key)} than ${ph.verb} ${regionPhrase(ref)}.`, expr:{[key]:1,[ref]:-1}, value:diff });
+    }
+  });
+
+  // shuffle body clues, keep the grand total last (it's the one that finally
+  // pins down "none of these")
+  clues.sort(()=>Math.random()-0.5);
+  {
+    const ph = phrase(total);
+    const be = total===1 ? 'is' : 'are';
+    clues.push({ text:`There ${be} ${total} ${ph.people} of the ${theme.club} altogether.`, expr:EXPR_TOTAL, value:total });
+  }
+
+  const values = {...regions, TOTAL: total};
+  puzzle = { theme, regions, values, clues };
+  return puzzle;
+}
+
+/* ===================== solver ===================== */
+function solvableNow(confirmed){
+  // confirmed: {onlyA:val,...} for cells the player has correctly filled
+  const known = {...confirmed};
+  let progressed = true;
+  const newlyDerived = new Set();
+  while (progressed){
+    progressed = false;
+    for (const clue of puzzle.clues){
+      const unknownKeys = PRIMS.filter(k => (clue.expr[k]||0)!==0 && !(k in known));
+      if (unknownKeys.length===1){
+        const k = unknownKeys[0];
+        let sum=0;
+        for (const kk of PRIMS) if (kk!==k && clue.expr[kk]) sum += clue.expr[kk]*known[kk];
+        const val = (clue.value - sum)/clue.expr[k];
+        if (!(k in known)){
+          known[k]=val;
+          newlyDerived.add(k);
+          progressed = true;
+        }
+      }
+    }
+  }
+  return {known, newlyDerived};
+}
+
+/* ===================== rendering ===================== */
+let confirmed = {};   // primitives the player has correctly entered
+let stats = {correct:0, wrong:0, hints:0};
+
+function render(){
+  const {theme, values} = puzzle;
+  const introVerb = theme.verbPast || theme.verb;
+  const doWord = theme.verbPast ? 'did' : 'do';
+  $('#statement').innerHTML = `There are <b>${values.TOTAL}</b> ${theme.people} of the <b>${theme.club}</b>. Some ${introVerb} ${theme.sets[0]}, some ${introVerb} ${theme.sets[1]}, some ${introVerb} ${theme.sets[2]} — and some ${doWord} more than one, or none at all. Use the clues to fill in every part of the diagram.`;
+  $('#labelA').textContent = cap(theme.sets[0]);
+  $('#labelB').textContent = cap(theme.sets[1]);
+  $('#labelC').textContent = cap(theme.sets[2]);
+
+  $('#clueList').innerHTML = puzzle.clues.map((c,i)=>`<li data-idx="${i}">${c.text}</li>`).join('');
+
+  $$('.cell input').forEach(inp=>{ inp.value=''; inp.disabled=false; });
+  $$('.cell').forEach(c=>c.classList.remove('solved','solvable','wrong','hint-solved'));
+
+  confirmed = {};
+  stats = {correct:0, wrong:0, hints:0};
+  $('#winBanner').classList.remove('show');
+  updateHighlights();
+  updateStatus();
+}
+function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+
+function cellEl(region){
+  return document.querySelector(`[data-region="${region}"]`);
+}
+
+function updateHighlights(){
+  const {newlyDerived} = solvableNow(confirmed);
+  PRIMS.forEach(k=>{
+    const el = cellEl(k);
+    if (!el) return;
+    if (k in confirmed){ el.classList.remove('solvable'); return; }
+    el.classList.toggle('solvable', newlyDerived.has(k));
+  });
+  // grey out clues whose value is already fully implied by confirmed cells
+  $$('#clueList li').forEach((li,i)=>{
+    const clue = puzzle.clues[i];
+    const allKnown = PRIMS.every(k => !(clue.expr[k]) || (k in confirmed));
+    li.classList.toggle('done', allKnown);
+  });
+}
+
+function updateStatus(){
+  const n = Object.keys(confirmed).length;
+  $('#progressFill').style.width = (n/8*100)+'%';
+  $('#progressText').textContent = `${n} / 8 solved`;
+  $('#scoreText').textContent = `Correct: ${stats.correct} · Wrong guesses: ${stats.wrong} · Hints used: ${stats.hints}`;
+  if (n===8){
+    $('#winBanner').textContent = `Solved! ${stats.wrong===0 ? "No wrong guesses — well done." : `You made ${stats.wrong} wrong guess${stats.wrong===1?'':'es'} along the way.`}`;
+    $('#winBanner').classList.add('show');
+  }
+}
+
+function tryValue(region, raw){
+  const el = cellEl(region);
+  const input = el.querySelector('input');
+  const val = parseInt(raw,10);
+  if (raw.trim()==='' ) return;
+  if (isNaN(val)){ flashWrong(el); return; }
+  if (val === puzzle.regions[region]){
+    confirmed[region] = val;
+    input.value = val;
+    input.disabled = true;
+    el.classList.remove('solvable','wrong');
+    el.classList.add('solved');
+    stats.correct++;
+    updateHighlights();
+    updateStatus();
+  } else {
+    stats.wrong++;
+    flashWrong(el);
+    updateStatus();
+  }
+}
+function flashWrong(el){
+  el.classList.remove('wrong'); void el.offsetWidth; el.classList.add('wrong');
+}
+
+function giveHint(){
+  const {newlyDerived} = solvableNow(confirmed);
+  const candidates = Array.from(newlyDerived).filter(k => !(k in confirmed));
+  if (!candidates.length) return;
+  const k = pick(candidates);
+  const {known} = solvableNow(confirmed);
+  confirmed[k] = known[k];
+  const el = cellEl(k);
+  const input = el.querySelector('input');
+  input.value = known[k];
+  input.disabled = true;
+  el.classList.remove('solvable');
+  el.classList.add('hint-solved');
+  stats.hints++;
+  updateHighlights();
+  updateStatus();
+}
+
+/* ===================== wiring ===================== */
+document.addEventListener('change', e=>{
+  const cell = e.target.closest('.cell');
+  if (cell && e.target.tagName==='INPUT') tryValue(cell.dataset.region, e.target.value);
+});
+document.addEventListener('keydown', e=>{
+  if (e.key==='Enter' && e.target.tagName==='INPUT'){
+    const cell = e.target.closest('.cell');
+    if (cell) tryValue(cell.dataset.region, e.target.value);
+    e.target.blur();
+  }
+});
+$('#hintBtn').addEventListener('click', giveHint);
+$('#newBtn').addEventListener('click', ()=>{ generatePuzzle(); render(); });
+
+generatePuzzle();
+render();
+</script>
+</body>
+</html>

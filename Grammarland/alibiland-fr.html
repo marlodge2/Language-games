@@ -1,0 +1,874 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ALIBILAND</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #f4ecd8;
+    --parchment-dark: #e8dcc0;
+    --card: #fffaf0;
+    --ink: #2b2318;
+    --ink-dim: #6b5d47;
+    --burgundy: #7a1f2b;
+    --burgundy-dark: #5c1620;
+    --forest: #2f4d3a;
+    --brass: #a8823a;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--parchment);
+    background-image:
+      radial-gradient(ellipse 700px 400px at 10% -10%, #fffdf6 0%, transparent 60%),
+      radial-gradient(ellipse 600px 400px at 100% 0%, #f0e4c8 0%, transparent 55%);
+    color: var(--ink);
+    font-family: 'Libre Baskerville', Georgia, serif;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 28px 18px 60px; }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 2.4em;
+    color: var(--burgundy);
+    text-align: center;
+    margin: 0 0 2px;
+    letter-spacing: 1px;
+  }
+  .subtitle {
+    text-align: center;
+    color: var(--ink-dim);
+    font-style: italic;
+    margin: 0 0 6px;
+  }
+  .caseTitle {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.3em;
+    color: var(--forest);
+    margin: 0 0 4px;
+  }
+  .caseBlurb {
+    text-align: center;
+    color: var(--ink-dim);
+    max-width: 640px;
+    margin: 0 auto 20px;
+    line-height: 1.55;
+  }
+
+  .hr {
+    border: none;
+    border-top: 1px solid var(--brass);
+    opacity: 0.5;
+    margin: 20px 0;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--brass);
+    border-radius: var(--radius);
+    box-shadow: 0 6px 18px rgba(43, 35, 24, 0.12);
+    padding: 22px;
+    margin-bottom: 20px;
+  }
+  .card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1em;
+    color: var(--burgundy);
+    margin: 0 0 14px;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+
+  /* ---------- Launch screen ---------- */
+  .launchActions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin: 22px 0; }
+  button {
+    font-family: 'Libre Baskerville', Georgia, serif;
+    cursor: pointer;
+    border-radius: 999px;
+    border: 2px solid var(--burgundy);
+    background: #fff;
+    color: var(--burgundy);
+    padding: 10px 22px;
+    font-size: 1em;
+    transition: background 0.15s, transform 0.08s;
+  }
+  button:hover { background: #fbeee8; }
+  button:active { transform: translateY(1px); }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+  button.primary {
+    background: var(--burgundy);
+    color: #fff;
+    font-size: 1.15em;
+    padding: 14px 32px;
+    box-shadow: 0 4px 14px rgba(122, 31, 43, 0.35);
+  }
+  button.primary:hover { background: var(--burgundy-dark); }
+  button.forest {
+    border-color: var(--forest);
+    color: var(--forest);
+  }
+  button.forest:hover { background: #eaf1ec; }
+
+  details#help {
+    background: var(--parchment-dark);
+    border: 1px solid var(--brass);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    color: var(--ink-dim);
+    font-size: 0.92em;
+  }
+  details#help summary { cursor: pointer; color: var(--ink); font-weight: 700; }
+  details#help p { line-height: 1.5; }
+  details#help b { color: var(--burgundy); }
+
+  /* ---------- House plan ---------- */
+  svg#housePlan { width: 100%; height: auto; display: block; }
+  .room-box { fill: #fff; stroke: var(--brass); stroke-width: 2; }
+  .room-box.outdoor { fill: #eef4ec; stroke-dasharray: 5 4; }
+  .room-box.scene { fill: #fbeee8; stroke: var(--burgundy); stroke-width: 2.5; }
+  .room-label {
+    font-family: 'Libre Baskerville', Georgia, serif;
+    font-size: 13px;
+    fill: var(--ink);
+    text-anchor: middle;
+  }
+  .room-note {
+    font-family: 'Libre Baskerville', Georgia, serif;
+    font-style: italic;
+    font-size: 10.5px;
+    fill: var(--ink-dim);
+    text-anchor: middle;
+  }
+  .path-line { stroke: var(--brass); stroke-width: 2; stroke-dasharray: 4 5; fill: none; }
+  .scene-mark { fill: var(--burgundy); font-size: 15px; text-anchor: middle; }
+
+  /* ---------- Suspects ---------- */
+  #suspectGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .suspect-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1.5px solid var(--brass);
+    border-radius: 8px;
+    background: var(--parchment-dark);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .suspect-card:hover { background: #f0e4c8; }
+  .suspect-card.selected { border-color: var(--burgundy); background: #fbeee8; }
+  .suspect-card .avatar { font-size: 1.8em; flex: none; }
+  .suspect-card .name { font-weight: 700; display: block; font-size: 0.95em; }
+  .suspect-card .role { color: var(--ink-dim); font-size: 0.82em; font-style: italic; }
+  .suspect-card .askedCount {
+    margin-left: auto;
+    font-size: 0.75em;
+    color: var(--forest);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  #questionPanel { margin-top: 14px; }
+  #questionPanel h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1em;
+    color: var(--burgundy);
+    margin: 0 0 10px;
+  }
+  .qbuttons { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .qbuttons button { font-size: 0.9em; padding: 8px 16px; }
+  .qbuttons button.done { background: var(--parchment-dark); color: var(--ink-dim); border-color: var(--brass); }
+
+  /* ---------- Transcript ---------- */
+  #transcript {
+    background: var(--parchment-dark);
+    border: 1px solid var(--brass);
+    border-radius: 8px;
+    padding: 10px 14px;
+    height: 220px;
+    overflow-y: auto;
+    font-size: 0.92em;
+    line-height: 1.5;
+  }
+  #transcript .empty { color: var(--ink-dim); font-style: italic; }
+  #transcript .line { margin: 6px 0; }
+  #transcript .q { color: var(--ink-dim); font-style: italic; }
+  #transcript .q b { color: var(--burgundy); font-style: normal; }
+  #transcript .a { color: var(--ink); }
+  #transcript .a b { color: var(--forest); }
+
+  /* ---------- Accusation ---------- */
+  #evidenceList { display: flex; flex-direction: column; gap: 6px; margin: 10px 0; max-height: 320px; overflow-y: auto; }
+  .evidence-item {
+    text-align: left;
+    border: 1.5px solid var(--brass);
+    border-radius: 8px;
+    padding: 8px 12px;
+    background: var(--parchment-dark);
+    cursor: pointer;
+    font-size: 0.92em;
+  }
+  .evidence-item:hover { background: #f0e4c8; }
+  .evidence-item.chosen { border-color: var(--burgundy); background: #fbeee8; }
+  .evidence-item .who { font-weight: 700; color: var(--burgundy); }
+  .evidence-item .qlabel { color: var(--ink-dim); font-style: italic; }
+
+  #outcome { margin-top: 10px; font-size: 1.02em; line-height: 1.5; min-height: 1.4em; }
+  #outcome.bad { color: var(--burgundy); }
+  #outcome.good { color: var(--forest); font-weight: 700; }
+
+  .footer { text-align: center; font-size: 0.85em; color: var(--ink-dim); margin-top: 24px; }
+  .footer a { color: var(--burgundy); }
+
+  [hidden] { display: none !important; }
+
+  @media print {
+    body { background: #fff; }
+    .subtitle, details#help, .footer,
+    #questionPanel, #printCard, #accuseCard,
+    button {
+      display: none !important;
+    }
+    .card {
+      box-shadow: none;
+      border: 1px solid #999;
+      break-inside: avoid;
+    }
+    #transcript {
+      height: auto;
+      overflow: visible;
+      background: #fff;
+    }
+    .suspect-card {
+      background: #fff;
+      border-color: #999;
+    }
+  }
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>
+</head>
+<body>
+<div class="wrap">
+  <h1>ALIBILAND</h1>
+  <div class="subtitle">un mystère Grammarland &mdash; &laquo;&nbsp;Qu'est-ce que vous faisiez&hellip;&nbsp;?&nbsp;&raquo; contre &laquo;&nbsp;Qu'est-ce que vous avez fait&hellip;&nbsp;?&nbsp;&raquo;</div>
+
+  <!-- ============ LAUNCH SCREEN ============ -->
+  <div id="launchScreen" class="card">
+    <h2>Un coup de feu dans la nuit</h2>
+    <p class="caseBlurb">
+      Un coup de feu. Un corps dans la bibliothèque. Six personnes dans la maison, chacune avec son
+      récit de l'endroit où elle se trouvait et de ce qu'elle a fait. L'une d'elles ment &mdash; et le
+      mensonge ne peut être découvert qu'en comparant ce que quelqu'un dit qu'il était en train de faire
+      au moment du coup de feu avec ce qu'un autre dit s'être passé juste après.
+    </p>
+    <div class="launchActions">
+      <button class="primary" id="watchBtn">Regarder l'interrogatoire</button>
+      <button class="forest" id="joinBtn">Rejoindre l'enquête</button>
+    </div>
+    <details id="help">
+      <summary>Comment ça marche ?</summary>
+      <p>
+        On peut poser quatre questions à chaque suspect : <b>Où étiez-vous&nbsp;?</b>, <b>Étiez-vous avec
+        quelqu'un&nbsp;?</b>, <b>Qu'est-ce que vous faisiez quand le coup de feu a retenti&nbsp;?</b>, et
+        <b>Qu'est-ce que vous avez fait quand vous avez entendu le coup de feu&nbsp;?</b>
+      </p>
+      <p>
+        La troisième question porte sur une action déjà <b>en cours</b> au moment du coup de feu &mdash;
+        un décor, un alibi : elle appelle l'<b>imparfait</b>. La quatrième demande une <b>suite d'actions
+        accomplies ensuite</b> &mdash; une réaction : elle appelle le <b>passé composé</b>. Elles demandent
+        une grammaire différente parce qu'elles interrogent deux sortes de temps différentes : un instant
+        interrompu, contre une chose après l'autre.
+      </p>
+      <p>
+        Dans <b>Rejoindre l'enquête</b>, interrogez les six suspects, étudiez le plan de la maison, puis
+        accusez le coupable &mdash; et prouvez-le en repérant les deux déclarations (venant de deux
+        suspects différents) qui ne concordent pas.
+      </p>
+    </details>
+  </div>
+
+  <!-- ============ INVESTIGATION SCREEN ============ -->
+  <div id="investigationScreen" hidden>
+    <div class="card">
+      <h2 class="caseTitle" id="caseTitleText"></h2>
+      <p class="caseBlurb" id="caseBlurbText"></p>
+    </div>
+
+    <div class="card">
+      <h2>Plan de la maison</h2>
+      <svg id="housePlan" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+        <rect class="room-box" x="20" y="20" width="160" height="100" rx="4"></rect>
+        <text class="room-label" x="100" y="65">Salle de musique</text>
+
+        <rect class="room-box scene" x="200" y="20" width="160" height="100" rx="4"></rect>
+        <text class="room-label" x="280" y="60">Bibliothèque</text>
+        <text class="scene-mark" x="280" y="80">&#9760;</text>
+
+        <rect class="room-box" x="380" y="20" width="160" height="100" rx="4"></rect>
+        <text class="room-label" x="460" y="65">Salon</text>
+
+        <rect class="room-box" x="20" y="140" width="160" height="100" rx="4"></rect>
+        <text class="room-label" x="100" y="185">Salle de billard</text>
+
+        <rect class="room-box" x="200" y="140" width="160" height="100" rx="4"></rect>
+        <text class="room-label" x="280" y="185">Hall</text>
+
+        <rect class="room-box" x="380" y="140" width="160" height="100" rx="4"></rect>
+        <text class="room-label" x="460" y="185">Bureau</text>
+
+        <rect class="room-box" x="20" y="260" width="160" height="100" rx="4"></rect>
+        <text class="room-label" x="100" y="305">Office</text>
+
+        <rect class="room-box outdoor" x="200" y="260" width="160" height="60" rx="4"></rect>
+        <text class="room-label" x="280" y="292">Terrasse</text>
+
+        <path class="path-line" d="M 360 290 C 420 300, 460 300, 500 310"></path>
+        <rect class="room-box outdoor" x="440" y="290" width="140" height="90" rx="4"></rect>
+        <text class="room-label" x="510" y="330">Serre</text>
+        <text class="room-note" x="510" y="348">(au fond du parc)</text>
+      </svg>
+    </div>
+
+    <div class="card">
+      <h2>Les suspects</h2>
+      <div id="suspectGrid"></div>
+      <div id="questionPanel" hidden>
+        <hr class="hr">
+        <h3 id="questionPanelTitle"></h3>
+        <div class="qbuttons" id="qbuttons"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Transcription</h2>
+      <div id="transcript"><div class="empty">Personne n'a encore été interrogé.</div></div>
+    </div>
+
+    <div class="card" id="printCard">
+      <h2>Sur papier</h2>
+      <p class="caseBlurb">Imprimez le plan de la maison, la liste des suspects et la transcription jusqu'ici, et résolvez l'affaire loin de l'écran.</p>
+      <div class="launchActions"><button id="printBtn">🖨 Imprimer pour des notes hors ligne</button></div>
+    </div>
+
+    <div class="card" id="accuseCard">
+      <h2>Prêt à accuser quelqu'un&nbsp;?</h2>
+      <div id="accuseStage1">
+        <p class="caseBlurb">Interrogez les suspects, étudiez le plan de la maison, puis nommez le coupable.</p>
+        <div class="launchActions"><button class="primary" id="accuseBtn">Je sais qui a fait le coup</button></div>
+      </div>
+      <div id="accuseStage2" hidden>
+        <p class="caseBlurb">Qui a tiré&nbsp;?</p>
+        <div id="suspectChoiceGrid" class="launchActions"></div>
+      </div>
+      <div id="accuseStage3" hidden>
+        <p class="caseBlurb">Quelles sont les deux déclarations &mdash; venant de deux suspects différents &mdash; qui ne concordent pas&nbsp;? Choisissez les deux.</p>
+        <div id="evidenceList"></div>
+        <div class="launchActions"><button class="primary" id="submitEvidenceBtn" disabled>Valider</button></div>
+      </div>
+      <div id="outcome"></div>
+    </div>
+  </div>
+
+  <!-- ============ REVEAL SCREEN ============ -->
+  <div id="revealScreen" hidden>
+    <div class="card">
+      <h2 id="revealHeading">Affaire classée</h2>
+      <p class="caseBlurb" id="revealText"></p>
+      <div class="launchActions">
+        <button class="primary" id="playAgainBtn">Enquêter sur une autre affaire</button>
+        <button id="backToIndexBtn">Retour à Grammarland</button>
+      </div>
+    </div>
+  </div>
+
+  <p class="footer">&larr; <a href="index.html">Retour à Grammarland</a></p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------------------------------------------------------
+   * QUESTION TYPES
+   * ------------------------------------------------------------- */
+  var QUESTIONS = [
+    { id: "where", label: "Où étiez-vous ?" },
+    { id: "companion", label: "Étiez-vous avec quelqu'un ?" },
+    { id: "continuous", label: "Qu'est-ce que vous faisiez quand le coup de feu a retenti ?" },
+    { id: "reaction", label: "Qu'est-ce que vous avez fait quand vous avez entendu le coup de feu ?" }
+  ];
+  function questionLabel(id) {
+    for (var i = 0; i < QUESTIONS.length; i++) if (QUESTIONS[i].id === id) return QUESTIONS[i].label;
+    return id;
+  }
+
+  /* ---------------------------------------------------------------
+   * CASES
+   * Each has six suspects (id, name, role, avatar, and an answer for
+   * each of the four question ids), a culprit, and the one pair of
+   * statements (by suspect + question) that contradicts. The
+   * "continuous" answers are written in the imparfait (a scene in
+   * progress); the "reaction" answers are chains of passé composé
+   * (a sequence of completed actions) — that contrast is the whole
+   * point of the game.
+   * ------------------------------------------------------------- */
+  var CASES = [
+    {
+      id: "blackwood",
+      house: "Blackwood Manor",
+      victim: "Sir Edmund Blackwood",
+      time: "21h15",
+      blurb: "Sir Edmund Blackwood, maître de Blackwood Manor, a été retrouvé abattu dans la bibliothèque à 21h15, durant un week-end tranquille en famille et entre amis.",
+      culpritId: "cole",
+      contradiction: {
+        a: { id: "cole", q: "reaction" },
+        b: { id: "grimshaw", q: "reaction" }
+      },
+      explanation: "Cole a prétendu être entré par les portes de la terrasse après avoir entendu le coup de feu &mdash; mais le récit de Grimshaw affirme clairement que les portes de la terrasse sont restées verrouillées de l'intérieur pendant toute la soirée, exactement comme il les avait laissées après le souper. Si Cole n'est pas entré par là, son alibi de la serre ne vaut rien : il se trouvait déjà à l'intérieur de la maison au moment du coup de feu.",
+      suspects: [
+        { id: "constance", name: "Lady Constance Blackwood", role: "la veuve", avatar: "👑",
+          where: "Dans le salon, en train d'écrire des lettres.",
+          companion: "Non, j'étais tout à fait seule.",
+          continuous: "Je cachetais une enveloppe quand j'ai entendu la détonation, juste à côté.",
+          reaction: "J'ai tout lâché, j'ai couru à la bibliothèque, et j'ai crié pour appeler Grimshaw." },
+        { id: "ashworth", name: "M. Julian Ashworth", role: "l'associé de Sir Edmund", avatar: "🎩",
+          where: "Dans la salle de billard, en train de s'entraîner seul.",
+          companion: "Non, personne d'autre n'avait envie de jouer.",
+          continuous: "Je visais un coup sur la table quand la détonation a retenti.",
+          reaction: "J'ai posé ma queue de billard, je suis allé dans le hall, et j'ai trouvé Lady Blackwood déjà là, blanche comme un linge." },
+        { id: "prentiss", name: "Dr Henry Prentiss", role: "le médecin de famille", avatar: "🩺",
+          where: "Dans le bureau, en train de lire.",
+          companion: "Non, j'avais le bureau pour moi seul.",
+          continuous: "J'étais au milieu d'un chapitre quand j'ai entendu le coup de feu.",
+          reaction: "Je me suis levé, j'ai écouté un instant à la porte, puis je suis allé directement à la bibliothèque pour voir si on avait besoin de moi." },
+        { id: "verity", name: "Mlle Verity Blackwood", role: "la nièce", avatar: "🎹",
+          where: "Dans la salle de musique, en train de travailler son piano.",
+          companion: "Non, juste moi et le piano.",
+          continuous: "J'étais en plein milieu d'un passage difficile quand le coup de feu m'a tellement surprise que j'ai fait une fausse note.",
+          reaction: "J'ai arrêté de jouer immédiatement, j'ai ouvert la porte, et j'ai failli percuter le Dr Prentiss dans le couloir." },
+        { id: "grimshaw", name: "Grimshaw", role: "le majordome", avatar: "🤴",
+          where: "Dans l'office, en train de faire briller l'argenterie.",
+          companion: "Non, le reste du personnel était déjà monté se coucher.",
+          continuous: "Je faisais briller un chandelier quand j'ai entendu le coup de feu.",
+          reaction: "J'ai lâché le chiffon et je me suis précipité dans le hall, où j'ai croisé M. Ashworth qui sortait de la salle de billard. Les portes de la terrasse étaient encore fermées à clé et verrouillées de l'intérieur, exactement comme je les avais laissées après le souper." },
+        { id: "cole", name: "Cole", role: "le jardinier", avatar: "🌿",
+          where: "Dans la serre, en train de tailler les rosiers.",
+          companion: "Non, je travaille toujours seul le soir.",
+          continuous: "Je taillais les rosiers quand j'ai entendu la détonation, même si elle semblait venir de tout près, ce qui m'a intrigué sur le moment.",
+          reaction: "J'ai posé mon sécateur et je me suis dépêché de rejoindre la maison, en entrant par les portes de la terrasse dans le hall." }
+      ]
+    },
+    {
+      id: "fenwick",
+      house: "Fenwick Court",
+      victim: "M. Rupert Fenwick",
+      time: "22h00",
+      blurb: "M. Rupert Fenwick a été retrouvé abattu dans la bibliothèque à 22h00, pendant un dîner organisé à Fenwick Court pour discuter du testament familial.",
+      culpritId: "tomkins",
+      contradiction: {
+        a: { id: "tomkins", q: "companion" },
+        b: { id: "hodges", q: "companion" }
+      },
+      explanation: "Tomkins a affirmé que Mme Hodges était avec lui tout le temps, autour d'un thé à la cuisine &mdash; mais Mme Hodges dit clairement qu'elle faisait la vaisselle toute seule, tout le monde étant déjà monté se coucher. Ils ne peuvent pas dire vrai tous les deux, et Mme Hodges n'a aucune raison de mentir sur sa propre soirée.",
+      suspects: [
+        { id: "frost", name: "Mme Eleanor Frost", role: "une vieille amie de la famille", avatar: "🎀",
+          where: "Dans le salon, en train de faire une réussite.",
+          companion: "Non, j'étais tout à fait seule avec mes cartes.",
+          continuous: "Je disposais la rangée suivante quand le coup de feu a claqué.",
+          reaction: "J'ai posé mes cartes, je me suis précipitée dans le hall, et j'ai trouvé le capitaine Hart déjà là." },
+        { id: "hart", name: "Capitaine Reggie Hart", role: "un vieil ami de régiment de Rupert", avatar: "🎖️",
+          where: "Dans la salle de billard, en train de fumer.",
+          companion: "Non, seul avec ma pipe.",
+          continuous: "Je visais un coup quand j'ai entendu la détonation.",
+          reaction: "J'ai posé ma queue de billard aussitôt et je suis allé directement dans le hall, où je suis tombé sur Mme Frost." },
+        { id: "vale", name: "Mlle Daphne Vale", role: "secrètement fiancée à Rupert", avatar: "💍",
+          where: "Dans la salle de musique, en train d'écouter des disques au gramophone.",
+          companion: "Non, juste moi et la musique.",
+          continuous: "Je changeais le disque quand j'ai entendu le coup de feu, et cela m'a beaucoup surprise.",
+          reaction: "J'ai éteint le gramophone, je suis allée dans le couloir, et j'ai trouvé M. Crane qui arrivait en sens inverse." },
+        { id: "crane", name: "M. Silas Crane", role: "le notaire de Rupert", avatar: "📄",
+          where: "Dans le bureau, en train de vérifier des documents.",
+          companion: "Non, tout seul avec les documents.",
+          continuous: "Je vérifiais une clause quand j'ai entendu le coup de feu.",
+          reaction: "J'ai posé mon stylo, je suis sorti dans le couloir, et j'ai rencontré Mlle Vale qui venait de la salle de musique." },
+        { id: "hodges", name: "Mme Hodges", role: "la gouvernante", avatar: "🧹",
+          where: "Dans la cuisine, en train de finir la vaisselle.",
+          companion: "Non, j'étais tout à fait seule. La vaisselle ne se fait pas toute seule, et tout le monde était déjà monté.",
+          continuous: "Je séchais les derniers verres quand j'ai entendu le coup de feu.",
+          reaction: "J'ai lâché mon torchon, je suis allée directement dans le hall, et j'ai trouvé toute la maisonnée déjà rassemblée." },
+        { id: "tomkins", name: "Tomkins", role: "le chauffeur", avatar: "🚗",
+          where: "Dans la cuisine avec Mme Hodges, en train de prendre une tasse de thé avant d'aller se coucher.",
+          companion: "Oui — Mme Hodges était avec moi tout le temps, nous discutions autour d'un thé.",
+          continuous: "Je finissais mon thé avec Mme Hodges quand nous avons tous les deux entendu le coup de feu.",
+          reaction: "Nous avons couru tous les deux ensemble jusqu'au hall, complètement secoués." }
+      ]
+    },
+    {
+      id: "ashcombe",
+      house: "Ashcombe Hall",
+      victim: "M. Alaric Vance",
+      time: "20h45",
+      blurb: "M. Alaric Vance, un marchand d'art de passage, a été retrouvé abattu dans la bibliothèque à 20h45, peu avant le dîner, au cœur d'un différend au sujet d'un tableau qu'il prétendait être un faux.",
+      culpritId: "webb",
+      contradiction: {
+        a: { id: "webb", q: "where" },
+        b: { id: "kerr", q: "reaction" }
+      },
+      explanation: "Le professeur Webb a prétendu avoir été seul dans le bureau au moment du coup de feu &mdash; mais Mlle Kerr affirme être passée juste devant le bureau en courant vers la bibliothèque, et avoir trouvé la porte grande ouverte et la pièce tout à fait vide. Si Webb n'était pas dans le bureau, son alibi pour le moment du coup de feu ne tient pas.",
+      suspects: [
+        { id: "grant", name: "Mme Ophelia Grant", role: "la maîtresse de maison", avatar: "🏡",
+          where: "Dans le salon, en train d'arranger des fleurs pour le dîner.",
+          companion: "Non, j'étais tout à fait seule avec mes fleurs.",
+          continuous: "Je coupais les tiges quand j'ai entendu le coup de feu.",
+          reaction: "J'ai lâché le sécateur, je me suis précipitée à la bibliothèque, et j'ai trouvé moi-même le pauvre M. Vance." },
+        { id: "webb", name: "Professeur Linus Webb", role: "un historien de l'art et marchand concurrent", avatar: "🖼️",
+          where: "Dans le bureau, en train de regarder des documents, tout seul.",
+          companion: "Non, j'avais le bureau pour moi seul.",
+          continuous: "Je lisais une vieille correspondance quand j'ai entendu le coup de feu.",
+          reaction: "Je me suis levé, je suis allé jusqu'à la porte, et je me suis dirigé vers la bibliothèque une fois que j'ai entendu l'agitation." },
+        { id: "kerr", name: "Mlle Rosalind Kerr", role: "l'assistante de M. Vance", avatar: "📋",
+          where: "Dans la salle de musique, en train d'accorder le piano pour la soirée.",
+          companion: "Non, tout à fait seule avec le piano.",
+          continuous: "Je resserrais une corde quand le coup de feu a retenti.",
+          reaction: "J'ai couru directement dans le couloir vers la bibliothèque. Je me souviens d'être passée devant le bureau en chemin — la porte était grande ouverte et la pièce était vide, ce qui m'a semblé étrange puisque personne n'était sorti voir d'où venait ce bruit." },
+        { id: "kingsley", name: "M. Bertram Kingsley", role: "un riche collectionneur", avatar: "🎩",
+          where: "Dans la salle de billard, en train de s'entraîner seul.",
+          companion: "Non, personne d'autre ne voulait jouer avant le dîner.",
+          continuous: "Je mettais de la craie sur ma queue de billard quand j'ai entendu le coup de feu.",
+          reaction: "J'ai posé ma queue de billard, je suis allé dans le hall, et j'ai trouvé Mme Wren déjà là, l'air affolé." },
+        { id: "wren", name: "Mme Wren", role: "la gouvernante", avatar: "🧹",
+          where: "Dans l'office, en train de disposer l'argenterie pour le dîner.",
+          companion: "Non, seule dans l'office.",
+          continuous: "Je comptais les fourchettes quand j'ai entendu le coup de feu.",
+          reaction: "Je me suis précipitée dans le hall et j'ai trouvé M. Kingsley déjà là." },
+        { id: "finch", name: "M. Aldous Finch", role: "le jardinier", avatar: "🌿",
+          where: "Dans la serre, en train d'arroser les orchidées.",
+          companion: "Non, je m'occupe toujours des orchidées seul le soir.",
+          continuous: "J'arrosais quand j'ai entendu le coup de feu, même s'il semblait venir de très loin d'où j'étais.",
+          reaction: "J'ai fini d'arroser la rangée où j'étais avant de remonter à la maison, car je ne pensais pas que cela me regardait." }
+      ]
+    }
+  ];
+
+  /* ---------------------------------------------------------------
+   * STATE
+   * ------------------------------------------------------------- */
+  var currentCase = null;
+  var lastCaseId = null;
+  var mode = null; // "watch" | "join"
+  var selectedSuspectId = null;
+  var asked = {}; // "suspectId:questionId" -> true
+  var accuseChosenId = null;
+  var evidenceChosen = []; // array of {id, q}
+
+  function pickCase() {
+    var pool = CASES.filter(function (c) { return c.id !== lastCaseId; });
+    var c = pool[Math.floor(Math.random() * pool.length)];
+    lastCaseId = c.id;
+    return c;
+  }
+  function suspectById(id) {
+    for (var i = 0; i < currentCase.suspects.length; i++) if (currentCase.suspects[i].id === id) return currentCase.suspects[i];
+    return null;
+  }
+
+  /* ---------------------------------------------------------------
+   * DOM refs
+   * ------------------------------------------------------------- */
+  var $ = function (id) { return document.getElementById(id); };
+  var launchScreen = $("launchScreen");
+  var investigationScreen = $("investigationScreen");
+  var revealScreen = $("revealScreen");
+
+  var caseTitleText = $("caseTitleText");
+  var caseBlurbText = $("caseBlurbText");
+  var suspectGrid = $("suspectGrid");
+  var questionPanel = $("questionPanel");
+  var questionPanelTitle = $("questionPanelTitle");
+  var qbuttons = $("qbuttons");
+  var transcript = $("transcript");
+
+  var accuseCard = $("accuseCard");
+  var accuseStage1 = $("accuseStage1");
+  var accuseStage2 = $("accuseStage2");
+  var accuseStage3 = $("accuseStage3");
+  var suspectChoiceGrid = $("suspectChoiceGrid");
+  var evidenceList = $("evidenceList");
+  var submitEvidenceBtn = $("submitEvidenceBtn");
+  var outcome = $("outcome");
+
+  function showScreen(name) {
+    launchScreen.hidden = name !== "launch";
+    investigationScreen.hidden = name !== "investigation";
+    revealScreen.hidden = name !== "reveal";
+  }
+
+  /* ---------------------------------------------------------------
+   * HOUSE PLAN / CASE HEADER
+   * ------------------------------------------------------------- */
+  function renderCaseHeader() {
+    caseTitleText.textContent = currentCase.house + " — " + currentCase.time;
+    caseBlurbText.textContent = currentCase.blurb;
+  }
+
+  /* ---------------------------------------------------------------
+   * SUSPECTS / QUESTIONS
+   * ------------------------------------------------------------- */
+  function askedCountFor(suspectId) {
+    var n = 0;
+    QUESTIONS.forEach(function (q) { if (asked[suspectId + ":" + q.id]) n++; });
+    return n;
+  }
+
+  function renderSuspectGrid() {
+    suspectGrid.innerHTML = "";
+    currentCase.suspects.forEach(function (s) {
+      var card = document.createElement("div");
+      card.className = "suspect-card" + (s.id === selectedSuspectId ? " selected" : "");
+      card.innerHTML =
+        '<span class="avatar">' + s.avatar + '</span>' +
+        '<span class="who"><span class="name">' + s.name + '</span><span class="role">' + s.role + '</span></span>' +
+        '<span class="askedCount">' + askedCountFor(s.id) + '/4</span>';
+      card.addEventListener("click", function () { selectSuspect(s.id); });
+      suspectGrid.appendChild(card);
+    });
+  }
+
+  function selectSuspect(id) {
+    selectedSuspectId = id;
+    renderSuspectGrid();
+    renderQuestionPanel();
+  }
+
+  function renderQuestionPanel() {
+    if (!selectedSuspectId) { questionPanel.hidden = true; return; }
+    var s = suspectById(selectedSuspectId);
+    questionPanel.hidden = false;
+    questionPanelTitle.textContent = "Interrogatoire de " + s.name;
+    qbuttons.innerHTML = "";
+    QUESTIONS.forEach(function (q) {
+      var btn = document.createElement("button");
+      var key = s.id + ":" + q.id;
+      btn.textContent = q.label;
+      if (asked[key]) btn.className = "done";
+      btn.addEventListener("click", function () { askQuestion(s, q); });
+      qbuttons.appendChild(btn);
+    });
+  }
+
+  function askQuestion(suspect, question) {
+    var key = suspect.id + ":" + question.id;
+    asked[key] = true;
+    appendTranscript(suspect, question);
+    renderSuspectGrid();
+    renderQuestionPanel();
+    maybeReadyToAccuse();
+  }
+
+  function appendTranscript(suspect, question) {
+    if (transcript.querySelector(".empty")) transcript.innerHTML = "";
+    var line = document.createElement("div");
+    line.className = "line";
+    line.innerHTML =
+      '<div class="q">Le détective, à <b>' + suspect.name + '</b> : &laquo;&nbsp;' + question.label + '&nbsp;&raquo;</div>' +
+      '<div class="a"><b>' + suspect.name + ' :</b> &laquo;&nbsp;' + suspect[question.id] + '&nbsp;&raquo;</div>';
+    transcript.appendChild(line);
+    transcript.scrollTop = transcript.scrollHeight;
+  }
+
+  function maybeReadyToAccuse() {
+    // No hard gate — the accuse button is always available, but the evidence
+    // step can only offer statements that have actually been asked for.
+  }
+
+  /* ---------------------------------------------------------------
+   * WATCH MODE
+   * ------------------------------------------------------------- */
+  var watchTimer = null;
+  function startWatch() {
+    var script = [];
+    currentCase.suspects.forEach(function (s) {
+      QUESTIONS.forEach(function (q) { script.push({ s: s, q: q }); });
+    });
+    var i = 0;
+    function step() {
+      if (i >= script.length) {
+        clearTimeout(watchTimer);
+        setTimeout(function () { showReveal(); }, 1200);
+        return;
+      }
+      var item = script[i++];
+      asked[item.s.id + ":" + item.q.id] = true;
+      appendTranscript(item.s, item.q);
+      renderSuspectGrid();
+      watchTimer = setTimeout(step, 1600);
+    }
+    step();
+  }
+
+  /* ---------------------------------------------------------------
+   * ACCUSATION
+   * ------------------------------------------------------------- */
+  function resetAccusation() {
+    accuseChosenId = null;
+    evidenceChosen = [];
+    accuseStage1.hidden = false;
+    accuseStage2.hidden = true;
+    accuseStage3.hidden = true;
+    outcome.textContent = "";
+    outcome.className = "";
+  }
+
+  $("accuseBtn").addEventListener("click", function () {
+    accuseStage1.hidden = true;
+    accuseStage2.hidden = false;
+    suspectChoiceGrid.innerHTML = "";
+    currentCase.suspects.forEach(function (s) {
+      var btn = document.createElement("button");
+      btn.textContent = s.name;
+      btn.addEventListener("click", function () { chooseAccused(s.id); });
+      suspectChoiceGrid.appendChild(btn);
+    });
+  });
+
+  function chooseAccused(id) {
+    accuseChosenId = id;
+    if (id !== currentCase.culpritId) {
+      outcome.textContent = "Cela ne colle pas avec les faits. Posez encore quelques questions et réfléchissez à nouveau.";
+      outcome.className = "bad";
+      return;
+    }
+    outcome.textContent = "";
+    outcome.className = "";
+    accuseStage2.hidden = true;
+    accuseStage3.hidden = false;
+    renderEvidenceList();
+  }
+
+  function renderEvidenceList() {
+    evidenceList.innerHTML = "";
+    var any = false;
+    currentCase.suspects.forEach(function (s) {
+      QUESTIONS.forEach(function (q) {
+        var key = s.id + ":" + q.id;
+        if (!asked[key]) return;
+        any = true;
+        var item = document.createElement("div");
+        item.className = "evidence-item";
+        item.innerHTML =
+          '<div class="who">' + s.name + '</div>' +
+          '<div class="qlabel">' + q.label + '</div>' +
+          '<div>&laquo;&nbsp;' + s[q.id] + '&nbsp;&raquo;</div>';
+        item.addEventListener("click", function () { toggleEvidence(item, s.id, q.id); });
+        evidenceList.appendChild(item);
+      });
+    });
+    if (!any) {
+      evidenceList.innerHTML = '<div class="caseBlurb">Vous n\'avez encore rien demandé à personne &mdash; retournez d\'abord interroger les suspects.</div>';
+    }
+  }
+
+  function toggleEvidence(el, suspectId, questionId) {
+    var idx = evidenceChosen.findIndex(function (e) { return e.id === suspectId && e.q === questionId; });
+    if (idx >= 0) {
+      evidenceChosen.splice(idx, 1);
+      el.classList.remove("chosen");
+    } else {
+      if (evidenceChosen.length >= 2) return;
+      evidenceChosen.push({ id: suspectId, q: questionId });
+      el.classList.add("chosen");
+    }
+    submitEvidenceBtn.disabled = evidenceChosen.length !== 2;
+  }
+
+  submitEvidenceBtn.addEventListener("click", function () {
+    var pair = currentCase.contradiction;
+    var match =
+      (matchOne(evidenceChosen[0], pair.a) && matchOne(evidenceChosen[1], pair.b)) ||
+      (matchOne(evidenceChosen[0], pair.b) && matchOne(evidenceChosen[1], pair.a));
+    if (match) {
+      showReveal();
+    } else {
+      outcome.textContent = "Ces deux déclarations ne se contredisent pas vraiment. Regardez encore.";
+      outcome.className = "bad";
+      evidenceChosen = [];
+      submitEvidenceBtn.disabled = true;
+      renderEvidenceList();
+    }
+  });
+  function matchOne(chosen, target) { return chosen.id === target.id && chosen.q === target.q; }
+
+  /* ---------------------------------------------------------------
+   * REVEAL
+   * ------------------------------------------------------------- */
+  function showReveal() {
+    var culprit = suspectById(currentCase.culpritId);
+    $("revealHeading").textContent = "Affaire classée : " + culprit.name;
+    $("revealText").innerHTML =
+      "<b>" + culprit.name + "</b> (" + culprit.role + ") a tué " + currentCase.victim + ". " +
+      currentCase.explanation +
+      "<br><br>Remarquez la grammaire : l'alibi (« ce que je faisais », à l'<i>imparfait</i>) plante le décor, mais c'est la suite des actions faites ensuite (« ce que j'ai fait », au <i>passé composé</i>) qui a trahi le menteur.";
+    showScreen("reveal");
+  }
+
+  /* ---------------------------------------------------------------
+   * LAUNCH
+   * ------------------------------------------------------------- */
+  function beginCase(chosenMode) {
+    currentCase = pickCase();
+    mode = chosenMode;
+    selectedSuspectId = null;
+    asked = {};
+    clearTimeout(watchTimer);
+    transcript.innerHTML = '<div class="empty">Personne n\'a encore été interrogé.</div>';
+    renderCaseHeader();
+    renderSuspectGrid();
+    renderQuestionPanel();
+    resetAccusation();
+    accuseCard.hidden = (mode === "watch");
+    showScreen("investigation");
+    if (mode === "watch") startWatch();
+  }
+
+  $("watchBtn").addEventListener("click", function () { beginCase("watch"); });
+  $("joinBtn").addEventListener("click", function () { beginCase("join"); });
+  $("playAgainBtn").addEventListener("click", function () { showScreen("launch"); });
+  $("backToIndexBtn").addEventListener("click", function () { window.location.href = "index.html"; });
+  $("printBtn").addEventListener("click", function () { window.print(); });
+
+  showScreen("launch");
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ฝึกภาษาอังกฤษ (English practice with Thai help)</title>
+<style>
+  :root {
+    --bg: #f4f1ea;
+    --panel: #ffffff;
+    --ink: #2e2a24;
+    --ink-dim: #756d60;
+    --accent: #2f6f4f;
+    --accent-dark: #1f4d36;
+    --border: #ddd6c7;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Noto Sans Thai', 'Inter', 'Segoe UI', Arial, sans-serif;
+  }
+  #app {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 24px 16px 60px;
+  }
+  h1 { text-align: center; margin-bottom: 0; }
+  .subtitle { text-align: center; color: var(--ink-dim); margin: 6px 0 24px; }
+  .gloss { color: var(--ink-dim); font-style: italic; }
+  .intro {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+  h2.group {
+    font-size: 1.05rem;
+    color: var(--accent-dark);
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 6px;
+    margin-top: 32px;
+  }
+  ul.games { list-style: none; padding: 0; margin: 14px 0 0; }
+  ul.games li {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    margin-bottom: 10px;
+  }
+  ul.games li a {
+    color: var(--accent-dark);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1.05rem;
+  }
+  ul.games li a:hover { text-decoration: underline; }
+  ul.games li p {
+    margin: 6px 0 0;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 0.85rem;
+    color: var(--ink-dim);
+  }
+  footer a { color: var(--accent-dark); }
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>ฝึกภาษาอังกฤษ</h1>
+  <div class="subtitle">English practice, with instructions in Thai</div>
+
+  <div class="intro">
+    เกมและแบบฝึกหัดในหน้านี้เป็นภาษาอังกฤษทั้งหมด (เนื้อหาไม่เปลี่ยนแปลง) แต่คำแนะนำวิธีเล่น ปุ่มกด
+    และข้อความช่วยเหลือแปลเป็นภาษาไทยไว้ให้ เหมาะสำหรับผู้ที่กำลังพัฒนาภาษาอังกฤษ
+    <br><br>
+    <span class="gloss">
+      The games and exercises below are entirely in English — none of the actual learning content
+      has changed. Only the instructions, buttons, and help text have been translated into Thai,
+      so these pages are easier to use while you're still building up your English.
+    </span>
+  </div>
+
+  <h2 class="group">Grammarland — เกมไวยากรณ์</h2>
+  <ul class="games">
+    <li>
+      <a href="johnandmary-th.html">John and Mary</a>
+      <p>สั่งงานและถามคำถามเกี่ยวกับบ้านของจอห์นกับแมรี่ ฝึกคำสั่งและคำถามพื้นฐาน<br>
+        <span class="gloss">Give commands and ask questions about John and Mary's house — basic instructions and questions.</span></p>
+    </li>
+    <li>
+      <a href="tenseland-th.html">Tenseland</a>
+      <p>ฝึก tense ต่างๆ ในภาษาอังกฤษผ่านการสนทนากับคอมพิวเตอร์<br>
+        <span class="gloss">Practise English tenses by chatting with a computer character.</span></p>
+    </li>
+    <li>
+      <a href="alibiland-th.html">Alibiland</a>
+      <p>คดีฆาตกรรมจำลอง สอบปากคำผู้ต้องสงสัยโดยใช้ past simple และ past continuous<br>
+        <span class="gloss">A murder-mystery case — question suspects using the past simple and past continuous.</span></p>
+    </li>
+    <li>
+      <a href="tiglet-th.html">Tiglet</a>
+      <p>เสนออาหารให้ Tiglet หมูน้อยจอมเรื่องมาก แล้วหาว่าเขาชอบอะไรกันแน่<br>
+        <span class="gloss">Offer food to Tiglet, a fussy little pig, and work out what he actually likes.</span></p>
+    </li>
+    <li>
+      <a href="perfectland-th.html">Perfectland</a>
+      <p>สัมภาษณ์ Elsie และ Walter เกี่ยวกับที่ที่เคยอยู่ ฝึกแยก simple past กับ present perfect<br>
+        <span class="gloss">Interview Elsie and Walter about where they've lived — practise simple past vs. present perfect.</span></p>
+    </li>
+  </ul>
+
+  <h2 class="group">Hidden Word — ฟังหาคำที่หายไป</h2>
+  <ul class="games">
+    <li>
+      <a href="instruct-th.html">คำอธิบายพร้อมตัวอย่าง (Instructions, with a worked example)</a>
+      <p>อ่านก่อนเริ่มเล่นครั้งแรก<br><span class="gloss">Read this before trying the exercises for the first time.</span></p>
+    </li>
+    <li>
+      <a href="hidden-th.html">คำกล่าวต้อนรับในที่ประชุม (Conference welcome)</a>
+      <p>ฟังประโยคแล้วเลือกคำที่ได้ยิน<br><span class="gloss">Listen to each sentence and choose the word you heard.</span></p>
+    </li>
+    <li>
+      <a href="hidden4-th.html">ประกาศในซูเปอร์มาร์เก็ต (Supermarket announcement)</a>
+    </li>
+    <li>
+      <a href="hidden3-th.html">พยากรณ์อากาศ (Weather forecast)</a>
+    </li>
+    <li>
+      <a href="hidden2-th.html">ข้อความในเครื่องตอบรับโทรศัพท์ (Answering machine message)</a>
+    </li>
+  </ul>
+
+  <footer>
+    <a href="../index.html">Higgins home page</a>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,143 @@
+[FileInfo]
+Version=3
+
+[Title]
+strQuizTitle=Answering machine message
+
+[NextEx]
+strNextExURL=nextpage.htm
+
+[Reading]
+IncludeReading=0
+IncludeTimer=0
+Timer=1
+ReadingInternal=1
+ReadingPath=
+ReadingTitle=
+ReadingTextLength=0
+
+[Question1]
+Question=<EMBED src="qq1.wav" autostart=false height=55 width=145>
+AnswerA=mess
+AnswerB=time
+AnswerC=able
+AnswerD=whole
+AnswerE=
+FeedbackA=No: ... message...
+FeedbackB=No: ... but I'm  ....
+FeedbackC=CORRECT: Thanks for your message, but I'm afraid I'll not be <FONT COLOR="green">able</FONT> to make it to the concert at the Holy Rude on Thursday.
+FeedbackD=No: .. Holy Rude ..
+FeedbackE=
+CorrectA=0
+CorrectB=0
+CorrectC=1
+CorrectD=0
+CorrectE=0
+
+[Question2]
+Question=<EMBED src="qq2.wav" autostart=false height=55 width=145>
+AnswerA=that
+AnswerB=Ivor
+AnswerC=beer
+AnswerD=Teddy
+AnswerE=
+FeedbackA=CORRECT: <FONT COLOR="green">That </FONT> evening I've arranged to be at Edinburgh Airport
+FeedbackB=No: ... I've arranged ...
+FeedbackC=No: ... be at ...
+FeedbackD=No: ...at Edinburgh ...
+FeedbackE=
+CorrectA=1
+CorrectB=0
+CorrectC=0
+CorrectD=0
+CorrectE=0
+
+[Question3]
+Question=<EMBED src="qq3.wav" autostart=false height=55 width=145>
+AnswerA=couple
+AnswerB=sup
+AnswerC=along
+AnswerD=weekend
+AnswerE=
+FeedbackA=No: .. to pick up Lorraine ...
+FeedbackB=No: ... who's up ...
+FeedbackC=No: ... a long  ...
+FeedbackD=CORRECT: .. to pick up Lorraine who's up for a long <FONT COLOR="green">weekend.</FONT>
+FeedbackE=
+CorrectA=0
+CorrectB=0
+CorrectC=0
+CorrectD=1
+CorrectE=0
+
+[Question4]
+Question=<EMBED src="qq4.wav" autostart=false height=55 width=145>
+AnswerA=deaf
+AnswerB=your
+AnswerC=tell
+AnswerD=on
+AnswerE=
+FeedbackA=No: ... definitely...
+FeedbackB=No: ... you at ...
+FeedbackC=No: ...Hotel  ...
+FeedbackD=CORRECT: I'll definitely see you at the Highland Hotel a week <FONT COLOR="green">on</FONT> Friday.
+FeedbackE=
+CorrectA=0
+CorrectB=0
+CorrectC=0
+CorrectD=1
+CorrectE=0
+
+[Question5]
+Question=<EMBED src="qq5.wav" autostart=false height=55 width=145>
+AnswerA=zero
+AnswerB=class
+AnswerC=sir
+AnswerD=shall
+AnswerE=
+FeedbackA=No: .. the aerobics ...
+FeedbackB=CORRECT: for the aerobics  <FONT COLOR="green">class</FONT> as usual.
+FeedbackC=No: ... class as ...
+FeedbackD=No: ... usual.
+FeedbackE=
+CorrectA=0
+CorrectB=1
+CorrectC=0
+CorrectD=0
+CorrectE=0
+
+[Question6]
+Question=<EMBED src="qq6.wav" autostart=false height=55 width=145>
+AnswerA=enjoy
+AnswerB=join
+AnswerC=tide
+AnswerD=laugh
+AnswerE=
+FeedbackA=CORRECT: <FONT COLOR="green">Enjoy </FONT> the concert; I'd love to have come.
+FeedbackB=No: Enjoy the ...
+FeedbackC=No: ... concert; I'd ...
+FeedbackD=No: ... love ..
+FeedbackE=
+CorrectA=1
+CorrectB=0
+CorrectC=0
+CorrectD=0
+CorrectE=0
+
+[Question7]
+Question=<EMBED src="qq7.wav" autostart=false height=55 width=145>
+AnswerA=anxious
+AnswerB=gain
+AnswerC=for
+AnswerD=thin
+AnswerE=
+FeedbackA=No: Thanks again ..
+FeedbackB=No: .. again ...
+FeedbackC=CORRECT: Thanks again  <FONT COLOR="green">for</FONT> the invite.
+FeedbackD=No: ... the invite ...
+FeedbackE=
+CorrectA=0
+CorrectB=0
+CorrectC=1
+CorrectD=0
+CorrectE=0

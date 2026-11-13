@@ -1,0 +1,5 @@
+Les visiteurs de Nasreddin | visiteurs.txt
+Nasreddin emprunte la marmite d'Ali | pot.txt
+Le chat curieux | chat.txt
+Nasreddin plante un arbre | nasreddin.txt
+Un voyage en train | voyage.txt

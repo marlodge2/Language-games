@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PINPOINT</title>
+    <link rel="stylesheet" href="pinpoint.css" />
+     <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>   
+  </head>
+  <body>
+    <header>
+      <h1
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <span>Which title fits the text?</span>
+        <span id="scoreBox">Score: 200</span>
+      </h1>
+      <div id="buttonGrid"></div>
+      <div id="status">Loading texts...</div>
+    </header>
+    <main>
+      <div id="textBox">Masked text will appear here.</div>
+    </main>
+
+    <script>
+      let allTexts = [];
+      let activeTexts = [];
+      let currentIndex = null;
+      let revealRange = 0;
+      let middleIndex = null;
+      let words = [];
+      let score = 200;
+      let textsCompleted = 0; // track how many texts completed
+
+      function updateScore(change) {
+        score = Math.max(0, score + change);
+        document.getElementById("scoreBox").textContent = "Score: " + score;
+
+        if (score >= 1000) {
+          const headerMessage = document.querySelector(
+            "header h1 span:first-child",
+          );
+          headerMessage.innerHTML = `You reached 1000 points in ${textsCompleted} texts. 
+       <div class="buttonRow">
+         <button id="playAgainBtn" class="moreTextButton">Play Again</button>
+         <button id="exitBtn" class="moreTextButton">Exit</button>
+       </div>`;
+
+          // Hide the blue bar
+          document.getElementById("status").style.display = "none";
+          // Clear the text box
+          //document.getElementById("textBox").textContent = "";
+
+          // Wire up Play Again
+          document
+            .getElementById("playAgainBtn")
+            .addEventListener("click", () => {
+              score = 200;
+              textsCompleted = 0;
+              document.querySelector("header h1 span:first-child").textContent =
+                "Which title fits the text?";
+              document.getElementById("status").style.display = "block"; // show blue bar again
+              updateScore(0);
+              loadTexts();
+            });
+
+          // Wire up Exit
+          document.getElementById("exitBtn").addEventListener("click", () => {
+            window.location.href = "index.html";
+          });
+        }
+      }
+
+      async function loadTexts() {
+        try {
+          const response = await fetch("texts.txt");
+          const rawText = await response.text();
+          allTexts = parseTextFile(rawText);
+          if (allTexts.length < 8) throw new Error("Need at least 8 texts");
+
+          activeTexts = shuffleArray(allTexts).slice(0, 8);
+          displayTitleButtons(activeTexts);
+
+          const randomIndex = Math.floor(Math.random() * activeTexts.length);
+          displayMaskedText(randomIndex, false);
+          setupMoreButton();
+        } catch (error) {
+          document.getElementById("status").textContent =
+            "Error: " + error.message;
+        }
+      }
+
+      function parseTextFile(rawText) {
+        const lines = rawText
+          .split(/\r?\n/)
+          .map((l) => l.trim())
+          .filter((l) => l.length > 0);
+        const texts = [];
+        for (let i = 0; i < lines.length - 1; i += 2) {
+          texts.push({ title: lines[i], body: lines[i + 1] });
+        }
+        return texts;
+      }
+
+      function shuffleArray(array) {
+        const copy = [...array];
+        for (let i = copy.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
+      }
+
+      function displayTitleButtons(texts) {
+        const buttonGrid = document.getElementById("buttonGrid");
+        buttonGrid.innerHTML = "";
+        texts.forEach((item, index) => {
+          const button = document.createElement("button");
+          button.className = "titleButton";
+          button.textContent = item.title;
+          button.addEventListener("click", () => checkGuess(index, button));
+          buttonGrid.appendChild(button);
+        });
+      }
+
+      function checkGuess(index, button) {
+        if (index === currentIndex) {
+          // ✅ Correct guess
+          button.style.backgroundColor = "lightgreen";
+          button.disabled = true;
+
+          revealRange = words.length;
+          renderMaskedText();
+          document
+            .querySelectorAll(".titleButton")
+            .forEach((b) => (b.disabled = true));
+
+          textsCompleted++;
+          updateScore(200);
+
+          // Show continue button
+          const status = document.getElementById("status");
+          status.innerHTML = "";
+          status.onclick = null;
+          document.getElementById("textBox").onclick = null;
+          const contBtn = document.createElement("button");
+          contBtn.textContent =
+            "When you have read the whole text, click here to continue";
+          contBtn.className = "moreTextButton";
+          contBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const correctText = activeTexts[index];
+            activeTexts.splice(index, 1);
+
+            const remainingPool = allTexts.filter(
+              (t) => !activeTexts.includes(t) && t !== correctText,
+            );
+            if (remainingPool.length > 0) {
+              const replacement =
+                remainingPool[Math.floor(Math.random() * remainingPool.length)];
+              activeTexts.push(replacement);
+            }
+
+            displayTitleButtons(activeTexts);
+            const newIndex = Math.floor(Math.random() * activeTexts.length);
+            displayMaskedText(newIndex, false);
+            setupMoreButton();
+          });
+          status.appendChild(contBtn);
+        } else {
+          // ❌ Wrong guess
+          button.style.backgroundColor = "#ccc";
+          button.disabled = true;
+          updateScore(-50);
+        }
+      }
+
+      function displayMaskedText(index, highlight = true) {
+        currentIndex = index;
+        const buttons = document.querySelectorAll(".titleButton");
+        buttons.forEach((button, i) => {
+          button.classList.toggle("active", highlight && i === index);
+        });
+        words = activeTexts[index].body.split(/\s+/);
+        middleIndex = Math.floor(words.length / 2);
+        revealRange = 0;
+        renderMaskedText();
+      }
+
+      function renderMaskedText() {
+        const textBox = document.getElementById("textBox");
+        textBox.innerHTML = "";
+
+        words.forEach((word, i) => {
+          const reveal =
+            i === middleIndex ||
+            (i >= middleIndex - revealRange && i <= middleIndex + revealRange);
+
+          if (reveal) {
+            textBox.appendChild(document.createTextNode(word + " "));
+          } else {
+            for (let char of word) {
+              if (/\s/.test(char)) {
+                textBox.appendChild(document.createTextNode(" "));
+              } else if (/[.,!?;:]/.test(char)) {
+                textBox.appendChild(document.createTextNode(char));
+              } else {
+                const square = document.createElement("span");
+                square.className = "maskSquare";
+                textBox.appendChild(square);
+              }
+            }
+            textBox.appendChild(document.createTextNode(" "));
+          }
+        });
+      }
+
+      function setupMoreButton() {
+        const status = document.getElementById("status");
+        status.innerHTML = "";
+        const moreBtn = document.createElement("button");
+        moreBtn.textContent = "Click here for more words or choose a title";
+        moreBtn.className = "moreTextButton";
+        status.appendChild(moreBtn);
+
+        const revealMore = () => {
+          revealRange++;
+          renderMaskedText();
+          updateScore(-10);
+        };
+        // Delegate from the status block (clicks on moreBtn bubble up to it)
+        // and from the text block itself, so either area works.
+        status.onclick = revealMore;
+        document.getElementById("textBox").onclick = revealMore;
+      }
+
+      loadTexts();
+    </script>
+  </body>
+</html>

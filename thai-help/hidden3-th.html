@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Weather Forecast — Hidden Word Listening (ภาษาไทย)</title>
+<link rel="stylesheet" href="../hidden/hidden-engine.css" />
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"></script>
+<script>
+  ((window.plausible = window.plausible || function () { (plausible.q = plausible.q || []).push(arguments); }),
+   (plausible.init = plausible.init || function (i) { plausible.o = i || {}; }));
+  plausible.init();
+</script>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script src="hidden-engine-th.js"></script>
+<script>
+  HiddenWordEngine.render({
+    title: "Weather Forecast",
+    next: "hidden2.html",
+    questions: [
+      { audio: "QW01", before: "The weather hasn't been ", after: " nice today, and I wish I could give you better news for tomorrow.",
+        words: ["heather", "very", "die", "hypotenuse"], correct: 1,
+        hints: ["The weather ....", null, "... and I wish ....", ".. give you better news .."] },
+      { audio: "QW02", before: "But ", after: " looks like more of the same for most of us, though if you live on the west coast things should be better.",
+        words: ["It", "morrow", "fuel", "costings"], correct: 0,
+        hints: [null, "... more of ...", "... if you live ...", "...coast, things ...."] },
+      { audio: "QW03", before: "Let's start there. The front that brought the heavy rain is moving east and is leaving ", after: " weather behind.",
+        words: ["star", "rainy", "sleeve", "showery"], correct: 3,
+        hints: ["Let's start ...", "... rain is ...", "... is leaving ...", null] },
+      { audio: "QW04", before: "It will be a bit windy tonight with some rain, ", after: " in the morning you should get some drier weather and maybe even see some sunshine.",
+        words: ["twill", "India", "but", "seize"], correct: 2,
+        hints: ["It will...", ".. windy tonight ...", null, "... see some ..."] },
+      { audio: "QW05", before: "The Borders and the south ", after: " have a wet day, with overcast skies, though it may clear up by the late afternoon.",
+        words: ["sand", "will", "very", "wit"], correct: 1,
+        hints: ["... Borders and  ...", null, "... have a wet ....", "... though it ..."] },
+      { audio: "QW06", before: "Central ", after: " will have plenty of cloud and rain, and the further north you go the more likely it is to fall as sleet or snow.",
+        words: ["region", "regional", "raining", "fallers"], correct: 0,
+        hints: [null, "... region will ...", "... rain and ...", "... fall as .."] },
+      { audio: "QW07", before: "The far north will certainly have wintry showers, and driving conditions may well be hazardous, ", after: " stay at home if you can.",
+        words: ["farm", "worsen", "so", "tome"], correct: 2,
+        hints: ["The far north ..", ".. showers and  ...", null, "... at home  ..."] },
+      { audio: "QW08", before: "Overnight temperatures will range from two or three in the south to minus one in the north, and there could be frost ", after: " anywhere.",
+        words: ["night-time", "tour", "northern", "almost"], correct: 3,
+        hints: ["Overnight temperatures  ...", "... two or three ..", ".. north and ..", null] },
+      { audio: "QW09", before: "Tomorrow's temperatures will ", after: " a bit better, getting up as high as seven in the Borders, but staying down at three or four in the north.",
+        words: ["be", "beer", "sigh", "awful"], correct: 0,
+        hints: [null, "... be a bit ...", "... as high ...", ".. or four .."] },
+      { audio: "QW10", before: "The outlook for the weekend is for ", after: " unsettled weather, with strong winds and rain, but the temperatures at least staying close to the average for the time of year.",
+        words: ["further", "more", "butter", "timer"], correct: 1,
+        hints: ["... for the  ...", null, "... but the ...", "... time of  ..."] }
+    ]
+  });
+</script>
+</body>
+</html>

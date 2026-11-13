@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECLIPSE — Competition Mode</title>
+<style>
+  html, body { height: 100%; margin: 0; padding: 0; }
+  body {
+    font-family: sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+    background-color: lightgoldenrodyellow;
+  }
+  #pageWrapper { max-width: 900px; margin: 20px auto; padding: 0 20px 40px; }
+  a { color: #0e8c62; }
+  h1 { text-align: center; }
+  h2 { text-align: center; }
+
+  button { font-family: inherit; cursor: pointer; }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+
+  /* ---------- Picker screen ---------- */
+  #pickerScreen .storyRow, #pickerScreen .playerRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  #storySelect { font-size: 14px; padding: 4px 6px; max-width: 320px; }
+  #pickerScreen input[type="text"] { font-size: 14px; padding: 4px 6px; width: 150px; }
+  #pickerScreen .homeLink { display: block; text-align: center; margin-top: 24px; font-size: 13px; }
+  #pickerError { color: darkred; font-style: italic; margin-top: 10px; }
+  #startBtn { margin-top: 14px; }
+
+  /* ---------- Title bar ---------- */
+  #titleBar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  #storyTitle { margin: 0; font-size: 1.5em; font-weight: bold; }
+
+  /* ---------- Turn banner + scoreboard ---------- */
+  #turnBanner {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.15em;
+    padding: 8px;
+    border-radius: 6px;
+    color: #fff;
+    transition: background-color .2s ease;
+  }
+  #turnBanner.player1 { background-color: #2a6fb0; }
+  #turnBanner.player2 { background-color: #b0722a; }
+
+  #scoreBoard {
+    text-align: center;
+    margin-top: 8px;
+    font-weight: bold;
+  }
+  #scoreBoard .p1 { color: #2a6fb0; }
+  #scoreBoard .p2 { color: #b0722a; }
+
+  /* ---------- Story text ---------- */
+  #textBox {
+    margin: 20px 0;
+    padding: 10px 20px;
+    word-spacing: 0.3em;
+    line-height: 1.4;
+    background-color: #fafafa;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+
+  /* ---------- Word states ---------- */
+  .masked { color: transparent; background-color: #ccc; padding: 0 2px; }
+  .revealed { color: black; }
+  .justRevealed { color: red; font-weight: bold; }
+  span.hinted { color: #555; font-style: italic; }
+
+  /* ---------- Play area ---------- */
+  #playArea { margin-top: 20px; }
+
+  #inputRow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+  }
+  #wordInput { width: 220px; }
+  #feedback { margin-top: 8px; color: darkred; font-style: italic; min-height: 1.2em; text-align: center; }
+
+  /* ---------- End screen ---------- */
+  #endScreen { display: none; text-align: left; margin-top: 20px; font-size: 15px; line-height: 1.5; }
+  #endScreen button { margin: 10px 5px 0 0; font-size: 1em; }
+  .buttonRow { display: flex; justify-content: space-between; margin-top: 15px; }
+  .buttonRow button { flex: 1; margin: 0 5px; }
+  .winnerLine { text-align: center; font-size: 1.2em; }
+
+  /* ---------- Summary overlay ---------- */
+  #summaryOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
+  #summaryBox {
+    background: #fffef8;
+    border-radius: 8px;
+    max-width: 480px;
+    width: 90%;
+    padding: 24px 28px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+  }
+  #summaryText { font-size: 16px; line-height: 1.5; margin: 0 0 18px; }
+  #summaryDismissButton { display: block; margin: 0 auto; font-size: 1em; padding: 6px 20px; }
+</style>
+ <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+    </script>
+  </head>
+<body>
+<div id="pageWrapper">
+
+  <!-- Summary overlay, shown once when a text with a ### summary loads -->
+  <div id="summaryOverlay" style="display:none;">
+    <div id="summaryBox">
+      <p id="summaryText"></p>
+      <button id="summaryDismissButton" type="button">Continue</button>
+    </div>
+  </div>
+
+  <!-- ============ Picker screen ============ -->
+  <div id="pickerScreen">
+    <h1>Welcome to ECLIPSE</h1>
+    <h2>A text rebuilding game by John and Muriel Higgins<br>July 2026</h2>
+    <p>This version is COMPETITION mode, where two players take turns trying to find the words of the
+      text. Correct or wrong, a guess passes the turn to the other player — unless the word has already
+      been found, in which case you get another go. Whoever scores more when the text is complete wins.</p>
+    <p>Select a story to play:</p>
+
+    <div class="storyRow">
+      <label for="storySelect">Choose story:</label>
+      <select id="storySelect"></select>
+    </div>
+    <div class="playerRow">
+      <label for="player1Name">Player 1:</label>
+      <input id="player1Name" type="text" placeholder="Player 1" maxlength="20">
+      <label for="player2Name">Player 2:</label>
+      <input id="player2Name" type="text" placeholder="Player 2" maxlength="20">
+    </div>
+    <button id="startBtn" type="button">Start Competition</button>
+    <div id="pickerError"></div>
+
+    <a class="homeLink" href="https://marlodge.net">Back to home page</a>
+  </div>
+
+  <!-- ============ Game screen ============ -->
+  <div id="gameScreen" style="display:none;">
+    <div id="titleBar">
+      <h1 id="storyTitle">Loading story...</h1>
+    </div>
+
+    <div id="turnBanner" class="player1"></div>
+    <div id="scoreBoard"></div>
+
+    <div id="textBox">Loading text...</div>
+
+    <div id="playArea">
+      <div id="competeBox">
+        <div id="inputRow">
+          <input id="wordInput" type="text" placeholder="Enter a word">
+          <button id="helpButton" type="button">Help (5s)</button>
+          <button id="quitButton" type="button">Quit</button>
+        </div>
+        <div id="feedback"></div>
+      </div>
+
+      <div id="endScreen"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ---------------------------------------------------------------------
+// Story list — loaded from alltexts.txt (one story per line:
+// "Title | filename.txt"; blank lines and #-comments are ignored).
+// ---------------------------------------------------------------------
+function parseStoryList(text) {
+  const stories = [];
+  text.split(/\r?\n/).forEach(raw => {
+    const line = raw.trim();
+    if (!line || line.startsWith("#")) return;
+    const sep = line.indexOf("|");
+    if (sep === -1) {
+      console.warn("Skipping malformed alltexts.txt line (missing '|'):", line);
+      return;
+    }
+    const title = line.slice(0, sep).trim();
+    const file = line.slice(sep + 1).trim();
+    if (!title || !file) {
+      console.warn("Skipping malformed alltexts.txt line (empty title or filename):", line);
+      return;
+    }
+    stories.push({ title, file });
+  });
+  return stories;
+}
+
+const $ = id => document.getElementById(id);
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+fetch("alltexts.txt")
+  .then(r => {
+    if (!r.ok) throw new Error("alltexts.txt not found (" + r.status + ")");
+    return r.text();
+  })
+  .then(text => {
+    const stories = parseStoryList(text);
+    const select = $("storySelect");
+    select.innerHTML = "";
+    if (stories.length === 0) {
+      $("pickerError").textContent = "No stories found in alltexts.txt.";
+      $("startBtn").disabled = true;
+      return;
+    }
+    stories.forEach(s => {
+      const opt = document.createElement("option");
+      opt.value = s.file;
+      opt.textContent = s.title;
+      select.appendChild(opt);
+    });
+  })
+  .catch(err => {
+    $("pickerError").textContent = "Couldn't load the story list (alltexts.txt). " +
+      "If you're opening this file directly, it needs to be served over http:// — try running a local server.";
+    $("startBtn").disabled = true;
+    console.error(err);
+  });
+
+$("startBtn").addEventListener("click", () => {
+  const file = $("storySelect").value;
+  if (!file) return;
+  player1Name = $("player1Name").value.trim() || "Player 1";
+  player2Name = $("player2Name").value.trim() || "Player 2";
+  $("pickerScreen").style.display = "none";
+  $("gameScreen").style.display = "block";
+  startGame(file);
+});
+
+// ---------------------------------------------------------------------
+// GAME STATE
+// ---------------------------------------------------------------------
+let player1Name = "Player 1";
+let player2Name = "Player 2";
+let player1Score = 0;
+let player2Score = 0;
+let player1FoundSet = new Set();
+let player2FoundSet = new Set();
+let player1WrongWords = new Set();
+let player2WrongWords = new Set();
+let helpSecondsP1 = 0;
+let helpSecondsP2 = 0;
+let helpTimer;
+let originalText = "";
+let bodyText = ""; // the game text only — title and any ### summary section excluded
+let currentPlayer = 1; // whichever player's turn it currently is
+let ended = false;
+
+// Matches a "word" for masking purposes: Latin letters (incl. accented),
+// digits, apostrophes (straight or curly) and internal hyphens — wide
+// enough to cope with story text beyond today's five sample stories.
+const WORD_RE = /[A-Za-z0-9À-ÖØ-öø-ÿ][A-Za-z0-9À-ÖØ-öø-ÿ'’-]*/g;
+
+function normalizeWord(word) {
+  return word
+    .toLowerCase()
+    .replace(/['’]/g, "")
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "");
+}
+
+function plural(n, word) { return n === 1 ? `1 ${word}` : `${n} ${word}s`; }
+
+function currentName() { return currentPlayer === 1 ? player1Name : player2Name; }
+
+// Rebuilds the story body as fully-revealed spans — used by Help and Quit.
+function buildFullRevealHTML() {
+  return bodyText
+    .split(/\r?\n/)
+    .filter(line => line.trim().length > 0)
+    .map(line => line.replace(WORD_RE, '<span class="revealed">$&</span>'))
+    .join("<br>");
+}
+
+// --- SUMMARY OVERLAY ---
+function showSummaryOverlay(text) {
+  $("summaryText").textContent = text;
+  $("summaryOverlay").style.display = "flex";
+}
+
+function dismissSummaryOverlay() {
+  $("summaryOverlay").style.display = "none";
+  $("wordInput").focus();
+}
+
+function updateTurnBanner() {
+  const banner = $("turnBanner");
+  banner.textContent = `${currentName()}'s turn`;
+  banner.className = currentPlayer === 1 ? "player1" : "player2";
+}
+
+function updateScoreboard() {
+  $("scoreBoard").innerHTML =
+    `<span class="p1">${escapeHtml(player1Name)}: ${player1Score}</span> &nbsp;·&nbsp; ` +
+    `<span class="p2">${escapeHtml(player2Name)}: ${player2Score}</span>`;
+}
+
+function resetGameState() {
+  player1Score = 0;
+  player2Score = 0;
+  player1FoundSet = new Set();
+  player2FoundSet = new Set();
+  player1WrongWords = new Set();
+  player2WrongWords = new Set();
+  helpSecondsP1 = 0;
+  helpSecondsP2 = 0;
+  clearTimeout(helpTimer);
+  originalText = "";
+  bodyText = "";
+  currentPlayer = Math.random() < 0.5 ? 1 : 2; // coin flip for who starts
+  ended = false;
+
+  $("competeBox").style.display = "block";
+  $("endScreen").style.display = "none";
+  $("endScreen").innerHTML = "";
+  $("wordInput").value = "";
+  $("wordInput").disabled = false;
+  $("feedback").textContent = "";
+
+  const helpBtn = $("helpButton");
+  helpBtn.textContent = "Help (5s)";
+  helpBtn.disabled = false;
+  helpBtn.onclick = showHelp;
+
+  const quitBtn = $("quitButton");
+  quitBtn.textContent = "Quit";
+  quitBtn.onclick = giveUp;
+
+  updateTurnBanner();
+  updateScoreboard();
+}
+
+function startGame(storyFile) {
+  resetGameState();
+
+  fetch(storyFile)
+    .then(r => {
+      if (!r.ok) throw new Error("Story file not found (" + r.status + ")");
+      return r.text();
+    })
+    .then(text => {
+      originalText = text;
+      const lines = text.split(/\r?\n/);
+      const titleIdx = lines.findIndex(line => line.trim().length > 0);
+      const titleLine = titleIdx >= 0 ? lines[titleIdx] : "Untitled Story";
+      $("storyTitle").textContent = titleLine;
+
+      // A summary, if present, sits between a pair of lines that are just
+      // "###" and comes after the story text — see LTEXT001.txt for the
+      // original format. Everything before the first ### is the game text;
+      // everything between the two ### lines is the summary.
+      const rest = lines.slice(titleIdx + 1);
+      const firstHashIdx = rest.findIndex(line => line.trim() === "###");
+      let bodyLines, summaryLines;
+      if (firstHashIdx === -1) {
+        bodyLines = rest;
+        summaryLines = [];
+      } else {
+        bodyLines = rest.slice(0, firstHashIdx);
+        const afterFirstHash = rest.slice(firstHashIdx + 1);
+        const secondHashIdx = afterFirstHash.findIndex(line => line.trim() === "###");
+        summaryLines = secondHashIdx === -1 ? afterFirstHash : afterFirstHash.slice(0, secondHashIdx);
+      }
+
+      bodyText = bodyLines.join("\n");
+      const summaryText = summaryLines.filter(line => line.trim().length > 0).join(" ").trim();
+
+      const bodyHTML = bodyLines
+        .filter(line => line.trim().length > 0)
+        .map(line =>
+          line.replace(WORD_RE, match => `<span class="masked" data-fullword="${match}">${match}</span>`)
+        )
+        .join("<br>");
+
+      $("textBox").innerHTML = bodyHTML || "(No story text found)";
+
+      if (summaryText) {
+        showSummaryOverlay(summaryText);
+      } else {
+        $("wordInput").focus();
+      }
+    })
+    .catch(err => {
+      $("textBox").textContent = "Error loading story.";
+      console.error(err);
+    });
+}
+
+$("wordInput").addEventListener("keydown", e => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    handleInput();
+  }
+});
+
+$("summaryDismissButton").addEventListener("click", dismissSummaryOverlay);
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && $("summaryOverlay").style.display !== "none") {
+    dismissSummaryOverlay();
+  }
+});
+
+// --- TURN INPUT ---
+function handleInput() {
+  if (ended) return;
+
+  const input = $("wordInput");
+  const guess = normalizeWord(input.value.trim());
+  input.value = "";
+  if (!guess) return; // an empty submission shouldn't cost a turn
+
+  document.querySelectorAll("#textBox span.justRevealed").forEach(span => {
+    span.classList.remove("justRevealed");
+  });
+
+  let found = false;
+  let alreadyFound = false;
+  let revealCount = 0;
+  let displayWord = guess;
+
+  document.querySelectorAll("#textBox span.masked").forEach(span => {
+    const normalized = normalizeWord(span.dataset.fullword);
+    if (normalized === guess) {
+      span.classList.remove("masked");
+      span.classList.add("revealed", "justRevealed");
+      span.textContent = span.dataset.fullword;
+      displayWord = span.dataset.fullword;
+      revealCount++;
+      found = true;
+    }
+  });
+
+  const foundSet = currentPlayer === 1 ? player1FoundSet : player2FoundSet;
+  const wrongSet = currentPlayer === 1 ? player1WrongWords : player2WrongWords;
+  const feedback = $("feedback");
+
+  if (found) {
+    if (currentPlayer === 1) player1Score += revealCount; else player2Score += revealCount;
+    foundSet.add(guess);
+    feedback.textContent = `${currentName()} found "${displayWord}" x ${revealCount}`;
+  } else {
+    document.querySelectorAll("#textBox span.revealed").forEach(span => {
+      const normalized = normalizeWord(span.dataset.fullword || span.textContent);
+      if (normalized === guess) alreadyFound = true;
+    });
+    if (alreadyFound) {
+      feedback.textContent = `"${guess}" has already been found — try again`;
+      input.focus();
+      return; // doesn't cost a turn
+    }
+    wrongSet.add(guess);
+    feedback.textContent = `${currentName()}: "${guess}" was not in the text`;
+  }
+
+  updateScoreboard();
+  checkGameFinished();
+  if (ended) return;
+
+  currentPlayer = currentPlayer === 1 ? 2 : 1;
+  updateTurnBanner();
+  input.focus();
+}
+
+// --- HELP FEATURE (full reveal for 5s, shared — costed to whoever's turn it is) ---
+function showHelp() {
+  if (currentPlayer === 1) helpSecondsP1 += 5; else helpSecondsP2 += 5;
+
+  const currentHTML = $("textBox").innerHTML;
+  $("textBox").innerHTML = buildFullRevealHTML();
+
+  clearTimeout(helpTimer);
+  helpTimer = setTimeout(() => {
+    $("textBox").innerHTML = currentHTML;
+    $("wordInput").focus();
+  }, 5000);
+}
+
+// --- QUIT FEATURE ---
+function giveUp() {
+  clearTimeout(helpTimer);
+  document.querySelectorAll("#textBox span.masked").forEach(span => {
+    span.classList.remove("masked");
+    span.classList.add("revealed");
+    span.textContent = span.dataset.fullword;
+  });
+  endGame();
+}
+
+// --- END GAME ---
+function checkGameFinished() {
+  const maskedSpans = document.querySelectorAll("#textBox span.masked");
+  if (maskedSpans.length === 0) endGame();
+}
+
+function endGame() {
+  ended = true;
+  clearTimeout(helpTimer);
+  $("wordInput").disabled = true;
+  $("competeBox").style.display = "none";
+  $("endScreen").style.display = "block";
+  showReport();
+}
+
+// --- REPORT ---
+function showReport() {
+  const title = $("storyTitle").textContent;
+  const spans = document.querySelectorAll("#textBox span.masked, #textBox span.revealed");
+  const totalWords = spans.length;
+  const uniqueWords = new Set(Array.from(spans).map(s => normalizeWord(s.dataset.fullword || s.textContent))).size;
+
+  let winnerLine;
+  if (player1Score > player2Score) winnerLine = `🏆 ${escapeHtml(player1Name)} wins!`;
+  else if (player2Score > player1Score) winnerLine = `🏆 ${escapeHtml(player2Name)} wins!`;
+  else winnerLine = "It's a tie!";
+
+  const p1Wrong = [...player1WrongWords].join(", ") || "none";
+  const p2Wrong = [...player2WrongWords].join(", ") || "none";
+  const helpLine = (helpSecondsP1 > 0 || helpSecondsP2 > 0)
+    ? `<p>Help used: ${escapeHtml(player1Name)} ${helpSecondsP1}s, ${escapeHtml(player2Name)} ${helpSecondsP2}s.</p>`
+    : `<p>Neither player used Help — well done!</p>`;
+
+  $("textBox").innerHTML = `
+    <p><strong>${title}</strong> contained ${uniqueWords} different words, ${totalWords} words altogether.</p>
+    <p class="winnerLine"><strong>${winnerLine}</strong></p>
+    <p>${escapeHtml(player1Name)} found ${plural(player1FoundSet.size, "different word")} scoring ${plural(player1Score, "point")}. Tried: ${p1Wrong}.</p>
+    <p>${escapeHtml(player2Name)} found ${plural(player2FoundSet.size, "different word")} scoring ${plural(player2Score, "point")}. Tried: ${p2Wrong}.</p>
+    ${helpLine}
+  `;
+
+  $("endScreen").innerHTML = `
+    <div class="buttonRow">
+      <button id="toggleReportBtn" type="button">See text again</button>
+      <button id="newGameBtn" type="button">New Game</button>
+      <button id="goHomeBtn" type="button">Back to home page</button>
+    </div>
+  `;
+  $("toggleReportBtn").addEventListener("click", toggleReport);
+  $("newGameBtn").addEventListener("click", playAgain);
+  $("goHomeBtn").addEventListener("click", goHome);
+  showingReport = true;
+}
+
+let showingReport = true;
+function toggleReport() {
+  if (showingReport) {
+    $("textBox").innerHTML = buildFullRevealHTML();
+    $("toggleReportBtn").textContent = "Report and analysis";
+    showingReport = false;
+  } else {
+    showReport(); // rebuilds #endScreen, which already sets the "See text again" label
+  }
+}
+
+// --- BACK TO PICKER ---
+function playAgain() {
+  $("gameScreen").style.display = "none";
+  $("pickerScreen").style.display = "block";
+}
+
+function goHome() {
+  window.location.href = "https://marlodge.net";
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="John and Muriel Higgins">
+<meta name="description" content="MARK-UP — a punctuation exercise for language learners.">
+<title>MARK-UP — a punctuation exercise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+<style>
+:root{
+  --desktop:#c6c2bb;
+  --panel:#ffffff;
+  --panel-border:#57544f;
+  --ink:#141414;
+  --ink-dim:#5a564f;
+  --blue:#0000cc;
+  --red:#cc0000;
+  --good:#0a6b2d;
+  --bad:#a3241a;
+  --rule:#8f8b83;
+  --key-bg:#e8e5df;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--desktop);
+  color:var(--ink);
+  font-family:'Public Sans',ui-sans-serif,system-ui,sans-serif;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:1.5rem 1rem 3rem;
+}
+.mono{font-family:'Courier Prime',ui-monospace,'SF Mono',Menlo,Consolas,monospace;}
+
+header.masthead{
+  text-align:center;
+  margin-bottom:1.1rem;
+}
+header.masthead h1{
+  margin:0;
+  font-family:'Courier Prime',monospace;
+  font-weight:700;
+  font-size:clamp(1.7rem,5vw,2.3rem);
+  letter-spacing:.08em;
+}
+header.masthead .byline{
+  color:var(--ink-dim);
+  font-size:.85rem;
+  margin-top:.2rem;
+}
+header.masthead .byline a{color:var(--ink-dim);}
+
+.console{
+  width:100%;
+  max-width:640px;
+  background:var(--panel);
+  border:2px solid var(--panel-border);
+  box-shadow:4px 4px 0 rgba(0,0,0,.18);
+}
+.console-inner{padding:1.1rem 1.3rem 0;}
+
+[hidden]{display:none!important;}
+
+/* ---------- main menu ---------- */
+.menu-title{
+  text-align:center;
+  font-family:'Courier Prime',monospace;
+  font-weight:700;
+  font-size:1.15rem;
+  padding:.9rem 0;
+  border-bottom:2px solid var(--panel-border);
+  margin:0 -1.3rem 1rem;
+  padding-left:1.3rem; padding-right:1.3rem;
+}
+.level-list{display:flex; flex-direction:column; gap:.6rem; padding-bottom:1.2rem;}
+.level-btn{
+  display:flex; align-items:baseline; gap:.7rem;
+  text-align:left;
+  background:var(--key-bg);
+  border:1px solid var(--panel-border);
+  padding:.6rem .8rem;
+  cursor:pointer;
+  font-family:'Public Sans',sans-serif;
+}
+.level-btn:hover{background:#dcd8cf;}
+.level-btn .num{font-family:'Courier Prime',monospace; font-weight:700; color:var(--blue);}
+.level-btn .desc{font-size:.85rem; color:var(--ink-dim);}
+.menu-foot{
+  display:flex; justify-content:center; gap:1rem;
+  padding:.9rem 0 1.1rem;
+  border-top:1px solid var(--rule);
+  margin:0 -1.3rem; padding-left:1.3rem; padding-right:1.3rem;
+}
+.menu-foot button{background:none; border:none; color:var(--blue); text-decoration:underline; cursor:pointer; font-family:'Public Sans',sans-serif; font-size:.85rem;}
+
+/* ---------- game screen ---------- */
+.passage-title{
+  text-align:center;
+  font-weight:700;
+  font-family:'Courier Prime',monospace;
+  padding:.5rem 0 .8rem;
+}
+.body-text{
+  font-size:1.05rem;
+  line-height:1.7;
+  min-height:5.5rem;
+  padding-bottom:.9rem;
+}
+.body-text .plain{color:var(--ink);}
+.body-text .unsolved{color:var(--blue);}
+.body-text .justsolved{color:var(--red); font-weight:700;}
+.body-text .solved{color:var(--ink);}
+.body-text .partial{color:var(--blue); text-decoration:underline wavy var(--bad);}
+.body-text .brk{display:block; height:.6rem;}
+
+.rule{border:none; border-top:1px solid var(--rule); margin:0 -1.3rem;}
+
+.bag-row{padding:.8rem 0; font-size:.95rem;}
+.bag-label{color:var(--ink-dim); font-size:.8rem; margin-bottom:.35rem;}
+.bag-marks{color:var(--blue); letter-spacing:.15em; word-break:break-all;}
+.bag-capitals{color:var(--blue); margin-top:.3rem;}
+
+.enter-row{padding:.8rem 0;}
+.enter-label{color:var(--ink-dim); font-size:.8rem; margin-bottom:.4rem;}
+.enter-row input{
+  width:100%;
+  font-family:'Courier Prime',monospace;
+  font-size:1.05rem;
+  color:var(--blue);
+  border:1px solid var(--panel-border);
+  background:#fbfbf8;
+  padding:.4rem .5rem;
+}
+.enter-row input:focus{outline:2px solid var(--blue); outline-offset:0;}
+.feedback{min-height:1.4em; font-size:.88rem; margin-top:.4rem;}
+.feedback.good{color:var(--good);}
+.feedback.bad{color:var(--bad);}
+
+.keybar{
+  display:flex; justify-content:space-between;
+  padding:.7rem 1.3rem;
+  background:var(--key-bg);
+  border-top:2px solid var(--panel-border);
+  margin:0 -1.3rem;
+  font-family:'Courier Prime',monospace;
+  font-size:.85rem;
+}
+.keybar button{
+  background:none; border:none; cursor:pointer;
+  font-family:'Courier Prime',monospace; font-size:.85rem; color:var(--ink);
+}
+.keybar button:hover{color:var(--blue);}
+.keybar button:disabled{color:#aaa6a0; cursor:default;}
+
+/* ---------- overlay ---------- */
+.overlay{
+  position:fixed; inset:0; background:rgba(20,20,20,.45);
+  display:flex; align-items:center; justify-content:center;
+  padding:1.5rem; z-index:20;
+}
+.overlay-box{
+  background:var(--panel); border:2px solid var(--panel-border);
+  max-width:520px; width:100%; padding:1.2rem 1.4rem;
+  box-shadow:4px 4px 0 rgba(0,0,0,.25);
+}
+.overlay-box h3{font-family:'Courier Prime',monospace; margin:0 0 .7rem;}
+.overlay-box p{font-size:.92rem; line-height:1.55; margin:.4rem 0;}
+.overlay-actions{display:flex; gap:.6rem; margin-top:1rem; justify-content:flex-end;}
+.overlay-actions button, .choice-btn{
+  font-family:'Public Sans',sans-serif; font-size:.85rem;
+  background:var(--key-bg); border:1px solid var(--panel-border);
+  padding:.45rem .9rem; cursor:pointer;
+}
+.overlay-actions button:hover, .choice-btn:hover{background:#dcd8cf;}
+
+/* ---------- end screen ---------- */
+.end-heading{
+  text-align:center; font-family:'Courier Prime',monospace; font-weight:700;
+  font-size:1.3rem; padding:1rem 0 .3rem; letter-spacing:.1em;
+}
+.end-text{font-size:1rem; line-height:1.7; padding:.6rem 0 1rem;}
+.end-stats{
+  text-align:center; padding:.6rem 0 1rem; font-size:.95rem;
+}
+.end-stats .score{font-family:'Courier Prime',monospace; font-weight:700; font-size:1.4rem; color:var(--blue);}
+.end-actions{
+  display:flex; justify-content:space-around; padding:.9rem 1.3rem;
+  background:var(--key-bg); border-top:2px solid var(--panel-border);
+  margin:0 -1.3rem;
+}
+.end-actions button{
+  background:none; border:none; cursor:pointer;
+  font-family:'Courier Prime',monospace; font-weight:700; font-size:.85rem; color:var(--ink);
+}
+.end-actions button:hover{color:var(--blue);}
+
+footer.sitefoot{margin-top:1.4rem; font-size:.75rem; color:var(--ink-dim); text-align:center; max-width:640px;}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <h1>MARK-UP</h1>
+  <div class="byline">by John and Muriel Higgins, 1993, revised 2026</div>
+</header>
+
+<div class="console">
+  <div class="console-inner">
+
+    <!-- ===== MAIN MENU ===== -->
+    <section id="screen-menu">
+      <div class="menu-title">MAIN MENU</div>
+      <div class="level-list" id="levelList"></div>
+    </section>
+
+    <!-- ===== GAME ===== -->
+    <section id="screen-game" hidden>
+      <div class="passage-title" id="passageTitle"></div>
+      <div class="body-text" id="bodyText"></div>
+      <hr class="rule">
+      <div class="bag-row">
+        <div class="bag-label">Punctuation marks in random order:</div>
+        <div class="bag-marks mono" id="bagMarks"></div>
+        <div class="bag-capitals mono" id="bagCapitals"></div>
+      </div>
+      <hr class="rule">
+      <div class="enter-row">
+        <div class="enter-label">Enter a word:-</div>
+        <input type="text" id="guessInput" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <div class="feedback" id="feedback"></div>
+      </div>
+    </section>
+    <div class="keybar" id="gameKeybar" hidden>
+      <button id="f1Btn">Help</button>
+      <button id="f2Btn">See text</button>
+      <button id="f10Btn">Quit</button>
+    </div>
+
+    <!-- ===== END SCREEN ===== -->
+    <section id="screen-end" hidden>
+      <div class="end-heading">FINISHED</div>
+      <div class="end-text" id="endText"></div>
+      <hr class="rule">
+      <div class="end-stats" id="endStats"></div>
+    </section>
+    <div class="end-actions" id="endActions" hidden>
+      <button id="newTextBtn">NEW TEXT</button>
+      <button id="mainMenuBtn">MAIN MENU</button>
+    </div>
+
+  </div>
+</div>
+
+<footer class="sitefoot">A way to learn about and practise English punctuation.</footer>
+
+<!-- ===== overlays ===== -->
+<div class="overlay" id="helpOverlay" hidden>
+  <div class="overlay-box">
+    <h3>Help</h3>
+    <p>Choose FREE WORD to have the computer fill in one word for you (this counts as a turn and affects your score), or ADVICE to read some notes on punctuation for this level (this is free).</p>
+    <div class="overlay-actions">
+      <button class="choice-btn" id="freeWordBtn">FREE WORD</button>
+      <button class="choice-btn" id="adviceBtn">ADVICE</button>
+      <button id="helpCancelBtn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="adviceOverlay" hidden>
+  <div class="overlay-box">
+    <h3 id="adviceTitle">Advice</h3>
+    <div id="adviceBody"></div>
+    <div class="overlay-actions">
+      <button class="choice-btn" id="adviceCloseBtn">Back to text</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="seeTextOverlay" hidden>
+  <div class="overlay-box">
+    <h3>The complete text</h3>
+    <div class="end-text" id="seeTextBody"></div>
+  </div>
+</div>
+
+<div class="overlay" id="quitOverlay" hidden>
+  <div class="overlay-box">
+    <h3>Quit this text?</h3>
+    <p>The rest of the text will be filled in, and you'll see your score so far.</p>
+    <div class="overlay-actions">
+      <button class="choice-btn" id="quitConfirmBtn">Quit</button>
+      <button id="quitCancelBtn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const MARKUP_DATA = {"1":[{"t":"DAYS OF THE WEEK","l":[["In","English","the","words","for","the","days","of","the","week","all","have","capital","letters."],["We","talk","about","Monday","and","Tuesday.","This","does","not","happen","in","all","other"],["European","languages.","The","French","for","Monday","and","Tuesday","is","lundi","and"],["mardi.","The","German","for","these","days","is","Montag","and","Dienstag.","German","uses"],["capital","letters","but","that","is","hardly","surprising.","All","nouns","in","German","are"],["capitalised."]]},{"t":"ENGLISH CITIES","l":[["London","is","the","capital","of","England","and","of","the","United","Kingdom","of","Great"],["Britain","and","Northern","Ireland.","It","stands","on","the","River","Thames.","The","second"],["largest","city","is","Birmingham.","It","is","in","the","very","centre","of","England","in","the"],["county","of","Warwickshire.","It","is","a","long","way","from","the","sea."],["Liverpool","and","Manchester","are","important","industrial","cities","in","the","north"],["west.","The","most","famous","city","in","the","north","east","is","Newcastle.","People","who"],["come","from","Newcastle","are","known","as","Geordies.","There","are","no","very","large"],["cities","in","the","south","west.","The","most","famous","city","there","is","Bristol.","It"],["stands","on","the","River","Avon."]]},{"t":"VEGETARIANISM","l":[["The","playwright","George","Bernard","Shaw","lived","to","be","a","very","old","man.","He"],["said","this","was","because","he","never","ate","any","form","of","meat.","He","never","drank"],["alcohol","either.","He","wrote","a","play","called","Back","to","Methusaleh","about"],["living","to","a","great","age."]]},{"t":"Christopher Columbus","l":[["Christopher","Columbus","was","a","brave","man","and","a","good","sailor.","In","1492","he"],["sailed","across","the","Atlantic","with","three","small","ships.","His","own","was"],["called","the","Santa","Maria.","The","others","were","the","Pinta","and","the","Nina.","The"],["sailors","on","these","ships","were","the","first","modern","Europeans","to","see"],["America.","For","years","European","children","have","been","taught","that","Columbus"],["discovered","America.","Now","many","of","the","native","Americans","are","objecting."],["They","say","that","Columbus","merely","invaded","and","enslaved","America."]]}],"2":[{"t":"LUNCHTIME","l":[["When","is","lunchtime?","Well,","whenever","one","has","lunch,","surely?","It","might","be"],["at","twelve,","or","earlier,","or","it","might","be","as","late","as","the","middle","of","the"],["afternoon."]]},{"t":"SEASONS OF THE YEAR","l":[["In","Europe","there","are","four","seasons,","which","are","spring,","summer,","autumn"],["and","winter.","In","places","with","different","climates,","the","seasons","are","not"],["the","same.","Some","places","have","only","two","seasons,","wet","and","dry."]]},{"t":"SIZE","l":[["How","can","the","hyrax","be","related","to","the","elephant?","Biologists","say","it","is,"],["although","the","hyrax","is","no","bigger","than","a","rat.","Can","you","believe","it?"]]}],"3":[{"t":"A BARGAIN","l":[["Jim's","new","car","does","not","look","as","smart","as","Peter's","and","it","is","not","as","big"],["as","Mike's,","but","it","runs","better","than","either","of","his","friends'","cars.","It"],["was","cheaper,","too."]]},{"t":"ETIQUETTE","l":[["I've","never","been","sure","what","to","say","when","somebody","tells","you","they're"],["leaving","the","district.","I","don't","know","if","it's","more","polite","to","be","pleased"],["or","sorry."]]},{"t":"THE HIPPOPOTAMUS","l":[["The","hippopotamus","spends","most","of","its","time","in","the","water.","It's","not"],["because","of","its","fondness","for","fish.","It's","because","it","can't","keep","cool"],["any","other","way."]]}],"4":[{"t":"INTRODUCTION","l":[["\"This","is","my","cousin,","Mark,\"","said","Peter."],["Mark","held","out","his","hand.","\"I've","been","looking","forward","to","meeting","you,\""],["he","said.","\"How","do","you","do?\""]]},{"t":"SWEETS FROM A STRANGER","l":[["Some","children,","on","being","told","never","to","accept","sweets","from","a","stranger,"],["asked,","\"Is","it","all","right","if","they're","wrapped?\"","We","need","to","make","it"],["clear","that","the","stranger","is","the","danger,","not","the","sweets."]]},{"t":"WRONG NUMBER","l":[["\"Hello?","Anyone","there?\""],["\"Joan?","Is","that","you?\""],["\"No.","No,","this","isn't","Joan.\""],["\"What","number's","that?\""],["\"What","number","are","you","calling?\""],["\"894432.\""],["\"Sorry,","you've","got","the","wrong","number.\""],["\"Well,","if","it's","the","wrong","number,","why","did","you","answer","the","phone?\""]]}],"5":[{"t":"HOW CAN YOU?","l":[["\"What","a","thought!\"","she","said.","\"I","don't","know","how","anyone","can","even","think"],["of","doing","that.\"","She","raised","her","eyebrows.","\"Honestly,","do","you?\""]]},{"t":"GREETING","l":[["\"Hi,\"","the","girl","said","happily.","\"I'm","Jill.","What's","your","name?","Jack?\""],["\"It","is,","actually,\"","I","said.","\"Odd,","isn't","it?\""]]},{"t":"MAKING YOGHURT","l":[["There","are","many","different","ways","of","making","yoghurt:","in","a","thermos;","in","a"],["bowl","(which","you","put","somewhere","warm);","or","with","a","special","electrically"],["controlled","machine."]]},{"t":"5 CONTINENTS","l":[["Historically,","there","are","thought","to","be","five","continents:","Europe,","Asia,"],["Africa,","America","and","Australia","(or","Australasia).","To","these,","however,"],["Antarctica","is","generally","added.","It","is","also","a","matter","for","discussion"],["whether","America","is","one","continent","or","two."]]}]};
+
+const LEVELS = [
+  {n:1, name:"Capital letters and periods", desc:"the easiest level — just sentence-initial capitals and full stops"},
+  {n:2, name:"Commas and question marks", desc:"adds commas and question marks"},
+  {n:3, name:"Possessives and contractions", desc:"adds apostrophes: it's, don't, Jim's"},
+  {n:4, name:"Quotation marks", desc:"adds speech marks around dialogue"},
+  {n:5, name:"Colons, semicolons and the rest", desc:"colons, semicolons, brackets, exclamation marks"},
+];
+
+const ADVICE = {
+  1: ["Every sentence starts with a capital letter and ends with a full stop.",
+      "Proper nouns — names of people, places, days, languages — always take a capital, wherever they fall in the sentence."],
+  2: ["A comma marks a short pause: before a linking word like 'but' or 'which', between items in a list, or after an introductory phrase.",
+      "A question mark replaces the full stop at the end of any sentence that's actually a question."],
+  3: ["An apostrophe + s can show possession (Jim's car) or a missing letter in a contraction (it's = it is, don't = do not).",
+      "Watch the difference between it's (it is) and its (belonging to it) — only one of them has an apostrophe."],
+  4: ["Speech marks wrap around the exact words someone said, and the closing punctuation (comma, full stop, question mark) usually goes inside them.",
+      "A new speaker normally starts a new line."],
+  5: ["A colon can introduce a list or an explanation; a semicolon joins two related sentences without a linking word.",
+      "Round brackets add a side remark that could be removed without changing the main sentence."],
+};
+
+/* ===================== word/segment logic (validated against a real screen dump) ===================== */
+function isPuzzleWord(chunk){
+  const lettersOnly = chunk.replace(/[^A-Za-z0-9]/g, "");
+  return lettersOnly.toLowerCase() !== chunk;
+}
+function displayForm(chunk){
+  return chunk.replace(/[^A-Za-z0-9]/g, "").toUpperCase();
+}
+function marksOf(chunk){
+  return chunk.replace(/[A-Za-z0-9]/g, "").split("");
+}
+function needsCapital(chunk){
+  return /[A-Z]/.test(chunk);
+}
+function buildSegments(lineChunks){
+  const segments = [];
+  let current = [];
+  for (const chunk of lineChunks){
+    current.push(chunk);
+    if (isPuzzleWord(chunk)){
+      segments.push({ words: current, keyIndex: current.length-1, state:"solved-auto" });
+      current = [];
+    }
+  }
+  if (current.length){
+    if (segments.length) segments[segments.length-1].words.push(...current);
+    else segments.push({ words: current, keyIndex: -1, state:"solved-auto" });
+  }
+  for (const seg of segments){
+    if (seg.keyIndex >= 0) seg.state = "unsolved";
+  }
+  return segments;
+}
+function keyChunk(seg){ return seg.keyIndex>=0 ? seg.words[seg.keyIndex] : null; }
+
+/* ===================== helpers ===================== */
+const $ = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>Array.from(r.querySelectorAll(s));
+const pick = arr => arr[Math.floor(Math.random()*arr.length)];
+function shuffle(arr){
+  const a = arr.slice();
+  for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function escapeHtml(s){ return s.replace(/[&<>]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+
+/* ===================== state ===================== */
+let state = {
+  level: null,
+  usedTitles: {}, // level -> Set of titles already played this session
+  passage: null,  // {title, lines:[ {words:[Segment,...]} per source line ]}
+  found: 0,
+  turns: 0,
+  helpsUsed: 0,
+  finishedByQuit: false,
+};
+
+function showScreen(name){
+  for (const id of ["menu","game","end"]) $("#screen-"+id).hidden = (id!==name);
+  $("#gameKeybar").hidden = (name!=="game");
+  $("#endActions").hidden = (name!=="end");
+}
+
+/* ===================== main menu ===================== */
+function renderMenu(){
+  $("#levelList").innerHTML = LEVELS.map(l =>
+    `<button class="level-btn" data-level="${l.n}"><span class="num">${l.n}</span><span><strong>${escapeHtml(l.name)}</strong><br><span class="desc">${escapeHtml(l.desc)}</span></span></button>`
+  ).join("");
+  $$(".level-btn").forEach(btn => btn.addEventListener("click", ()=> startLevel(parseInt(btn.dataset.level,10))));
+}
+function startLevel(n){
+  state.level = n;
+  if (!state.usedTitles[n]) state.usedTitles[n] = new Set();
+  startNewPassage();
+  showScreen("game");
+}
+
+/* ===================== picking & building a passage ===================== */
+function pickPassageRaw(){
+  const all = MARKUP_DATA[String(state.level)];
+  const used = state.usedTitles[state.level];
+  let pool = all.filter(p => !used.has(p.t));
+  if (!pool.length){ used.clear(); pool = all; }
+  const chosen = pick(pool);
+  used.add(chosen.t);
+  return chosen;
+}
+function startNewPassage(){
+  const raw = pickPassageRaw();
+  const lines = raw.l.map(buildSegments);
+  const quoteLines = raw.l.filter(l => l[0] && l[0].startsWith('"')).length;
+  const dialogue = quoteLines >= raw.l.length/2;
+  state.passage = { title: raw.t, lines, dialogue };
+  state.found = 0; state.turns = 0; state.helpsUsed = 0; state.finishedByQuit = false;
+  $("#passageTitle").textContent = raw.t;
+  $("#guessInput").value = "";
+  $("#feedback").textContent = "";
+  $("#feedback").className = "feedback";
+  renderBody();
+  renderBag();
+  setTimeout(()=> $("#guessInput").focus(), 30);
+}
+
+/* ===================== rendering ===================== */
+function segWordsDisplay(seg){
+  return seg.words.map((w,i) => {
+    if (i===seg.keyIndex){
+      if (seg.state==="partial") return seg.partialGuess;
+      return displayForm(w);
+    }
+    return w.toUpperCase();
+  }).join(" ");
+}
+function segWordsSolved(seg){ return seg.words.join(" "); }
+
+function renderBody(){
+  const p = state.passage;
+  let html = "";
+  p.lines.forEach((segs, li) => {
+    const lineSolved = segs.length && segs[0].state !== "unsolved" && segs[0].state !== "partial";
+    if (p.dialogue && li>0 && lineSolved) html += `<span class="brk"></span>`;
+    segs.forEach(seg => {
+      let cls = "plain", text;
+      if (seg.keyIndex < 0){ cls="plain"; text = segWordsSolved(seg); }
+      else if (seg.state==="unsolved"){ cls="unsolved"; text = segWordsDisplay(seg); }
+      else if (seg.state==="partial"){ cls="partial"; text = segWordsDisplay(seg); }
+      else if (seg.state==="justsolved"){ cls="justsolved"; text = segWordsSolved(seg); }
+      else { cls="solved"; text = segWordsSolved(seg); }
+      html += `<span class="${cls}">${escapeHtml(text)}</span> `;
+    });
+  });
+  $("#bodyText").innerHTML = html;
+}
+
+function liveBag(){
+  const marks = []; let capitals = 0;
+  for (const line of state.passage.lines) for (const seg of line){
+    if (seg.keyIndex>=0 && (seg.state==="unsolved" || seg.state==="partial")){
+      marks.push(...marksOf(keyChunk(seg)));
+      if (needsCapital(keyChunk(seg))) capitals++;
+    }
+  }
+  return {marks, capitals};
+}
+function renderBag(){
+  const {marks, capitals} = liveBag();
+  $("#bagMarks").textContent = shuffle(marks).join("  ") || "(none left)";
+  $("#bagCapitals").textContent = capitals + (capitals===1 ? " CAPITAL LETTER" : " CAPITAL LETTERS");
+}
+
+/* ===================== guessing ===================== */
+function allSegments(){
+  const out = [];
+  for (const line of state.passage.lines) for (const seg of line) out.push(seg);
+  return out;
+}
+function sweepJustSolved(){
+  for (const seg of allSegments()) if (seg.state==="justsolved") seg.state = "solved";
+}
+function checkComplete(){
+  return allSegments().every(seg => seg.keyIndex<0 || seg.state==="solved" || seg.state==="justsolved");
+}
+function submitGuess(){
+  const raw = $("#guessInput").value;
+  const guess = raw.trim();
+  $("#guessInput").value = "";
+  if (!guess) return;
+  sweepJustSolved();
+  renderBody();
+
+  const guessBase = displayForm(guess);
+  const candidates = allSegments().filter(seg =>
+    seg.keyIndex>=0 && (seg.state==="unsolved"||seg.state==="partial") && displayForm(keyChunk(seg))===guessBase
+  );
+  state.turns++;
+  const fb = $("#feedback");
+
+  if (!candidates.length){
+    fb.textContent = `"${guess}" isn't in the text — try again.`;
+    fb.className = "feedback bad";
+    renderBag(); renderBody();
+    return;
+  }
+  const exact = candidates.filter(seg => keyChunk(seg)===guess);
+  if (exact.length){
+    for (const seg of exact) seg.state = "justsolved";
+    state.found += exact.length;
+    fb.textContent = "Correct!";
+    fb.className = "feedback good";
+    renderBody(); renderBag();
+    if (checkComplete()) return finishPassage(false);
+    return;
+  }
+  const guessLetters = guess.replace(/[^A-Za-z0-9]/g,"");
+  const partial = candidates.find(seg => keyChunk(seg).replace(/[^A-Za-z0-9]/g,"") === guessLetters);
+  if (partial){
+    partial.state = "partial";
+    partial.partialGuess = guess;
+    fb.textContent = `"${guess}" is not right yet.`;
+    fb.className = "feedback bad";
+    renderBody();
+    return;
+  }
+  fb.textContent = "Not quite — try again.";
+  fb.className = "feedback bad";
+}
+
+/* ===================== help ===================== */
+function openHelp(){ $("#helpOverlay").hidden = false; }
+function closeHelp(){ $("#helpOverlay").hidden = true; }
+function useFreeWord(){
+  closeHelp();
+  sweepJustSolved();
+  const remaining = allSegments().filter(seg => seg.keyIndex>=0 && (seg.state==="unsolved"||seg.state==="partial"));
+  if (!remaining.length) return;
+  const seg = pick(remaining);
+  seg.state = "justsolved";
+  state.turns++;
+  state.helpsUsed++;
+  $("#feedback").textContent = `Free word: "${keyChunk(seg)}".`;
+  $("#feedback").className = "feedback";
+  renderBody(); renderBag();
+  if (checkComplete()) finishPassage(false);
+}
+function openAdvice(){
+  closeHelp();
+  const tips = ADVICE[state.level] || [];
+  $("#adviceTitle").textContent = `Level ${state.level} notes`;
+  $("#adviceBody").innerHTML = tips.map(t=>`<p>${escapeHtml(t)}</p>`).join("");
+  $("#adviceOverlay").hidden = false;
+}
+function closeAdvice(){ $("#adviceOverlay").hidden = true; $("#guessInput").focus(); }
+
+function openSeeText(){
+  sweepJustSolved(); renderBody();
+  state.turns++;
+  const p = state.passage;
+  let html = "";
+  p.lines.forEach((segs,li)=>{
+    if (p.dialogue && li>0) html += `<span class="brk"></span>`;
+    html += segs.map(seg=>escapeHtml(segWordsSolved(seg))).join(" ") + " ";
+  });
+  $("#seeTextBody").innerHTML = html;
+  $("#seeTextOverlay").hidden = false;
+  setTimeout(()=>{ $("#seeTextOverlay").hidden = true; renderBag(); }, 5000);
+}
+
+function openQuit(){ $("#quitOverlay").hidden = false; }
+function closeQuit(){ $("#quitOverlay").hidden = true; }
+function confirmQuit(){
+  closeQuit();
+  sweepJustSolved();
+  for (const seg of allSegments()) if (seg.keyIndex>=0 && seg.state!=="solved") seg.state = "quit-reveal";
+  finishPassage(true);
+}
+
+/* ===================== end of passage ===================== */
+// null means "no attempts made" -- 0 turns is not the same as a 0% (or 100%) score
+function computeScore(){
+  if (state.turns === 0) return null;
+  return Math.min(100, Math.round(100*state.found/state.turns));
+}
+function finishPassage(byQuit){
+  state.finishedByQuit = byQuit;
+  const p = state.passage;
+  let html = "";
+  p.lines.forEach((segs,li)=>{
+    if (p.dialogue && li>0) html += `<span class="brk"></span>`;
+    html += segs.map(seg=>escapeHtml(segWordsSolved(seg))).join(" ") + " ";
+  });
+  $("#endText").innerHTML = html;
+  const score = computeScore();
+  const scoreLine = score===null ? `<span class="score">No attempts made</span>` : `<span class="score">Score ${score}%</span>`;
+  $("#endStats").innerHTML =
+    `You found ${state.found} word${state.found===1?"":"s"} containing punctuation in ${state.turns} turn${state.turns===1?"":"s"}.<br>` +
+    scoreLine;
+  showScreen("end");
+}
+
+/* ===================== wiring ===================== */
+$("#guessInput").addEventListener("keydown", e=>{ if (e.key==="Enter") submitGuess(); });
+$("#f1Btn").addEventListener("click", openHelp);
+$("#f2Btn").addEventListener("click", openSeeText);
+$("#f10Btn").addEventListener("click", openQuit);
+$("#helpCancelBtn").addEventListener("click", closeHelp);
+$("#freeWordBtn").addEventListener("click", useFreeWord);
+$("#adviceBtn").addEventListener("click", openAdvice);
+$("#adviceCloseBtn").addEventListener("click", closeAdvice);
+$("#quitCancelBtn").addEventListener("click", closeQuit);
+$("#quitConfirmBtn").addEventListener("click", confirmQuit);
+
+$("#newTextBtn").addEventListener("click", ()=>{ startNewPassage(); showScreen("game"); });
+$("#mainMenuBtn").addEventListener("click", ()=> showScreen("menu"));
+
+renderMenu();
+showScreen("menu");
+</script>
+</body>
+</html>

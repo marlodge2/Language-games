@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TIGLET</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf1dc;
+    --panel: #fffdf6;
+    --ink: #4a3826;
+    --ink-dim: #8a7458;
+    --accent: #c98a2b;
+    --accent-dark: #a06b1a;
+    --leaf: #6b8f47;
+    --leaf-dark: #52702f;
+    --border: #e6d5ad;
+    --tiglet: #a0521b;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; min-height: 100%;
+    background: var(--bg);
+    background-image: radial-gradient(ellipse 700px 400px at 15% -10%, #fffaf0 0%, transparent 60%);
+    color: var(--ink);
+    font-family: 'Nunito', sans-serif;
+  }
+  #app {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 10px 16px 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  h1 {
+    margin: 0;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.5rem;
+    color: var(--tiglet);
+    text-align: center;
+    letter-spacing: 1px;
+  }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    box-shadow: 0 4px 14px rgba(74, 56, 38, 0.08);
+  }
+  .panel h2 {
+    margin: 0 0 10px 0;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.25rem;
+    color: var(--accent-dark);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 6px;
+  }
+
+  #foodGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 8px;
+    max-height: 420px;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+  .food-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 10px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    background: #fffaf0;
+  }
+  .food-card:hover { background: #fdf2da; }
+  .food-card.highlight { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .food-card.tried { opacity: 0.55; }
+  .food-card.secret { border: 2px dashed #c98a2b; background: #fff3d6; box-shadow: 0 0 0 2px rgba(201, 138, 43, 0.25); }
+  .food-card.secret .name::after { content: " 🎯"; }
+  .food-card .emoji { font-size: 1.6rem; flex: none; line-height: 1.3; }
+  .food-card .name { font-weight: 700; display: block; font-size: 0.92rem; }
+  .food-card .desc { color: var(--ink-dim); font-size: 0.78rem; line-height: 1.25; }
+
+  #transcript {
+    background: #fffaf0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    height: 112px;
+    overflow-y: auto;
+    font-size: 0.98rem;
+    line-height: 1.45;
+  }
+  #transcript .line { margin: 4px 0; }
+  #transcript .learner { color: var(--ink); }
+  #transcript .learner::before { content: "You: "; color: var(--ink-dim); font-weight: 700; }
+  #transcript .auto::before { content: "(auto) You: "; color: var(--ink-dim); font-style: italic; font-weight: 400; }
+  #transcript .tiglet { color: var(--tiglet); font-weight: 600; }
+  #transcript .tiglet::before { content: "Tiglet: "; color: var(--tiglet); font-weight: 700; }
+  #transcript .system { color: var(--ink-dim); font-style: italic; }
+
+  form#inputForm { display: flex; gap: 8px; }
+  #inputBox {
+    flex: 1;
+    background: #fff;
+    border: 1.5px solid var(--border);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+  }
+  #inputBox:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+
+  #speakToggleRow { display: none; text-align: center; font-size: 0.9rem; color: var(--ink-dim); margin-bottom: 8px; }
+
+  #micBtn { font-size: 1.1rem; line-height: 1; padding: 8px 12px; }
+  #micBtn.listening {
+    background: #b23b23;
+    border-color: #b23b23;
+    color: #fff;
+    animation: micPulse 1s ease-in-out infinite;
+  }
+  @keyframes micPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  button {
+    background: #fff;
+    color: var(--accent-dark);
+    border: 2px solid var(--accent);
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.15s, 
+    
+    transform 0.08s;
+  }
+  button:hover { background: #fdf2da; }
+  button:active { transform: translateY(1px); }
+  button.primary { background: var(--accent); color: #fff; }
+  button.primary:hover { background: var(--accent-dark); }
+  button.leaf { border-color: var(--leaf); color: var(--leaf-dark); }
+  button.leaf:hover { background: #eef4e8; }
+
+  .controls { display: flex; gap: 8px; flex-wrap: wrap; justify-content: space-between; }
+  .controls .group { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  details#help {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.88rem;
+    color: var(--ink-dim);
+  }
+  details#help summary { cursor: pointer; color: var(--ink); font-weight: 700; }
+  details#help ul { margin: 8px 0 0 18px; padding: 0; }
+  details#help p { margin: 8px 0; }
+  details#help code {
+    background: #fdf2da;
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--accent-dark);
+  }
+
+  .tiglet-footer {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--ink-dim);
+    margin: 4px 0 0;
+  }
+  .tiglet-footer a { color: var(--accent-dark); }
+
+  [hidden] { display: none !important; }
+
+  @media print {
+    body { background: #fff; }
+    details#help, .tiglet-footer, form#inputForm, .controls { display: none !important; }
+    .panel { box-shadow: none; border: 1px solid #999; }
+    #app { padding: 6px 8px; gap: 6px; }
+    h1 { font-size: 1.5rem; }
+    #foodGrid { max-height: none; overflow: visible; }
+    #transcript { height: auto; overflow: visible; }
+    body:not(.printing-larder) #larderPanel { display: none !important; }
+    body:not(.printing-transcript) #transcriptPanel { display: none !important; }
+
+    /* Condense the larder so it fits on one side of A4, and make the
+       description legible instead of the on-screen muted tone. */
+    body.printing-larder .panel { padding: 6px 8px; }
+    body.printing-larder .panel h2 { font-size: 1rem; margin-bottom: 4px; padding-bottom: 3px; }
+    body.printing-larder #foodGrid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+    }
+    body.printing-larder .food-card {
+      padding: 4px 6px;
+      border-width: 1px;
+      gap: 5px;
+    }
+    body.printing-larder .food-card .emoji { font-size: 1.1rem; }
+    body.printing-larder .food-card .name { font-size: 0.78rem; }
+    body.printing-larder .food-card .desc {
+      font-size: 0.7rem;
+      line-height: 1.15;
+      color: #2b1d10;
+      font-weight: 600;
+    }
+  }
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>
+</head>
+<body>
+<div id="app">
+  <p style="text-align:center; font-size:0.85rem;"><a href="../thai-help/tiglet-th.html">ภาษาไทย (Thai instructions)</a></p>
+  <h1>TIGLET</h1>
+
+  <div class="panel" id="larderPanel">
+    <h2>The larder</h2>
+    <div id="foodGrid"></div>
+  </div>
+
+  <div class="panel" id="transcriptPanel" style="padding:0; overflow:hidden;">
+    <div id="transcript"></div>
+  </div>
+
+  <label id="speakToggleRow">
+    <input type="checkbox" id="speakToggle" /> <span id="speakToggleLabel">Sound On</span>
+  </label>
+
+  <form id="inputForm" autocomplete="off">
+    <input id="inputBox" type="text" placeholder="Offer Tiglet something… (leave blank and press Enter to watch him try things himself)" />
+    <button type="button" id="micBtn" aria-label="Speak your offer" style="display:none;">&#127908;</button>
+    <button class="primary" id="sendBtn" type="submit" aria-label="Send">&#9166;</button>
+  </form>
+
+  <div class="controls">
+    <div class="group">
+      <button id="clearBtn" type="button">Clear screen</button>
+      <button id="printLarderBtn" type="button">🖨 Print larder</button>
+      <button id="printTranscriptBtn" type="button" hidden>🖨 Print dialogue</button>
+    </div>
+    <div class="group">
+      <button id="revealBtn" type="button">I give up</button>
+      <button class="leaf" id="restartBtn" type="button">New Tiglet</button>
+    </div>
+  </div>
+
+  <details id="help">
+    <summary>What is this?</summary>
+    <p>
+      Somewhere in the larder above is one thing Tiglet actually likes. Everything else, he'll turn
+      down &mdash; and tell you why, all in one breath: too sweet, too sour, too spicy, too bitter, too
+      savoury; the wrong colour; or simply a food-group he doesn't touch (meat, fish, vegetables,
+      dairy, fruit, bread and rice, or puddings).
+    </p>
+    <ul>
+      <li>Offer him something &mdash; <code>Would you like an apple?</code>, <code>How about some cheese?</code>, <code>Try the banana.</code>, or just <code>apple</code></li>
+      <li>Click a card in the larder to fill in an offer for you</li>
+      <li>Leave the box empty and press Enter to let Tiglet try the next thing himself &mdash; keep pressing to watch the whole game play out</li>
+      <li>Use what he says to rule things out. If he says a food-group is wrong, try a different group. If it's the taste, try a different taste. If it's the colour, try a different colour.</li>
+    </ul>
+    <p>The parser only understands simple offers built around the food names in the larder above &mdash; it won't follow a long story, so keep it short.</p>
+  </details>
+  <p class="tiglet-footer">&larr; <a href="index.html">Back to Grammarland</a></p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------------------------------------------------------
+   * DATA: the larder.
+   * Each food is tagged on three dimensions (group, taste, colour).
+   * Tiglet's secret favourite is one food picked at random each game;
+   * any offer is compared to it on those three dimensions, and the
+   * first dimension (in that fixed order) that doesn't match becomes
+   * the reason for turning it down.
+   * ------------------------------------------------------------- */
+
+  var FOODS = [
+    { id: "apple", name: "an apple", emoji: "🍏", group: "fruit", taste: "sweet", colour: "green",
+      desc: "A crisp, green apple, sweet and juicy." },
+    { id: "lemon", name: "a lemon", emoji: "🍋", group: "fruit", taste: "sour", colour: "yellow",
+      desc: "A bright yellow lemon, sharp and sour." },
+    { id: "chilli", name: "a chilli pepper", emoji: "🌶️", group: "vegetable", taste: "spicy", colour: "red",
+      desc: "A small red chilli pepper, fiery and hot." },
+    { id: "broccoli", name: "some broccoli", emoji: "🥦", group: "vegetable", taste: "bitter", colour: "green",
+      desc: "A head of green broccoli, a little bitter but good for you." },
+    { id: "carrot", name: "a carrot", emoji: "🥕", group: "vegetable", taste: "sweet", colour: "orange",
+      desc: "A crunchy orange carrot, surprisingly sweet." },
+    { id: "banana", name: "a banana", emoji: "🍌", group: "fruit", taste: "sweet", colour: "yellow",
+      desc: "A soft yellow banana, sweet and creamy." },
+    { id: "steak", name: "some steak", emoji: "🥩", group: "meat", taste: "savoury", colour: "brown",
+      desc: "A grilled brown steak, rich and savoury." },
+    { id: "fish", name: "some fried fish", emoji: "🐟", group: "fish", taste: "savoury", colour: "brown",
+      desc: "A piece of fried fish, golden-brown and savoury." },
+    { id: "cheese", name: "some cheese", emoji: "🧀", group: "dairy", taste: "savoury", colour: "yellow",
+      desc: "A wedge of yellow cheese, mild and savoury." },
+    { id: "milk", name: "some milk", emoji: "🥛", group: "dairy", taste: "savoury", colour: "white",
+      desc: "A glass of white milk, mild and creamy." },
+    { id: "bread", name: "some bread", emoji: "🍞", group: "grain", taste: "savoury", colour: "brown",
+      desc: "A warm brown loaf of bread, plain and filling." },
+    { id: "rice", name: "some rice", emoji: "🍚", group: "grain", taste: "savoury", colour: "white",
+      desc: "A bowl of white rice, plain and simple." },
+    { id: "cake", name: "some chocolate cake", emoji: "🍰", group: "dessert", taste: "sweet", colour: "brown",
+      desc: "A slice of rich brown chocolate cake, very sweet." },
+    { id: "icecream", name: "some ice cream", emoji: "🍨", group: "dessert", taste: "sweet", colour: "white",
+      desc: "A scoop of white vanilla ice cream, cold and sweet." },
+    { id: "grapes", name: "some grapes", emoji: "🍇", group: "fruit", taste: "sweet", colour: "purple",
+      desc: "A bunch of purple grapes, sweet and juicy." },
+    { id: "spinach", name: "some spinach", emoji: "🥬", group: "vegetable", taste: "savoury", colour: "green",
+      desc: "A pile of green spinach leaves, mild and savoury." },
+    { id: "pickle", name: "a pickle", emoji: "🥒", group: "vegetable", taste: "sour", colour: "green",
+      desc: "A crunchy green pickle, sharp and sour." },
+    { id: "orange", name: "an orange", emoji: "🍊", group: "fruit", taste: "sweet", colour: "orange",
+      desc: "A juicy orange, sweet with a little tang." },
+    { id: "curry", name: "some curry", emoji: "🍛", group: "meat", taste: "spicy", colour: "yellow",
+      desc: "A bowl of spicy curry, warm and fiery, yellow with turmeric." },
+    { id: "lime", name: "a lime", emoji: "🍈", group: "fruit", taste: "sour", colour: "green",
+      desc: "A small green lime, very sour." },
+    { id: "watermelon", name: "some watermelon", emoji: "🍉", group: "fruit", taste: "sweet", colour: "red",
+      desc: "A slice of watermelon, red and very sweet." },
+    { id: "yogurt", name: "some yogurt", emoji: "🥣", group: "dairy", taste: "sour", colour: "white",
+      desc: "A pot of white yogurt, tangy and a little sour." }
+  ];
+
+  var GROUP_PHRASE = {
+    fruit: "I don't really go in for fruit.",
+    vegetable: "I don't like vegetables, I'm afraid.",
+    meat: "Oh, I don't touch meat.",
+    fish: "Fish? No, not for me.",
+    dairy: "I'm not one for dairy food.",
+    grain: "I don't much care for bread and rice.",
+    dessert: "Puddings aren't really my sort of thing."
+  };
+
+  var byId = {};
+  FOODS.forEach(function (f) { byId[f.id] = f; });
+
+  // Two foods with identical (group, taste, colour) are indistinguishable to
+  // the win-check, so either would be accepted as "the" secret favourite.
+  // Warn loudly if the list is ever edited into that state again.
+  (function checkForDuplicateProfiles() {
+    var seen = {};
+    FOODS.forEach(function (f) {
+      var key = f.group + "|" + f.taste + "|" + f.colour;
+      if (seen[key]) {
+        console.warn("TIGLET: " + f.id + " and " + seen[key] + " share the same group/taste/colour (" + key + ") — either could be accepted for the other.");
+      }
+      seen[key] = f.id;
+    });
+  })();
+
+  /* ---------------------------------------------------------------
+   * GAME STATE
+   * ------------------------------------------------------------- */
+  var secret = null;
+  var tried = {}; // id -> true
+  var won = false;
+
+  function newGame() {
+    secret = FOODS[Math.floor(Math.random() * FOODS.length)];
+    tried = {};
+    won = false;
+    revealMode = false;
+  }
+  newGame();
+
+  /* ---------------------------------------------------------------
+   * UI: larder grid
+   * ------------------------------------------------------------- */
+  var foodGridEl = document.getElementById("foodGrid");
+  var cardById = {};
+
+  var revealMode = false; // temporary testing aid — off by default, see revealBtn
+
+  function renderFoodGrid() {
+    foodGridEl.innerHTML = "";
+    FOODS.forEach(function (f) {
+      var card = document.createElement("div");
+      card.className = "food-card" + (tried[f.id] ? " tried" : "");
+      card.innerHTML =
+        '<span class="emoji">' + f.emoji + '</span>' +
+        '<span class="who"><span class="name">' + capitalize(f.name) + '</span><span class="desc">' + f.desc + '</span></span>';
+      card.addEventListener("click", function () {
+        inputBox.value = "Would you like " + f.name + "?";
+        inputBox.focus();
+        highlightFood(f);
+      });
+      foodGridEl.appendChild(card);
+      cardById[f.id] = card;
+    });
+    updateRevealHighlight();
+  }
+  function highlightFood(f) {
+    FOODS.forEach(function (o) { cardById[o.id].classList.remove("highlight"); });
+    cardById[f.id].classList.add("highlight");
+  }
+  function markTried(f) {
+    tried[f.id] = true;
+    renderFoodGrid();
+    highlightFood(f);
+  }
+  function updateRevealHighlight() {
+    FOODS.forEach(function (o) { cardById[o.id].classList.remove("secret"); });
+    if (revealMode && secret) cardById[secret.id].classList.add("secret");
+  }
+  function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  /* ---------------------------------------------------------------
+   * UI: transcript
+   * ------------------------------------------------------------- */
+  var transcriptEl = document.getElementById("transcript");
+  var exchangeCount = 0;
+  var PRINT_DIALOGUE_AFTER = 8; // the print-dialogue button appears once past this many exchanges
+  var printTranscriptBtn = document.getElementById("printTranscriptBtn");
+
+  /* ---------------- optional text-to-speech for replies ---------------- */
+
+  var speechSupported = "speechSynthesis" in window;
+  var speakEnabled = false;
+  var speakToggle = document.getElementById("speakToggle");
+  var speakToggleRow = document.getElementById("speakToggleRow");
+  var speakToggleLabel = document.getElementById("speakToggleLabel");
+
+  function updateSpeakLabel() {
+    speakToggleLabel.textContent = speakEnabled ? "Sound Off" : "Sound On";
+  }
+
+  if (speechSupported) {
+    speakToggleRow.style.display = "block";
+    try {
+      speakEnabled = localStorage.getItem("tiglet_speak") === "1";
+    } catch (e) {}
+    speakToggle.checked = speakEnabled;
+    updateSpeakLabel();
+    speakToggle.addEventListener("change", function () {
+      speakEnabled = speakToggle.checked;
+      try {
+        localStorage.setItem("tiglet_speak", speakEnabled ? "1" : "0");
+      } catch (e) {}
+      updateSpeakLabel();
+      if (!speakEnabled) window.speechSynthesis.cancel();
+    });
+  }
+
+  function speak(text) {
+    if (!speechSupported || !speakEnabled || !text) return;
+    window.speechSynthesis.cancel();
+    setTimeout(function () {
+      var utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "en-GB";
+      window.speechSynthesis.speak(utterance);
+    }, 50);
+  }
+
+  function say(role, text) {
+    var div = document.createElement("div");
+    div.className = "line " + role;
+    div.textContent = text;
+    transcriptEl.appendChild(div);
+    transcriptEl.scrollTop = transcriptEl.scrollHeight;
+    if (role === "tiglet") {
+      exchangeCount++;
+      if (exchangeCount > PRINT_DIALOGUE_AFTER) printTranscriptBtn.hidden = false;
+    }
+    if (role === "tiglet" || role === "auto" || role === "system") speak(text);
+  }
+
+  /* ---------------------------------------------------------------
+   * FINDING A FOOD IN TYPED TEXT
+   * Very forgiving: just looks for a known food's key word anywhere
+   * in what was typed, regardless of the sentence around it.
+   * ------------------------------------------------------------- */
+  function findFoodInText(text) {
+    var lower = " " + text.toLowerCase().replace(/[.,!?;:]/g, "") + " ";
+    var best = null, bestLen = 0;
+    FOODS.forEach(function (f) {
+      var word = f.id === "icecream" ? "ice cream" : f.id;
+      if (lower.indexOf(" " + word + " ") !== -1 || lower.indexOf(" " + word + "s ") !== -1) {
+        if (word.length > bestLen) { best = f; bestLen = word.length; }
+      }
+    });
+    return best;
+  }
+
+  /* ---------------------------------------------------------------
+   * OFFERING A FOOD
+   * ------------------------------------------------------------- */
+  function reasonFor(offered) {
+    if (offered.group !== secret.group) return GROUP_PHRASE[offered.group];
+    if (offered.taste !== secret.taste) return "I don't like anything too " + offered.taste + ".";
+    if (offered.colour !== secret.colour) return "That's really not the right colour for me.";
+    return null; // matches on all three
+  }
+
+  function offerFood(f, isAuto) {
+    markTried(f);
+    if (won) return;
+    var reason = reasonFor(f);
+    if (reason === null) {
+      won = true;
+      say("tiglet", "Oh! Yes, I like " + f.name + " very much indeed!");
+      var count = Object.keys(tried).length;
+      say("system", "(Tiglet's favourite was " + f.name + ". It took " + count + (count === 1 ? " offer" : " offers") + " to find it. Press “New Tiglet” to play again.)");
+    } else {
+      say("tiglet", "No, thank you. " + reason);
+    }
+  }
+
+  /* ---------------------------------------------------------------
+   * WIRING
+   * ------------------------------------------------------------- */
+  var form = document.getElementById("inputForm");
+  var inputBox = document.getElementById("inputBox");
+
+  /* ---------------- optional speech recognition for input ---------------- */
+  /* Opt-in, not default: the mic button only appears if the browser
+     actually supports it, and it only ever fills the text box — it
+     never submits on your behalf, so you can check/correct what it
+     heard before sending it. */
+
+  var SpeechRecognitionCtor = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var micBtn = document.getElementById("micBtn");
+  var sendBtn = document.getElementById("sendBtn");
+  var recognizer = null;
+  var listening = false;
+  var inputPlaceholder = inputBox.placeholder;
+
+  function setListening(on) {
+    listening = on;
+    micBtn.classList.toggle("listening", on);
+    // Recognition keeps running for a moment after you stop talking, while
+    // it processes what it heard — Send stays disabled the whole time, so
+    // an early Enter/click can't submit an empty line before the words
+    // actually arrive.
+    sendBtn.disabled = on;
+    inputBox.placeholder = on ? "Listening…" : inputPlaceholder;
+  }
+
+  if (SpeechRecognitionCtor) {
+    micBtn.style.display = "";
+    recognizer = new SpeechRecognitionCtor();
+    recognizer.lang = "en-GB";
+    recognizer.continuous = false;
+    recognizer.interimResults = false;
+    recognizer.maxAlternatives = 1;
+
+    recognizer.addEventListener("result", function (event) {
+      var transcript = event.results[0][0].transcript;
+      inputBox.value = transcript;
+      inputBox.focus();
+    });
+    recognizer.addEventListener("end", function () {
+      setListening(false);
+    });
+    recognizer.addEventListener("error", function () {
+      setListening(false);
+    });
+
+    micBtn.addEventListener("click", function () {
+      if (listening) {
+        recognizer.stop();
+        return;
+      }
+      setListening(true);
+      try {
+        recognizer.start();
+      } catch (e) {
+        setListening(false);
+      }
+    });
+  }
+
+  var MIN_TRIES_BEFORE_AUTO_SECRET = 5; // the auto-player won't stumble onto the answer before this many offers
+
+  function offerRandomUntried() {
+    var untried = FOODS.filter(function (f) { return !tried[f.id]; });
+    if (!untried.length) return null;
+    if (Object.keys(tried).length < MIN_TRIES_BEFORE_AUTO_SECRET) {
+      var withoutSecret = untried.filter(function (f) { return f.id !== secret.id; });
+      if (withoutSecret.length) untried = withoutSecret;
+    }
+    return untried[Math.floor(Math.random() * untried.length)];
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var raw = inputBox.value;
+    inputBox.value = "";
+
+    if (won) {
+      say("system", "(Tiglet's already happy — press “New Tiglet” to start again.)");
+      return;
+    }
+
+    if (!raw.trim()) {
+      var next = offerRandomUntried();
+      if (!next) { say("system", "(There's nothing left in the larder to try!)"); return; }
+      say("auto", "Would you like " + next.name + "?");
+      offerFood(next, true);
+      return;
+    }
+
+    say("learner", raw);
+    var found = findFoodInText(raw);
+    if (!found) {
+      say("tiglet", "I'm not sure what you're offering me there — try naming something from the larder.");
+      return;
+    }
+    offerFood(found, false);
+  });
+
+  document.getElementById("clearBtn").addEventListener("click", function () {
+    transcriptEl.innerHTML = "";
+    exchangeCount = 0;
+    printTranscriptBtn.hidden = true;
+  });
+
+  var revealBtn = document.getElementById("revealBtn");
+  revealBtn.addEventListener("click", function () {
+    if (won) {
+      say("system", "(Tiglet's already happy — press “New Tiglet” to start again.)");
+      return;
+    }
+    won = true;
+    revealMode = true;
+    updateRevealHighlight();
+    say("system", "(You gave up — Tiglet's favourite was " + secret.name + ". Press “New Tiglet” to play again.)");
+  });
+
+  function printOnly(className) {
+    document.body.classList.add(className);
+    window.print();
+  }
+  window.addEventListener("afterprint", function () {
+    document.body.classList.remove("printing-larder", "printing-transcript");
+  });
+  document.getElementById("printLarderBtn").addEventListener("click", function () {
+    printOnly("printing-larder");
+  });
+  printTranscriptBtn.addEventListener("click", function () {
+    printOnly("printing-transcript");
+  });
+
+  document.getElementById("restartBtn").addEventListener("click", function () {
+    newGame();
+    renderFoodGrid();
+    transcriptEl.innerHTML = "";
+    exchangeCount = 0;
+    printTranscriptBtn.hidden = true;
+    say("system", "A new Tiglet has arrived, with a new favourite hidden somewhere in the larder.");
+    inputBox.focus();
+  });
+
+  // greet
+  renderFoodGrid();
+  say("system", "Tiglet is hungry, but fussy. Offer him something from the larder, or leave the box empty and press Enter to watch him try things himself.");
+  inputBox.focus();
+})();
+</script>
+</body>
+</html>

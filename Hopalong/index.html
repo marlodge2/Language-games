@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HOPALONG</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6fb;
+    margin: 0;
+    padding: 20px 16px 60px 16px;
+    text-align: center;
+    color: #222;
+  }
+  h1 { margin-bottom: 4px; }
+  .byline { color: #555; margin-top: 0; }
+  .note {
+    max-width: 680px;
+    margin: 14px auto 20px auto;
+    background: #fff8dc;
+    border: 2px solid #3366cc;
+    border-radius: 8px;
+    padding: 12px 18px;
+    text-align: left;
+    font-size: 0.92em;
+    line-height: 1.5em;
+  }
+  .screen { display: none; max-width: 900px; margin: 0 auto; }
+  .screen.active { display: block; }
+
+  .menubar {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  button, select {
+    font-size: 0.95em;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: 2px solid #3366cc;
+    background: #fff;
+    color: #3366cc;
+    cursor: pointer;
+  }
+  button:hover, select:hover { background: #eaf0fc; }
+  button.primary { background: #3366cc; color: #fff; }
+  button.primary:hover { background: #254a99; }
+  button:disabled { opacity: 0.4; cursor: default; }
+
+  /* ---------- Launch screen ---------- */
+  .big-button {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    margin: 10px auto;
+    padding: 18px;
+    font-size: 1.15em;
+    font-weight: bold;
+  }
+
+  /* ---------- Settings ---------- */
+  .settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    max-width: 700px;
+    margin: 0 auto 20px auto;
+    text-align: left;
+  }
+  .settings-box {
+    background: #fff;
+    border: 1px solid #ccd4e6;
+    border-radius: 8px;
+    padding: 12px 16px;
+  }
+  .settings-box h3 { margin: 0 0 8px 0; font-size: 1em; color: #3366cc; }
+  .settings-box label { display: block; margin: 4px 0; font-size: 0.9em; }
+  .color-swatch {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border: 1px solid #888;
+    border-radius: 3px;
+    vertical-align: middle;
+    margin-right: 4px;
+  }
+
+  /* ---------- Text list ---------- */
+  .text-list { max-width: 640px; margin: 0 auto; text-align: left; }
+  .text-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #ccd4e6;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    cursor: pointer;
+  }
+  .text-item:hover { background: #eaf0fc; }
+  .text-item .meta { font-size: 0.85em; color: #666; }
+
+  /* ---------- Intro screen ---------- */
+  .intro-box {
+    background: #fff;
+    border: 2px solid #3366cc;
+    border-radius: 10px;
+    padding: 24px;
+    max-width: 600px;
+    margin: 0 auto 18px auto;
+    text-align: left;
+    white-space: pre-wrap;
+    font-size: 1.05em;
+    line-height: 1.5em;
+  }
+
+  /* ---------- Reading screen ---------- */
+  #readStatus {
+    display: flex;
+    justify-content: space-between;
+    max-width: 900px;
+    margin: 0 auto 8px auto;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+    font-size: 0.95em;
+  }
+  #readViewport {
+    max-width: 900px;
+    height: 60vh;
+    min-height: 380px;
+    margin: 0 auto;
+    overflow-y: hidden;
+    border: 2px solid #333;
+    border-radius: 6px;
+    position: relative;
+    text-align: left;
+  }
+  #readInner { padding: 20px; transition: transform 0.15s linear; }
+  .phrase { display: inline; }
+  .phrase.centered-mode {
+    display: block;
+    text-align: center;
+    font-size: 1.6em;
+    padding: 10px 0;
+  }
+  .read-controls-hint {
+    max-width: 900px;
+    margin: 10px auto 0 auto;
+    font-size: 0.85em;
+    color: #555;
+    text-align: left;
+  }
+  #pauseOverlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    font-weight: bold;
+    color: #c0392b;
+  }
+
+  /* ---------- Report screen ---------- */
+  #graphCanvas {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    max-width: 100%;
+  }
+  .report-stats { max-width: 480px; margin: 14px auto; text-align: left; font-size: 1.02em; }
+  .report-stats div { margin: 4px 0; }
+
+  /* ---------- Questions ---------- */
+  .q-box {
+    background: #fff;
+    border: 2px solid #3366cc;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto 16px auto;
+    text-align: left;
+  }
+  .q-stem { font-weight: bold; margin-bottom: 12px; }
+  .q-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    margin: 6px 0;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid #ccd4e6;
+    background: #fff;
+    color: #222;
+    cursor: pointer;
+  }
+  .q-option:hover { background: #f0f4fb; }
+  .q-option.picked { border-color: #3366cc; background: #eaf0fc; color: #1c3d8f; font-weight: bold; }
+  .q-option.correct-reveal { border-color: #c0392b; color: #c0392b; font-weight: bold; }
+
+  /* ---------- Marked-up text (print view) ---------- */
+  .marked-text {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: left;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    line-height: 1.8em;
+  }
+  .mark { color: #c0392b; font-weight: bold; }
+
+  @media print {
+    .menubar, .read-controls-hint, .note { display: none !important; }
+  }
+</style>
+<!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>   
+
+</head>
+<body>
+
+  <h1>HOPALONG</h1>
+  <p class="byline">a reading pacer &mdash; by John and Muriel Higgins, 1988&ndash;1992, revised 2026</p>
+
+  <div class="note" id="introNote">
+    HOPALONG runs a highlight through a text at a speed you control, to help you find a
+    comfortable reading rhythm and see how it changes across a passage. It is not a race
+    or a test &mdash; it's a way to notice your own reading habits, ideally to discuss with a
+    teacher afterwards.
+  </div>
+
+  <!-- ============ LAUNCH SCREEN ============ -->
+  <div id="launchScreen" class="screen active">
+    <button id="startBtn" class="big-button primary">Start reading</button>
+    <button id="settingsBtn" class="big-button">Colour, layout &amp; speed range</button>
+  </div>
+
+  <!-- ============ SETTINGS SCREEN ============ -->
+  <div id="settingsScreen" class="screen">
+    <div class="settings-grid">
+      <div class="settings-box">
+        <h3>Layout</h3>
+        <label><input type="radio" name="layout" value="80"> 80-column &mdash; normal book-style paragraph</label>
+        <label><input type="radio" name="layout" value="40"> 40-column &mdash; large, one phrase at a time</label>
+      </div>
+      <div class="settings-box">
+        <h3>Speed range</h3>
+        <label><input type="radio" name="range" value="slow"> SLOW (50&ndash;300 wpm, short phrases)</label>
+        <label><input type="radio" name="range" value="fast"> FAST (100&ndash;600 wpm, longer phrases)</label>
+      </div>
+      <div class="settings-box">
+        <h3>Text colour</h3>
+        <select id="foreSelect"></select>
+      </div>
+      <div class="settings-box">
+        <h3>Background colour</h3>
+        <select id="groundSelect"></select>
+      </div>
+      <div class="settings-box">
+        <h3>Highlight colour</h3>
+        <select id="highSelect"></select>
+      </div>
+    </div>
+    <div id="colorSample" class="intro-box" style="max-width:600px;">Sample text in the <span id="sampleHighlight">highlighted phrase</span> style.</div>
+    <button id="settingsDoneBtn" class="primary">Done</button>
+  </div>
+
+  <!-- ============ TEXT LIST SCREEN ============ -->
+  <div id="listScreen" class="screen">
+    <h2>Choose a text</h2>
+    <div class="text-list" id="textList"></div>
+  </div>
+
+  <!-- ============ INTRO SCREEN ============ -->
+  <div id="introScreen" class="screen">
+    <div class="intro-box" id="introText"></div>
+    <button id="introContinueBtn" class="primary">Read this page carefully, then click here</button>
+  </div>
+
+  <!-- ============ READING SCREEN ============ -->
+  <div id="readingScreen" class="screen">
+    <div id="readStatus">
+      <span id="readSpeed">Speed: 180 wpm</span>
+      <span id="readTitle"></span>
+      <span id="readProgress">0%</span>
+    </div>
+    <div id="readViewport">
+      <div id="readInner"></div>
+      <div id="pauseOverlay">PAUSED</div>
+    </div>
+    <div class="read-controls-hint">
+      &larr; slower &nbsp;&nbsp; &rarr; faster &nbsp;&nbsp; &darr; pause/resume &nbsp;&nbsp;
+      Home = back to start &nbsp;&nbsp; PgUp = back a bit &nbsp;&nbsp; Esc = finish
+    </div>
+  </div>
+
+  <!-- ============ REPORT SCREEN ============ -->
+  <div id="reportScreen" class="screen">
+    <h2>How you read it</h2>
+    <canvas id="graphCanvas" width="640" height="280"></canvas>
+    <div class="report-stats" id="reportStats"></div>
+    <div class="menubar">
+      <button id="printBtn">Print marked-up text</button>
+      <button id="readAgainBtn">Read again</button>
+      <button id="answerQBtn">Answer questions</button>
+      <button id="reportExitBtn" class="primary">Main menu</button>
+    </div>
+  </div>
+
+  <!-- ============ QUESTIONS SCREEN ============ -->
+  <div id="questionsScreen" class="screen">
+    <h2>Comprehension questions</h2>
+    <div id="qBox" class="q-box"></div>
+    <div class="menubar">
+      <button id="qPrevBtn">&larr; Previous</button>
+      <button id="qNextBtn">Next &rarr;</button>
+      <button id="qCheckBtn">Check all answers</button>
+      <button id="qDoneBtn" class="primary">Done</button>
+    </div>
+  </div>
+
+  <!-- ============ MARKED TEXT (PRINT) SCREEN ============ -->
+  <div id="printScreen" class="screen">
+    <h2 id="printTitle">Marked-up text</h2>
+    <p style="max-width:700px;margin:0 auto 14px auto;text-align:left;">
+      <span class="mark">[&gt;]</span> sped up &nbsp;
+      <span class="mark">[&lt;]</span> slowed down &nbsp;
+      <span class="mark">[^]</span> went back a page &nbsp;
+      <span class="mark">[^^]</span> went back to the start &nbsp;
+      <span class="mark">[+]</span> came back to this point &nbsp;
+      <span class="mark">[Ns]</span> paused for N seconds
+    </p>
+    <div class="marked-text" id="markedText"></div>
+    <div class="menubar">
+      <button onclick="window.print()">Print</button>
+      <button id="printBackBtn" class="primary">Back to report</button>
+    </div>
+  </div>
+
+<script>
+const STORIES = [{"title":"OFFICE BOY IN LONDON","difficulty":2,"wordTotal":614,"chunkedBy":"original","slow":["My chief duty","as an office boy","was to copy letters.","Only very few","of the communications","were then typewritten.","There were","no female typists","and only","the most senior","of the staff","had male","shorthand writers","attached to them.","All inter-office letters","and ordinary letters","to clients","were written","in copying ink","by the clerks concerned,","and all these letters","had to be copied","by damping","the tissue-paper leaves","of a huge book,","inserting the letters,","separating them with","oiled waterproof paper,","and putting","the book into","a heavy iron press.","The letters","were removed and","put into envelopes,","on most of which","I had to","write the address.","First thing","in the morning","I had to index","the previous day's","complete pages in","the letter-copying book,","so that any clerk","receiving a reply","to his letter","could refer","to the copy.","After a few weeks","I was late","for work","and was demoted","to messenger boy","in the Shipping","and Forwarding Department.","My duties were","to collect","despatch advice notes","from the various","sections of","the department,","carry these","in a leather bag","to the warehouse,","and on returning,","distribute","advice arrival notes","of goods received","in the warehouse.","The distance","from Ludgate Circus","to the warehouse","in Coach and Horses Yard","was about","two and a half miles","and I was given","a shilling a day","for bus fares,","enough for","three round trips.","Motor buses","were just beginning","to appear","on the streets,","but there were also","horse-drawn buses","still plying","the route.","The fare","was two pence,","but by walking about","two hundred yards","to the Law Courts","and by getting off","at Piccadilly Circus","one could ride","for one penny,","as my predecessor","quickly taught me.","Thus I could","save sixpence","a day and,","by being demoted,","was half a crown","a week","better off,","since no such perks","were available","to office boys","in the British Department.","The head","of the department","was a character","named Lee.","He had had","a senior job","with the London","Parcels Delivery Company,","who had stables","and depots","in Soho Street.","All their vans","were horse-drawn,","and we had two","of their vans","on hire.","Lee was therefore","known as 'Horsey'.","His office rigout","was a silk","top hat","and a frock coat.","He got","to the office","at 8 a m","on the dot","and personally","opened all the letters,","marking a number","of them PSM","in blue pencil.","If you got one","of the marked ones","you had to","\"Please See Me\".","He didn't miss much","of what was going on.","At 10:30","to the minute","every day","he emerged","from his","glass-windowed office,","put on","his top hat,","and made his way","to one of","the well-known","Fleet Street pubs","for his","daily glass","of champagne.","Lee lived","in a flat","in the Grays Inn Road","about ten minutes walk","from Ludgate Circus.","It had no telephone","(they were","still unusual","in private dwellings).","The old chap","must have had","a few","convivial friends","and he often","found it necessary","to send a note","to his wife","saying he","would be home","late that night.","I was","sometimes chosen","to be one","of the note-carriers.","His wife","would invite","the note-carrier in","and, after making","him swear","he would not","divulge it","to her husband,","offer him","a glass of port.","When the messenger","returned to","the office","to report","the safe delivery","of the note,","Lee would ask","\"Did she give you","a glass of wine?\"","On being told \"No\",","he would say","\"She's very mean.","I must tell her","next time","you are","to have one.\""],"fast":["My chief duty","as an office boy","was to copy letters.","Only very few","of the communications","were then typewritten.","There were no female typists","and only the most senior","of the staff","had male shorthand writers","attached to them.","All inter-office letters","and ordinary letters to clients","were written in copying ink","by the clerks concerned,","and all these letters","had to be copied by damping","the tissue-paper leaves","of a huge book,","inserting the letters,","separating them with","oiled waterproof paper,","and putting the book","into a heavy iron press.","The letters were removed","and put into envelopes,","on most of which","I had to write the address.","First thing in the morning","I had to index","the previous day's complete pages","in the letter-copying book,","so that any clerk","receiving a reply to his letter","could refer to the copy.","After a few weeks","I was late for work","and was demoted to messenger boy in","the Shipping and Forwarding Department.","My duties were to collect","despatch advice notes from","the various sections of the department,","carry these in a leather bag","to the warehouse,","and on returning,","distribute advice arrival notes","of goods received in the warehouse.","The distance from Ludgate Circus","to the warehouse","in Coach and Horses Yard","was about two and a half miles","and I was given a shilling a day","for bus fares,","enough for three round trips.","Motor buses were just beginning","to appear on the streets,","but there were also","horse-drawn buses","still plying the route.","The fare was two pence,","but by walking about","two hundred yards","to the Law Courts","and by getting off","at Piccadilly Circus","one could ride for one penny,","as my predecessor quickly taught me.","Thus I could save sixpence a day","and, by being demoted, was","half a crown a week better off,","since no such perks","were available to office boys","in the British Department.","The head of the department","was a character named Lee.","He had had a senior job with","the London Parcels Delivery Company,","who had stables and depots","in Soho Street.","All their vans were horse-drawn,","and we had two","of their vans on hire.","Lee was therefore known as 'Horsey'.","His office rigout was","a silk top hat and a frock coat.","He got to the office","at 8 a m on the dot and","personally opened all the letters,","marking a number of them","PSM in blue pencil.","If you got one","of the marked ones","you had to \"Please See Me\".","He didn't miss much","of what was going on.","At 10:30 to the minute","every day he emerged from","his glass-windowed office,","put on his top hat,","and made his way to one of","the well-known Fleet Street pubs","for his daily glass of champagne.","Lee lived in a flat","in the Grays Inn Road","about ten minutes walk","from Ludgate Circus.","It had no telephone","(they were still unusual","in private dwellings).","The old chap must have had","a few convivial friends","and he often found it necessary","to send a note to his wife","saying he would be home","late that night.","I was sometimes chosen to be","one of the note-carriers.","His wife would invite","the note-carrier in","and, after making him swear","he would not divulge it","to her husband, offer him","a glass of port.","When the messenger returned","to the office to report","the safe delivery of the note,","Lee would ask","\"Did she give you","a glass of wine?\"","On being told \"No\",","he would say","\"She's very mean.","I must tell her next time","you are to have one.\""],"intro":"This is an extract from the memoirs of\r\na man who began his working life with a\r\nfirm of travel agents in London in 1907.\r\nHe talks about his daily routine, and \r\ndescribes his flamboyant boss, Mr Lee.\r\n\r\n\r\nWhile you are reading the text, think\r\nabout these questions:\r\n\r\n\r\nWould an office boy nowadays find his\r\nwork easier or more interesting than\r\nthe writer's?\r\n\r\n\r\nDid Mr Lee have a happy marriage?","questions":[{"stem":"When the writer first went to work,","options":[{"text":"there were equal numbers of men and women in the office.","correct":false},{"text":"the typists were mainly men.","correct":false},{"text":"there were no women in the office.","correct":true},{"text":"most of the clerks were women.","correct":false}]},{"stem":"The writer had to","options":[{"text":"copy the letters and write +    addresses on the envelopes.","correct":true},{"text":"write the letters and copy them.","correct":false},{"text":"write the letters only.","correct":false},{"text":"address the envelopes only.","correct":false}]},{"stem":"As a messenger the writer was paid one shilling  (=twelve pence) a day for fares.  He actually spent","options":[{"text":"18 pence.","correct":false},{"text":"12 pence.","correct":false},{"text":"8 pence.","correct":false},{"text":"6 pence.","correct":true}]},{"stem":"How did the writer travel to the warehouse?","options":[{"text":"on foot?","correct":false},{"text":"by bus?","correct":false},{"text":"on foot and by bus?","correct":true},{"text":"on horseback?","correct":false}]},{"stem":"Mr Lee used to arrive at the office","options":[{"text":"after drinking champagne.","correct":false},{"text":"early and well-dressed.","correct":true},{"text":"at ten-thirty.","correct":false},{"text":"at different times.","correct":false}]},{"stem":"Mr Lee wrote PSM, meaning \"Please see me\",","options":[{"text":"on letters which arrived in the +    post.","correct":true},{"text":"on notes which he sent to the clerks.","correct":false},{"text":"on letters which the clerks had written.","correct":false},{"text":"on the window of his office.","correct":false}]},{"stem":"Did Mr Lee send boys with messages to his flat","options":[{"text":"because he disliked using the telephone?","correct":false},{"text":"because he did not like walking?","correct":false},{"text":"to punish the boys?","correct":false},{"text":"because there was no telephone in +    the flat?","correct":true}]},{"stem":"Mrs Lee told the boys not to tell Mr Lee","options":[{"text":"that she had been drinking port.","correct":false},{"text":"that she had given them a glass of +    port.","correct":true},{"text":"that she was angry with Mr Lee.","correct":false},{"text":"that she had not given them any wine.","correct":false}]},{"stem":"Mr Lee said that his wife","options":[{"text":"was very mean not to give the boys +    a drink.","correct":true},{"text":"should not have given the boys a drink.","correct":false},{"text":"must not give the boys a drink next time.","correct":false},{"text":"should not drink so much.","correct":false}]},{"stem":"What is the writer's opinion of Mr Lee?","options":[{"text":"He was lazy and cruel to the boys.","correct":false},{"text":"He drank too much and was cruel to his wife.","correct":false},{"text":"He ran the office badly.","correct":false},{"text":"He was efficient and kind.","correct":true}]}]},{"title":"LANGUAGE LABORATORIES","difficulty":2,"wordTotal":709,"chunkedBy":"auto","slow":["The language","laboratory used","to be the","great status","symbol of the","language","teaching","profession.","Every school","which could","afford one had","to have one","or risk being","thought behind","the times. But","the hoped-for","results never","came. Language","laboratories","were left","unrepaired, sold","off, or simply","ignored. It is","worth asking","why. After all,","the equipment is","nothing more","than a bank","of tape","recorders,","arranged so that","one can listen","to recordings of","native speakers","or monitor one's","own attempts to","repeat or speak.","Why has this","useful device","become","associated with","boredom and","frustration","rather than with","excitement and","success? There","seem to be","three main","reasons. One is","the burden of","guilt imposed by","the sheer cost","of the","equipment. When","you have spent","a very large","amount of money,","you want the","equipment to be","used","purposefully and","systematically","rather than","haphazardly or","frivolously.","This was why","teachers tended","to use banks","of courseware","which provided","thirty minutes","of drill work","for each unit","of the textbook,","regardless of","whether thirty","minutes was","necessary or","sufficient. It","was this","courseware which","was tedious","rather than the","machine itself.","A second reason","is the fear","of complex","machinery,","symbolised in","the children's","story of the","Sorcerer's","Apprentice. The","apprentice in","the story used","his master's","magic broom to","do the","housework, but","could not","remember the","magic words to","switch the thing","off. In the","same way","teachers","sometimes feared","the humiliation","of not being","able to control","the machine if","they should","attempt to use","it in an","experimental","way. The third","reason is more","subtle and less","well publicised.","Of those who","teach foreign","languages world","wide, by no","means all are","expert speakers","of the languages","they teach. What","the language","laboratory did","was to expose","them to damaging","comparisons with","authentic","language. The","profession's","response was to","separate","classwork and","lab work,","putting the","language","laboratory in a","separate locked","room, supplied","with separate","materials, and","often supervised","by a separate","teacher, so that","the authority of","the class","teacher could","remain","unthreatened.","All three of","these factors:","guilt over the","expense, fear of","complex","machinery, and","resistance to","authentic","language, may","also be","affecting the","profession's","current attitude","towards","computers. The","first one,","however, namely","the money","problem, will","probably not be","so important for","language","teachers since","it is not","usually the","language","departments who","will be asked","to find the","money for","computer","equipment.","Instead, they","will be using","machines bought","by physics and","maths teachers","who cannot fill","all the","timetable spots","with computer","work. The","science teachers","will be grateful","if language","teachers help","them to justify","their large","investment. Fear","of machinery is","just as strong","as it ever","was, but","computers","themselves are","becoming both","more familiar in","everyday life","and easier to","use as their","designers learn","new ways of","making them","'user-friendly'.","Some teachers","may still be","afraid, but they","will be forced","to overcome","their fear in","order to cope","with computers","outside the","classroom as","well as in","it. What is","more, they will","find that their","pupils have no","such fears. The","final factor,","fear of","authenticity,","will continue to","be a real","deterrent to the","use of computers","in language","classes. The","computer is not","at present a","device which","handles spoken","language. It","will not expose","any","pronunciation","problems, but it","will present","grammatical","features in such","a way that","a teacher's","errors cannot be","concealed. The","cowardly","response would","be to smother","the machine with","strict drills","that stay within","the narrow","syllabus which","the textbook","covers and the","teacher can","handle. A better","response, but","one which","demands new","attitudes among","teachers and","among officials","of education","systems is for","teachers to use","the computers as","learning aids,","too. Teachers","can say to","their students,","in effect, \"We","can both use","this machine to","help us learn.\"","Teachers who","present","themselves as","advanced","learners rather","than as","unimpeachable","authorities may","find that they","get better","results and","certainly can","make better use","of modern aids","to learning than","traditional","teachers. They","may also find","that they enjoy","themselves much","more while they","are doing it."],"fast":["The language laboratory","used to be the great","status symbol of the","language teaching","profession. Every school","which could afford one had","to have one or risk","being thought behind the","times. But the hoped-for","results never came.","Language laboratories were","left unrepaired, sold off,","or simply ignored. It is","worth asking why. After","all, the equipment is","nothing more than a bank","of tape recorders, arranged","so that one can listen","to recordings of native","speakers or monitor one's","own attempts to repeat or","speak. Why has this useful","device become associated","with boredom and","frustration rather than","with excitement and","success? There seem to be","three main reasons. One is","the burden of guilt imposed","by the sheer cost of","the equipment. When you","have spent a very large","amount of money, you want","the equipment to be used","purposefully and","systematically rather than","haphazardly or frivolously.","This was why teachers","tended to use banks of","courseware which provided","thirty minutes of drill","work for each unit of","the textbook, regardless of","whether thirty minutes was","necessary or sufficient. It","was this courseware which","was tedious rather than the","machine itself. A second","reason is the fear of","complex machinery,","symbolised in the","children's story of the","Sorcerer's Apprentice. The","apprentice in the story","used his master's magic","broom to do the housework,","but could not remember the","magic words to switch the","thing off. In the same","way teachers sometimes","feared the humiliation of","not being able to control","the machine if they should","attempt to use it in","an experimental way. The","third reason is more subtle","and less well publicised.","Of those who teach foreign","languages world wide, by no","means all are expert","speakers of the languages","they teach. What the","language laboratory did was","to expose them to damaging","comparisons with authentic","language. The profession's","response was to separate","classwork and lab work,","putting the language","laboratory in a separate","locked room, supplied with","separate materials, and","often supervised by a","separate teacher, so that","the authority of the class","teacher could remain","unthreatened. All three of","these factors: guilt over","the expense, fear of","complex machinery, and","resistance to authentic","language, may also be","affecting the profession's","current attitude towards","computers. The first one,","however, namely the money","problem, will probably not","be so important for","language teachers since it","is not usually the language","departments who will be","asked to find the money","for computer equipment.","Instead, they will be using","machines bought by physics","and maths teachers who","cannot fill all the","timetable spots with","computer work. The science","teachers will be grateful","if language teachers help","them to justify their large","investment. Fear of","machinery is just as strong","as it ever was, but","computers themselves are","becoming both more familiar","in everyday life and easier","to use as their designers","learn new ways of making","them 'user-friendly'. Some","teachers may still be","afraid, but they will be","forced to overcome their","fear in order to cope","with computers outside the","classroom as well as in","it. What is more, they","will find that their pupils","have no such fears. The","final factor, fear of","authenticity, will continue","to be a real deterrent","to the use of computers","in language classes. The","computer is not at present","a device which handles","spoken language. It will","not expose any","pronunciation problems, but","it will present grammatical","features in such a way","that a teacher's errors","cannot be concealed. The","cowardly response would be","to smother the machine with","strict drills that stay","within the narrow syllabus","which the textbook covers","and the teacher can handle.","A better response, but one","which demands new attitudes","among teachers and among","officials of education","systems is for teachers to","use the computers as","learning aids, too.","Teachers can say to their","students, in effect, \"We","can both use this machine","to help us learn.\" Teachers","who present themselves as","advanced learners rather","than as unimpeachable","authorities may find that","they get better results and","certainly can make better","use of modern aids to","learning than traditional","teachers. They may also","find that they enjoy","themselves much more while","they are doing it."],"intro":"This is an extract from an academic\r\nbook on the role of machinery in\r\neducation.  The writer looks at three\r\nexplanations for the failure of the\r\nlanguage laboratory to improve language\r\nlearning, and asks if computers will\r\nbe affected by the same factors.\r\n\r\n\r\nThink about this question while you \r\nread:\r\n\r\n\r\nWhat are the most important differences\r\nbetween language laboratories and\r\ncomputers?","questions":[{"stem":"The language laboratory was a machine to help with","options":[{"text":"reading and writing","correct":false},{"text":"listening","correct":false},{"text":"speaking","correct":false},{"text":"listening and speaking","correct":true}]},{"stem":"Language laboratories were","options":[{"text":"small and simple","correct":false},{"text":"large but easy to use","correct":false},{"text":"expensive and complicated","correct":true},{"text":"cheap and complicated","correct":false}]}]},{"title":"THE GOLD BUG","difficulty":1,"wordTotal":1234,"chunkedBy":"auto","slow":["My friend","William Legrand","lived on a","small island,","nine miles from","Charleston in","America. He was","a clever man,","and he had","once been rich.","But now he","was poor, and","this change in","his fortune had","made him","strange.","Sometimes he was","sad and silent,","and seemed to","hate everybody.","At other times","he was very","happy and most","interesting to","talk to. He","lived in a","hut, with an","old African","servant called","Jupiter, and a","big dog. He","used to shoot","birds and catch","fish, and he","was a great","collector. His","collection of","shells was the","best that I","had ever seen.","He was also","very interested","in all kinds","of insects. I","went to visit","him in late","October one","year. He was","not in his","hut. It was","a cold day,","and so I","went in and","sat down by","the fire. After","about an hour,","he and Jupiter","returned.","Legrand said,","\"I'm sorry that","I wasn't here","to meet you.","I found a","wonderful thing","on the shore","today. It's a","gold bug, an","insect which","looks exactly as","if it was","made of gold.","I don't think","that a bug","like it has","ever been found","before.\" I said,","\"Let me see","it, then.\" He","answered, \"I met","my friend Martin","on the way","back. He wanted","to study it,","and so I","let him take","it. You shall","see it the","next time you","come here. But","I will draw","a picture of","it for you.\"","Legrand sat down","at a small","table by the","window and","looked for some","paper. He could","not find any","at first but","then began to","feel in his","pockets. \"Oh,","this will do,\"","he said, and","took out a","piece of dirty","parchment. He","drew something","on the parchment","and brought it","to me by","the fire. Just","at that moment,","Legrand's dog","pushed open the","door and rushed","into the room.","The dog and","I were great","friends, and for","two or three","minutes we had","to greet each","other. When at","last I looked","at the","parchment, I was","puzzled. \"This","is a funny","kind of bug,\"","I said. \"It","looks more like","a death's head,","a skull and","cross bones. And","there are some","marks underneath","it.\" Legrand","laughed. \"A","skull!\" he","cried, without","looking at the","drawing. Then he","said seriously,","\"No, no. I","couldn't show","the colour, of","course. But it's","a bug, and","I have drawn","it well enough.\"","He had drawn","a good skull","and crossbones,","not an insect.","But I was","afraid to say","more for fear","of hurting his","feelings. So I","walked across to","him and gave","him the","parchment. I","thought that he","was going to","tear it up,","but first he","looked at it","quickly. His","face turned red,","and then as","pale as death.","He examined the","parchment","carefully for","several minutes","but did not","say anything. At","last he locked","it away in","a desk. After","that, I did","not see Legrand,","or hear from","him, for a","month. Then, one","day, Jupiter","came to visit","me at my","home. He brought","a letter from","his master: \"Why","haven't I seen","you for such","a long time?","I have made","a most","interesting","discovery, and","want to tell","you about it.","Do come at","once. Come this","evening, with","Jupiter. Your","friend,","Legrand.\" I felt","a little anxious","when I saw","the look on","Jupiter's face.","\"How is your","master?\" I","asked. \"He is","not well, sir.","I don't know","what's the","matter with him.","He never talks,","and a few","days ago he","stayed out,","alone, for the","whole day.","Something is","troubling him","...\" \"What can","be troubling","him?\" \"I think","it's the gold","bug, sir! I","think it bit","him when he","picked it up.","And the bite","has made him","ill. I'm very","glad that I","carried it in","a piece of","paper.\" I","decided to go","with Jupiter to","the island. When","we arrived","there, my friend","looked pale and","tired. He was","also in a","strange, excited","state, with a","mad look in","his eyes. \"Do","you remember the","gold bug that","I found?\" he","cried. \"Well, it","is made of","gold and it","will make my","fortune for me!\"","I felt very","sorry for him.","Was he so","ill that his","mind had given","way? \"How will","it do that?\"","I asked quietly.","Legrand did not","answer. He went","to a glass","case and brought","the insect to","me. It was","dead, of course,","but still very","beautiful and","exactly like","gold. It was","also a lot","heavier than","most insects of","the same size.","But I knew","that it was","not made of","gold. \"Legrand,\"","I said, \"you","are unwell,","and....\" \"No!\"","he cried. \"I","am excited but","not ill. I","want your help.\"","\"How can I","help you?\"","\"Jupiter and I","are going up","into the hills","this afternoon.","I can trust","you, and so","will you come","with us? We","may be very","lucky. I don't","know. But if","we are not,","I shall still","feel calmer.\" \"I","am willing to","help you,\" I","said, \"if you","promise me","something. When","we come back","from the hills,","you must go","to bed. And","I will bring","a doctor to","you.\" \"Yes, yes,","I promise. We","must go now,","while it is","still light.\" We","left the hut","at half past","three, and the","dog came with","us. Jupiter was","carrying a rope","and three","spades. Two","hours later we","reached a spot","on high ground.","Legrand walked","straight towards","the tallest","tree. \"Now,","Jupiter,\"","Legrand said.","\"Can you climb","that tree?\"","\"Yes, sir. How","far up shall","I go?\" \"Climb","up to the","seventh branch.\"","He gave Jupiter","the ball of","string with the","gold bug tied","to it. When","Jupiter came to","the seventh","branch, Legrand","told him to","look for","anything that","was there. A","moment later","Jupiter cried,","\"O God have","mercy on me!","What's this?\" He","had found a","skull fixed to","the tree with","nails. Legrand","told him to","drop the gold","bug on its","string through","the left eye","of the skull.","The gold bug","fell to the","ground and","Legrand marked","the place and","we began to","dig a deep","hole. We worked","for two hours","and found","nothing. Then","Legrand asked","Jupiter to show","him his left","eye. Jupiter","pointed to his","right eye. He","had made a","mistake. He sent","Jupiter up the","tree again, and","we started","digging in the","new place. We","found the bones","of two dead","men, and a","box full of","gold and jewels.","I asked Legrand","\"How did you","know that the","box would be","there?\" He said","that it was","because of the","piece of","parchment on","which he had","drawn the","picture of the","bug. I had","seen a skull","and crossbones,","the symbol of","pirates. That","picture was not","the one that","Legrand had","drawn. It had","been drawn on","the other side","of the parchment","in secret ink","which could be","seen only when","the parchment","was warmed by","the heat of","the fire.","Afterwards","Legrand had","studied the","parchment and","had read a","complete message","which told him","where to find","the treasure."],"fast":["My friend William Legrand","lived on a small island,","nine miles from Charleston","in America. He was a","clever man, and he had","once been rich. But now","he was poor, and this","change in his fortune had","made him strange. Sometimes","he was sad and silent,","and seemed to hate","everybody. At other times","he was very happy and","most interesting to talk","to. He lived in a","hut, with an old African","servant called Jupiter, and","a big dog. He used","to shoot birds and catch","fish, and he was a","great collector. His","collection of shells was","the best that I had","ever seen. He was also","very interested in all","kinds of insects. I went","to visit him in late","October one year. He was","not in his hut. It","was a cold day, and","so I went in and","sat down by the fire.","After about an hour, he","and Jupiter returned.","Legrand said, \"I'm sorry","that I wasn't here to","meet you. I found a","wonderful thing on the","shore today. It's a gold","bug, an insect which looks","exactly as if it was","made of gold. I don't","think that a bug like","it has ever been found","before.\" I said, \"Let me","see it, then.\" He answered,","\"I met my friend Martin","on the way back. He","wanted to study it, and","so I let him take","it. You shall see it","the next time you come","here. But I will draw","a picture of it for","you.\" Legrand sat down at","a small table by the","window and looked for some","paper. He could not find","any at first but then","began to feel in his","pockets. \"Oh, this will","do,\" he said, and took","out a piece of dirty","parchment. He drew","something on the parchment","and brought it to me","by the fire. Just at","that moment, Legrand's dog","pushed open the door and","rushed into the room. The","dog and I were great","friends, and for two or","three minutes we had to","greet each other. When at","last I looked at the","parchment, I was puzzled.","\"This is a funny kind","of bug,\" I said. \"It","looks more like a death's","head, a skull and cross","bones. And there are some","marks underneath it.\"","Legrand laughed. \"A skull!\"","he cried, without looking","at the drawing. Then he","said seriously, \"No, no. I","couldn't show the colour,","of course. But it's a","bug, and I have drawn","it well enough.\" He had","drawn a good skull and","crossbones, not an insect.","But I was afraid to","say more for fear of","hurting his feelings. So I","walked across to him and","gave him the parchment. I","thought that he was going","to tear it up, but","first he looked at it","quickly. His face turned","red, and then as pale","as death. He examined the","parchment carefully for","several minutes but did not","say anything. At last he","locked it away in a","desk. After that, I did","not see Legrand, or hear","from him, for a month.","Then, one day, Jupiter came","to visit me at my","home. He brought a letter","from his master: \"Why","haven't I seen you for","such a long time? I","have made a most","interesting discovery, and","want to tell you about","it. Do come at once.","Come this evening, with","Jupiter. Your friend,","Legrand.\" I felt a little","anxious when I saw the","look on Jupiter's face.","\"How is your master?\" I","asked. \"He is not well,","sir. I don't know what's","the matter with him. He","never talks, and a few","days ago he stayed out,","alone, for the whole day.","Something is troubling him","...\" \"What can be troubling","him?\" \"I think it's the","gold bug, sir! I think","it bit him when he","picked it up. And the","bite has made him ill.","I'm very glad that I","carried it in a piece","of paper.\" I decided to","go with Jupiter to the","island. When we arrived","there, my friend looked","pale and tired. He was","also in a strange, excited","state, with a mad look","in his eyes. \"Do you","remember the gold bug that","I found?\" he cried. \"Well,","it is made of gold","and it will make my","fortune for me!\" I felt","very sorry for him. Was","he so ill that his","mind had given way? \"How","will it do that?\" I","asked quietly. Legrand did","not answer. He went to","a glass case and brought","the insect to me. It","was dead, of course, but","still very beautiful and","exactly like gold. It was","also a lot heavier than","most insects of the same","size. But I knew that","it was not made of","gold. \"Legrand,\" I said,","\"you are unwell, and....\"","\"No!\" he cried. \"I am","excited but not ill. I","want your help.\" \"How can","I help you?\" \"Jupiter and","I are going up into","the hills this afternoon. I","can trust you, and so","will you come with us?","We may be very lucky.","I don't know. But if","we are not, I shall","still feel calmer.\" \"I am","willing to help you,\" I","said, \"if you promise me","something. When we come","back from the hills, you","must go to bed. And","I will bring a doctor","to you.\" \"Yes, yes, I","promise. We must go now,","while it is still light.\"","We left the hut at","half past three, and the","dog came with us. Jupiter","was carrying a rope and","three spades. Two hours","later we reached a spot","on high ground. Legrand","walked straight towards the","tallest tree. \"Now,","Jupiter,\" Legrand said.","\"Can you climb that tree?\"","\"Yes, sir. How far up","shall I go?\" \"Climb up","to the seventh branch.\" He","gave Jupiter the ball of","string with the gold bug","tied to it. When Jupiter","came to the seventh branch,","Legrand told him to look","for anything that was","there. A moment later","Jupiter cried, \"O God have","mercy on me! What's this?\"","He had found a skull","fixed to the tree with","nails. Legrand told him to","drop the gold bug on","its string through the left","eye of the skull. The","gold bug fell to the","ground and Legrand marked","the place and we began","to dig a deep hole.","We worked for two hours","and found nothing. Then","Legrand asked Jupiter to","show him his left eye.","Jupiter pointed to his","right eye. He had made","a mistake. He sent Jupiter","up the tree again, and","we started digging in the","new place. We found the","bones of two dead men,","and a box full of","gold and jewels. I asked","Legrand \"How did you know","that the box would be","there?\" He said that it","was because of the piece","of parchment on which he","had drawn the picture of","the bug. I had seen","a skull and crossbones, the","symbol of pirates. That","picture was not the one","that Legrand had drawn. It","had been drawn on the","other side of the parchment","in secret ink which could","be seen only when the","parchment was warmed by the","heat of the fire.","Afterwards Legrand had","studied the parchment and","had read a complete message","which told him where to","find the treasure."],"intro":"(The word 'bug' means insect.)\r\n\r\nThis is the story about a mysterious\r\ninsect which seems to be made of gold.\r\n\r\n\r\nWhile you are reading think about these\r\nquestions:\r\n\r\n\r\n  What is William Legrand's job?\r\n\r\n\r\n  Would you be afraid to touch the gold\r\n  bug if you found it?","questions":[]},{"title":"A MEDICAL STUDENT'S STORY","difficulty":2,"wordTotal":700,"chunkedBy":"auto","slow":["As a medical","student, I often","see patients","classed as","\"difficult\".","Most of these","angry and","violent people","appear in","hospital","casualty","departments;","some behave","threateningly to","GPs or their","receptionists.","They are a","very real threat","to members of","staff and a","frightening","problem for","management. Any","arrangement by","which patients","come in straight","off the street","means that there","is no time","for anger to","dissipate before","they are seen,","and no guarantee","that they are","not armed. (This","might be the","only instance","where the long","wait to see","a doctor is","therapeutic,","because the","angry patient,","after a few","battles with the","receptionist,","will usually","leave). Some","come in","shouting, which","at least","forewarns","everyone that","they are tricky","customers.","Others come in","quietly, and","explode later in","response to some","inadvertent","trigger, for","example, the","comforting words","\"I'm a medical","student, I","wonder if you","would mind","telling me about","your problem?\"","At the GP's,","the common","triggers seem to","be, \"No, you","can't see a","doctor until","tomorrow unless","it is an","emergency\", or","\"I'm afraid","you're too late","for your","appointment;","perhaps you","would like to","make another for","tomorrow.\" The","first person to","see the patient","is the one","who generally","bears the brunt","of any attack.","Since physical","retaliation is","out of the","question, each","member of staff","is left with","their own","persuasive","skills as their","only weapon. The","aim is to","pacify the","patient and","redirect their","anger away from","the staff","(especially me),","and preferably","diffuse it","altogether. The","physician's","natural","response, that","this unpleasant","person can go","to hell, is","not really the","best possible","one. Anger is","a natural","response to many","situations, pain","or fear, for","example, or","excess of","alcohol,","frustration and","some illnesses.","If its cause","or source can","be revealed to","the physician","and the patient,","anger can be","useful","therapeutically.","The expression","of fear can","reduce its","intensity and","the physician","may be able","to reassure that","it is unfounded.","Successful pain","management","brings","confidence from","the patient and","reduction in","irritability.","Even","explanations for","the cause of","hold-ups in the","system, or","blunders in","filing can","defuse","frustration","before it boils","over into","violence. People","who are not","open to reason,","the drugged or","drunk, have the","worst possible","prognosis","because the","physician","becomes angry","and frustrated","too, and","aggravates the","problem. For the","general practice","the issue is","slightly","different","because all the","staff gradually","get to know","the patients.","The habitual","drunk who only","comes for","treatment when","already","intoxicated, and","who is abusive","and violent in","the waiting","room, is a","serious problem.","The GP must","decide whether","to protect the","staff and other","patients, by","asking this","patient to","register","elsewhere, or to","soldier on,","trying to meet","the patient only","when sober and","to encourage","them to give","up drinking.","Sending the","patient","elsewhere is","really only","passing the","buck. But","perhaps the","threat of","dismissal may","help to modify","behaviour at the","surgery. It is","easy to","pontificate","about reactions","to anger when","one isn't","exhausted,","hasn't seen ten","similar patients","that day and","isn't actually","being attacked","at that moment.","I considered","whether panic","buttons would be","useful and","concluded that","in most hospital","situations they","wouldn't because","there are","usually plenty","of people about","to call for","help. But in","the small","general practice","where one doctor","and one","receptionist may","be the only","people there in","the evening, the","ability to call","for help","unobtrusively","might be useful,","even if this","was only felt","to be necessary","in big cities","or in practices","specialising in","drug addicts or","alcoholics. More","generous","staffing levels","would help. But","in lieu of","that, more","training in the","management of","'difficult","patients' would","possibly bring a","better reflex","response from","medical staff.","Training in the","defusing of","violence would","enable the team","to protect","themselves and","allow patients","to express their","anger in such","a way as","to reveal its","source. As a","last resort,","recommendations","from the British","Medical","Association as","to what is","legally","permissible in","terms of","self-defence","would be a","help."],"fast":["As a medical student, I","often see patients classed","as \"difficult\". Most of","these angry and violent","people appear in hospital","casualty departments; some","behave threateningly to GPs","or their receptionists.","They are a very real","threat to members of staff","and a frightening problem","for management. Any","arrangement by which","patients come in straight","off the street means that","there is no time for","anger to dissipate before","they are seen, and no","guarantee that they are not","armed. (This might be the","only instance where the","long wait to see a","doctor is therapeutic,","because the angry patient,","after a few battles with","the receptionist, will","usually leave). Some come","in shouting, which at least","forewarns everyone that","they are tricky customers.","Others come in quietly, and","explode later in response","to some inadvertent","trigger, for example, the","comforting words \"I'm a","medical student, I wonder","if you would mind telling","me about your problem?\" At","the GP's, the common","triggers seem to be, \"No,","you can't see a doctor","until tomorrow unless it is","an emergency\", or \"I'm","afraid you're too late for","your appointment; perhaps","you would like to make","another for tomorrow.\" The","first person to see the","patient is the one who","generally bears the brunt","of any attack. Since","physical retaliation is out","of the question, each","member of staff is left","with their own persuasive","skills as their only","weapon. The aim is to","pacify the patient and","redirect their anger away","from the staff (especially","me), and preferably diffuse","it altogether. The","physician's natural","response, that this","unpleasant person can go to","hell, is not really the","best possible one. Anger is","a natural response to many","situations, pain or fear,","for example, or excess of","alcohol, frustration and","some illnesses. If its","cause or source can be","revealed to the physician","and the patient, anger can","be useful therapeutically.","The expression of fear can","reduce its intensity and","the physician may be able","to reassure that it is","unfounded. Successful pain","management brings","confidence from the patient","and reduction in","irritability. Even","explanations for the cause","of hold-ups in the system,","or blunders in filing can","defuse frustration before","it boils over into","violence. People who are","not open to reason, the","drugged or drunk, have the","worst possible prognosis","because the physician","becomes angry and","frustrated too, and","aggravates the problem. For","the general practice the","issue is slightly different","because all the staff","gradually get to know the","patients. The habitual","drunk who only comes for","treatment when already","intoxicated, and who is","abusive and violent in the","waiting room, is a serious","problem. The GP must decide","whether to protect the","staff and other patients,","by asking this patient to","register elsewhere, or to","soldier on, trying to meet","the patient only when sober","and to encourage them to","give up drinking. Sending","the patient elsewhere is","really only passing the","buck. But perhaps the","threat of dismissal may","help to modify behaviour at","the surgery. It is easy","to pontificate about","reactions to anger when one","isn't exhausted, hasn't","seen ten similar patients","that day and isn't actually","being attacked at that","moment. I considered","whether panic buttons would","be useful and concluded","that in most hospital","situations they wouldn't","because there are usually","plenty of people about to","call for help. But in","the small general practice","where one doctor and one","receptionist may be the","only people there in the","evening, the ability to","call for help unobtrusively","might be useful, even if","this was only felt to","be necessary in big cities","or in practices","specialising in drug","addicts or alcoholics. More","generous staffing levels","would help. But in lieu","of that, more training in","the management of","'difficult patients' would","possibly bring a better","reflex response from","medical staff. Training in","the defusing of violence","would enable the team to","protect themselves and","allow patients to express","their anger in such a","way as to reveal its","source. As a last resort,","recommendations from the","British Medical Association","as to what is legally","permissible in terms of","self-defence would be a","help."],"intro":"This is an article from The Guardian\r\nnewspaper by a medical student who\r\ndescribes how threateningly patients\r\ncan behave to medical staff.\t\r\n\r\n\r\nAs you are reading, think about these\r\nquestions:\r\n\r\n\r\n  Why is anger a natural response to\r\nmany situations?\r\n\r\n\r\n  What advice would you give to a\r\ndoctor dealing with alcoholics or drug\r\naddicts?","questions":[{"stem":"The author of this article is:","options":[{"text":"a psychiatrist","correct":false},{"text":"a nurse","correct":false},{"text":"a medical student.","correct":true}]},{"stem":"Any arrangement by which patients come in straight off the street means:","options":[{"text":"that there is no time to see them;","correct":false},{"text":"that there is no time for anger +    to dissipate;","correct":true},{"text":"that they have had a chance to calm down.","correct":false}]},{"stem":"Some come in shouting which at least forewarns everyone that:","options":[{"text":"they are tricky customers;","correct":true},{"text":"they are drunk;","correct":false},{"text":"they are in great discomfort.","correct":false}]},{"stem":"The first person to see the patient is the one:","options":[{"text":"who bandages him up;","correct":false},{"text":"who bears the brunt of any +    attack;","correct":true},{"text":"who takes him to 'casualty'.","correct":false}]},{"stem":"The physician's response that this unpleasant person can go to hell:","options":[{"text":"is the only possible one;","correct":false},{"text":"is the most natural one;","correct":true},{"text":"is not really the best possible one.","correct":false}]},{"stem":"The expression of fear can reduce its intensity and the physician may be able to reassure:","options":[{"text":"that it is unfounded;","correct":true},{"text":"that it is reasonable;","correct":false},{"text":"that it is annoying.","correct":false}]},{"stem":"For the general practice the issue is slightly different because:","options":[{"text":"the patient comes regularly;","correct":true},{"text":"all the staff gradually get to know the patient;","correct":false},{"text":"the patient knows the GP.","correct":false}]},{"stem":"The writer considered:","options":[{"text":"whether panic buttons would +    be useful;","correct":true},{"text":"whether a porter would be useful;","correct":false},{"text":"whether a night-nurse would be useful.","correct":false}]},{"stem":"More training in the management of 'difficult patients' would possibly bring:","options":[{"text":"an increase in salaries;","correct":false},{"text":"a better reflex response +    from medical staff;","correct":true},{"text":"a more efficient allocation of hospital beds.","correct":false}]},{"stem":"Recommendations from the British Medical Association as to what is legally permissible in terms of self-defence:","options":[{"text":"would be useless;","correct":false},{"text":"would be a nuisance;","correct":false},{"text":"would be a help.","correct":true}]}]},{"title":"OIL","difficulty":1,"wordTotal":617,"chunkedBy":"auto","slow":["Petrol engines","and diesel","engines are used","more than any","other kind of","engine today,","and no wonder.","Unlike steam","engines, they","need no furnace","or boiler, they","start going at","the press of","a button, and","they are","powerful without","being so huge","and heavy. That","is why they","are used in","most travelling","machines: in","lorries, buses,","aeroplanes,","locomotives,","motor-cars, and","many ships and","motor-boats. And","they drive many","kinds of","machines that","don't move","about, such as","pumps, sawmills,","and oil-well","drills. Petrol","engines and","diesel engines","work for us","in thousands of","ways. You know","that petrol and","diesel engines","are run by","the energy of","burning petrol","or oil. But","how do petrol","and oil get","their energy?","Does the sun","have a share","in this too?","Yes, the energy","in petrol and","oil comes from","the sun. Or","rather, it comes","from sunlight","that shone","millions of","years ago. Let's","see how. Petrol","and diesel oil","are both made","from crude oil.","Crude oil comes","from down in","the ground. Like","coal, crude oil","was formed out","of plants and","animals that","lived and died","a long time","ago. You may","not think that","plants and","animals have","much oil in","them. True","enough, they","don't seem to","have much oil","in them, but","it's there just","the same. Rub","a peanut on","a piece of","paper and see","the oil spot","it leaves.","Turpentine, as","you may know,","is an oil","we get from","a certain kind","of pine tree.","Coconut oil is","used in making","some kinds of","soap. All plants","have oil in","them, even if","only a tiny","bit. Animals","have lots of","oil in them.","Most of it","is in the","form of fat,","which is a","sort of hard","oil. You know","how lamb chops","ooze oil when","they are fried.","Some fish have","so much oil","in them that","the Indians once","used them as","candles! They","would hang up","a dried","fish-candle and","light it at","night. All","living things,","both plants and","animals, have","oil and fat","in them. The","crude oil that","we get out","of the ground","and make into","petrol and","diesel fuel came","from plants and","animals that","lived and died","long ago. We","don't know just","how the oil","was pressed out,","or how it","collected in","huge quantities","underground, but","we find it","there and use","it. What does","all this have","to do with","sunlight? You","already know","part of the","answer. You know","that sunlight","gives plants the","energy for","growing.","Animals, too,","get their energy","for working and","growing from","sunlight. They","get it from","the plant food","that they eat.","When you eat","a carrot or","an apple, you","are really","eating the","stored-up energy","of sunlight.","Some animals","never eat","plants. However,","they do eat","other animals","that eat plants.","A lion eats","a zebra that","eats grass. An","eagle catches a","weasel that eats","mice that eat","corn. Follow the","links in a","food chain back","and you will","always come to","plants. All","foods begin with","plants. And","plants get their","energy from","sunlight.","Without sunlight","there could be","no plants or","animals. We have","gone a long","way from petrol","engines and","diesel engines,","but the sun","has been with","us all the","way. Petrol,","oil, and every","other fuel","contains the","energy of","sunlight that","was stored in","a plant or","in an animal.","The next time","you see an","aeroplane flying","high up in","the sunlight,","you will know","that its engine","is running on","sunlight stored","up by plants","and animals","millions of","years ago."],"fast":["Petrol engines and diesel","engines are used more than","any other kind of engine","today, and no wonder.","Unlike steam engines, they","need no furnace or boiler,","they start going at the","press of a button, and","they are powerful without","being so huge and heavy.","That is why they are","used in most travelling","machines: in lorries,","buses, aeroplanes,","locomotives, motor-cars,","and many ships and","motor-boats. And they drive","many kinds of machines that","don't move about, such as","pumps, sawmills, and","oil-well drills. Petrol","engines and diesel engines","work for us in thousands","of ways. You know that","petrol and diesel engines","are run by the energy","of burning petrol or oil.","But how do petrol and","oil get their energy? Does","the sun have a share","in this too? Yes, the","energy in petrol and oil","comes from the sun. Or","rather, it comes from","sunlight that shone","millions of years ago.","Let's see how. Petrol and","diesel oil are both made","from crude oil. Crude oil","comes from down in the","ground. Like coal, crude","oil was formed out of","plants and animals that","lived and died a long","time ago. You may not","think that plants and","animals have much oil in","them. True enough, they","don't seem to have much","oil in them, but it's","there just the same. Rub","a peanut on a piece","of paper and see the","oil spot it leaves.","Turpentine, as you may","know, is an oil we","get from a certain kind","of pine tree. Coconut oil","is used in making some","kinds of soap. All plants","have oil in them, even","if only a tiny bit.","Animals have lots of oil","in them. Most of it","is in the form of","fat, which is a sort","of hard oil. You know","how lamb chops ooze oil","when they are fried. Some","fish have so much oil","in them that the Indians","once used them as candles!","They would hang up a","dried fish-candle and light","it at night. All living","things, both plants and","animals, have oil and fat","in them. The crude oil","that we get out of","the ground and make into","petrol and diesel fuel came","from plants and animals","that lived and died long","ago. We don't know just","how the oil was pressed","out, or how it collected","in huge quantities","underground, but we find it","there and use it. What","does all this have to","do with sunlight? You","already know part of the","answer. You know that","sunlight gives plants the","energy for growing.","Animals, too, get their","energy for working and","growing from sunlight. They","get it from the plant","food that they eat. When","you eat a carrot or","an apple, you are really","eating the stored-up energy","of sunlight. Some animals","never eat plants. However,","they do eat other animals","that eat plants. A lion","eats a zebra that eats","grass. An eagle catches a","weasel that eats mice that","eat corn. Follow the links","in a food chain back","and you will always come","to plants. All foods begin","with plants. And plants get","their energy from sunlight.","Without sunlight there","could be no plants or","animals. We have gone a","long way from petrol","engines and diesel engines,","but the sun has been","with us all the way.","Petrol, oil, and every","other fuel contains the","energy of sunlight that was","stored in a plant or","in an animal. The next","time you see an aeroplane","flying high up in the","sunlight, you will know","that its engine is running","on sunlight stored up by","plants and animals millions","of years ago."],"intro":"This is an extract from a children's\r\nbook about science.\r\n\r\n\r\nWhile you are reading it think about\r\nthese questions:\r\n\r\n\r\nWould children usually be surprised to\r\nlearn that petrol comes from plants?\r\n\r\n\r\nHow do carnivores (animals which only\r\neat other animals) get their oil?","questions":[{"stem":"The text is about engines which","options":[{"text":"burn wood","correct":false},{"text":"burn petrol or oil","correct":true},{"text":"burn coke or coal.","correct":false}]},{"stem":"Petrol and diesel oil are made from","options":[{"text":"paraffin","correct":false},{"text":"crude oil","correct":true},{"text":"toluene","correct":false}]},{"stem":"Crude oil was formed from","options":[{"text":"plants and animals","correct":true},{"text":"minerals","correct":false},{"text":"metals","correct":false}]},{"stem":"When you rub a peanut on a piece of paper it leaves","options":[{"text":"an oil spot","correct":true},{"text":"a water mark","correct":false},{"text":"a blue ring","correct":false}]},{"stem":"Turpentine comes from a certain kind of","options":[{"text":"oak tree","correct":false},{"text":"pine tree","correct":true},{"text":"fruit tree","correct":false}]},{"stem":"According to the writer Indians used fish as","options":[{"text":"candles","correct":true},{"text":"ornaments","correct":false},{"text":"wall hangings","correct":false}]},{"stem":"Plants get their energy for growing from","options":[{"text":"water","correct":false},{"text":"sunlight","correct":true},{"text":"minerals","correct":false}]},{"stem":"If you follow a food chain back you will always come to","options":[{"text":"animals","correct":false},{"text":"water","correct":false},{"text":"plants","correct":true}]},{"stem":"Petrol, oil and other fuel contains the energy of sunlight that was stored in","options":[{"text":"a container","correct":false},{"text":"a plant or animal","correct":true},{"text":"rock","correct":false}]},{"stem":"The sunlight in oil was stored by plants and animals","options":[{"text":"ten thousand years ago","correct":false},{"text":"millions of years ago","correct":true},{"text":"a hundred years ago.","correct":false}]}]},{"title":"ECHO AND NARCISSUS","difficulty":2,"wordTotal":1272,"chunkedBy":"auto","slow":["The famous","Theban prophet","Tiresias gave","many true","answsers to","those who sought","his advice.","Among these","answers was one","that he gave","to a nymph,","the mother of","a beautiful boy","called","Narcissus. She","had asked the","prophet whether","her son would","live to old","age, and the","prophet replied:","\"Only if he","never knows","himself\". For a","long time there","seemed to be","no meaning in","the reply, but","in the end","the death and","the strange","falling in love","of Narcissus","showed that the","old prophet was","right. For when","the boy had","reached his","sixteenth year","he was loved","by very many","young men and","very many girls.","But in his","beautiful body","there was so","much hard pride","that he would","have nothing to","do with any","of them. Once","in the forest","when he was","driving the","frightened deer","into his nets,","a nymph called","Echo saw him.","Echo was neither","able to begin","a conversation","nor to keep","quiet when","others were","talking. At this","time she had","a body and","was not, as","she is now,","just a voice;","yet her speech","was just as","it is now.","She could only","repeat the last","words that","others spoke.","Juno had made","her like this,","being angry with","her for engaging","her in long","conversations in","order that she","would not","inquire too","closely into","what her husband","Jupiter was","doing. Now, when","she saw","Narcissus","wandering in the","pathless forest","she immediately","fell in love","with him, and,","hiding herself,","she followed in","his footsteps.","How much she","longed to speak","to him and","say soft things","in his ear!","But this she","could not do.","She had not","the power to","speak first and","could only wait","for him to","speak so that","she could use","his own words.","It happened that","Narcissus had","become separated","from his","companions and","he called out:","\"Is there anyone","here?\" Echo","answered him,","\"Here!\" and he","looked all round","him in","amazement. \"Come","to me then!\"","Again he looked","round and, as","no one appeared,","he called out:","\"Why are you","avoiding me?\"","Again the same","words came back","to him. He","stood stock","still, wondering","what this","answering voice","could be, then","cried out: \"Let","us meet here!\"","\"Meet here,\"","Echo replied and","never gave a","reply which","delighted her so","much. And,","following up her","own words, she","came out of","the woods where","she had been","hiding, went up","to Narcissus and","wished to throw","her arms round","his neck. But","he fled from","her and, as","he fled, he","cried out: \"Take","your hands off,","and don't touch","me. May I","die before I","let you have","your way with","me!\" \"I let","you have your","way with me,\"","she answered,","and then she","could speak no","more. Spurned,","she lay hid","in the woods,","covering her","blushing face","with leaves, and","ever afterwards","lived in lonely","caves. Her love","however remained","and indeed,","through pain at","what she had","suffered, grew","even stronger.","In sleeplessness","and worry her","body wasted","away. She became","thin and","wrinkled: all","the moisture in","her body","vanished into","the air: only","her bones and","her voice were","left. Her voice","still remains.","Her bones they","say, were turned","to stone. Still","she hides in","the woods and","is seen no","more in the","mountains. But","everyone can","hear her, since","her voice, and","only her voice,","is still alive.","Not only Echo,","but many nymphs","of the water","and of the","mountains, were","despised by","Narcissus. So","too were the","companies of","young men. In","the end one","of those who","had been treated","so proudly","prayed to the","gods: \"May he","fall in love","like this","himself, and not","gain the thing","that he loves!\"","It was a","just prayer and","the goddess","Nemesis heard","it. There was","a bright pool","with shining","silvery water, a","place where no","shepherd had","ever come or","goats that feed","on the mountains","or any other","cattle. No bird","or beast or","even a bough","falling from a","tree had ever","ruffled its","mirrored","surface. There","was grassy turf","round the","margin, cool and","soft from the","water, and there","were thickets","interlaced that","kept away the","heat of the","sun. Here,","tired-out with","hunting,","Narcissus came","and, pleased","with the place","and with the","spring of water,","he lay down","beside the pool","to quench his","thirst. Seeing","himself in the","water he looked","with amazement","at himself and","stayed there","motionless, with","the same","expression on","his face, like","a statue,","staring into his","own eyes, at","his smooth","cheeks, his neck","like ivory, the","white and red","of his beautiful","face. Without","knowing that","what he saw","was himself, he","fell in love","with what he","saw, and as","he looked with","love at his","own reflection,","the face into","which he gazed","looked back at","him with love","too. Often he","vainly plunged","his arms into","the water,","trying to clasp","the neck that","he saw there.","Never did it","dawn upon his","foolish mind","that the image","which he pursued","would turn away","if he turned","away himself,","that what he","longed for was","only a shadow.","Neither hunger","nor desire for","sleep could tear","him away from","the place.","Stretched out on","the shady grass","he continued to","gaze with eyes","that could never","be satisfied at","that deceitful","image of","himself. His own","beautiful eyes","brought him to","death. He raised","himself a little","from the ground","and stretched","out his arms","to the","surrounding","trees. \"O you","woods and","forests\", he","said, \"You who","have witnessed","so many loves,","has anyone been","more unfortunate","in love than","I? I see,","but I cannot","touch what I","desire. And it","is not as","though there was","a great ocean","between us, or","long roads or","mountains or","city walls. We","are only","separated by a","little water.","And the face","I look at","looks back at","me with love,","smiling when I","smile, weeping","when I weep.","Why then does","it always escape","me?\" So he","spoke and, half","out of his","senses, looked","back again at","the image in","the water. As","his tears fell","on the surface,","the reflection","seemed to shiver","and break, and","over and over","again he cried","out: \"O do","not leave me!\"","So, lying there,","he began to","pine and waste","away, like","yellow wax in","the heat or","like frost in","the rays of","the morning sun.","Echo, though she","was angry with","him, and","remembered how","he had treated","her, was sad","when she saw","him. When he","cried out:","\"Alas!\" she","repeated the","word after him.","His last words,","as he stared","into the water","were: \"Farewell,","face that I","have loved in","vain!\" and Echo","replied to him:","\"I have loved","in vain.\" Then","he let his","tired head drop","on the green","grass. Death","closed the eyes","that had","wondered at","their own","beauty. Even","when he was","received into","the lower world","of the dead,","they say he","kept gazing at","his face","reflected in the","dark pool of","Styx. The nymphs","of the forests","and of the","rivers mourned","for him and","Echo answered","their cries.","They were making","ready his","funeral with","torches and a","pile of wood","for burning. But","the body was","nowhere to be","found. In its","place they found","a flower. It","has a yellow","centre and white","petals","surrounding it."],"fast":["The famous Theban prophet","Tiresias gave many true","answsers to those who","sought his advice. Among","these answers was one that","he gave to a nymph,","the mother of a beautiful","boy called Narcissus. She","had asked the prophet","whether her son would live","to old age, and the","prophet replied: \"Only if","he never knows himself\".","For a long time there","seemed to be no meaning","in the reply, but in","the end the death and","the strange falling in love","of Narcissus showed that","the old prophet was right.","For when the boy had","reached his sixteenth year","he was loved by very","many young men and very","many girls. But in his","beautiful body there was so","much hard pride that he","would have nothing to do","with any of them. Once","in the forest when he","was driving the frightened","deer into his nets, a","nymph called Echo saw him.","Echo was neither able to","begin a conversation nor to","keep quiet when others were","talking. At this time she","had a body and was","not, as she is now,","just a voice; yet her","speech was just as it","is now. She could only","repeat the last words that","others spoke. Juno had made","her like this, being angry","with her for engaging her","in long conversations in","order that she would not","inquire too closely into","what her husband Jupiter","was doing. Now, when she","saw Narcissus wandering in","the pathless forest she","immediately fell in love","with him, and, hiding","herself, she followed in","his footsteps. How much she","longed to speak to him","and say soft things in","his ear! But this she","could not do. She had","not the power to speak","first and could only wait","for him to speak so","that she could use his","own words. It happened that","Narcissus had become","separated from his","companions and he called","out: \"Is there anyone","here?\" Echo answered him,","\"Here!\" and he looked all","round him in amazement.","\"Come to me then!\" Again","he looked round and, as","no one appeared, he called","out: \"Why are you avoiding","me?\" Again the same words","came back to him. He","stood stock still,","wondering what this","answering voice could be,","then cried out: \"Let us","meet here!\" \"Meet here,\"","Echo replied and never gave","a reply which delighted her","so much. And, following up","her own words, she came","out of the woods where","she had been hiding, went","up to Narcissus and wished","to throw her arms round","his neck. But he fled","from her and, as he","fled, he cried out: \"Take","your hands off, and don't","touch me. May I die","before I let you have","your way with me!\" \"I","let you have your way","with me,\" she answered, and","then she could speak no","more. Spurned, she lay hid","in the woods, covering her","blushing face with leaves,","and ever afterwards lived","in lonely caves. Her love","however remained and","indeed, through pain at","what she had suffered, grew","even stronger. In","sleeplessness and worry her","body wasted away. She","became thin and wrinkled:","all the moisture in her","body vanished into the air:","only her bones and her","voice were left. Her voice","still remains. Her bones","they say, were turned to","stone. Still she hides in","the woods and is seen","no more in the mountains.","But everyone can hear her,","since her voice, and only","her voice, is still alive.","Not only Echo, but many","nymphs of the water and","of the mountains, were","despised by Narcissus. So","too were the companies of","young men. In the end","one of those who had","been treated so proudly","prayed to the gods: \"May","he fall in love like","this himself, and not gain","the thing that he loves!\"","It was a just prayer","and the goddess Nemesis","heard it. There was a","bright pool with shining","silvery water, a place","where no shepherd had ever","come or goats that feed","on the mountains or any","other cattle. No bird or","beast or even a bough","falling from a tree had","ever ruffled its mirrored","surface. There was grassy","turf round the margin, cool","and soft from the water,","and there were thickets","interlaced that kept away","the heat of the sun.","Here, tired-out with","hunting, Narcissus came","and, pleased with the place","and with the spring of","water, he lay down beside","the pool to quench his","thirst. Seeing himself in","the water he looked with","amazement at himself and","stayed there motionless,","with the same expression on","his face, like a statue,","staring into his own eyes,","at his smooth cheeks, his","neck like ivory, the white","and red of his beautiful","face. Without knowing that","what he saw was himself,","he fell in love with","what he saw, and as","he looked with love at","his own reflection, the","face into which he gazed","looked back at him with","love too. Often he vainly","plunged his arms into the","water, trying to clasp the","neck that he saw there.","Never did it dawn upon","his foolish mind that the","image which he pursued","would turn away if he","turned away himself, that","what he longed for was","only a shadow. Neither","hunger nor desire for sleep","could tear him away from","the place. Stretched out on","the shady grass he","continued to gaze with eyes","that could never be","satisfied at that deceitful","image of himself. His own","beautiful eyes brought him","to death. He raised himself","a little from the ground","and stretched out his arms","to the surrounding trees.","\"O you woods and forests\",","he said, \"You who have","witnessed so many loves,","has anyone been more","unfortunate in love than I?","I see, but I cannot","touch what I desire. And","it is not as though","there was a great ocean","between us, or long roads","or mountains or city walls.","We are only separated by","a little water. And the","face I look at looks","back at me with love,","smiling when I smile,","weeping when I weep. Why","then does it always escape","me?\" So he spoke and,","half out of his senses,","looked back again at the","image in the water. As","his tears fell on the","surface, the reflection","seemed to shiver and break,","and over and over again","he cried out: \"O do","not leave me!\" So, lying","there, he began to pine","and waste away, like yellow","wax in the heat or","like frost in the rays","of the morning sun. Echo,","though she was angry with","him, and remembered how he","had treated her, was sad","when she saw him. When","he cried out: \"Alas!\" she","repeated the word after","him. His last words, as","he stared into the water","were: \"Farewell, face that","I have loved in vain!\"","and Echo replied to him:","\"I have loved in vain.\"","Then he let his tired","head drop on the green","grass. Death closed the","eyes that had wondered at","their own beauty. Even when","he was received into the","lower world of the dead,","they say he kept gazing","at his face reflected in","the dark pool of Styx.","The nymphs of the forests","and of the rivers mourned","for him and Echo answered","their cries. They were","making ready his funeral","with torches and a pile","of wood for burning. But","the body was nowhere to","be found. In its place","they found a flower. It","has a yellow centre and","white petals surrounding","it."],"intro":"This is an old Greek legend about a\r\nnymph called Echo who falls in love\r\nwith a young man called Narcissus.\r\n\r\n\r\nWhile you are reading it, try to\r\nanswer these questions:\r\n\r\n\r\nWhat in the end were Echo's feelings\r\nabout Narcissus?\r\n\r\n\r\nWhat do we mean nowadays when we say\r\nthat a person is Narcissistic?","questions":[{"stem":"The famous Theban prophet Tiresias gave","options":[{"text":"good advice","correct":false},{"text":"many true answers","correct":true},{"text":"much help.","correct":false}]},{"stem":"His death and his strange falling in love showed Narcissus that","options":[{"text":"the prophet was wrong","correct":false},{"text":"the prophet was wise","correct":false},{"text":"the prophet was right","correct":true}]},{"stem":"Once in the forest Narcissus was driving the frightened deer","options":[{"text":"into the woods","correct":false},{"text":"into the lake","correct":false},{"text":"into his nets","correct":true}]},{"stem":"Echo was not able","options":[{"text":"to sing a song","correct":false},{"text":"to begin a conversation","correct":true},{"text":"to speak in a loud voice","correct":false}]},{"stem":"Jupiter was","options":[{"text":"Echo's husband","correct":false},{"text":"Juno's husband","correct":true},{"text":"Echo's brother","correct":false}]},{"stem":"Echo fell in love with Narcissus when she saw him","options":[{"text":"sitting under a tree","correct":false},{"text":"lying in the deep grass","correct":false},{"text":"wandering in the pathless forest","correct":true}]},{"stem":"When Narcissus called out: \"Is there anyone here?\" Echo answered him:","options":[{"text":"\"Yes\"","correct":false},{"text":"\"Here\"","correct":true},{"text":"\"Where?\"","correct":false}]},{"stem":"Afterwards Echo lived in","options":[{"text":"lonely caves","correct":true},{"text":"dark forests","correct":false},{"text":"green meadows.","correct":false}]},{"stem":"Her bones were","options":[{"text":"carried away by the stream","correct":false},{"text":"buried in the cave","correct":false},{"text":"turned to stone.","correct":true}]},{"stem":"The body of Narcissus was nowhere to be found;  in its place","options":[{"text":"they saw a beautiful bird","correct":false},{"text":"they found a flower","correct":true},{"text":"they found a slender deer","correct":false}]}]},{"title":"NASREDDIN THE HUNTER","difficulty":1,"wordTotal":175,"chunkedBy":"auto","slow":["Nasreddin had a","gun and he","would often go","out to try","and shoot a","bird or an","animal for his","wife to cook.","But he could","not shoot well","and he usually","came home with","nothing. His","wife made fun","of him. \"You","couldn't hit a","horse if it","was standing","beside you,\" she","said. Nasreddin","was hurt and","angry, and he","wanted to bring","back some game","to show her","that she was","wrong. He went","to market and","bought a wild","bird in a","cage. He took","it into the","forest. There he","tied a piece","of string round","its leg, and","took it out","of the cage.","He tied the","other end of","the string to","a tree. He","wanted to shoot","the bird to","show his wife","that he could","use his gun","to get food.","He picked up","his gun, pointed","it at the","bird and fired.","But the bullet","hit the string,","and the bird","flew away. He","had to go","back to his","wife","empty-handed","after all."],"fast":["Nasreddin had a gun and","he would often go out","to try and shoot a","bird or an animal for","his wife to cook. But","he could not shoot well","and he usually came home","with nothing. His wife made","fun of him. \"You couldn't","hit a horse if it","was standing beside you,\"","she said. Nasreddin was","hurt and angry, and he","wanted to bring back some","game to show her that","she was wrong. He went","to market and bought a","wild bird in a cage.","He took it into the","forest. There he tied a","piece of string round its","leg, and took it out","of the cage. He tied","the other end of the","string to a tree. He","wanted to shoot the bird","to show his wife that","he could use his gun","to get food. He picked","up his gun, pointed it","at the bird and fired.","But the bullet hit the","string, and the bird flew","away. He had to go","back to his wife","empty-handed after all."],"intro":"This is a story about a man who \r\ngoes shooting.\r\n\r\nWhile you are reading, try to\r\nanswer these questions:\r\n\r\nWhat haoppened to the bird?\r\n\r\nWas Nasreddin's wife a nice\r\nperson?","questions":[]}]
+;
+
+const PALETTE = ["Black", "Blue", "Green", "Cyan", "Red", "Magenta", "Yellow", "White"];
+const PALETTE_HEX = {
+  Black: "#000000", Blue: "#0000AA", Green: "#00AA00", Cyan: "#00AAAA",
+  Red: "#AA0000", Magenta: "#AA00AA", Yellow: "#AAAA00", White: "#FFFFFF",
+};
+
+// ------------------------------
+// Settings (persisted; stands in for SETUP.DAT)
+// ------------------------------
+const SETTINGS_KEY = "hopalongSettings";
+function loadSettings() {
+  try {
+    const s = JSON.parse(localStorage.getItem(SETTINGS_KEY));
+    if (s) return s;
+  } catch (e) {}
+  return { layout: "80", range: "slow", fore: "Green", ground: "White", high: "Black" };
+}
+function saveSettings() { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); }
+let settings = loadSettings();
+
+
+// ------------------------------
+// DOM references
+// ------------------------------
+const screens = ["launchScreen", "settingsScreen", "listScreen", "introScreen", "readingScreen", "reportScreen", "questionsScreen", "printScreen"];
+function el(id) { return document.getElementById(id); }
+function showScreen(name) {
+  screens.forEach(s => el(s).classList.remove("active"));
+  el(name).classList.add("active");
+}
+
+const startBtn = el("startBtn");
+const settingsBtn = el("settingsBtn");
+const settingsDoneBtn = el("settingsDoneBtn");
+const foreSelect = el("foreSelect");
+const groundSelect = el("groundSelect");
+const highSelect = el("highSelect");
+const colorSample = el("colorSample");
+const sampleHighlight = el("sampleHighlight");
+const textList = el("textList");
+const introText = el("introText");
+const introContinueBtn = el("introContinueBtn");
+const readStatus = el("readStatus");
+const readSpeed = el("readSpeed");
+const readTitle = el("readTitle");
+const readProgress = el("readProgress");
+const readViewport = el("readViewport");
+const readInner = el("readInner");
+const pauseOverlay = el("pauseOverlay");
+const reportStats = el("reportStats");
+const graphCanvas = el("graphCanvas");
+const printBtn = el("printBtn");
+const readAgainBtn = el("readAgainBtn");
+const answerQBtn = el("answerQBtn");
+const reportExitBtn = el("reportExitBtn");
+const qBox = el("qBox");
+const qPrevBtn = el("qPrevBtn");
+const qNextBtn = el("qNextBtn");
+const qCheckBtn = el("qCheckBtn");
+const qDoneBtn = el("qDoneBtn");
+const printTitle = el("printTitle");
+const markedText = el("markedText");
+const printBackBtn = el("printBackBtn");
+
+
+// ------------------------------
+// Settings screen
+// ------------------------------
+function populateColorSelects() {
+  [foreSelect, groundSelect, highSelect].forEach(sel => {
+    sel.innerHTML = "";
+    PALETTE.forEach(name => {
+      const opt = document.createElement("option");
+      opt.value = name;
+      opt.textContent = name;
+      sel.appendChild(opt);
+    });
+  });
+}
+
+function applySettingsToUI() {
+  document.querySelector(`input[name=layout][value="${settings.layout}"]`).checked = true;
+  document.querySelector(`input[name=range][value="${settings.range}"]`).checked = true;
+  foreSelect.value = settings.fore;
+  groundSelect.value = settings.ground;
+  highSelect.value = settings.high;
+  renderColorSample();
+}
+
+function renderColorSample() {
+  colorSample.style.background = PALETTE_HEX[settings.ground];
+  colorSample.style.color = PALETTE_HEX[settings.fore];
+  sampleHighlight.style.color = PALETTE_HEX[settings.high];
+  sampleHighlight.style.fontWeight = "bold";
+}
+
+document.querySelectorAll('input[name=layout]').forEach(r => r.addEventListener("change", e => { settings.layout = e.target.value; saveSettings(); }));
+document.querySelectorAll('input[name=range]').forEach(r => r.addEventListener("change", e => { settings.range = e.target.value; saveSettings(); }));
+foreSelect.addEventListener("change", () => { settings.fore = foreSelect.value; saveSettings(); renderColorSample(); });
+groundSelect.addEventListener("change", () => { settings.ground = groundSelect.value; saveSettings(); renderColorSample(); });
+highSelect.addEventListener("change", () => { settings.high = highSelect.value; saveSettings(); renderColorSample(); });
+
+settingsBtn.addEventListener("click", () => { applySettingsToUI(); showScreen("settingsScreen"); });
+settingsDoneBtn.addEventListener("click", () => showScreen("launchScreen"));
+
+
+// ------------------------------
+// Text list
+// ------------------------------
+function renderTextList() {
+  textList.innerHTML = "";
+  STORIES.forEach((story, idx) => {
+    const div = document.createElement("div");
+    div.className = "text-item";
+    const left = document.createElement("span");
+    left.textContent = titleCase(story.title);
+    const right = document.createElement("span");
+    right.className = "meta";
+    right.textContent = `${story.wordTotal} words — level ${story.difficulty}/5`;
+    div.appendChild(left);
+    div.appendChild(right);
+    div.addEventListener("click", () => chooseStory(idx));
+    textList.appendChild(div);
+  });
+}
+function titleCase(s) {
+  return s.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+}
+
+startBtn.addEventListener("click", () => { renderTextList(); showScreen("listScreen"); });
+
+
+// ------------------------------
+// Story selection -> intro screen
+// ------------------------------
+let currentStory = null;
+
+function chooseStory(idx) {
+  currentStory = STORIES[idx];
+  if (currentStory.intro && currentStory.intro.trim()) {
+    introText.textContent = currentStory.intro;
+    showScreen("introScreen");
+  } else {
+    beginReading();
+  }
+}
+introContinueBtn.addEventListener("click", beginReading);
+
+
+// ------------------------------
+// Reading session
+// ------------------------------
+let session = null;
+
+function buildSession(story) {
+  const phrases = settings.range === "slow" ? story.slow : story.fast;
+  const avgLen = story.wordTotal / phrases.length;
+  const minimum = settings.range === "slow" ? 50 : 100;
+  const maximum = Math.max(minimum + 10, Math.floor(100 * avgLen));
+  const startSpeed = settings.range === "slow" ? 120 : 180;
+  return {
+    story, phrases, avgLen, minimum, maximum,
+    speed: clamp(startSpeed, minimum, maximum),
+    index: 0,
+    records: [], // {index, speed, pauseSecs}
+    paused: false,
+    quit: false,
+    startTime: null,
+    elapsedBeforePause: 0,
+    timerId: null,
+    pauseStart: null,
+    wordsAtIndex: cumulativeWords(phrases),
+  };
+}
+function cumulativeWords(phrases) {
+  const out = [0];
+  let total = 0;
+  phrases.forEach(p => { total += p.split(/\s+/).filter(Boolean).length; out.push(total); });
+  return out;
+}
+function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+function beginReading() {
+  session = buildSession(currentStory);
+  readTitle.textContent = titleCase(currentStory.title);
+  layoutReadingViewport();
+  showScreen("readingScreen");
+  session.startTime = performance.now();
+  logEvent(0);
+  renderStatus();
+  scheduleNextPhrase();
+}
+
+function layoutReadingViewport() {
+  readInner.innerHTML = "";
+  readInner.style.color = PALETTE_HEX[settings.fore];
+  readViewport.style.background = PALETTE_HEX[settings.ground];
+  const frag = document.createDocumentFragment();
+  session.phrases.forEach((p, i) => {
+    const span = document.createElement("span");
+    span.className = "phrase" + (settings.layout === "40" ? " centered-mode" : "");
+    span.textContent = p + (settings.layout === "80" ? " " : "");
+    span.dataset.index = i;
+    frag.appendChild(span);
+  });
+  readInner.appendChild(frag);
+  readInner.style.transform = "translateY(0px)";
+}
+
+function currentDelaySeconds() {
+  return (session.avgLen / session.speed) * 60;
+}
+
+function scheduleNextPhrase() {
+  if (session.quit || session.index >= session.phrases.length) { finishReading(); return; }
+  highlightCurrentPhrase();
+  const delayMs = currentDelaySeconds() * 1000;
+  session.timerId = setTimeout(() => {
+    session.index++;
+    scheduleNextPhrase();
+  }, delayMs);
+}
+
+function highlightCurrentPhrase() {
+  const spans = readInner.children;
+  for (let i = 0; i < spans.length; i++) {
+    spans[i].style.color = i === session.index ? PALETTE_HEX[settings.high] : PALETTE_HEX[settings.fore];
+    spans[i].style.fontWeight = i === session.index ? "bold" : "normal";
+  }
+  const activeSpan = spans[session.index];
+  if (activeSpan) scrollToPhrase(activeSpan);
+  renderProgress();
+}
+
+function scrollToPhrase(spanEl) {
+  const viewportHeight = readViewport.clientHeight;
+  const target = spanEl.offsetTop - viewportHeight / 2 + spanEl.offsetHeight / 2;
+  readInner.style.transform = `translateY(${-Math.max(0, target)}px)`;
+}
+
+function renderStatus() {
+  readSpeed.textContent = `Speed: ${Math.round(session.speed)} wpm`;
+}
+function renderProgress() {
+  const pct = Math.round((session.wordsAtIndex[session.index] / session.story.wordTotal) * 100);
+  readProgress.textContent = pct + "%";
+}
+
+function logEvent(pauseSecs) {
+  session.records.push({ index: session.index, speed: Math.round(session.speed), pauseSecs: pauseSecs || 0 });
+}
+
+// --- controls ---
+function faster() {
+  session.speed = clamp(Math.round(session.speed * 1.1), session.minimum, session.maximum);
+  logEvent(0);
+  renderStatus();
+}
+function slower() {
+  session.speed = clamp(Math.round(session.speed * 0.9), session.minimum, session.maximum);
+  logEvent(0);
+  renderStatus();
+}
+function togglePause() {
+  if (session.paused) {
+    session.paused = false;
+    pauseOverlay.style.display = "none";
+    const pausedSecs = Math.round((performance.now() - session.pauseStart) / 1000) || 1;
+    logEvent(pausedSecs);
+    scheduleNextPhrase();
+  } else {
+    session.paused = true;
+    session.pauseStart = performance.now();
+    pauseOverlay.style.display = "flex";
+    clearTimeout(session.timerId);
+  }
+}
+function goHome() {
+  clearTimeout(session.timerId);
+  session.index = 0;
+  slower();
+  scheduleNextPhrase();
+}
+function goBackAPage() {
+  clearTimeout(session.timerId);
+  session.index = Math.max(0, session.index - 15);
+  slower();
+  scheduleNextPhrase();
+}
+function quitReading() {
+  clearTimeout(session.timerId);
+  session.quit = true;
+  finishReading();
+}
+
+document.addEventListener("keydown", (e) => {
+  if (!session || !el("readingScreen").classList.contains("active")) return;
+  switch (e.key) {
+    case "ArrowLeft": e.preventDefault(); if (!session.paused) slower(); break;
+    case "ArrowRight": e.preventDefault(); if (!session.paused) faster(); break;
+    case "ArrowDown": e.preventDefault(); togglePause(); break;
+    case "Home": e.preventDefault(); if (!session.paused) goHome(); break;
+    case "PageUp": e.preventDefault(); if (!session.paused) goBackAPage(); break;
+    case "Escape": e.preventDefault(); quitReading(); break;
+  }
+});
+
+
+// ------------------------------
+// Report screen
+// ------------------------------
+function finishReading() {
+  const elapsedSecs = (performance.now() - session.startTime) / 1000;
+  session.timeTakenSecs = elapsedSecs;
+  showScreen("reportScreen");
+  drawGraph();
+  renderReportStats();
+}
+
+function drawGraph() {
+  const ctx = graphCanvas.getContext("2d");
+  const W = graphCanvas.width, H = graphCanvas.height;
+  ctx.clearRect(0, 0, W, H);
+  const marginL = 50, marginR = 20, marginT = 20, marginB = 40;
+  const plotW = W - marginL - marginR, plotH = H - marginT - marginB;
+  const maxWords = session.story.wordTotal;
+  const maxSpeed = 800;
+
+  ctx.strokeStyle = "#999";
+  ctx.beginPath();
+  ctx.moveTo(marginL, marginT); ctx.lineTo(marginL, marginT + plotH); ctx.lineTo(marginL + plotW, marginT + plotH);
+  ctx.stroke();
+
+  ctx.fillStyle = "#666";
+  ctx.font = "11px Arial";
+  [0, 200, 400, 600, 800].forEach(v => {
+    const y = marginT + plotH - (v / maxSpeed) * plotH;
+    ctx.fillText(String(v), 8, y + 4);
+    ctx.strokeStyle = "#eee";
+    ctx.beginPath(); ctx.moveTo(marginL, y); ctx.lineTo(marginL + plotW, y); ctx.stroke();
+  });
+  ctx.fillText("wpm", 8, marginT - 6);
+  ctx.fillText("words →", marginL + plotW - 40, marginT + plotH + 22);
+
+  function toXY(rec) {
+    const words = session.wordsAtIndex[rec.index] || 0;
+    const x = marginL + (words / maxWords) * plotW;
+    const y = marginT + plotH - (rec.speed / maxSpeed) * plotH;
+    return [x, y];
+  }
+
+  ctx.strokeStyle = "#3366cc";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  session.records.forEach((rec, i) => {
+    const [x, y] = toXY(rec);
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  session.records.forEach((rec, i) => {
+    const [x, y] = toXY(rec);
+    const prev = session.records[i - 1];
+    const isRegression = prev && rec.index < prev.index;
+    if (rec.pauseSecs > 0 || isRegression) {
+      ctx.beginPath();
+      ctx.arc(x, y, 4, 0, Math.PI * 2);
+      ctx.strokeStyle = "#c0392b";
+      ctx.stroke();
+    }
+  });
+}
+
+function renderReportStats() {
+  // session.index lands exactly at phrases.length on natural completion, or
+  // wherever the reader quit early — either way it's a valid, exact index
+  // into wordsAtIndex (which has one entry per phrase boundary, 0..length).
+  const wordsRead = session.wordsAtIndex[session.index];
+  const mins = session.timeTakenSecs / 60;
+  const avgSpeed = Math.round(wordsRead / mins);
+  reportStats.innerHTML = `
+    <div><strong>${titleCase(session.story.title)}</strong> &mdash; ${session.story.wordTotal} words</div>
+    <div>Time taken: ${mins.toFixed(2)} minutes</div>
+    <div>Average speed: ${avgSpeed} wpm</div>
+  `;
+}
+
+readAgainBtn.addEventListener("click", () => {
+  showScreen("listScreen");
+  renderTextList();
+});
+answerQBtn.addEventListener("click", () => {
+  if (!currentStory.questions.length) { alert("There are no comprehension questions for this text."); return; }
+  startQuestions();
+});
+reportExitBtn.addEventListener("click", () => showScreen("launchScreen"));
+
+
+// ------------------------------
+// Questions screen
+// ------------------------------
+let qState = null;
+function startQuestions() {
+  qState = { index: 0, picks: currentStory.questions.map(() => null), checking: false };
+  showScreen("questionsScreen");
+  renderQuestion();
+}
+function renderQuestion() {
+  const q = currentStory.questions[qState.index];
+  qBox.innerHTML = "";
+  const stem = document.createElement("div");
+  stem.className = "q-stem";
+  stem.textContent = `Question ${qState.index + 1} of ${currentStory.questions.length}: ${q.stem}`;
+  qBox.appendChild(stem);
+
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.className = "q-option";
+    btn.textContent = opt.text;
+    if (qState.picks[qState.index] === i) btn.classList.add("picked");
+    if (qState.checking && opt.correct && qState.picks[qState.index] !== i) btn.classList.add("correct-reveal");
+    btn.addEventListener("click", () => {
+      if (qState.checking) return;
+      qState.picks[qState.index] = i;
+      renderQuestion();
+    });
+    qBox.appendChild(btn);
+  });
+}
+qPrevBtn.addEventListener("click", () => { qState.index = (qState.index - 1 + currentStory.questions.length) % currentStory.questions.length; renderQuestion(); });
+qNextBtn.addEventListener("click", () => { qState.index = (qState.index + 1) % currentStory.questions.length; renderQuestion(); });
+qCheckBtn.addEventListener("click", () => {
+  qState.checking = true;
+  const right = currentStory.questions.filter((q, i) => {
+    const pickIdx = qState.picks[i];
+    return pickIdx !== null && q.options[pickIdx].correct;
+  }).length;
+  qCheckBtn.textContent = `Score: ${right} out of ${currentStory.questions.length}`;
+  qCheckBtn.disabled = true;
+  renderQuestion();
+});
+qDoneBtn.addEventListener("click", () => showScreen("reportScreen"));
+
+
+// ------------------------------
+// Marked-up text (print view) — the one print feature the original
+// actually finished (the "print report" option was a stub even in
+// the source: "This routine is not yet enabled.")
+// ------------------------------
+printBtn.addEventListener("click", () => {
+  printTitle.textContent = "Marked-up text: " + titleCase(currentStory.title);
+  markedText.innerHTML = buildMarkedUpText();
+  showScreen("printScreen");
+});
+printBackBtn.addEventListener("click", () => showScreen("reportScreen"));
+
+function buildMarkedUpText() {
+  const marks = {}; // phrase index -> mark string
+  const recs = session.records;
+  for (let i = 1; i < recs.length; i++) {
+    const prev = recs[i - 1], cur = recs[i];
+    let mark = "";
+    if (cur.speed > prev.speed) mark = "[&gt;]";
+    if (cur.speed < prev.speed) mark = "[&lt;]";
+    if (cur.index < prev.index) mark = "[^]";
+    if (cur.index === 0 && prev.index !== 0) mark = "[^^]";
+    if (cur.pauseSecs > 0) mark = `[${cur.pauseSecs}s]`;
+    if (mark) marks[prev.index] = (marks[prev.index] || "") + " " + mark;
+  }
+  return session.phrases.map((p, i) => {
+    const m = marks[i] ? ` <span class="mark">${marks[i]}</span>` : "";
+    return escapeHtml(p) + m;
+  }).join(" ");
+}
+function escapeHtml(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+
+// ------------------------------
+// Startup
+// ------------------------------
+populateColorSelects();
+applySettingsToUI();
+</script>
+</body>
+</html>

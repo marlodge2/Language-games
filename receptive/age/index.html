@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../minimals.css" />
+    <title>True False Age Game</title>
+    <style>
+      :root {
+        --accent: #3366cc;
+        --accent-dark: #244d99;
+        --ink: #1c2733;
+        --ink-dim: #5b6b7a;
+        --bg: #eef2fa;
+        --card: #ffffff;
+        --border: #dde4f0;
+        --radius: 14px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        background:
+          radial-gradient(ellipse 800px 400px at 10% -10%, #ffffff 0%, transparent 60%),
+          radial-gradient(ellipse 700px 500px at 100% 0%, #e4ecfc 0%, transparent 55%),
+          var(--bg);
+        margin: 0;
+        padding: 32px 16px 60px;
+        min-height: 100vh;
+        color: var(--ink);
+        text-align: center;
+      }
+      .page {
+        max-width: 640px;
+        margin: 0 auto;
+      }
+      h1 {
+        font-size: 2.1em;
+        color: var(--accent);
+        margin: 0 0 6px;
+        letter-spacing: 0.5px;
+      }
+      #intro {
+        color: var(--ink-dim);
+        font-size: 1.05em;
+        margin: 0 0 24px;
+        line-height: 1.5;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: 0 6px 20px rgba(30, 40, 80, 0.08);
+        padding: 28px 24px;
+      }
+      table#vocabulary {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 22px;
+        font-size: 0.95em;
+      }
+      table#vocabulary th,
+      table#vocabulary td {
+        padding: 10px 8px;
+        text-align: center;
+      }
+      table#vocabulary th {
+        background: #eaf0fc;
+        color: var(--accent-dark);
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.8em;
+        letter-spacing: 0.5px;
+      }
+      table#vocabulary th:first-child {
+        border-top-left-radius: 10px;
+      }
+      table#vocabulary th:last-child {
+        border-top-right-radius: 10px;
+      }
+      table#vocabulary td {
+        border-top: 1px solid var(--border);
+      }
+      #question {
+        font-size: 1.3em;
+        background: #f4f7fd;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 18px;
+        margin-bottom: 20px;
+        min-height: 1.6em;
+      }
+      button {
+        font-family: inherit;
+        cursor: pointer;
+        border-radius: 999px;
+        border: 2px solid var(--accent);
+        background: #fff;
+        color: var(--accent);
+        transition: background 0.15s, transform 0.08s;
+      }
+      button:hover {
+        background: #eaf0fc;
+      }
+      button:active {
+        transform: translateY(1px);
+      }
+      #startButton {
+        font-size: 1.5em;
+        padding: 18px 44px;
+        margin-top: 10px;
+        background: var(--accent);
+        color: #fff;
+        box-shadow: 0 4px 14px rgba(51, 102, 204, 0.35);
+      }
+      #startButton:hover {
+        background: var(--accent-dark);
+        border-color: var(--accent-dark);
+      }
+      #trueButton,
+      #falseButton,
+      #playAgain,
+      #returnHome {
+        font-size: 1.05em;
+        padding: 10px 24px;
+        margin: 8px;
+      }
+      #feedback {
+        margin-top: 16px;
+        font-size: 1.15em;
+        font-weight: 600;
+        min-height: 1.4em;
+      }
+      #score {
+        margin-top: 14px;
+        font-size: 1.05em;
+        color: var(--ink-dim);
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <h1>Gama's Guesses</h1>
+      <p id="intro">King Gama thinks he is good at guessing ages. Let's see how often he gets it right.</p>
+      <div class="card">
+        <table id="vocabulary">
+          <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Name</th>
+            <th>Age</th>
+          </tr>
+          <tr>
+            <td>Henry</td>
+            <td id="ageHenry"></td>
+            <td>Richard</td>
+            <td id="ageRichard"></td>
+            <td>George</td>
+            <td id="ageGeorge"></td>
+          </tr>
+          <tr>
+            <td>Mary</td>
+            <td id="ageMary"></td>
+            <td>Violet</td>
+            <td id="ageViolet"></td>
+            <td>Alice</td>
+            <td id="ageAlice"></td>
+          </tr>
+        </table>
+        <div id="question">Study the names and ages above, then click Start.</div>
+        <button id="startButton">Start</button>
+        <button id="trueButton" style="display: none">True</button>
+        <button id="falseButton" style="display: none">False</button>
+        <div id="feedback"></div>
+        <div id="score"></div>
+        <div id="endGame"></div>
+      </div>
+    </div>
+    <script src="aboutage.js"></script>
+  </body>
+</html>

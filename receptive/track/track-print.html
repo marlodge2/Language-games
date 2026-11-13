@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRACK — Printable Puzzles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0f1a22;
+    --panel:#16232c;
+    --rail:#e0a339;
+    --rail-bright:#f2bb56;
+    --ink-text:#eee6d4;
+    --ink-text-dim:#9fb0ba;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--ink-text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+  }
+
+  /* ---------------- Screen-only chrome ---------------- */
+  .toolbar{
+    max-width:900px;margin:0 auto;padding:28px 20px 20px;
+  }
+  .toolbar h1{
+    font-family:'Archivo Black',sans-serif;
+    font-size:32px;letter-spacing:4px;margin:0 0 4px;color:var(--rail-bright);
+  }
+  .toolbar .sub{font-size:13px;color:var(--ink-text-dim);margin:0 0 22px;line-height:1.6;max-width:640px;}
+
+  .controls{
+    background:var(--panel);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:10px;
+    padding:18px 20px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+    align-items:flex-end;
+  }
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field label{font-size:11.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-text-dim);}
+  .field input[type=number]{
+    width:80px;padding:9px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.15);
+    background:#0f1a22;color:var(--ink-text);font-family:'IBM Plex Mono',monospace;font-size:14px;
+  }
+  .field label.chk{flex-direction:row;align-items:center;display:flex;gap:8px;text-transform:none;letter-spacing:0;font-size:13px;color:var(--ink-text);}
+
+  button{
+    font-family:'Inter',sans-serif;cursor:pointer;border:none;border-radius:8px;font-weight:600;
+    transition:transform .08s ease, filter .12s ease, background .15s ease;
+  }
+  button:active{transform:translateY(1px);}
+  button:disabled{opacity:.4;cursor:not-allowed;}
+  .btn-primary{background:var(--rail);color:#231603;padding:11px 20px;font-size:14px;}
+  .btn-primary:hover:not(:disabled){background:var(--rail-bright);}
+  .btn-ghost{background:transparent;color:var(--ink-text-dim);border:1px solid rgba(255,255,255,0.18);padding:10px 16px;font-size:13px;}
+  .btn-ghost:hover:not(:disabled){color:var(--ink-text);border-color:rgba(255,255,255,0.4);}
+  .toolbar-actions{max-width:900px;margin:16px auto 0;padding:0 20px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  .empty-note{max-width:900px;margin:40px auto;padding:0 20px;color:var(--ink-text-dim);font-size:14px;}
+
+  /* ---------------- Printable sheets ---------------- */
+  .sheets{max-width:900px;margin:26px auto 60px;padding:0 20px;}
+  .sheet{
+    background:#ffffff;
+    color:#1a1a1a;
+    border-radius:6px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    padding:46px 50px;
+    margin-bottom:34px;
+    font-family:'Inter',sans-serif;
+  }
+  .sheet-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #1a1a1a;padding-bottom:10px;margin-bottom:22px;}
+  .sheet-head .title{font-family:'Archivo Black',sans-serif;font-size:22px;letter-spacing:3px;}
+  .sheet-head .puzno{font-family:'IBM Plex Mono',monospace;font-size:13px;color:#555;}
+  .line-caption{font-size:13px;text-transform:uppercase;letter-spacing:1.5px;color:#555;margin-bottom:18px;}
+
+  .diagram-wrap{display:flex;justify-content:center;margin-bottom:22px;}
+  svg.diagram{width:100%;max-width:520px;height:auto;}
+  .rail-line{stroke:#1a1a1a;stroke-width:4;fill:none;stroke-linecap:round;}
+  .node-circle{fill:#fff;stroke:#1a1a1a;stroke-width:2.5;}
+  .node-text{font-family:'IBM Plex Mono',monospace;font-size:13px;fill:#1a1a1a;text-anchor:middle;dominant-baseline:central;font-weight:600;}
+  .compass-text{font-family:'IBM Plex Mono',monospace;font-size:11px;fill:#555;letter-spacing:1px;}
+
+  .stations-list{
+    font-family:'IBM Plex Mono',monospace;font-size:13px;
+    display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;margin-bottom:22px;color:#333;
+  }
+  .stations-list span{border:1px solid #ccc;border-radius:14px;padding:4px 12px;}
+
+  .clue-instr{font-size:13px;color:#555;text-align:center;margin-bottom:16px;font-style:italic;}
+  ol.clues{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13.5px;
+    line-height:2;
+    columns:2;
+    column-gap:36px;
+    padding-left:20px;
+    margin:0;
+  }
+  ol.clues li{break-inside:avoid;padding-right:8px;}
+
+  .solutions-sheet .sol-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px 40px;}
+  .sol-entry{border-bottom:1px solid #eee;padding-bottom:14px;}
+  .sol-entry .sol-title{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#777;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px;}
+  .sol-table{width:100%;border-collapse:collapse;font-size:13px;}
+  .sol-table td{padding:3px 6px;}
+  .sol-table td.pos{font-family:'IBM Plex Mono',monospace;color:#888;width:24px;}
+
+  footer.credit{max-width:900px;margin:0 auto 40px;padding:0 20px;font-size:12px;color:var(--ink-text-dim);text-align:center;line-height:1.6;}
+
+  @media print{
+    body{background:#fff;color:#000;}
+    .toolbar,.toolbar-actions,.empty-note,footer.credit{display:none !important;}
+    .sheets{max-width:none;margin:0;padding:0;}
+    .sheet{box-shadow:none;border-radius:0;margin:0;padding:0.5in;page-break-after:always;}
+    .sheet:last-child{page-break-after:auto;}
+    @page{margin:0.4in;}
+  }
+</style>
+ <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>   
+</head>
+<body>
+
+  <div class="toolbar">
+    <h1>TRACK — PRINTABLE PUZZLES</h1>
+    <p class="sub">
+      Generates paper versions of TRACK: a diagram, the station names, and a numbered clue list for each puzzle,
+      followed by an answer key. Print it, save it as a PDF, or download it as plain text — no printer setup or
+      drivers needed, unlike the original 1991 program this replaces.
+    </p>
+
+    <div class="controls">
+      <div class="field">
+        <label for="numPuzzles">Puzzles</label>
+        <input type="number" id="numPuzzles" min="1" max="30" value="4">
+      </div>
+      <div class="field">
+        <label class="chk"><input type="checkbox" id="includeSolutions" checked> Include answer key</label>
+      </div>
+      <div class="field">
+        <label class="chk"><input type="checkbox" id="smartClues"> Smart clues (shorter, sharper clue lists)</label>
+      </div>
+      <button class="btn-primary" id="generateBtn">Generate puzzles</button>
+    </div>
+  </div>
+
+  <div class="toolbar-actions" id="downloadActions" style="display:none;">
+    <button class="btn-ghost" id="printBtn">Print / Save as PDF</button>
+    <button class="btn-ghost" id="txtBtn">Download as text (.txt)</button>
+  </div>
+
+  <div class="empty-note" id="emptyNote">No puzzles generated yet — choose a count above and press "Generate puzzles".</div>
+
+  <div class="sheets" id="sheets"></div>
+
+  <footer class="credit">
+    TRACK · From a BASIC version by John Higgins, 1985. New HTML edition, August 2026.
+  </footer>
+
+<script>
+// TRACK puzzle engine — faithful port of the BASIC constraint-propagation logic
+// from TRACK2.BAS (Muriel & John Higgins, 1987/1991).
+//
+// Topology (fixed, same every game):
+//   North branch: 1 - 2 - 3 -\
+//                              4 (junction) - 5 (east terminus)
+//   South branch: 8 - 7 - 6 -/
+// West->East order: {1,8} < {2,7} < {3,6} < 4 < 5
+// Termini (only one neighbour): 1, 5, 8
+// Junction (three neighbours): 4
+
+const THEMES = [
+  { names: ["Amber","Coral","Gold","Ivory","Opal","Pearl","Ruby","Topaz"], line: "Decor Line" },
+  { names: ["Ash","Elm","Lime","Maple","Oak","Pine","Teak","Yew"], line: "Forest Line" },
+  { names: ["Daisy","Fern","Holly","Lily","Moss","Palm","Rose","Tulip"], line: "Garden Line" },
+  { names: ["Bank","Court","Docks","Ferry","Grand","Park","Union","Zoo"], line: "City Line" },
+  { names: ["Blue","Green","Indigo","Red","Orange","Violet","White","Yellow"], line: "Rainbow Line" },
+  { names: ["Beach","Cabin","Hotel","Lake","Mount","Pier","River","Woods"], line: "Country Line" },
+  { names: ["Aster","Luna","Mars","Orion","Pluto","Sol","Terra","Venus"], line: "Firmament Line" },
+];
+
+function randInt(a, b) { // inclusive
+  return Math.floor(Math.random() * (b - a + 1)) + a;
+}
+function randChoice(arr) {
+  return arr[randInt(0, arr.length - 1)];
+}
+function mkArr(n, fill) {
+  const a = new Array(n + 1);
+  for (let i = 0; i <= n; i++) a[i] = fill;
+  return a;
+}
+function mk2D(n, m, fill) {
+  const a = new Array(n + 1);
+  for (let i = 0; i <= n; i++) a[i] = mkArr(m, fill);
+  return a;
+}
+
+// Clue-type pool for weighted random draws. Types 3 (two stations away) and
+// 6 (between) narrow the possibilities fastest, so they're weighted higher
+// to bring the solution sooner.
+const FACT_POOL = [1, 2, 3, 3, 4, 5, 6, 6, 7, 8];
+
+// (station, fact) pairs that solve a station outright regardless of any
+// other clue given: position 5 is always the sole furthest-east station,
+// and position 4 is always the sole three-way junction. The smart picker
+// would otherwise grab both as its very first moves every game, so they're
+// held back until at least this clue number.
+const CERTAINTY_PAIRS = [[5, 4], [4, 5]];
+const CERTAINTY_DELAY = 5;
+
+class TrackGame {
+  constructor(opts) {
+    opts = opts || {};
+    this.smart = !!opts.smart; // smart clue picker vs the original weighted-random one
+    this.oldstations = 0;
+    this.pull = 0;
+    this.chk = 0;
+    this.onDeduce = null; // callback(pos)
+    this.newRound();
+  }
+
+  newRound() {
+    this.ans = mkArr(8, "");
+    this.rep = mkArr(8, "");
+    this.store = []; // clue sentences, 1-indexed via store[1..]
+    this.store[0] = null;
+    this.sol = mkArr(8, 0);
+    this.recap = mk2D(8, 8, false);
+    this.stor = {}; // stor[clueIndex] = [stat, fact, z, zz]
+    this.deduced = mkArr(8, false);
+    this.typeSeen = mkArr(8, false); // has clue-type N been given yet this round?
+    for (let n = 1; n <= 8; n++) this.sol[n] = 255;
+    this.recap[1][6] = true;
+    this.recap[5][6] = true;
+    this.recap[8][6] = true;
+    this.solved = false;
+    this.lastclue = 0;
+    this.thisclue = 1;
+    this.wrong = 0;
+    this.howmany = 0;
+    this.chk = 0;
+
+    // choose a station theme, avoiding immediate repeat
+    let stationset;
+    do { stationset = randInt(1, 7); } while (stationset === this.oldstations);
+    this.oldstations = stationset;
+    const theme = THEMES[stationset - 1];
+    this.alpha = mkArr(8, "");
+    this.station = mkArr(8, "");
+    for (let r = 1; r <= 8; r++) {
+      this.station[r] = theme.names[r - 1];
+      this.alpha[r] = theme.names[r - 1];
+    }
+    this.show = "There are eight stations on the " + theme.line;
+
+    // scatter station names randomly onto the eight physical positions
+    for (let n = 1; n <= 8; n++) {
+      const card = randInt(1, 8);
+      const t = this.station[n]; this.station[n] = this.station[card]; this.station[card] = t;
+    }
+    this.shuffle();
+  }
+
+  shuffle() {
+    this.pickall = mkArr(8, 0);
+    for (let n = 1; n <= 8; n++) this.pickall[n] = n;
+    for (let n = 1; n <= 8; n++) {
+      const card = randInt(1, 8);
+      if (card !== n) {
+        const t = this.pickall[n]; this.pickall[n] = this.pickall[card]; this.pickall[card] = t;
+      }
+    }
+  }
+
+  setStor(idx, pos, val) {
+    if (!this.stor[idx]) this.stor[idx] = [0, 0, 0, 0];
+    this.stor[idx][pos] = val;
+  }
+
+  Maketrace(x) {
+    if (this.chk !== 0) return;
+    this.rep[x] = this.rep[x].slice(0, -1) + "1";
+  }
+
+  Betclause(a, b) {
+    if (this.chk !== 0) return;
+    if (Math.random() > 0.5) { const t = a; a = b; b = t; }
+    this.clause = " is between " + this.station[a] + " and " + this.station[b];
+  }
+
+  Twoclause(x) {
+    if (this.chk !== 0) return;
+    this.clause = " is two stations away from " + this.station[x];
+  }
+
+  NSclause(x, y, due) {
+    this.Maketrace(x);
+    if (this.chk !== 0) return;
+    if (due) this.clause = y ? " is due north of " : " is due south of ";
+    else this.clause = y ? " is further north than " : " is further south than ";
+    this.clause += this.station[x];
+  }
+
+  Branchline(x) {
+    if (x >= 1 && x <= 3) {
+      if (this.chk === 0) this.clause = " is on the northern branch";
+      this.sol[x] &= 7;
+    } else if (x >= 6 && x <= 8) {
+      if (this.chk === 0) this.clause = " is on the southern branch";
+      this.sol[x] &= 224;
+    } else {
+      if (this.chk === 0) this.clause = " isn't on either the north or the south branch";
+      this.sol[x] &= 24;
+    }
+  }
+
+  Terminus(x) {
+    if (x === 1 || x === 8 || x === 5) {
+      if (this.chk === 0) this.clause = " is a terminus";
+      this.sol[x] &= 145;
+      this.recap[x][5] = true;
+    } else {
+      this.sol[x] &= 110;
+      if (this.chk === 0) this.clause = " isn't a terminus";
+      this.recap[x][4] = true;
+    }
+  }
+
+  Furthest(x) {
+    this.recap[x][2] = true;
+    if (x === 1 || x === 8) {
+      if (this.chk === 0) this.clause = " is one of the furthest west stations";
+      this.sol[x] &= 129;
+      this.recap[x][5] = true;
+    } else if (x === 5) {
+      if (this.chk === 0) this.clause = " is the furthest east station";
+      this.sol[x] &= 16;
+      this.recap[x][5] = true;
+    } else {
+      if (this.chk === 0) this.clause = " isn't the furthest east or the furthest west";
+      this.sol[x] &= 110;
+    }
+  }
+
+  Nextto(x) {
+    this.recap[x][2] = true;
+    if (x === 4) {
+      if (this.chk === 0) this.clause = " is next to three other stations";
+      this.sol[4] &= 8;
+      this.recap[4][4] = true;
+    } else if (x === 1 || x === 5 || x === 8) {
+      if (this.chk === 0) this.clause = " is next to only one other station";
+      this.sol[x] &= 145;
+      this.recap[x][6] = true;
+    } else {
+      if (this.chk === 0) this.clause = " is next to two other stations";
+      this.sol[x] &= 102;
+      this.recap[x][4] = true;
+    }
+  }
+
+  Between(x, y, z) {
+    this.recap[x][2] = true;
+    if (x === 2 || x === 3 || x === 7) {
+      this.Maketrace(x - 1); this.Maketrace(x + 1);
+      this.Betclause(x - 1, x + 1);
+      if (this.sol[x] === 0) {
+        if (x === 2) { this.sol[1] &= 5; this.sol[3] &= 5; }
+        else if (x === 3) { this.sol[2] &= 10; this.sol[4] &= 10; }
+        else { this.sol[6] &= 160; this.sol[8] &= 160; }
+      }
+      if (this.sol[x - 1] === 0) {
+        if (x === 2) { this.sol[2] &= 2; this.sol[3] &= 4; }
+        else if (x === 3) { this.sol[3] &= 4; this.sol[4] &= 8; }
+        else { this.sol[7] &= 72; this.sol[8] &= 148; }
+      }
+      if (this.sol[x + 1] === 0) {
+        if (x === 2) { this.sol[2] &= 10; this.sol[1] &= 49; }
+        else if (x === 3) { this.sol[3] &= 36; this.sol[2] &= 66; }
+        else { this.sol[7] &= 64; this.sol[6] &= 32; }
+      }
+      this.recap[x][4] = true; this.recap[x][5] = true;
+    } else if (x === 4) {
+      if (y === 0) {
+        y = Math.random() > 0.5 ? 6 : 3;
+        z = y === 3 ? (Math.random() > 0.5 ? 6 : 5) : (Math.random() > 0.5 ? 5 : 3);
+        this.setStor(this.thisclue, 2, y);
+        this.setStor(this.thisclue, 3, z);
+      }
+      this.Maketrace(y); this.Maketrace(z);
+      this.Betclause(y, z);
+      if (this.sol[4] === 0) { this.sol[y] &= 52; this.sol[z] &= 52; }
+      if (y === 3) { if (this.sol[3] === 0) { this.sol[4] &= 10; this.sol[z] &= 49; } }
+      else if (y === 6) { if (this.sol[6] === 0) { this.sol[4] &= 72; this.sol[z] &= 148; } }
+      if (z === 3) { if (this.sol[3] === 0) { this.sol[4] &= 10; this.sol[y] &= 49; } }
+      else if (z === 5) { if (this.sol[5] === 0) { this.sol[4] &= 8; this.sol[y] &= 36; } }
+      else if (z === 6) { if (this.sol[6] === 0) { this.sol[4] &= 72; this.sol[y] &= 148; } }
+      this.recap[4][4] = true;
+      this._lastY = y; this._lastZ = z;
+    } else if (x === 6) {
+      this.Maketrace(4); this.Maketrace(7);
+      this.Betclause(4, 7);
+      if (this.sol[6] === 0) { this.sol[4] &= 72; this.sol[7] &= 72; }
+      if (this.sol[4] === 0) { this.sol[6] &= 36; this.sol[7] &= 66; }
+      if (this.sol[7] === 0) { this.sol[6] &= 32; this.sol[4] &= 8; }
+      this.recap[6][4] = true;
+    } else {
+      if (this.chk === 0) this.clause = " is at an end of the line";
+      this.sol[x] &= 145;
+      this.recap[x][5] = true; this.recap[x][4] = true;
+      return;
+    }
+    this.sol[x] &= 110;
+  }
+
+  Twostations(x, y) {
+    let out = y;
+    if (x === 1) {
+      out = 3; this.Twoclause(out);
+      if (this.sol[x] === 0) this.sol[out] &= 4;
+      if (this.sol[out] === 0) this.sol[x] &= 49;
+    } else if (x === 2 || x === 7) {
+      out = 4; this.Twoclause(out);
+      if (this.sol[x] === 0) this.sol[out] &= 8;
+      if (this.sol[out] === 0) this.sol[x] &= 66;
+    } else if (x === 3) {
+      if (out === 0) {
+        let count = 0;
+        while (count < 2) {
+          out = randInt(5, 7); if (out === 7) out = 1;
+          if (!this.recap[out][3]) break;
+          count++;
+        }
+        if (out === 1) this.recap[1][3] = true;
+        this.setStor(this.thisclue, 2, out);
+      }
+      this.Twoclause(out);
+      if (this.sol[x] === 0) this.sol[out] &= 49;
+      if (this.sol[out] === 0) {
+        if (out === 1) this.sol[x] &= 4;
+        if (out === 5) this.sol[x] &= 36;
+        if (out === 6) this.sol[x] &= 148;
+      }
+    } else if (x === 4) {
+      if (out === 0) {
+        out = randChoice([2, 7]);
+        if (this.recap[out][3]) out = (out === 2) ? 7 : 2;
+        this.recap[out][3] = true;
+        this.setStor(this.thisclue, 2, out);
+      }
+      this.Twoclause(out);
+      if (this.sol[4] === 0) this.sol[out] &= 66;
+      if (this.sol[out] === 0) this.sol[4] &= 8;
+    } else if (x === 5) {
+      if (out === 0) {
+        out = randChoice([3, 6]);
+        if (this.recap[out][3]) out = (out === 3) ? 6 : 3;
+        this.recap[out][3] = true;
+        this.setStor(this.thisclue, 2, out);
+      }
+      this.Twoclause(out);
+      if (this.sol[x] === 0) this.sol[out] &= 36;
+      if (this.sol[out] === 0) {
+        if (out === 3) this.sol[x] &= 49;
+        if (out === 6) this.sol[x] &= 148;
+      }
+    } else if (x === 6) {
+      if (out === 0) {
+        let count = 0;
+        while (count < 2) {
+          out = randChoice([3, 5, 7]); if (out === 7) out = 8;
+          if (!this.recap[out][3]) break;
+          count++;
+        }
+        if (out === 8) this.recap[8][3] = true;
+        this.setStor(this.thisclue, 2, out);
+      }
+      this.Twoclause(out);
+      if (this.sol[x] === 0) this.sol[out] &= 148;
+      if (this.sol[out] === 0) {
+        if (out === 8) this.sol[x] &= 32;
+        else if (out === 5) this.sol[x] &= 36;
+        else this.sol[x] &= 49;
+      }
+    } else { // x === 8
+      out = 6; this.Twoclause(out);
+      if (this.sol[x] === 0) this.sol[out] &= 32;
+      if (this.sol[out] === 0) this.sol[x] &= 148;
+    }
+    this.Maketrace(out);
+    this._lastY = out;
+  }
+
+  Northorsouth(x, y, z) {
+    if (this.chk === 0) {
+      y = Math.random() > 0.5;
+      this.setStor(this.thisclue, 2, y);
+    }
+    if ((x >= 1 && x <= 3) || (x >= 6 && x <= 8)) {
+      if (y) {
+        z = 9 - x;
+        this.NSclause(z, x < 4, y);
+        this.recap[x][1] = true; this.recap[z][1] = true; this.recap[z][7] = true;
+        if (this.sol[x] === 0) this.sol[z] &= (Math.pow(2, z) - 1);
+        if (this.sol[z] === 0) { this.sol[x] &= Math.pow(2, x - 1); this._lastZ = z; return; }
+        if (x < 4) { this.sol[x] &= 7; this.sol[z] &= 224; }
+        else { this.sol[x] &= 224; this.sol[z] &= 7; }
+      } else {
+        if (z === 0) { z = x < 4 ? randInt(4, 8) : randInt(1, 5); this.setStor(this.thisclue, 3, z); }
+        this.NSclause(z, x < 4, y);
+        if (x < 4) { this.sol[x] &= 31; this.sol[z] &= 248; }
+        else { this.sol[x] &= 248; this.sol[z] &= 31; }
+      }
+    } else { // x = 4 or 5
+      let v, w;
+      if (y) { v = 31; w = 248; } else { v = 248; w = 31; }
+      if (z === 0) { z = y ? randInt(6, 8) : randInt(1, 3); this.setStor(this.thisclue, 3, z); }
+      this.NSclause(z, y, false);
+      if (this.sol[x] === 0) { if (y) this.sol[z] &= 224; else this.sol[z] &= 7; }
+      this.sol[x] &= v;
+      this.sol[z] &= w;
+    }
+    this._lastZ = z;
+  }
+
+  Eastorwest(x, y, z) {
+    if (this.chk === 0) {
+      y = Math.random() > 0.5;
+      this.setStor(this.thisclue, 2, y);
+    }
+    if (x === 1 || x === 8) {
+      if (z === 0) { z = randInt(2, 7); this.setStor(this.thisclue, 3, z); }
+      let due = false;
+      if (z === 2 || z === 3) {
+        if (x === 1) {
+          if (this.sol[x] === 0) this.sol[z] &= 6;
+          if (this.sol[z] === 0 && z === 3) this.sol[1] &= 3;
+          if (this.sol[z] === 0 && z === 2) this.sol[1] &= 1;
+          this.sol[1] &= 203; this.sol[z] &= 118;
+          due = true;
+        }
+      } else if (z === 6 || z === 7) {
+        if (x === 8) {
+          if (this.sol[8] === 0) this.sol[z] &= 96;
+          if (this.sol[z] === 0 && z === 6) this.sol[8] &= 192;
+          if (this.sol[z] === 0 && z === 7) this.sol[8] &= 128;
+          this.sol[8] &= 203; this.sol[z] &= 118;
+          due = true;
+        }
+      }
+      if (due) { if (this.chk === 0) this.clause = " is due west of " + this.station[z]; }
+      else {
+        this.sol[x] &= 239; this.sol[z] &= 126;
+        if (this.chk === 0) this.clause = " is further west than " + this.station[z];
+      }
+    } else if (x === 2 || x === 7) {
+      if (y) {
+        if (z === 0) { z = randInt(3, 6); this.setStor(this.thisclue, 3, z); }
+        if (x === 2 && z === 3) {
+          if (this.chk === 0) this.clause = " is due west of " + this.station[z];
+          if (this.sol[2] === 0) this.sol[3] &= 4;
+          else if (this.sol[3] === 0) this.sol[2] &= 3;
+          else { this.sol[x] &= 203; this.sol[z] &= 118; }
+        } else if (x === 7 && z === 6) {
+          if (this.chk === 0) this.clause = " is due west of " + this.station[z];
+          if (this.sol[7] === 0) this.sol[6] &= 32;
+          else if (this.sol[6] === 0) this.sol[7] &= 192;
+          else { this.sol[x] &= 203; this.sol[z] &= 118; }
+        } else {
+          if (this.chk === 0) this.clause = " is further west than " + this.station[z];
+          if (this.sol[x] === 0) this.sol[z] &= 60;
+          if (this.sol[z] === 0) {
+            if (z === 3 || z === 6) this.sol[x] &= 195;
+            else if (z === 4) this.sol[x] &= 231;
+            else this.sol[x] &= 239;
+          } else { this.sol[x] &= 239; this.sol[z] &= 126; }
+        }
+      } else {
+        if (z === 0) { z = randChoice([1, 8]); this.setStor(this.thisclue, 3, z); }
+        if (x === 2 && z === 1) {
+          if (this.chk === 0) this.clause = " is due east of " + this.station[z];
+          if (this.sol[2] === 0) this.sol[1] &= 1;
+          else if (this.sol[1] === 0) this.sol[2] &= 6;
+          else { this.sol[x] &= 118; this.sol[z] &= 203; }
+        } else if (x === 7 && z === 8) {
+          if (this.chk === 0) this.clause = " is due east of " + this.station[z];
+          if (this.sol[7] === 0) this.sol[8] &= 128;
+          else if (this.sol[8] === 0) this.sol[7] &= 96;
+          else { this.sol[x] &= 118; this.sol[z] &= 203; }
+        } else {
+          if (this.chk === 0) this.clause = " is further east than " + this.station[z];
+          if (this.sol[x] === 0) this.sol[z] &= 129;
+          this.sol[x] &= 126; this.sol[z] &= 239;
+        }
+      }
+    } else if (x === 3 || x === 6) {
+      if (y) {
+        if (z === 0) { z = randInt(4, 5); this.setStor(this.thisclue, 3, z); }
+        if (this.chk === 0) this.clause = " is further west than " + this.station[z];
+        if (this.sol[x] === 0) this.sol[z] &= 24;
+        if (z === 4 && this.sol[z] === 0) this.sol[x] &= 247;
+        this.sol[x] &= 239; this.sol[z] &= 126;
+      } else {
+        if (z === 0) { z = randInt(1, 2) + (Math.random() > 0.5 ? 6 : 0); this.setStor(this.thisclue, 3, z); }
+        if (x === 3 && z < 3) {
+          if (this.chk === 0) this.clause = " is due east of " + this.station[z];
+          if (this.sol[3] === 0) this.sol[z] &= 3;
+          this.sol[x] &= 118; this.sol[z] &= 203;
+        } else if (x === 6 && z > 6) {
+          if (this.chk === 0) this.clause = " is due east of " + this.station[z];
+          if (this.sol[6] === 0) this.sol[z] &= 192;
+          this.sol[x] &= 118; this.sol[z] &= 203;
+        } else {
+          if (this.chk === 0) this.clause = " is further east than " + this.station[z];
+          if (this.sol[x] === 0) this.sol[z] &= 195;
+          this.sol[x] &= 126; this.sol[z] &= 239;
+        }
+      }
+    } else { // x = 4 or 5
+      if (z === 0) {
+        do { z = randInt(1, 8); } while (z === x);
+        this.setStor(this.thisclue, 3, z);
+      }
+      if (z === 5) {
+        if (this.sol[4] === 0) this.sol[5] &= 16;
+        this.sol[4] &= 203; this.sol[5] &= 118;
+        if (this.chk === 0) this.clause = " is due west of " + this.station[z];
+      } else if (z === 4) {
+        if (this.sol[5] === 0) this.sol[4] &= 8;
+        this.sol[5] &= 118; this.sol[4] &= 203;
+        if (this.chk === 0) this.clause = " is due east of " + this.station[z];
+      } else {
+        if (this.chk === 0) this.clause = " is further east than " + this.station[z];
+        if (this.sol[x] === 0 && x === 4) this.sol[z] &= 231;
+        this.sol[x] &= 126; this.sol[z] &= 239;
+      }
+    }
+    this.Maketrace(z);
+    this._lastZ = z;
+  }
+
+  Statement(x, y, z, zz) {
+    if (this.chk === 0) {
+      for (let n = 1; n <= 8; n++) this.rep[n] += (n === x) ? "1" : "0";
+      z = 0; zz = 0;
+    }
+    switch (y) {
+      case 1: this.Branchline(x); break;
+      case 2: this.Terminus(x); break;
+      case 3: this.Twostations(x, z); break;
+      case 4: this.Furthest(x); break;
+      case 5: this.Nextto(x); break;
+      case 6: this.Between(x, z, zz); break;
+      case 7: this.Northorsouth(x, z, zz); break;
+      case 8: this.Eastorwest(x, z, zz); break;
+    }
+    if (this.chk === 0 && !this.solved) this.Solver();
+  }
+
+  Solver() {
+    let found = true;
+    while (found) {
+      found = false;
+      this.howmany = 0;
+      if (this.lastclue > 8) {
+        for (let column = 0; column <= 7; column++) {
+          let hold = 0;
+          for (let row = 1; row <= 8; row++) hold += (this.sol[row] & (1 << column));
+          if (hold === (1 << column)) { this.sol[column + 1] = hold; break; }
+        }
+      }
+      for (let i = 1; i <= 8; i++) {
+        if (this.sol[i] === (1 << (i - 1))) {
+          this.sol[i] = 0;
+          found = true;
+          for (let zz = 1; zz <= 8; zz++) {
+            if (zz !== i) this.sol[zz] &= (255 - (1 << (i - 1)));
+          }
+          let idx = this.rep[i].indexOf("1");
+          let chk = idx + 1;
+          while (chk > 0) {
+            this.chk = chk;
+            const rec = this.stor[chk] || [0, 0, 0, 0];
+            this.Statement(rec[0], rec[1], rec[2], rec[3]);
+            const nidx = this.rep[i].indexOf("1", chk);
+            chk = nidx + 1;
+          }
+          this.chk = 0;
+          if (this.ans[i] === "") {
+            this.deduced[i] = true;
+            if (this.onDeduce) this.onDeduce(i);
+          }
+        }
+        if (this.sol[i] === 0) this.howmany++;
+      }
+    }
+    this.solved = this.howmany > 7;
+  }
+
+  // Any station whose fact-slot `fact` hasn't been used yet (and that still
+  // needs clues), or null if none exists.
+  findStationFor(fact) {
+    for (let n = 1; n <= 8; n++) {
+      if ((this.sol[n] !== 0 || this.solved) && !this.recap[n][fact]) return n;
+    }
+    return null;
+  }
+
+  Choosenum() {
+    if (this.smart) this.ChoosenumSmart();
+    else this.ChoosenumRandom();
+  }
+
+  ChoosenumRandom() {
+    // Guarantee a north/south (7) and an east/west (8) clue both land within
+    // the first 8 clues: once the remaining slots before clue 8 equal the
+    // number of these types still missing, force one in now.
+    let forced = null;
+    if (this.thisclue <= 8) {
+      const missing = [7, 8].filter(f => !this.typeSeen[f]);
+      const remaining = 8 - this.thisclue + 1;
+      if (missing.length > 0 && missing.length >= remaining) {
+        let pickFact = missing.length === 2 ? randChoice(missing) : missing[0];
+        let station = this.findStationFor(pickFact);
+        if (!station && missing.length === 2) {
+          pickFact = missing.find(f => f !== pickFact);
+          station = this.findStationFor(pickFact);
+        }
+        if (station) forced = { stat: station, fact: pickFact };
+      }
+    }
+
+    let stat, fact;
+    if (forced) {
+      stat = forced.stat; fact = forced.fact;
+    } else {
+      do {
+        do {
+          this.pull++; if (this.pull > 8) this.pull = 1;
+          stat = this.pickall[this.pull];
+        } while (!(this.sol[stat] !== 0 || this.solved));
+        fact = randChoice(FACT_POOL);
+        if (this.howmany > 3) fact = randChoice([3, 6]);
+        let trial = 0;
+        while (true) {
+          if (!this.recap[stat][fact]) break;
+          fact++; if (fact > 8) fact = 1;
+          trial++;
+          if (this.solved || trial > 7) break;
+        }
+      } while (!(!this.recap[stat][fact] || this.solved));
+    }
+    this.stat = stat; this.fact = fact;
+    this.setStor(this.thisclue, 0, stat);
+    this.setStor(this.thisclue, 1, fact);
+    this.recap[stat][fact] = true;
+    this.typeSeen[fact] = true;
+  }
+
+  // ---- Smart clue picker -------------------------------------------------
+  // Rather than choosing a clue type at random, simulate firing each legal
+  // (station, clue-type) pair — including the solver cascade it triggers —
+  // and keep whichever narrows the eight-station puzzle the most: stations
+  // fully pinned down count for the most, remaining ambiguity (bits still
+  // set in each station's possibility mask) breaks ties.
+
+  popcount(n) {
+    let c = 0;
+    while (n) { c += n & 1; n >>= 1; }
+    return c;
+  }
+
+  // Fires (stat, fact) against the live state, scores the result, then
+  // rewinds every field the fire could have touched so the trial leaves no
+  // trace. Randomised clue types (which station they reference) are sampled
+  // a few times so the score reflects their expected value, not one roll.
+  runTrial(stat, fact) {
+    const solBefore = this.sol.slice();
+    const recapBefore = this.recap.map(row => row.slice());
+    const repBefore = this.rep.slice();
+    const deducedBefore = this.deduced.slice();
+    const chkBefore = this.chk;
+    const howmanyBefore = this.howmany;
+    const solvedBefore = this.solved;
+
+    this.Statement(stat, fact, 0, 0);
+
+    let bits = 0, newlySolved = 0;
+    for (let i = 1; i <= 8; i++) {
+      bits += this.popcount(solBefore[i]) - this.popcount(this.sol[i]);
+      if (solBefore[i] !== 0 && this.sol[i] === 0) newlySolved++;
+    }
+    const score = newlySolved * 100 + bits;
+
+    this.sol = solBefore;
+    this.recap = recapBefore;
+    this.rep = repBefore;
+    this.deduced = deducedBefore;
+    this.chk = chkBefore;
+    this.howmany = howmanyBefore;
+    this.solved = solvedBefore;
+    delete this.stor[this.thisclue];
+
+    return score;
+  }
+
+  trialScore(stat, fact) {
+    const randomFact = fact === 3 || fact === 6 || fact === 7 || fact === 8;
+    const samples = randomFact ? 3 : 1;
+    let total = 0;
+    for (let s = 0; s < samples; s++) total += this.runTrial(stat, fact);
+    return total / samples;
+  }
+
+  bestCandidate(candidates) {
+    let bestScore = -Infinity, best = [];
+    candidates.forEach(([n, f]) => {
+      const score = this.trialScore(n, f);
+      if (score > bestScore) { bestScore = score; best = [[n, f]]; }
+      else if (score === bestScore) { best.push([n, f]); }
+    });
+    return randChoice(best);
+  }
+
+  isHeldBack(n, f) {
+    if (this.thisclue >= CERTAINTY_DELAY) return false;
+    return CERTAINTY_PAIRS.some(([ps, pf]) => ps === n && pf === f);
+  }
+
+  ChoosenumSmart() {
+    let stat, fact;
+
+    // Same first-8 north/south + east/west guarantee as the random picker,
+    // but choosing the best-scoring eligible station rather than the first.
+    if (this.thisclue <= 8) {
+      const missing = [7, 8].filter(f => !this.typeSeen[f]);
+      const remaining = 8 - this.thisclue + 1;
+      if (missing.length > 0 && missing.length >= remaining) {
+        const forcedCandidates = [];
+        missing.forEach(f => {
+          for (let n = 1; n <= 8; n++) {
+            if ((this.sol[n] !== 0 || this.solved) && !this.recap[n][f]) forcedCandidates.push([n, f]);
+          }
+        });
+        if (forcedCandidates.length) [stat, fact] = this.bestCandidate(forcedCandidates);
+      }
+    }
+
+    if (stat === undefined) {
+      const candidates = [];
+      for (let n = 1; n <= 8; n++) {
+        if (!(this.sol[n] !== 0 || this.solved)) continue;
+        for (let f = 1; f <= 8; f++) {
+          if (!this.recap[n][f] && !this.isHeldBack(n, f)) candidates.push([n, f]);
+        }
+      }
+      if (!candidates.length) { this.ChoosenumRandom(); return; }
+      [stat, fact] = this.bestCandidate(candidates);
+    }
+
+    this.stat = stat; this.fact = fact;
+    this.setStor(this.thisclue, 0, stat);
+    this.setStor(this.thisclue, 1, fact);
+    this.recap[stat][fact] = true;
+    this.typeSeen[fact] = true;
+  }
+
+  Makesentence() {
+    let num = String(this.thisclue) + ": ";
+    if (this.thisclue < 10) num = " " + num;
+    this.sent = num + this.station[this.stat] + this.clause + ".";
+    this.thisclue++;
+  }
+
+  // Player-facing actions -------------------------------------------------
+
+  getClue() {
+    this.Choosenum();
+    this.Statement(this.stat, this.fact, 0, 0);
+    this.Makesentence();
+    this.lastclue++;
+    this.store[this.lastclue] = this.sent;
+    return this.sent;
+  }
+
+  guess(pos, name) {
+    const correct = name === this.station[pos];
+    if (correct) this.ans[pos] = name;
+    else this.wrong++;
+    return correct;
+  }
+
+  giveUp() {
+    for (let n = 1; n <= 8; n++) this.ans[n] = this.station[n];
+  }
+
+  isComplete() {
+    for (let n = 1; n <= 8; n++) if (!this.ans[n]) return false;
+    return true;
+  }
+
+  summary(found) {
+    const clues = this.lastclue;
+    const clueText = clues === 1 ? " one clue" : (" " + clues + " clues");
+    let wrongText;
+    if (this.wrong === 0) wrongText = ".";
+    else if (this.wrong === 1) wrongText = " and making one wrong guess.";
+    else wrongText = " and making " + this.wrong + " wrong guesses.";
+    const intro = found ? "You found the answer after seeing" : "You asked for the answer after seeing";
+    return intro + clueText + wrongText;
+  }
+}
+
+if (typeof module !== "undefined") module.exports = { TrackGame, THEMES };
+
+// ---------------------------------------------------------------------
+// Printable-puzzle generator — uses the same TrackGame engine as the
+// interactive game, but simply plays it out to completion internally
+// (no UI guessing) and lays the result out as static paper sheets.
+// ---------------------------------------------------------------------
+
+const POS = {
+  1: {x:60,  y:70},
+  2: {x:170, y:70},
+  3: {x:280, y:70},
+  4: {x:390, y:140},
+  5: {x:520, y:140},
+  6: {x:280, y:210},
+  7: {x:170, y:210},
+  8: {x:60,  y:210},
+};
+const LINES = [[1,2],[2,3],[3,4],[8,7],[7,6],[6,4],[4,5]];
+
+function diagramSVG(labelFn){
+  let lines = "";
+  LINES.forEach(([a,b]) => {
+    const p1 = POS[a], p2 = POS[b];
+    lines += `<line class="rail-line" x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}"></line>`;
+  });
+  let nodes = "";
+  for(let n=1;n<=8;n++){
+    const p = POS[n];
+    const label = String(labelFn(n));
+    const r = label.length > 2 ? 30 : 22;
+    nodes += `<g transform="translate(${p.x},${p.y})">
+      <circle class="node-circle" r="${r}"></circle>
+      <text class="node-text" y="1">${escapeXml(label)}</text>
+    </g>`;
+  }
+  return `<svg class="diagram" viewBox="-10 0 600 260" xmlns="http://www.w3.org/2000/svg">
+    ${lines}
+    ${nodes}
+    <text class="compass-text" x="560" y="20">N</text>
+    <text class="compass-text" x="560" y="255">S</text>
+    <text class="compass-text" x="-10" y="140">W</text>
+    <text class="compass-text" x="590" y="140" text-anchor="end">E</text>
+  </svg>`;
+}
+
+function escapeXml(s){
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+function generatePuzzle(smart){
+  const g = new TrackGame({ smart });
+  const lineLabel = g.show.replace("There are eight stations on the ", "");
+  const alphabetical = [];
+  for(let n=1;n<=8;n++) alphabetical.push(g.alpha[n]);
+  alphabetical.sort();
+
+  const clues = [];
+  let guard = 0;
+  while(!g.solved && guard < 200){
+    g.getClue();
+    guard++;
+  }
+  for(let i=1;i<=g.lastclue;i++) clues.push(g.store[i]);
+
+  const solution = {};
+  for(let n=1;n<=8;n++) solution[n] = g.station[n];
+
+  return { lineLabel, alphabetical, clues, solution };
+}
+
+function renderPuzzleSheet(puzzle, index){
+  const cluesHtml = puzzle.clues.map(c => {
+    // strip the leading "N: " numbering the engine already added, since
+    // the <ol> supplies its own numbering
+    const text = c.replace(/^\s*\d+:\s*/, "");
+    return `<li>${escapeXml(text)}</li>`;
+  }).join("");
+
+  const stationsHtml = puzzle.alphabetical.map(s => `<span>${escapeXml(s)}</span>`).join("");
+
+  return `
+  <section class="sheet">
+    <div class="sheet-head">
+      <span class="title">TRACK</span>
+      <span class="puzno">PUZZLE No. ${index}</span>
+    </div>
+    <div class="line-caption">${escapeXml(puzzle.lineLabel)}</div>
+    <div class="diagram-wrap">${diagramSVG(n => n)}</div>
+    <div class="stations-list">${stationsHtml}</div>
+    <div class="clue-instr">Use these clues to work out where each station belongs.</div>
+    <ol class="clues">${cluesHtml}</ol>
+  </section>`;
+}
+
+function renderSolutionSheet(puzzles){
+  const entries = puzzles.map((p, i) => {
+    const rows = [];
+    for(let n=1;n<=8;n++){
+      rows.push(`<tr><td class="pos">${n}</td><td>${escapeXml(p.solution[n])}</td></tr>`);
+    }
+    return `<div class="sol-entry">
+      <div class="sol-title">Puzzle No. ${i+1} — ${escapeXml(p.lineLabel)}</div>
+      <table class="sol-table"><tbody>${rows.join("")}</tbody></table>
+    </div>`;
+  }).join("");
+
+  return `
+  <section class="sheet solutions-sheet">
+    <div class="sheet-head">
+      <span class="title">TRACK</span>
+      <span class="puzno">ANSWER KEY</span>
+    </div>
+    <div class="line-caption">Positions numbered as on each puzzle's diagram</div>
+    <div class="sol-grid">${entries}</div>
+  </section>`;
+}
+
+function puzzlesToText(puzzles, includeSolutions){
+  let out = "";
+  puzzles.forEach((p, i) => {
+    out += `TRACK — PUZZLE No. ${i+1}\n`;
+    out += `${p.lineLabel}\n`;
+    out += "=".repeat(40) + "\n\n";
+    out += "Stations: " + p.alphabetical.join(", ") + "\n\n";
+    out += "Clues:\n";
+    p.clues.forEach((c, idx) => {
+      const text = c.replace(/^\s*\d+:\s*/, "");
+      out += `  ${idx+1}. ${text}\n`;
+    });
+    out += "\n\n";
+  });
+  if(includeSolutions){
+    out += "ANSWER KEY\n" + "=".repeat(40) + "\n\n";
+    puzzles.forEach((p, i) => {
+      out += `Puzzle No. ${i+1} — ${p.lineLabel}\n`;
+      for(let n=1;n<=8;n++) out += `  Position ${n}: ${p.solution[n]}\n`;
+      out += "\n";
+    });
+  }
+  return out;
+}
+
+const $ = (id) => document.getElementById(id);
+let lastPuzzles = [];
+
+function generate(){
+  const count = Math.max(1, Math.min(30, parseInt($("numPuzzles").value, 10) || 1));
+  const includeSolutions = $("includeSolutions").checked;
+  const smart = $("smartClues").checked;
+
+  const puzzles = [];
+  for(let i=0;i<count;i++) puzzles.push(generatePuzzle(smart));
+  lastPuzzles = puzzles;
+
+  let html = puzzles.map((p, i) => renderPuzzleSheet(p, i+1)).join("");
+  if(includeSolutions) html += renderSolutionSheet(puzzles);
+
+  $("sheets").innerHTML = html;
+  $("emptyNote").style.display = "none";
+  $("downloadActions").style.display = "flex";
+  window.scrollTo({top: $("sheets").offsetTop - 20, behavior:"smooth"});
+}
+
+function downloadText(){
+  if(!lastPuzzles.length) return;
+  const includeSolutions = $("includeSolutions").checked;
+  const text = puzzlesToText(lastPuzzles, includeSolutions);
+  const blob = new Blob([text], {type:"text/plain"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "track-puzzles.txt";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+$("generateBtn").addEventListener("click", generate);
+$("printBtn").addEventListener("click", () => window.print());
+$("txtBtn").addEventListener("click", downloadText);
+
+generate();
+</script>
+</body>
+</html>

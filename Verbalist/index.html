@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Verbalist</title>
+<link rel="stylesheet" href="style.css" />
+<style>
+  main.launch {
+    max-width: 720px;
+    padding-top: 2.5rem;
+  }
+  .launch h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.2rem;
+  }
+  .launch .byline {
+    color: var(--text-muted);
+    margin-top: 0;
+    margin-bottom: 1.8rem;
+  }
+  .launch p {
+    line-height: 1.6;
+    margin: 1rem 0;
+  }
+  .launch .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.4rem 1.6rem;
+    margin: 1.6rem 0;
+  }
+  .launch .card h2 {
+    margin-top: 0;
+    font-size: 1.05rem;
+    color: var(--accent);
+  }
+  .launch ul {
+    margin: 0.4rem 0;
+    padding-left: 1.3rem;
+    line-height: 1.6;
+  }
+  .launch .launch-actions {
+    margin: 2rem 0 1rem 0;
+  }
+  .launch .btn-launch {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 1.05rem;
+    padding: 0.8rem 1.8rem;
+  }
+  .launch .example {
+    font-family: "Courier New", monospace;
+    background: var(--rule-bg);
+    border: 1px solid var(--rule-border);
+    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+    margin: 0.8rem 0;
+  }
+  .launch .launch-actions.top {
+    margin: 0 0 1.8rem 0;
+  }
+  .launch .launch-actions.top .btn-launch {
+    font-size: 0.95rem;
+    padding: 0.55rem 1.3rem;
+  }
+</style>
+ <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>   
+</head>
+</head>
+<body>
+<main class="launch">
+  <h1>Verbalist</h1>
+  <p class="byline">a verb-building robot &mdash; by John Higgins</p>
+
+  <div class="launch-actions top">
+    <a class="btn btn-launch" href="verbalist.html">Launch Verbalist</a>
+  </div>
+
+  <p>
+    VERBALIST is a verb-building robot. So what, you may ask &mdash; as English speakers
+    we already know how to build verbs, so why get a machine to do it for us? The answer
+    is that if you succeed in teaching a machine how to do something, you come to
+    understand better how you do it yourself. VERBALIST tries to capture, in a program,
+    everything an English speaker knows about forming verbs and verb phrases. Play with
+    it. See if you can catch it out. In the process you'll
+    bring to the surface all the subconscious knowledge you already have about how this
+    part of the language works. If you are an EFL learner, check out some of the more complicated forms by hunting for them on Google or using a concordance. 
+  </p>
+
+  <p>
+    Pick a verb, then flip through tense, modal, perfect, continuous, "going to",
+    passive, negative, question and tag-question &mdash; each combination rebuilds the
+    phrase live, and whenever a spelling or grammar rule applies, a note explains what
+    just happened and why.
+  </p>
+
+  <div class="example">
+    I walk. &rarr; He hasn't been walking. &rarr; Will they have been walked? &rarr; She isn't walking, is she?
+  </div>
+
+  <div class="card">
+    <h2>What's in this version</h2>
+    <ul>
+      <li>Every component of the original: tense, modal verbs, perfect, continuous,
+        "going to" (with its own extra perfect/continuous), voice, polarity, and
+        statement/question/tag &mdash; yielding 292 forms per verb, and up to 6,132
+        phrases once you add pronouns and modals into the mix.</li>
+      <li>A verb dictionary with about 500 entries, carried over from the original data files &mdash; meanings,
+        irregular ("strong verb") forms, and usage notes, e.g. why you <em>try to do</em>
+        something when you mean attempt, but <em>try doing</em> it when you mean experiment. There is no point in trying to list all verbs; practically any noun can be used as a verb: "Where are you Christmassing next year?"</li>
+      <li>Warnings when a combination is grammatically doubtful &mdash; passivising an
+        intransitive verb, or making a stative verb continuous &mdash; with a browsable
+        list of the stative and intransitive verbs behind the warning.</li>
+      <li>Type in any verb, real or invented, and watch the spelling rules apply to it.
+        There's nothing stopping you trying a nonsense verb to see how the machine copes.</li>
+      
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Where it came from</h2>
+    <p>
+      VERBALIST began with a student who wanted a program that would test learners on
+      English verb tenses and mark them right or wrong. I proposed the
+      opposite: a program that would generate and correctly inflect every possible verb
+      phrase for any headword you gave it, and leave it to the learner to work out which
+      ones sounded right and search for examples in a corpus of text.
+    </p>
+    <p>
+      It belongs to a small family of "exploratory" programs &mdash; a term coined by
+      Higgins and Johns in 1984 &mdash; that includes S-ENDING and A/AN, written by
+      Johns for an unexpanded 1K Sinclair ZX81 (A/AN could tell <em>a uniformed man</em>
+      from <em>an uninformed man</em> using nothing but spelling rules, no dictionary), and
+      LOAN, SORRY and THANKS, which generated polite requests, apologies and thanks from a
+      handful of inputs.
+    </p>
+  </div>
+
+  <p>
+    It's often said that the best way to learn a subject is to teach it &mdash; and that's
+    what you're doing here: teaching the machine by making it create phrases and judging
+    whether they're right. It's one working answer to a question Arthur Luehrmann asked
+    back in 1972: <em>should the computer teach the student, or vice versa?</em>
+  </p>
+
+  <div class="launch-actions">
+    <a class="btn btn-launch" href="verbalist.html">Launch Verbalist</a>
+  </div>
+
+  <p style="margin-top:20px;"><a href="../othersoftware.html">&larr; Back to main page</a></p>
+</main>
+</body>
+</html>

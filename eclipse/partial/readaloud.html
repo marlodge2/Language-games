@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PARTIAL ECLIPSE — read-aloud, blackboard style</title>
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+<style>
+  :root {
+    --bg: #f6f5f1;
+    --surface: #ffffff;
+    --ink: #22262b;
+    --muted: #5b6570;
+    --border: #e3e0d8;
+    --accent: #0e8c62;
+    --accent-dark: #0a6b4a;
+    --radius: 12px;
+    --shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  #app { max-width: 760px; margin: 0 auto; padding: 30px 20px 60px; }
+  h1 { text-align: center; margin-bottom: 4px; letter-spacing: 1px; }
+  .subtitle { text-align: center; color: var(--muted); margin-bottom: 24px; font-size: 0.95rem; }
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 22px;
+    margin-bottom: 20px;
+  }
+  .row { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  select {
+    font-size: 1rem; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface);
+  }
+  .pos-row { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+  .pos-btn {
+    font-size: 0.85rem; padding: 8px 14px; border: 1px solid var(--border); border-radius: 999px;
+    background: var(--surface); color: var(--ink); cursor: pointer;
+  }
+  .pos-btn.gone { background: #c0392b; border-color: #c0392b; color: #fff; }
+  .pos-btn .count { color: var(--muted); font-size: 0.78rem; }
+  .pos-btn.gone .count { color: #ffd8d2; }
+
+  .story-text {
+    background: #faf8f2;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    font-size: 1.15rem;
+    line-height: 1.8;
+    margin-bottom: 18px;
+  }
+  .story-text h2 { margin-top: 0; font-size: 1.2rem; }
+  .blank { border-bottom: 2px solid var(--accent); display: inline-block; min-width: 2.2em; }
+  .word.reading { background: #fdf0c8; border-radius: 3px; }
+
+  .controls-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .controls-row button {
+    font-size: 1rem; padding: 10px 18px; border: none; border-radius: 8px;
+    background: var(--accent); color: #fff; cursor: pointer;
+  }
+  .controls-row button:hover { background: var(--accent-dark); }
+  .controls-row button.secondary { background: var(--surface); color: var(--accent-dark); border: 1px solid var(--border); }
+  .controls-row button:disabled { opacity: 0.5; cursor: default; }
+
+  .hint { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 10px; }
+  .footer-link { text-align: center; margin-top: 24px; font-size: 0.9rem; }
+  .footer-link a { color: var(--accent-dark); }
+  details.about { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; }
+  details.about summary { cursor: pointer; font-weight: 600; }
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>PARTIAL ECLIPSE</h1>
+  <div class="subtitle">read aloud, blackboard style &mdash; erase a category of word, read it again, erase another</div>
+
+  <div class="panel">
+    <div class="row">
+      <label for="storySelect">Story:</label>
+      <select id="storySelect"></select>
+    </div>
+
+    <div class="pos-row" id="posRow"></div>
+
+    <div class="story-text" id="storyText">
+      <p>Loading&hellip;</p>
+    </div>
+
+    <div class="controls-row">
+      <button id="readBtn" type="button">&#9654; Read aloud</button>
+      <button id="stopBtn" type="button" class="secondary" disabled>Stop</button>
+      <button id="resetBtn" type="button" class="secondary">Restore all words</button>
+    </div>
+    <div class="hint" id="hintText"></div>
+  </div>
+
+  <details class="about">
+    <summary>About this version</summary>
+    <p>
+      Based on a technique Peace Corps teachers often used with a blackboard: read a text aloud
+      several times, rubbing out a bit more of it before each reading, so students have to supply
+      the missing words from memory and context. Click a category button to erase every word of that
+      kind from the text &mdash; it stays erased when you pick another one too, so you build up to
+      the whole text being blank. Then click &ldquo;Read aloud&rdquo;: it reads the visible words in
+      natural phrases, and pauses for two silent seconds wherever a word is missing, the same gap a
+      teacher would leave at the blackboard.
+    </p>
+    <p>
+      The categories are the same determiner/auxiliary/preposition/adverb/number word-lists already
+      used by this folder's typing game (see <a href="sogame.html">Partial Eclipse</a> and
+      <a href="../../museum/funcword.html">the function-word lists</a> they're drawn from) &mdash;
+      &ldquo;Content words&rdquo; just means everything that isn't one of those, which covers nouns,
+      verbs, adjectives and most everything else in one bucket rather than splitting them further.
+    </p>
+  </details>
+
+  <p class="footer-link">&larr; <a href="index.html">Back to Partial Eclipse</a></p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------------------------------------------------------
+   * Word categories — identical lists to soclip.js (the typing-game
+   * version of Partial Eclipse), so a word is sorted the same way
+   * here as it would be there. "Content" is the complement of the
+   * other five, not its own list.
+   * ------------------------------------------------------------- */
+
+  function normalizeWord(word) {
+    return word
+      .toLowerCase()
+      .replace(/'/g, "")
+      .normalize("NFD")
+      .replace(/[̀-ͯ]/g, "");
+  }
+  function makeWordSet(raw) {
+    return new Set(raw.trim().split(/\s+/).map(normalizeWord));
+  }
+
+  var DETERMINERS = makeWordSet(
+    "A ALL AN ANOTHER ANY ANYBODY ANYTHING BOTH EACH EITHER ENOUGH EVERY " +
+    "EVERYBODY EVERYONE EVERYTHING FEW FEWER HE HER HERS HERSELF HIM HIMSELF " +
+    "HIS I IT ITS ITSELF LESS MANY ME MINE MORE MOST MUCH MY MYSELF NEITHER " +
+    "NO NOBODY NONE NOONE NOTHING OTHER OTHERS OUR OURS OURSELVES SHE SOME " +
+    "SOMEBODY SOMEONE SOMETHING SUCH THAT THE THEIR THEIRS THEM THEMSELVES " +
+    "THESE THEY THIS THOSE US WE WHAT WHICH WHO WHOM WHOSE YOU YOUR YOURS " +
+    "YOURSELF YOURSELVES"
+  );
+  var AUXILIARIES = makeWordSet(
+    "AM ARE AREN'T BE BEEN BEING CAN CAN'T COULD COULDN'T DID DIDN'T DO DOES " +
+    "DOESN'T DOING DONE DON'T GET GETS GETTING GOT HAD HADN'T HAS HASN'T HAVE " +
+    "HAVEN'T HAVING HE'D HE'LL HE'S I'D I'LL I'M IS I'VE ISN'T IT'S MAY MIGHT " +
+    "MUST MUSTN'T OUGHT OUGHTN'T SHALL SHAN'T SHE'D SHE'LL SHE'S SHOULD " +
+    "SHOULDN'T THAT'S THEY'D THEY'LL THEY'RE WAS WASN'T WE'D WE'LL WERE WE'RE " +
+    "WEREN'T WE'VE WILL WON'T WOULD WOULDN'T YOU'D YOU'LL YOU'RE YOU'VE"
+  );
+  var PREPOSITIONS = makeWordSet(
+    "ABOUT ABOVE AFTER ALONG ALTHOUGH AMONG AND AROUND AS AT BEFORE BELOW " +
+    "BENEATH BESIDE BETWEEN BEYOND BUT BY DOWN DURING EXCEPT FOR FROM IF IN " +
+    "INTO NEAR NOR OF OFF ON OR OUT OVER ROUND SINCE SO THAN THAT THOUGH " +
+    "THROUGH TILL TO TOWARDS UNDER UNLESS UNTIL UP WHEREAS WHILE WITH WITHIN " +
+    "WITHOUT"
+  );
+  var ADVERBS = makeWordSet(
+    "AGAIN AGO ALMOST ALREADY ALSO ALWAYS ANYWHERE BACK ELSE EVEN EVER " +
+    "EVERYWHERE FAR HENCE HERE HITHER HOW HOWEVER JUST NEAR NEARBY NEARLY " +
+    "NEVER NOT NOW NOWHERE OFTEN ONLY QUITE RATHER SOMETIMES SOMEWHERE SOON " +
+    "STILL THEN THENCE THERE THEREFORE THITHER THUS TODAY TOMORROW TOO " +
+    "UNDERNEATH VERY WHEN WHENCE WHERE WHITHER WHY YES YESTERDAY YET"
+  );
+  var NUMBERS = makeWordSet(
+    "BILLION BILLIONTH EIGHT EIGHTEEN EIGHTEENTH EIGHTH EIGHTIETH EIGHTY " +
+    "ELEVEN ELEVENTH FIFTEEN FIFTEENTH FIFTH FIFTIETH FIFTY FIRST FIVE " +
+    "FORTIETH FORTY FOUR FOURTEEN FOURTEENTH FOURTH HUNDRED HUNDREDTH LAST " +
+    "MILLION MILLIONTH NEXT NINE NINETEEN NINETEENTH NINETIETH NINETY NINTH " +
+    "ONCE ONE SECOND SEVEN SEVENTEEN SEVENTEENTH SEVENTH SEVENTIETH SEVENTY " +
+    "SIX SIXTEEN SIXTEENTH SIXTH SIXTIETH SIXTY TEN TENTH THIRD THIRTEEN " +
+    "THIRTEENTH THIRTIETH THIRTY THOUSAND THOUSANDTH THREE THRICE TWELFTH " +
+    "TWELVE TWENTIETH TWENTY TWICE TWO"
+  );
+
+  var POS_CATEGORIES = [
+    { key: "determiners", label: "Determiners/pronouns", set: DETERMINERS },
+    { key: "auxiliaries", label: "Auxiliaries", set: AUXILIARIES },
+    { key: "prepositions", label: "Prepositions/conjunctions", set: PREPOSITIONS },
+    { key: "adverbs", label: "Adverbs", set: ADVERBS },
+    { key: "numbers", label: "Numbers", set: NUMBERS }
+  ];
+
+  function categoryFor(word) {
+    var norm = normalizeWord(word);
+    for (var i = 0; i < POS_CATEGORIES.length; i++) {
+      if (POS_CATEGORIES[i].set.has(norm)) return POS_CATEGORIES[i].key;
+    }
+    return "content";
+  }
+
+  var storySelect = document.getElementById("storySelect");
+  var storyTextEl = document.getElementById("storyText");
+  var posRow = document.getElementById("posRow");
+  var readBtn = document.getElementById("readBtn");
+  var stopBtn = document.getElementById("stopBtn");
+  var resetBtn = document.getElementById("resetBtn");
+  var hintText = document.getElementById("hintText");
+
+  var words = []; // { text, pre, post, category }
+  var title = "";
+  var goneCategories = {}; // category key -> true if currently erased
+  var speaking = false;
+  var stopRequested = false;
+
+  /* ---------------------------------------------------------------
+   * Load the story list, same alltexts.txt format used elsewhere in
+   * this folder.
+   * ------------------------------------------------------------- */
+  fetch("alltexts.txt")
+    .then(function (r) {
+      if (!r.ok) throw new Error("alltexts.txt not found (" + r.status + ")");
+      return r.text();
+    })
+    .then(function (text) {
+      var lines = text.split("\n");
+      lines.forEach(function (line) {
+        line = line.trim();
+        if (!line || line.charAt(0) === "#") return;
+        var parts = line.split("|");
+        if (parts.length !== 2) return;
+        var storyTitle = parts[0].trim(), filename = parts[1].trim();
+        if (!storyTitle || !filename) return;
+        var opt = document.createElement("option");
+        opt.value = filename;
+        opt.textContent = storyTitle;
+        storySelect.appendChild(opt);
+      });
+      if (storySelect.options.length) {
+        var requested = new URLSearchParams(window.location.search).get("story");
+        if (requested && Array.prototype.some.call(storySelect.options, function (o) { return o.value === requested; })) {
+          storySelect.value = requested;
+        }
+        loadStory(storySelect.value);
+      }
+    })
+    .catch(function (err) {
+      storyTextEl.innerHTML = "<p>Couldn't load the story list (alltexts.txt). " + err.message + "</p>";
+    });
+
+  storySelect.addEventListener("change", function () {
+    loadStory(storySelect.value);
+  });
+
+  function loadStory(filename) {
+    stopReading();
+    storyTextEl.innerHTML = "<p>Loading&hellip;</p>";
+    fetch(filename)
+      .then(function (r) {
+        if (!r.ok) throw new Error("Couldn't load " + filename + " (" + r.status + ")");
+        return r.text();
+      })
+      .then(function (text) {
+        var lines = text.split("\n");
+        title = (lines.shift() || "").trim();
+        var body = lines.join(" ").replace(/\s+/g, " ").trim();
+        tagWords(body);
+        goneCategories = {};
+        renderPosButtons();
+        renderStory();
+      })
+      .catch(function (err) {
+        storyTextEl.innerHTML = "<p>" + err.message + "</p>";
+      });
+  }
+
+  /* ---------------------------------------------------------------
+   * Split the body into word tokens and the literal text between
+   * them (punctuation, spaces), same word-matching pattern soclip.js
+   * uses, so every word gets exactly one category.
+   * ------------------------------------------------------------- */
+  function tagWords(body) {
+    words = [];
+    var parts = body.split(/([A-Za-zÀ-ÖØ-öø-ÿ']+)/);
+    var pendingPre = "";
+    parts.forEach(function (part, i) {
+      if (i % 2 === 0) {
+        // literal text (punctuation/spaces) between words
+        if (words.length) words[words.length - 1].post += part;
+        else pendingPre += part;
+      } else if (part) {
+        words.push({ text: part, pre: pendingPre, post: "", category: categoryFor(part) });
+        pendingPre = "";
+      }
+    });
+  }
+
+  /* ---------------------------------------------------------------
+   * UI: category toggle buttons
+   * ------------------------------------------------------------- */
+  function renderPosButtons() {
+    posRow.innerHTML = "";
+    var categoriesWithContent = POS_CATEGORIES.concat([{ key: "content", label: "Content words" }]);
+    categoriesWithContent.forEach(function (cat) {
+      var count = words.filter(function (w) { return w.category === cat.key; }).length;
+      if (!count) return;
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "pos-btn" + (goneCategories[cat.key] ? " gone" : "");
+      btn.innerHTML = cat.label + ' <span class="count">(' + count + ')</span>';
+      btn.addEventListener("click", function () {
+        goneCategories[cat.key] = !goneCategories[cat.key];
+        renderPosButtons();
+        renderStory();
+      });
+      posRow.appendChild(btn);
+    });
+  }
+
+  /* ---------------------------------------------------------------
+   * UI: the story text itself, with blanks for erased categories
+   * ------------------------------------------------------------- */
+  function renderStory() {
+    storyTextEl.innerHTML = "";
+    var h2 = document.createElement("h2");
+    h2.textContent = title;
+    storyTextEl.appendChild(h2);
+
+    var p = document.createElement("p");
+    words.forEach(function (w, i) {
+      p.appendChild(document.createTextNode(w.pre));
+      var span = document.createElement("span");
+      span.className = "word";
+      span.dataset.index = i;
+      if (goneCategories[w.category]) {
+        span.classList.add("blank");
+        span.innerHTML = "&nbsp;";
+      } else {
+        span.textContent = w.text;
+      }
+      p.appendChild(span);
+      p.appendChild(document.createTextNode(w.post));
+    });
+    storyTextEl.appendChild(p);
+  }
+
+  /* ---------------------------------------------------------------
+   * Read aloud: group consecutive visible words into chunks, each
+   * spoken as one natural utterance; each blanked word becomes an
+   * exact 2-second silence between chunks.
+   * ------------------------------------------------------------- */
+  var PAUSE_MS = 2000; // a blanked word
+  var SENTENCE_PAUSE_MS = 600; // end of a sentence, even with nothing blanked there
+
+  function buildChunks() {
+    var chunks = [];
+    var current = null;
+    function flushCurrent() {
+      if (current) { chunks.push(current); current = null; }
+    }
+    words.forEach(function (w, i) {
+      var isBlank = !!goneCategories[w.category];
+      if (isBlank) {
+        flushCurrent();
+        chunks.push({ pause: PAUSE_MS });
+      } else {
+        if (!current) current = { indices: [], text: "" };
+        current.indices.push(i);
+        current.text += (current.text ? " " : "") + w.text;
+        // A full stop/!/? right after this word ends the sentence here,
+        // even though nothing's blanked — worth a shorter pause so
+        // sentences don't just run straight into each other.
+        if (/[.!?]/.test(w.post)) {
+          flushCurrent();
+          chunks.push({ pause: SENTENCE_PAUSE_MS });
+        }
+      }
+    });
+    flushCurrent();
+    return chunks;
+  }
+
+  function speakChunk(chunk) {
+    return new Promise(function (resolve) {
+      chunk.indices.forEach(function (i) {
+        document.querySelector('.word[data-index="' + i + '"]').classList.add("reading");
+      });
+      var utterance = new SpeechSynthesisUtterance(chunk.text);
+      utterance.lang = "en-GB";
+      utterance.onend = function () {
+        chunk.indices.forEach(function (i) {
+          document.querySelector('.word[data-index="' + i + '"]').classList.remove("reading");
+        });
+        resolve();
+      };
+      utterance.onerror = function () { resolve(); };
+      window.speechSynthesis.speak(utterance);
+    });
+  }
+
+  function wait(ms) {
+    return new Promise(function (resolve) {
+      var start = Date.now();
+      (function tick() {
+        if (stopRequested || Date.now() - start >= ms) { resolve(); return; }
+        setTimeout(tick, 100);
+      })();
+    });
+  }
+
+  function readAloud() {
+    if (speaking) return;
+    if (!("speechSynthesis" in window)) {
+      hintText.textContent = "This browser doesn't support speech synthesis.";
+      return;
+    }
+    speaking = true;
+    stopRequested = false;
+    readBtn.disabled = true;
+    stopBtn.disabled = false;
+    hintText.textContent = "Reading…";
+
+    var chunks = buildChunks();
+    var i = 0;
+    function next() {
+      if (stopRequested || i >= chunks.length) { finishReading(); return; }
+      var chunk = chunks[i++];
+      if (chunk.pause) {
+        wait(chunk.pause).then(next);
+      } else {
+        speakChunk(chunk).then(next);
+      }
+    }
+    next();
+  }
+
+  function finishReading() {
+    speaking = false;
+    readBtn.disabled = false;
+    stopBtn.disabled = true;
+    hintText.textContent = "";
+    document.querySelectorAll(".word.reading").forEach(function (el) {
+      el.classList.remove("reading");
+    });
+  }
+
+  function stopReading() {
+    stopRequested = true;
+    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+    finishReading();
+  }
+
+  readBtn.addEventListener("click", readAloud);
+  stopBtn.addEventListener("click", stopReading);
+  resetBtn.addEventListener("click", function () {
+    stopReading();
+    goneCategories = {};
+    renderPosButtons();
+    renderStory();
+  });
+})();
+</script>
+</body>
+</html>

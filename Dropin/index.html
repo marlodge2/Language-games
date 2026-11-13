@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DROPIN</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6fb;
+        margin: 0;
+        padding: 30px 16px 60px 16px;
+        text-align: center;
+        color: #222;
+      }
+      h1 {
+        margin-bottom: 4px;
+      }
+      .byline {
+        color: #555;
+        margin-top: 0;
+      }
+      .note {
+        max-width: 640px;
+        margin: 18px auto 26px auto;
+        background: #fff8dc;
+        border: 2px solid #3366cc;
+        border-radius: 8px;
+        padding: 14px 18px;
+        text-align: left;
+        font-size: 0.95em;
+        line-height: 1.5em;
+      }
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+      select,
+      button {
+        font-size: 1em;
+        padding: 8px 14px;
+        border-radius: 6px;
+        border: 2px solid #3366cc;
+        background: #fff;
+        color: #3366cc;
+        cursor: pointer;
+      }
+      button:hover,
+      select:hover {
+        background: #eaf0fc;
+      }
+      button.primary {
+        background: #3366cc;
+        color: #fff;
+      }
+      button.primary:hover {
+        background: #254a99;
+      }
+      button:disabled {
+        opacity: 0.45;
+        cursor: default;
+        background: #fff;
+        color: #3366cc;
+      }
+      #levelRow {
+        min-height: 40px;
+      }
+
+      #gridWrap {
+        display: flex;
+        justify-content: center;
+        margin: 20px auto;
+        overflow-x: auto;
+      }
+      #grid {
+        display: inline-grid;
+        gap: 3px;
+        background: #1c2331;
+        padding: 4px;
+        border-radius: 6px;
+      }
+      .cell {
+        width: 2.1em;
+        height: 2.1em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Courier New", monospace;
+        font-size: 1.05em;
+        font-weight: bold;
+        border-radius: 3px;
+        user-select: none;
+      }
+      .cell-blocked {
+        background: transparent;
+      }
+      .cell-space {
+        background: #1c2331;
+      }
+      .cell-punct {
+        background: #dfe6f5;
+        color: #222;
+      }
+      .cell-letter {
+        background: #ffffff;
+        color: #222;
+        cursor: pointer;
+        box-shadow: inset 0 0 0 1px #b9c4de;
+      }
+      .cell-letter:hover {
+        background: #eaf0fc;
+      }
+      .cell-letter.selected {
+        background: #3366cc;
+        color: #fff;
+        box-shadow: inset 0 0 0 2px #1c2331;
+      }
+      .cell-letter.correct {
+        background: #c9e8c9;
+      }
+
+      #message {
+        min-height: 1.6em;
+        font-weight: bold;
+        margin-top: 6px;
+      }
+      #message.solved {
+        color: #1a7a1a;
+        font-size: 1.15em;
+      }
+
+      details.editor {
+        max-width: 640px;
+        margin: 40px auto 0 auto;
+        text-align: left;
+        background: #fff;
+        border: 1px solid #ccd4e6;
+        border-radius: 8px;
+        padding: 4px 18px 16px 18px;
+      }
+      details.editor summary {
+        cursor: pointer;
+        font-weight: bold;
+        padding: 12px 0;
+        color: #3366cc;
+      }
+      .editor-note {
+        font-size: 0.85em;
+        color: #666;
+        margin-top: -4px;
+      }
+      textarea#newText {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 1em;
+        padding: 8px;
+        border: 1px solid #b9c4de;
+        border-radius: 6px;
+        resize: vertical;
+        min-height: 60px;
+      }
+      #charCount {
+        font-size: 0.85em;
+        color: #555;
+      }
+      #charCount.bad {
+        color: #c0392b;
+      }
+      .editor-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 6px;
+        gap: 10px;
+      }
+      #textList {
+        margin-top: 14px;
+        padding-top: 10px;
+        border-top: 1px solid #e0e0e0;
+        font-size: 0.9em;
+      }
+      #textList div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 3px 0;
+      }
+      #textList button.removeBtn {
+        border: none;
+        background: none;
+        color: #c0392b;
+        font-weight: bold;
+        padding: 0 6px;
+        font-size: 1em;
+      }
+    </style>
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+    </script>
+  </head>
+  <body>
+    <h1>DROPIN</h1>
+    <p class="byline">
+      A sentence puzzle for EFL learners &mdash; adapted from QUOTEFALL by John
+      and Muriel Higgins, 1995, revised 2026.
+    </p>
+
+    <div class="note">
+      Every letter in the grid has slid down its column into the wrong row.
+      Click a letter, then click another letter
+      <strong>in the same column</strong> to swap them, until every row reads
+      correctly. Dark squares mark the end of a word; punctuation is filled in
+      for you. The computer picks the text at random &mdash; if you get stuck,
+      <strong>Peek</strong> shows it for five seconds.
+    </div>
+
+    <div class="controls">
+      <button id="newPuzzleBtn" class="primary">New puzzle</button>
+      <button id="peekBtn">Peek (5s)</button>
+      <button id="revealBtn">Show answer</button>
+    </div>
+
+    <div class="controls" id="levelRow"></div>
+
+    <div id="gridWrap"><div id="grid"></div></div>
+
+    <div id="message"></div>
+
+    <details class="editor">
+      <summary>Add your own text</summary>
+      <p class="editor-note">
+        Type a sentence and it joins the pool the computer picks puzzles from
+        (and loads straight away so you can try it). Needs to be 40&ndash;120
+        characters (roughly 8&ndash;22 words).
+      </p>
+      <textarea id="newText" placeholder="Type a short text here..."></textarea>
+      <div class="editor-row">
+        <span id="charCount">0 characters</span>
+        <button id="addTextBtn">Add to library</button>
+      </div>
+      <div id="textList"></div>
+    </details>
+
+    <script>
+      // ------------------------------
+      // Text library
+      // ------------------------------
+      const DEFAULT_TEXTS = [
+        "Roses are red, violets are blue, sugar is sweet, and so are you.",
+        "They say that a stitch in time saves nine.",
+        "Actions speak louder than words most of the time.",
+        "The early bird catches the worm, but the second mouse gets the cheese.",
+        "All that glitters is not gold, and every cloud has a silver lining.",
+        "Look before you leap, and think before you speak.",
+        "Practice makes perfect, so keep trying until you succeed.",
+        "Better late than never, but it is always best to be on time.",
+        "When in Rome, do as the Romans do, or you might feel very strange.",
+        "A picture is worth a thousand words, or so people often say.",
+        "Honesty is the best policy, even when the truth is hard to hear.",
+        "Two heads are better than one when solving a difficult problem.",
+        "Do not count your chickens before they hatch, or you may be disappointed.",
+        "The pen is mightier than the sword, especially in a battle of ideas.",
+      ];
+
+      // Texts typed into the editor only last for this visit to the page —
+      // there's already a reasonable set of built-in ones, so nothing needs
+      // to be saved permanently.
+      let userTexts = [];
+
+      function allTexts() {
+        return DEFAULT_TEXTS.concat(userTexts);
+      }
+
+      // ------------------------------
+      // DOM references
+      // ------------------------------
+      const newPuzzleBtn = document.getElementById("newPuzzleBtn");
+      const peekBtn = document.getElementById("peekBtn");
+      const revealBtn = document.getElementById("revealBtn");
+      const levelRow = document.getElementById("levelRow");
+      const gridEl = document.getElementById("grid");
+      const messageEl = document.getElementById("message");
+      const newTextArea = document.getElementById("newText");
+      const charCountEl = document.getElementById("charCount");
+      const addTextBtn = document.getElementById("addTextBtn");
+      const textListEl = document.getElementById("textList");
+
+      // ------------------------------
+      // Puzzle state
+      // ------------------------------
+      let currentText = ""; // the text behind the puzzle currently on screen
+      let currentLevels = []; // available row counts for the current text, ascending
+      let currentRows = 0; // chosen row count
+      let cols = 0;
+      let cells = []; // { row, col, type, target, current }
+      let selectedIndex = null;
+      let solved = false;
+      let peekTimer = null;
+
+      function isLetter(ch) {
+        return /[a-zA-Z0-9]/.test(ch);
+      }
+
+      // Heuristic reconstruction of DROPIN's grid-shape rule. The exact 1995
+      // algorithm is lost with the source, but the documentation anchors two
+      // points: short texts sit 2-3 rows deep, long (~220 char) texts 5-6 rows
+      // deep, with a graded choice in between. This interpolates between them.
+      function computeRowOptions(length) {
+        let center = 2 + ((length - 25) / (220 - 25)) * 3.5;
+        center = Math.max(2, Math.min(6, center));
+        let lo = Math.max(2, Math.floor(center - 0.5));
+        let hi = Math.min(6, Math.ceil(center + 0.5));
+        const rows = [];
+        for (let r = lo; r <= hi; r++) rows.push(r);
+        while (rows.length > 3) {
+          rows.length % 2 === 0 ? rows.pop() : rows.shift();
+        }
+        return rows;
+      }
+
+      function buildCells(text, rows) {
+        const upper = text.toUpperCase();
+        const c = Math.ceil(upper.length / rows);
+        const list = [];
+        for (let i = 0; i < rows * c; i++) {
+          const row = Math.floor(i / c);
+          const col = i % c;
+          if (i >= upper.length) {
+            list.push({ row, col, type: "blocked", target: "", current: "" });
+            continue;
+          }
+          const ch = upper[i];
+          let type;
+          if (ch === " ") type = "space";
+          else if (isLetter(ch)) type = "letter";
+          else type = "punct";
+          list.push({ row, col, type, target: ch, current: ch });
+        }
+        return { cells: list, cols: c };
+      }
+
+      function shuffleColumns(cellList, rows, c) {
+        for (let col = 0; col < c; col++) {
+          const idxs = [];
+          for (let row = 0; row < rows; row++) {
+            const idx = row * c + col;
+            if (cellList[idx].type === "letter") idxs.push(idx);
+          }
+          if (idxs.length < 2) continue;
+
+          let chars = idxs.map((i) => cellList[i].target);
+          let shuffled = chars.slice();
+          // Retry until the order actually changes, but give up after a few dozen
+          // tries: if a column stacks two identical letters (e.g. a repeated "S"),
+          // every permutation is indistinguishable from the original and this
+          // would otherwise loop forever.
+          for (let attempt = 0; attempt < 30; attempt++) {
+            shuffled = chars.slice();
+            for (let k = shuffled.length - 1; k > 0; k--) {
+              const j = Math.floor(Math.random() * (k + 1));
+              [shuffled[k], shuffled[j]] = [shuffled[j], shuffled[k]];
+            }
+            if (!shuffled.every((ch, k) => ch === chars[k])) break;
+          }
+
+          idxs.forEach((idx, k) => {
+            cellList[idx].current = shuffled[k];
+          });
+        }
+      }
+
+      function startPuzzle(text, rows) {
+        clearPeekTimer();
+        currentText = text;
+        const built = buildCells(text, rows);
+        cells = built.cells;
+        cols = built.cols;
+        currentRows = rows;
+        shuffleColumns(cells, rows, cols);
+        selectedIndex = null;
+        solved = false;
+        messageEl.textContent = "";
+        messageEl.className = "";
+        setRevealButtonMode(false);
+        renderGrid();
+      }
+
+      function renderLevelButtons(length, chosenRows) {
+        levelRow.innerHTML = "";
+        currentLevels = computeRowOptions(length);
+        if (currentLevels.length <= 1) return;
+
+        const labels =
+          currentLevels.length === 3
+            ? ["Easier", "Normal", "Harder"]
+            : ["Easier", "Harder"];
+
+        currentLevels.forEach((rows, i) => {
+          const btn = document.createElement("button");
+          btn.textContent = labels[i];
+          if (rows === chosenRows) btn.classList.add("primary");
+          btn.addEventListener("click", () => {
+            startPuzzle(currentText, rows);
+            renderLevelButtons(currentText.toUpperCase().length, rows);
+          });
+          levelRow.appendChild(btn);
+        });
+      }
+
+      function renderGrid() {
+        gridEl.style.gridTemplateColumns = `repeat(${cols}, 2.1em)`;
+        gridEl.innerHTML = "";
+
+        cells.forEach((cell, idx) => {
+          const div = document.createElement("div");
+          div.className = "cell cell-" + cell.type;
+
+          if (cell.type === "punct") {
+            div.textContent = cell.target;
+          } else if (cell.type === "letter") {
+            div.textContent = cell.current;
+            if (idx === selectedIndex) div.classList.add("selected");
+            if (solved) div.classList.add("correct");
+            div.addEventListener("click", () => onLetterClick(idx));
+          }
+
+          gridEl.appendChild(div);
+        });
+      }
+
+      function onLetterClick(idx) {
+        if (solved) return;
+
+        if (selectedIndex === null) {
+          selectedIndex = idx;
+          renderGrid();
+          return;
+        }
+        if (selectedIndex === idx) {
+          selectedIndex = null;
+          renderGrid();
+          return;
+        }
+        const a = cells[selectedIndex];
+        const b = cells[idx];
+
+        if (a.col !== b.col) {
+          // Letters only ever move within their own column.
+          selectedIndex = idx;
+          renderGrid();
+          return;
+        }
+
+        const tmp = a.current;
+        a.current = b.current;
+        b.current = tmp;
+        selectedIndex = null;
+        renderGrid();
+        checkSolved();
+      }
+
+      function checkSolved() {
+        const done = cells.every(
+          (c) => c.type !== "letter" || c.current === c.target,
+        );
+        if (done) {
+          solved = true;
+          messageEl.textContent = "Solved! — " + currentText;
+          messageEl.className = "solved";
+          renderGrid();
+          setRevealButtonMode(true);
+        }
+      }
+
+      function revealAnswer() {
+        clearPeekTimer();
+        cells.forEach((c) => {
+          if (c.type === "letter") c.current = c.target;
+        });
+        solved = true;
+        messageEl.textContent = currentText;
+        messageEl.className = "solved";
+        renderGrid();
+        setRevealButtonMode(true);
+      }
+
+      // Once the puzzle is over (solved or given up on), "Show answer" has
+      // nothing left to reveal, so it becomes the way back out to the main site.
+      function setRevealButtonMode(isSolved) {
+        if (isSolved) {
+          revealBtn.textContent = "Back to Home Page";
+          revealBtn.onclick = () => {
+            window.location.href = "https://marlodge.net";
+          };
+        } else {
+          revealBtn.textContent = "Show answer";
+          revealBtn.onclick = revealAnswer;
+        }
+      }
+
+      function clearPeekTimer() {
+        if (peekTimer) {
+          clearInterval(peekTimer);
+          peekTimer = null;
+          peekBtn.disabled = false;
+          peekBtn.textContent = "Peek (5s)";
+          revealBtn.disabled = false;
+        }
+      }
+
+      function peekAnswer() {
+        if (solved || peekTimer) return;
+
+        const prevText = messageEl.textContent;
+        const prevClass = messageEl.className;
+        messageEl.textContent = currentText;
+        messageEl.className = "";
+        peekBtn.disabled = true;
+        revealBtn.disabled = true;
+
+        let secondsLeft = 5;
+        peekTimer = setInterval(() => {
+          secondsLeft--;
+          peekBtn.textContent = `Peek (${secondsLeft}s)`;
+          if (secondsLeft <= 0) {
+            clearInterval(peekTimer);
+            peekTimer = null;
+            peekBtn.disabled = false;
+            peekBtn.textContent = "Peek (5s)";
+            revealBtn.disabled = false;
+            messageEl.textContent = prevText;
+            messageEl.className = prevClass;
+          }
+        }, 1000);
+      }
+
+      // ------------------------------
+      // Text list / editor
+      // ------------------------------
+      function renderTextList() {
+        textListEl.innerHTML = "";
+        if (!userTexts.length) return;
+
+        const heading = document.createElement("div");
+        heading.innerHTML = "<strong>Your added texts</strong>";
+        textListEl.appendChild(heading);
+
+        userTexts.forEach((t, i) => {
+          const row = document.createElement("div");
+          const label = document.createElement("span");
+          label.textContent = t.length > 70 ? t.slice(0, 67) + "..." : t;
+          const removeBtn = document.createElement("button");
+          removeBtn.className = "removeBtn";
+          removeBtn.textContent = "×";
+          removeBtn.title = "Remove";
+          removeBtn.addEventListener("click", () => {
+            userTexts.splice(i, 1);
+            renderTextList();
+          });
+          row.appendChild(label);
+          row.appendChild(removeBtn);
+          textListEl.appendChild(row);
+        });
+      }
+
+      const MIN_TEXT_LEN = 40;
+      const MAX_TEXT_LEN = 120;
+
+      function updateCharCount() {
+        const n = newTextArea.value.trim().length;
+        charCountEl.textContent =
+          n + ` characters (need ${MIN_TEXT_LEN}–${MAX_TEXT_LEN})`;
+        charCountEl.className =
+          n < MIN_TEXT_LEN || n > MAX_TEXT_LEN ? "bad" : "";
+      }
+
+      addTextBtn.addEventListener("click", () => {
+        const text = newTextArea.value.trim().replace(/\s+/g, " ");
+        if (text.length < MIN_TEXT_LEN || text.length > MAX_TEXT_LEN) {
+          updateCharCount();
+          return;
+        }
+        userTexts.push(text);
+        newTextArea.value = "";
+        updateCharCount();
+        renderTextList();
+        loadText(text);
+      });
+
+      newTextArea.addEventListener("input", updateCharCount);
+
+      // ------------------------------
+      // Wiring
+      // ------------------------------
+      function loadText(text) {
+        const levels = computeRowOptions(text.toUpperCase().length);
+        const rows = levels[Math.floor(levels.length / 2)];
+        startPuzzle(text, rows);
+        renderLevelButtons(text.toUpperCase().length, rows);
+      }
+
+      // Picks a new text at random, avoiding an immediate repeat when there's
+      // more than one to choose from — the text itself is never shown, so the
+      // player can't just read the answer off a menu.
+      function pickRandomText() {
+        const texts = allTexts();
+        let next = texts[Math.floor(Math.random() * texts.length)];
+        if (texts.length > 1) {
+          while (next === currentText) {
+            next = texts[Math.floor(Math.random() * texts.length)];
+          }
+        }
+        loadText(next);
+      }
+
+      newPuzzleBtn.addEventListener("click", pickRandomText);
+      peekBtn.addEventListener("click", peekAnswer);
+
+      renderTextList();
+      updateCharCount();
+      pickRandomText();
+    </script>
+  </body>
+</html>

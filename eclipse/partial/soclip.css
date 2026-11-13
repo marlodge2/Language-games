@@ -1,0 +1,243 @@
+/* --- General layout --- */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  background-color: lightgoldenrodyellow;
+
+}
+
+/* --- Page wrapper --- */
+#pageWrapper {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+/* --- Title bar --- */
+#titleBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#storyTitle {
+  margin: 0;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+/* --- Story text --- */
+#textBox {
+  margin: 20px 0;
+  padding: 10px 20px;
+  word-spacing: 0.3em;
+  line-height: 1.4;
+  background-color: #fafafa;
+  border-radius: 4px;
+  font-size: 16px;
+}
+a {
+        color: #0e8c62;
+      }
+      h1 {
+        text-align: center;
+      }
+      h2 {
+        text-align: center;
+      }
+      h4 {
+        text-align: right;
+    }
+
+/* --- Word states --- */
+.masked {
+  color: transparent;
+  background-color: #ccc;
+  padding: 0 2px;
+}
+
+.revealed {
+  color: black;
+}
+
+.justRevealed {
+  color: red;
+  font-weight: bold;
+}
+
+/* --- Play area --- */
+#playArea {
+  margin-top: 20px;
+}
+
+.inputRow {
+  display: flex;
+  justify-content: space-between; /* left, center, right */
+  align-items: center;
+  margin-top: 10px;
+}
+
+#wordInput {
+  width: 220px;
+  flex: none;
+}
+
+#soloHelpButton {
+  margin: 0 auto;
+}
+
+#giveUpButton {
+  margin-left: auto;
+}
+
+#feedback {
+  margin-top: 8px;
+  color: darkred;
+  font-style: italic;
+  min-height: 1.2em;
+}
+
+/* --- End screen --- */
+#endScreen {
+  display: none;
+  text-align: left;
+  margin-top: 20px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+#endScreen button {
+  margin: 10px 5px 0 0;
+  font-size: 1em;
+}
+.buttonRow {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.buttonRow button {
+  flex: 1;
+  margin: 0 5px;
+}
+span.hinted {
+  color: #555;       /* grey text */
+  font-style: italic;
+}
+
+/* revealed by the teacher's category setup, as opposed to found by the player */
+.given {
+  color: black;
+  background-color: #fff3cd;
+  border-radius: 2px;
+}
+
+/* --- Reveal setup (Partial Eclipse) --- */
+#revealSetup {
+  margin: 16px 0;
+  padding: 14px 18px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+#revealHint {
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: #444;
+}
+
+#revealChecks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px 16px;
+}
+
+#revealChecks label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+#revealActions button {
+  flex: 1;
+}
+
+@media (max-width: 600px) {
+  #revealChecks {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* --- Print worksheet --- */
+@media print {
+  #revealSetup,
+  #playArea,
+  #summaryOverlay {
+    display: none !important;
+  }
+  body {
+    background: white;
+  }
+  #textBox {
+    background: white;
+    font-size: 13pt;
+    padding: 0;
+  }
+  .masked {
+    background: none;
+    color: transparent;
+    border-bottom: 1px solid #000;
+  }
+  .given {
+    background: none;
+    border-bottom: 1px dotted #666;
+  }
+  .hinted {
+    color: black;
+    font-style: normal;
+    border-bottom: 1px solid #000;
+  }
+}
+
+/* --- Summary overlay --- */
+#summaryOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+#summaryBox {
+  background: #fffef8;
+  border-radius: 8px;
+  max-width: 480px;
+  width: 90%;
+  padding: 24px 28px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+#summaryText {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0 0 18px;
+}
+
+#summaryDismissButton {
+  display: block;
+  margin: 0 auto;
+  font-size: 1em;
+  padding: 6px 20px;
+}

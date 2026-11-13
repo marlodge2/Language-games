@@ -1,0 +1,9650 @@
+[
+ {
+  "word": "abandon",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "leave"
+ },
+ {
+  "word": "abase",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make someone feel ashamed"
+ },
+ {
+  "word": "abash",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make someone feel embarrassed",
+  "usageNote": "This verb is common in the passive followed by AT"
+ },
+ {
+  "word": "abate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "become less strong"
+ },
+ {
+  "word": "abet",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "help, especially help somebody commit a crime"
+ },
+ {
+  "word": "abide",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(strong): live (old-fashioned)  (weak): put up with",
+  "pastForm": "abode",
+  "pastParticiple": "abided",
+  "usageNote": "Usually follows 'can' when it means 'put up with'"
+ },
+ {
+  "word": "abided",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "abode",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "abut",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be beside"
+ },
+ {
+  "word": "accept",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "agree to take something, say Yes"
+ },
+ {
+  "word": "accommodate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give room to"
+ },
+ {
+  "word": "accompany",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "go with, play the piano for a singer"
+ },
+ {
+  "word": "accomplish",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "achieve, finish"
+ },
+ {
+  "word": "accord",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) be the same as, (2) give (honour or status)"
+ },
+ {
+  "word": "account",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "explain, give a reason",
+  "usageNote": "usually followed by FOR"
+ },
+ {
+  "word": "accuse",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say that a person has done something wrong"
+ },
+ {
+  "word": "accustom",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make somebody become used to something"
+ },
+ {
+  "word": "ache",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "feel or give pain"
+ },
+ {
+  "word": "achieve",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "reach a goal, succeed in something"
+ },
+ {
+  "word": "acquire",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "get"
+ },
+ {
+  "word": "act",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) do, (2) take a role in a drama"
+ },
+ {
+  "word": "add",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "sum two numbers, say or do something extra"
+ },
+ {
+  "word": "address",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "speak to, write an address on a letter"
+ },
+ {
+  "word": "admire",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "think somebody/something is good"
+ },
+ {
+  "word": "admit",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) allow somebody to come in, (2) confess"
+ },
+ {
+  "word": "adopt",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "take on, give a home to a child"
+ },
+ {
+  "word": "advance",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) move forward, (2) lend money"
+ },
+ {
+  "word": "advertise",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make something famous, give publicity"
+ },
+ {
+  "word": "advise",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give advice"
+ },
+ {
+  "word": "affect",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "change, have an effect on"
+ },
+ {
+  "word": "afford",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "have enough money for something"
+ },
+ {
+  "word": "age",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "become old, make something seem older"
+ },
+ {
+  "word": "agree",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "have the same opinion"
+ },
+ {
+  "word": "aim",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "point at a target, intend"
+ },
+ {
+  "word": "allot",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "share, give a portion"
+ },
+ {
+  "word": "allow",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "let somebody do something, permit"
+ },
+ {
+  "word": "alter",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "change"
+ },
+ {
+  "word": "amaze",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "surprise"
+ },
+ {
+  "word": "amount",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "be in total"
+ },
+ {
+  "word": "amuse",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make somebody laugh"
+ },
+ {
+  "word": "anger",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make somebody angry"
+ },
+ {
+  "word": "annoy",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make somebody angry"
+ },
+ {
+  "word": "answer",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "reply, say something back"
+ },
+ {
+  "word": "apologise",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": true,
+  "defin": "say you are sorry"
+ },
+ {
+  "word": "appal",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "shock or frighten"
+ },
+ {
+  "word": "appear",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "come into view, seem"
+ },
+ {
+  "word": "applaud",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "clap your hands, think something is good"
+ },
+ {
+  "word": "apply",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "ask for a job, work hard, put on to a surface"
+ },
+ {
+  "word": "appoint",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give a job to"
+ },
+ {
+  "word": "apportion",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "share out, put (the blame) on"
+ },
+ {
+  "word": "appreciate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "like, show that you like, become more valuable"
+ },
+ {
+  "word": "apprehend",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "arrest, catch"
+ },
+ {
+  "word": "approach",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "come near"
+ },
+ {
+  "word": "approve",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "think something is good"
+ },
+ {
+  "word": "argue",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say that you disagree, give reasons for something"
+ },
+ {
+  "word": "arise",
+  "strong": true,
+  "isBase": true,
+  "intransitive": true,
+  "stative": false,
+  "defin": "get up, start",
+  "pastForm": "arose",
+  "pastParticiple": "arisen",
+  "usageNote": ""
+ },
+ {
+  "word": "arisen",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "arm",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give weapons to"
+ },
+ {
+  "word": "arose",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "arrange",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put in order"
+ },
+ {
+  "word": "arrest",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "catch a criminal, stop"
+ },
+ {
+  "word": "arrive",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "come to a place"
+ },
+ {
+  "word": "ask",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put a question or make a request"
+ },
+ {
+  "word": "assist",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give help"
+ },
+ {
+  "word": "astonish",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "surprise greatly"
+ },
+ {
+  "word": "astound",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "surprise greatly"
+ },
+ {
+  "word": "ate",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "attack",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "start to fight"
+ },
+ {
+  "word": "attempt",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "try"
+ },
+ {
+  "word": "attend",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be present"
+ },
+ {
+  "word": "attract",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make something come near, make somebody like you"
+ },
+ {
+  "word": "avoid",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "try not to meet"
+ },
+ {
+  "word": "await",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "wait for, expect"
+ },
+ {
+  "word": "awake",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "wake up",
+  "pastForm": "awoke",
+  "pastParticiple": "awoken",
+  "usageNote": ""
+ },
+ {
+  "word": "awoke",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "awoken",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "axe",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "cut down"
+ },
+ {
+  "word": "back",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "support, bet money on a horse, move backwards"
+ },
+ {
+  "word": "bade",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "bag",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put in a bag, catch"
+ },
+ {
+  "word": "bake",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "cook in an oven, feel hot"
+ },
+ {
+  "word": "balance",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "cause to be steady, make equal"
+ },
+ {
+  "word": "ban",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "forbid something"
+ },
+ {
+  "word": "band",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "work together, put a band round a box"
+ },
+ {
+  "word": "bank",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) lean to one side, (2) put in a bank"
+ },
+ {
+  "word": "bar",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "keep out, forbid"
+ },
+ {
+  "word": "bare",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "uncover"
+ },
+ {
+  "word": "bargain",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "argue about the price"
+ },
+ {
+  "word": "base",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "use facts to support an argument"
+ },
+ {
+  "word": "bathe",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put in water, take a bath"
+ },
+ {
+  "word": "battle",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "fight"
+ },
+ {
+  "word": "be",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "exist"
+ },
+ {
+  "word": "bear",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "carry, put up with, give birth",
+  "pastForm": "bore",
+  "pastParticiple": "borne",
+  "usageNote": "The past participle is 'born' when the meaning is 'give birth to a child'"
+ },
+ {
+  "word": "beat",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "hit, to win at a game or in war",
+  "pastForm": "beat",
+  "pastParticiple": "beaten",
+  "usageNote": ""
+ },
+ {
+  "word": "beaten",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "became",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "become",
+  "strong": true,
+  "isBase": true,
+  "intransitive": true,
+  "stative": false,
+  "defin": "to change",
+  "pastForm": "became",
+  "pastParticiple": "become",
+  "usageNote": ""
+ },
+ {
+  "word": "bed",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put in a bed"
+ },
+ {
+  "word": "befall",
+  "strong": true,
+  "isBase": true,
+  "intransitive": true,
+  "stative": true,
+  "defin": "happen (old-fashioned)",
+  "pastForm": "befell",
+  "pastParticiple": "befallen",
+  "usageNote": ""
+ },
+ {
+  "word": "befallen",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "befell",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "befriend",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be friendly or helpful to somebody"
+ },
+ {
+  "word": "beg",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "ask for money"
+ },
+ {
+  "word": "began",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "beget",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "create, conceive",
+  "pastForm": "begot",
+  "pastParticiple": "begotten",
+  "usageNote": ""
+ },
+ {
+  "word": "begin",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "start",
+  "pastForm": "began",
+  "pastParticiple": "begun",
+  "usageNote": ""
+ },
+ {
+  "word": "begot",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "begotten",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "begun",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "behave",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "act, esp. in a proper way or following a scientific law"
+ },
+ {
+  "word": "beheld",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "behold",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "see (old-fashioned)",
+  "pastForm": "beheld",
+  "pastParticiple": "beheld",
+  "usageNote": ""
+ },
+ {
+  "word": "believe",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "think that something is true"
+ },
+ {
+  "word": "belong",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": true,
+  "defin": "be somebody's property"
+ },
+ {
+  "word": "belt",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put a belt round, hit"
+ },
+ {
+  "word": "bemoan",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "complain about"
+ },
+ {
+  "word": "bend",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make something not straight",
+  "pastForm": "bent",
+  "pastParticiple": "bent",
+  "usageNote": ""
+ },
+ {
+  "word": "bent",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "bequeath",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "leave things to specific people after your death"
+ },
+ {
+  "word": "bereave",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": true,
+  "defin": "take away a friend or relative through death",
+  "pastForm": "bereft",
+  "pastParticiple": "bereft",
+  "usageNote": "Usually passive"
+ },
+ {
+  "word": "bereaved",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "bereft",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "beseech",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "ask (old-fashioned)",
+  "pastForm": "besought",
+  "pastParticiple": "besought",
+  "usageNote": ""
+ },
+ {
+  "word": "beset",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "surround (old-fashioned)",
+  "pastForm": "beset",
+  "pastParticiple": "beset",
+  "usageNote": "Usually passive"
+ },
+ {
+  "word": "besought",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "best",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "overcome in a struggle"
+ },
+ {
+  "word": "bestow",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give"
+ },
+ {
+  "word": "bestridden",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "bestride",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be large enough to walk across something",
+  "pastForm": "bestrode",
+  "pastParticiple": "bestridden",
+  "usageNote": ""
+ },
+ {
+  "word": "bestrode",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "bet",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": true,
+  "defin": "win or lose money if some future event happens",
+  "pastForm": "bet",
+  "pastParticiple": "bet",
+  "usageNote": ""
+ },
+ {
+  "word": "betake",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "go",
+  "usageNote": "betook betaken\\"
+ },
+ {
+  "word": "betaken",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "bethink",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "intend (old-fashioned)",
+  "pastForm": "bethought",
+  "pastParticiple": "bethought",
+  "usageNote": "Usually reflexive"
+ },
+ {
+  "word": "bethought",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "betook",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "betray",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give away secrets, report a secret"
+ },
+ {
+  "word": "better",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give a better performance than"
+ },
+ {
+  "word": "bewilder",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "surprise completely"
+ },
+ {
+  "word": "bid",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "command",
+  "pastForm": "bade",
+  "pastParticiple": "bidden",
+  "usageNote": "There is also the past tense 'I bid' and perfect 'I have bid' in games like Bridge"
+ },
+ {
+  "word": "bidden",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "bill",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "send a bill to"
+ },
+ {
+  "word": "bind",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "fasten",
+  "pastForm": "bound",
+  "pastParticiple": "bound",
+  "usageNote": ""
+ },
+ {
+  "word": "bit",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "bite",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "use one's teeth",
+  "pastForm": "bit",
+  "pastParticiple": "bitten",
+  "usageNote": ""
+ },
+ {
+  "word": "bitten",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "blame",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say or think that somebody has caused a bad event"
+ },
+ {
+  "word": "bled",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "bleed",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) lose blood, (2) take blood",
+  "pastForm": "bled",
+  "pastParticiple": "bled",
+  "usageNote": "The transitive sense is now usually metaphorical as in 'They are bleeding me dry' (taking my money)"
+ },
+ {
+  "word": "bless",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say holy words about"
+ },
+ {
+  "word": "blew",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "blind",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "cause somebody not to be able to see"
+ },
+ {
+  "word": "block",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "stand in the way of"
+ },
+ {
+  "word": "blow",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make air move",
+  "pastForm": "blew",
+  "pastParticiple": "blown",
+  "usageNote": ""
+ },
+ {
+  "word": "blown",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "blush",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "become red"
+ },
+ {
+  "word": "boast",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "tell people that you are good"
+ },
+ {
+  "word": "boat",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "travel by boat, sail a boat as a hobby"
+ },
+ {
+  "word": "boil",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make water hotter than 100 degrees C, become hot or angry"
+ },
+ {
+  "word": "bond",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "connect closely"
+ },
+ {
+  "word": "book",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "reserve"
+ },
+ {
+  "word": "border",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be at the edge of"
+ },
+ {
+  "word": "bore",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make a person lose interest in something"
+ },
+ {
+  "word": "borne",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "borrow",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "get something which you must give back"
+ },
+ {
+  "word": "bottle",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put into a bottle"
+ },
+ {
+  "word": "bought",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "bound",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "move in big leaps"
+ },
+ {
+  "word": "bow",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "bend at the waist, obey orders"
+ },
+ {
+  "word": "box",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put in a box, fight with fists"
+ },
+ {
+  "word": "branch",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "divide into two branches"
+ },
+ {
+  "word": "brave",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "endure something bravely"
+ },
+ {
+  "word": "break",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "divide",
+  "pastForm": "broke",
+  "pastParticiple": "broken",
+  "usageNote": ""
+ },
+ {
+  "word": "breakfast",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "eat breakfast"
+ },
+ {
+  "word": "breathe",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "take breath"
+ },
+ {
+  "word": "bred",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "breed",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make things grow",
+  "pastForm": "bred",
+  "pastParticiple": "bred",
+  "usageNote": ""
+ },
+ {
+  "word": "bribe",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give money illegally to an official"
+ },
+ {
+  "word": "bridge",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "cover a gap"
+ },
+ {
+  "word": "brighten",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make bright"
+ },
+ {
+  "word": "bring",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "carry to this place",
+  "pastForm": "brought",
+  "pastParticiple": "brought",
+  "usageNote": ""
+ },
+ {
+  "word": "broadcast",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) scatter, (2) make a radio or TV programme",
+  "pastForm": "broadcast",
+  "pastParticiple": "broadcast",
+  "usageNote": ""
+ },
+ {
+  "word": "broaden",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make broader"
+ },
+ {
+  "word": "broke",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "broken",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "brought",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "brown",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make brown, cook under a grill"
+ },
+ {
+  "word": "brush",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put on with a brush, touch gently"
+ },
+ {
+  "word": "build",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make (usually a house)",
+  "pastForm": "built",
+  "pastParticiple": "built",
+  "usageNote": ""
+ },
+ {
+  "word": "built",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "bunch",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "come together in a group, push together"
+ },
+ {
+  "word": "bundle",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make a bundle of things, sell a computer with software"
+ },
+ {
+  "word": "burn",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "feel hot, cause to catch fire"
+ },
+ {
+  "word": "burnt",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "burst",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "break",
+  "pastForm": "burst",
+  "pastParticiple": "burst",
+  "usageNote": ""
+ },
+ {
+  "word": "bury",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put underground, hide"
+ },
+ {
+  "word": "bus",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "send people by bus"
+ },
+ {
+  "word": "button",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "fasten the buttons on"
+ },
+ {
+  "word": "buy",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "get for money",
+  "pastForm": "bought",
+  "pastParticiple": "bought",
+  "usageNote": ""
+ },
+ {
+  "word": "cage",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put in a cage"
+ },
+ {
+  "word": "cake",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "become hard, cover with something hard"
+ },
+ {
+  "word": "calculate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "work out an answer, do arithmetic"
+ },
+ {
+  "word": "call",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give a name to, shout out"
+ },
+ {
+  "word": "calm",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make quiet or become quiet"
+ },
+ {
+  "word": "came",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "camp",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "sleep in a tent, live temporarily"
+ },
+ {
+  "word": "can",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put in a tin can, preserve"
+ },
+ {
+  "word": "cancel",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "undo an arrangement"
+ },
+ {
+  "word": "cap",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "finish, put a cap on"
+ },
+ {
+  "word": "captain",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be the captain of"
+ },
+ {
+  "word": "care",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "have feelings about"
+ },
+ {
+  "word": "carry",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) lift up and take, (2) reach without touching the ground"
+ },
+ {
+  "word": "cart",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "carry in a cart"
+ },
+ {
+  "word": "cast",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "throw",
+  "pastForm": "cast",
+  "pastParticiple": "cast",
+  "usageNote": ""
+ },
+ {
+  "word": "castle",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make a move in chess with king and rook"
+ },
+ {
+  "word": "catch",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "hold something thrown, understand",
+  "pastForm": "caught",
+  "pastParticiple": "caught",
+  "usageNote": ""
+ },
+ {
+  "word": "caught",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "cause",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make something happen"
+ },
+ {
+  "word": "caution",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give a warning"
+ },
+ {
+  "word": "cease",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "stop",
+  "usageNote": "may be followed by TO verb or verbING with the same meaning"
+ },
+ {
+  "word": "centre",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put in the centre"
+ },
+ {
+  "word": "chain",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put a chain on, arrange in a row"
+ },
+ {
+  "word": "chair",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "preside at a meeting"
+ },
+ {
+  "word": "chalk",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "mark with chalk"
+ },
+ {
+  "word": "chance",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "happen by chance, take a chance"
+ },
+ {
+  "word": "change",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "become different, make different"
+ },
+ {
+  "word": "charge",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "fill up, run towards, make somebody pay"
+ },
+ {
+  "word": "charm",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "behave pleasantly, fascinate"
+ },
+ {
+  "word": "cheat",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "win by doing something wrong"
+ },
+ {
+  "word": "check",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "find out if something is right"
+ },
+ {
+  "word": "cheer",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "shout approval, make happy"
+ },
+ {
+  "word": "chicken",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be cowardly",
+  "usageNote": "normally with OUT OF ..."
+ },
+ {
+  "word": "chid",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "chidden",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "chide",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "criticise",
+  "pastForm": "chid",
+  "pastParticiple": "chidden",
+  "usageNote": ""
+ },
+ {
+  "word": "choose",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "pick out",
+  "pastForm": "chose",
+  "pastParticiple": "chosen",
+  "usageNote": ""
+ },
+ {
+  "word": "chose",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "chosen",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "circle",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "walk or be all round something"
+ },
+ {
+  "word": "civilise",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make civilised"
+ },
+ {
+  "word": "civilize",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make civilized"
+ },
+ {
+  "word": "claim",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say that something belongs to you or is true"
+ },
+ {
+  "word": "clap",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make a noise with your hands, applaud"
+ },
+ {
+  "word": "class",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put together in a class"
+ },
+ {
+  "word": "clean",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make clean"
+ },
+ {
+  "word": "clear",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "take away rubbish, become clear"
+ },
+ {
+  "word": "cleave",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) divide, (2) stick to (old-fashioned)",
+  "pastForm": "clove",
+  "pastParticiple": "cloven",
+  "usageNote": ""
+ },
+ {
+  "word": "climb",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "move higher, go up a mountain"
+ },
+ {
+  "word": "cling",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "hold",
+  "pastForm": "clung",
+  "pastParticiple": "clung",
+  "usageNote": ""
+ },
+ {
+  "word": "close",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make a door shut, come to the end, come near"
+ },
+ {
+  "word": "clothe",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put clothes on"
+ },
+ {
+  "word": "cloud",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make unclear, become cloudy"
+ },
+ {
+  "word": "clove",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "cloven",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "club",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "hit with a club"
+ },
+ {
+  "word": "clung",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "coat",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "cover with a thin layer"
+ },
+ {
+  "word": "coin",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make coins, produce new words or ideas"
+ },
+ {
+  "word": "collapse",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "fall down"
+ },
+ {
+  "word": "collar",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "catch"
+ },
+ {
+  "word": "collect",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "bring together, come together"
+ },
+ {
+  "word": "collide",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "come together in a damaging way"
+ },
+ {
+  "word": "colonise",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "take over territory"
+ },
+ {
+  "word": "colour",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give something a new colour, become red with embarrassment"
+ },
+ {
+  "word": "comb",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "tidy your hair, search carefully"
+ },
+ {
+  "word": "combine",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put together"
+ },
+ {
+  "word": "come",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "move to this place",
+  "pastForm": "came",
+  "pastParticiple": "come",
+  "usageNote": ""
+ },
+ {
+  "word": "comfort",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make an unhappy person feel happier"
+ },
+ {
+  "word": "command",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "order, be the leader of"
+ },
+ {
+  "word": "commit",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "do (especially a crime), promise to give"
+ },
+ {
+  "word": "compare",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say if two things are similar"
+ },
+ {
+  "word": "compete",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "try to be better than, take part in games or sport"
+ },
+ {
+  "word": "complain",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "say that something is bad"
+ },
+ {
+  "word": "complete",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "finish, do everything"
+ },
+ {
+  "word": "compose",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "write music, make yourself calm"
+ },
+ {
+  "word": "compress",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make something smaller"
+ },
+ {
+  "word": "concern",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be important for"
+ },
+ {
+  "word": "confess",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say that one is guilty"
+ },
+ {
+  "word": "confuse",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "muddle, mix up"
+ },
+ {
+  "word": "congratulate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "tell somebody they have done well"
+ },
+ {
+  "word": "connect",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "join"
+ },
+ {
+  "word": "conquer",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "win, beat in battle"
+ },
+ {
+  "word": "consider",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "think about"
+ },
+ {
+  "word": "contain",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "hold"
+ },
+ {
+  "word": "content",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make happy"
+ },
+ {
+  "word": "continue",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "go on with something"
+ },
+ {
+  "word": "control",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make something/somebody act in a certain way"
+ },
+ {
+  "word": "converse",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "speak with a person"
+ },
+ {
+  "word": "convince",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "persuade somebody that something is true"
+ },
+ {
+  "word": "cook",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "prepare food"
+ },
+ {
+  "word": "cool",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make colder, become colder"
+ },
+ {
+  "word": "copy",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make one thing like another thing, be like somebody else"
+ },
+ {
+  "word": "cork",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put a cork in"
+ },
+ {
+  "word": "corner",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "go round a corner, obtain all the supplies of a product"
+ },
+ {
+  "word": "correct",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "tell somebody they are wrong"
+ },
+ {
+  "word": "cost",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": true,
+  "defin": "(strong) need so much money or time, (weak) calculate costs",
+  "pastForm": "cost",
+  "pastParticiple": "cost",
+  "usageNote": "'Cost' in this sense has a complement rather than an object"
+ },
+ {
+  "word": "cough",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "make coughing sounds, bring up sputum"
+ },
+ {
+  "word": "count",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "say numbers, add up money, be important"
+ },
+ {
+  "word": "court",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "try to make friends with"
+ },
+ {
+  "word": "cover",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put something on top of"
+ },
+ {
+  "word": "cow",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make somebody afraid"
+ },
+ {
+  "word": "crack",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "break a surface, solve a problem, become broken"
+ },
+ {
+  "word": "crackle",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "make noises like things breaking"
+ },
+ {
+  "word": "crash",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "have a car or plane accident, make a crashing sound"
+ },
+ {
+  "word": "cream",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "take away the best part of something"
+ },
+ {
+  "word": "create",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make"
+ },
+ {
+  "word": "creep",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "move quietly",
+  "pastForm": "crept",
+  "pastParticiple": "crept",
+  "usageNote": ""
+ },
+ {
+  "word": "crept",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "crew",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "work for, make up the right number of people for"
+ },
+ {
+  "word": "crop",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "eat grass, cut hair short"
+ },
+ {
+  "word": "cross",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "go from one side to the other, breed two animals"
+ },
+ {
+  "word": "crow",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make the noise a cock makes, be proud",
+  "pastForm": "crew",
+  "pastParticiple": "crowed",
+  "usageNote": ""
+ },
+ {
+  "word": "crowd",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "come to a place in large numbers"
+ },
+ {
+  "word": "crowed",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "crown",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put a crown on a king or queen"
+ },
+ {
+  "word": "crumble",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "turn into dust"
+ },
+ {
+  "word": "crush",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "press together and break"
+ },
+ {
+  "word": "cry",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "weep, shout"
+ },
+ {
+  "word": "cultivate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make something grow"
+ },
+ {
+  "word": "cure",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make better from an illness, preserve"
+ },
+ {
+  "word": "curl",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "grow not straight"
+ },
+ {
+  "word": "curse",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "use bad language, wish a bad fate on somebody"
+ },
+ {
+  "word": "curve",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "move in a changing direction"
+ },
+ {
+  "word": "cushion",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "soften a fall or bump"
+ },
+ {
+  "word": "cut",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "reduce, use a knife",
+  "pastForm": "cut",
+  "pastParticiple": "cut",
+  "usageNote": ""
+ },
+ {
+  "word": "damage",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "harm"
+ },
+ {
+  "word": "dawn",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "begin"
+ },
+ {
+  "word": "deal",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "share, do business",
+  "pastForm": "dealt",
+  "pastParticiple": "dealt",
+  "usageNote": ""
+ },
+ {
+  "word": "dealt",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "decay",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "become old and weak"
+ },
+ {
+  "word": "deceive",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make somebody believe what is not true"
+ },
+ {
+  "word": "decide",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make a choice"
+ },
+ {
+  "word": "defect",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "run away from a country"
+ },
+ {
+  "word": "defer",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "postpone or delay"
+ },
+ {
+  "word": "defy",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "stand up against a danger or threat"
+ },
+ {
+  "word": "delay",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make something late"
+ },
+ {
+  "word": "demand",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "ask for"
+ },
+ {
+  "word": "demur",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "disagree politely"
+ },
+ {
+  "word": "deny",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say something is not true"
+ },
+ {
+  "word": "depart",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "go away"
+ },
+ {
+  "word": "deplore",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say one is unhappy about something"
+ },
+ {
+  "word": "describe",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say what something is like"
+ },
+ {
+  "word": "desert",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "abandon"
+ },
+ {
+  "word": "design",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "draw, plan"
+ },
+ {
+  "word": "desire",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "want"
+ },
+ {
+  "word": "destroy",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "spoil, break up totally"
+ },
+ {
+  "word": "deteriorate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "become bad"
+ },
+ {
+  "word": "devour",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "eat like an animal"
+ },
+ {
+  "word": "did",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "die",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "reach the end of life"
+ },
+ {
+  "word": "dig",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make holes in the ground",
+  "pastForm": "dug",
+  "pastParticiple": "dug",
+  "usageNote": ""
+ },
+ {
+  "word": "digress",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "say irrelevant things"
+ },
+ {
+  "word": "dine",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "have dinner"
+ },
+ {
+  "word": "disagree",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "not agree, have different opinions"
+ },
+ {
+  "word": "disappear",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "vanish, not be seen"
+ },
+ {
+  "word": "disbelieve",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "not believe"
+ },
+ {
+  "word": "discomfort",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make somebody unhappy or uncomfortable"
+ },
+ {
+  "word": "discover",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "find"
+ },
+ {
+  "word": "discuss",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "talk about"
+ },
+ {
+  "word": "disintegrate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "break up into piece"
+ },
+ {
+  "word": "dismay",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "cause an unpleasant surprise"
+ },
+ {
+  "word": "display",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "show"
+ },
+ {
+  "word": "disturb",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "interrupt, make angry"
+ },
+ {
+  "word": "divide",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put into two or more parts"
+ },
+ {
+  "word": "do",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "many meanings",
+  "pastForm": "did",
+  "pastParticiple": "done",
+  "usageNote": ""
+ },
+ {
+  "word": "done",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "double",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make twice as large"
+ },
+ {
+  "word": "doze",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "be half asleep"
+ },
+ {
+  "word": "drank",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "draw",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) pull, (2) make pictures",
+  "pastForm": "drew",
+  "pastParticiple": "drawn",
+  "usageNote": ""
+ },
+ {
+  "word": "drawn",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "dread",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be afraid of something"
+ },
+ {
+  "word": "drew",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "drift",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "move aimlessly, move on water"
+ },
+ {
+  "word": "drink",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "take liquid",
+  "pastForm": "drank",
+  "pastParticiple": "drunk",
+  "usageNote": ""
+ },
+ {
+  "word": "drive",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) force, (2) go in a car",
+  "pastForm": "drove",
+  "pastParticiple": "driven",
+  "usageNote": ""
+ },
+ {
+  "word": "driven",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "droop",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "not be straight, hang downwards"
+ },
+ {
+  "word": "drove",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "drunk",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "dug",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "dust",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) clean the dust from; (2) sprinkle dust on"
+ },
+ {
+  "word": "eat",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "take food",
+  "pastForm": "ate",
+  "pastParticiple": "eaten",
+  "usageNote": ""
+ },
+ {
+  "word": "eaten",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "economise",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "spend little money"
+ },
+ {
+  "word": "economize",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "spend little money"
+ },
+ {
+  "word": "edit",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "change a piece of writing, run a newspaper"
+ },
+ {
+  "word": "effect",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make possible"
+ },
+ {
+  "word": "elapse",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "pass (of time)"
+ },
+ {
+  "word": "embed",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put inside something else"
+ },
+ {
+  "word": "employ",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "pay somebody to work"
+ },
+ {
+  "word": "enchant",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make happy"
+ },
+ {
+  "word": "encroach",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "move into something and take away part of it"
+ },
+ {
+  "word": "end",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "finish, complete"
+ },
+ {
+  "word": "endeavour",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "try hard, attempt"
+ },
+ {
+  "word": "endow",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give qualities to"
+ },
+ {
+  "word": "endure",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "last a long time, put up with"
+ },
+ {
+  "word": "enfold",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "surround, cover completely"
+ },
+ {
+  "word": "enjoy",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "like doing something"
+ },
+ {
+  "word": "enrich",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make rich"
+ },
+ {
+  "word": "ensue",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "come afterwards"
+ },
+ {
+  "word": "enter",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "come in, write records"
+ },
+ {
+  "word": "equal",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be the same as"
+ },
+ {
+  "word": "equate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say that something is the same as something else"
+ },
+ {
+  "word": "equip",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "provide tools for"
+ },
+ {
+  "word": "erupt",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "explode"
+ },
+ {
+  "word": "estimate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "guess, calculate roughly"
+ },
+ {
+  "word": "evaporate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "turn to vapour, dry out, disappear"
+ },
+ {
+  "word": "exacerbate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make conditions worse"
+ },
+ {
+  "word": "examine",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "look at, give a test to"
+ },
+ {
+  "word": "exasperate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make angry"
+ },
+ {
+  "word": "exchange",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give one thing for another"
+ },
+ {
+  "word": "exclude",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "keep out"
+ },
+ {
+  "word": "execute",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "do, kill somebody as punishment"
+ },
+ {
+  "word": "exercise",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) use (eg authority) (2) do strenuous bodily activity"
+ },
+ {
+  "word": "exist",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "be"
+ },
+ {
+  "word": "exit",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "go out, leave a place"
+ },
+ {
+  "word": "expect",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "think that something will happen"
+ },
+ {
+  "word": "expel",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "drive out"
+ },
+ {
+  "word": "experience",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "have something happen to you"
+ },
+ {
+  "word": "expire",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "die"
+ },
+ {
+  "word": "explain",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say how something works, give reasons"
+ },
+ {
+  "word": "explode",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "burst, become very angry"
+ },
+ {
+  "word": "explore",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "find out about, travel in a new country"
+ },
+ {
+  "word": "export",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "send goods abroad"
+ },
+ {
+  "word": "express",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say, show feelings"
+ },
+ {
+  "word": "extend",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "reach, make larger"
+ },
+ {
+  "word": "extract",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "pull out"
+ },
+ {
+  "word": "fail",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "do badly, not succeed"
+ },
+ {
+  "word": "faint",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "become unconscious"
+ },
+ {
+  "word": "fall",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "move down",
+  "pastForm": "fell",
+  "pastParticiple": "fallen",
+  "usageNote": ""
+ },
+ {
+  "word": "fallen",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "falter",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "become unreliable because of age or tiredness"
+ },
+ {
+  "word": "favour",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "do better for one than for another"
+ },
+ {
+  "word": "fear",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "be afraid of"
+ },
+ {
+  "word": "fed",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "feed",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give food to, eat (of animals)",
+  "pastForm": "fed",
+  "pastParticiple": "fed",
+  "usageNote": ""
+ },
+ {
+  "word": "feel",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": true,
+  "defin": "have sensations, touch",
+  "pastForm": "felt",
+  "pastParticiple": "felt",
+  "usageNote": ""
+ },
+ {
+  "word": "fell",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "cut down a tree"
+ },
+ {
+  "word": "felt",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "cover with felt cloth"
+ },
+ {
+  "word": "fidget",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "touch things or move around aimlessly"
+ },
+ {
+  "word": "fight",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "attack",
+  "pastForm": "fought",
+  "pastParticiple": "fought",
+  "usageNote": ""
+ },
+ {
+  "word": "fill",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make something full"
+ },
+ {
+  "word": "filter",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "take out what is not wanted"
+ },
+ {
+  "word": "find",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "discover",
+  "pastForm": "found",
+  "pastParticiple": "found",
+  "usageNote": ""
+ },
+ {
+  "word": "finish",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "complete, end"
+ },
+ {
+  "word": "flee",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "run away (from)",
+  "pastForm": "fled",
+  "pastParticiple": "fled",
+  "usageNote": "usually intransitive but transitive in set phrases such as 'fled the scene' or 'flee the coop'."
+ },
+ {
+  "word": "flew",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "flinch",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "draw back from danger"
+ },
+ {
+  "word": "flourish",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) do well, become strong, (2) wave something"
+ },
+ {
+  "word": "flown",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "fluctuate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "become stronger and weaker alternately"
+ },
+ {
+  "word": "fly",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "go in the air",
+  "pastForm": "flew",
+  "pastParticiple": "flown",
+  "usageNote": ""
+ },
+ {
+  "word": "follow",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "go after"
+ },
+ {
+  "word": "fool",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "deceive"
+ },
+ {
+  "word": "forbade",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "forbear",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "not do something",
+  "pastForm": "forbore",
+  "pastParticiple": "forborne",
+  "usageNote": ""
+ },
+ {
+  "word": "forbid",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "stop people from doing something",
+  "pastForm": "forbade",
+  "pastParticiple": "forbidden",
+  "usageNote": ""
+ },
+ {
+  "word": "forbidden",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "forbore",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "forborne",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "forecast",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say what will happen",
+  "pastForm": "forecast",
+  "pastParticiple": "forecast",
+  "usageNote": ""
+ },
+ {
+  "word": "forego",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "do without something",
+  "pastForm": "forewent",
+  "pastParticiple": "foregone",
+  "usageNote": ""
+ },
+ {
+  "word": "foregone",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "foresaw",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "foresee",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "see what will happen in future",
+  "pastForm": "foresaw",
+  "pastParticiple": "foreseen",
+  "usageNote": ""
+ },
+ {
+  "word": "foreseen",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "foretell",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say what will happen",
+  "pastForm": "foretold",
+  "pastParticiple": "foretold",
+  "usageNote": ""
+ },
+ {
+  "word": "foretold",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "forewent",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "forgave",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "forget",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "not remember",
+  "pastForm": "forgot",
+  "pastParticiple": "forgotten",
+  "usageNote": ""
+ },
+ {
+  "word": "forgive",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": true,
+  "defin": "pardon",
+  "pastForm": "forgave",
+  "pastParticiple": "forgiven",
+  "usageNote": ""
+ },
+ {
+  "word": "forgiven",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "forgo",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "do without",
+  "pastForm": "forwent",
+  "pastParticiple": "forgone",
+  "usageNote": "alternative spelling of forego"
+ },
+ {
+  "word": "forgone",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "forgot",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "forgotten",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "form",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "change the shape of, create, become"
+ },
+ {
+  "word": "forsake",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "abandon",
+  "pastForm": "forsook",
+  "pastParticiple": "forsaken",
+  "usageNote": ""
+ },
+ {
+  "word": "forsaken",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "forsook",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "forswear",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give up something",
+  "pastForm": "forswore",
+  "pastParticiple": "forsworn",
+  "usageNote": ""
+ },
+ {
+  "word": "forswore",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "forsworn",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "forwent",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "fought",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "found",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "set up an organisation"
+ },
+ {
+  "word": "free",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make something free, let out of prison"
+ },
+ {
+  "word": "freeze",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) be cold, (2) make cold",
+  "pastForm": "froze",
+  "pastParticiple": "frozen",
+  "usageNote": ""
+ },
+ {
+  "word": "frighten",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make somebody afraid"
+ },
+ {
+  "word": "froze",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "frozen",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "fry",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "cook food in fat, become hot"
+ },
+ {
+  "word": "gainsaid",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "gainsay",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "contradict",
+  "pastForm": "gainsaid",
+  "pastParticiple": "gainsaid",
+  "usageNote": ""
+ },
+ {
+  "word": "gave",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "get",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) obtain, (2) become",
+  "pastForm": "got",
+  "pastParticiple": "got",
+  "usageNote": "The US past participle is 'gotten'"
+ },
+ {
+  "word": "give",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "pass to somebody else",
+  "pastForm": "gave",
+  "pastParticiple": "given",
+  "usageNote": ""
+ },
+ {
+  "word": "given",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "gleam",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "be bright"
+ },
+ {
+  "word": "go",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "move",
+  "pastForm": "went",
+  "pastParticiple": "gone",
+  "usageNote": ""
+ },
+ {
+  "word": "gone",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "got",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "grant",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give"
+ },
+ {
+  "word": "grew",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "grind",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make smooth, break up into small pieces",
+  "pastForm": "ground",
+  "pastParticiple": "ground",
+  "usageNote": ""
+ },
+ {
+  "word": "ground",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put or keep on the ground"
+ },
+ {
+  "word": "grow",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) become larger or older, (2) cultivate",
+  "pastForm": "grew",
+  "pastParticiple": "grown",
+  "usageNote": ""
+ },
+ {
+  "word": "growl",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make low angry noises"
+ },
+ {
+  "word": "grown",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "guard",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "stop somebody from escaping, keep secure"
+ },
+ {
+  "word": "had",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "handle",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "touch, deal with"
+ },
+ {
+  "word": "hang",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(strong) hold something high, (weak) punish by killing",
+  "pastForm": "hung",
+  "pastParticiple": "hung",
+  "usageNote": ""
+ },
+ {
+  "word": "happen",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "take place, occur",
+  "usageNote": "HAPPEN can have a personal subject when followed by a TO infinitive as in `She happened to see me'."
+ },
+ {
+  "word": "harm",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "hate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "dislike strongly"
+ },
+ {
+  "word": "have",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "own, many other meanings",
+  "pastForm": "had",
+  "pastParticiple": "had",
+  "usageNote": ""
+ },
+ {
+  "word": "hear",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "use one's ears",
+  "pastForm": "heard",
+  "pastParticiple": "heard",
+  "usageNote": ""
+ },
+ {
+  "word": "heard",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "heat",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make something hot"
+ },
+ {
+  "word": "heed",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "listen to, obey"
+ },
+ {
+  "word": "held",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "help",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "assist"
+ },
+ {
+  "word": "hesitate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "wait before doing something"
+ },
+ {
+  "word": "hid",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "hidden",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "hide",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "conceal",
+  "pastForm": "hid",
+  "pastParticiple": "hidden",
+  "usageNote": ""
+ },
+ {
+  "word": "hire",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "pay money to use something, rent"
+ },
+ {
+  "word": "hit",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "touch, strike",
+  "pastForm": "hit",
+  "pastParticiple": "hit",
+  "usageNote": ""
+ },
+ {
+  "word": "hold",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "keep",
+  "pastForm": "held",
+  "pastParticiple": "held",
+  "usageNote": ""
+ },
+ {
+  "word": "hop",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "move on one leg"
+ },
+ {
+  "word": "hope",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "think that good things may happen"
+ },
+ {
+  "word": "howl",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make loud sad noises"
+ },
+ {
+  "word": "hung",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "hurt",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give or feel pain",
+  "pastForm": "hurt",
+  "pastParticiple": "hurt",
+  "usageNote": ""
+ },
+ {
+  "word": "imitate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "copy"
+ },
+ {
+  "word": "include",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "contain, have as a member of a group"
+ },
+ {
+  "word": "influence",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "change, persuade"
+ },
+ {
+  "word": "inform",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "tell"
+ },
+ {
+  "word": "input",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put in",
+  "pastForm": "input",
+  "pastParticiple": "input",
+  "usageNote": ""
+ },
+ {
+  "word": "interfere",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "deal with things which are not your business"
+ },
+ {
+  "word": "interrogate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "question, interview"
+ },
+ {
+  "word": "interrupt",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "come into the middle of"
+ },
+ {
+  "word": "introduce",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "use for the first time, bring two people together"
+ },
+ {
+  "word": "issue",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give out, publish"
+ },
+ {
+  "word": "itch",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "feel pain on the skin"
+ },
+ {
+  "word": "join",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "come together with, make things come together"
+ },
+ {
+  "word": "justify",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "explain, say that something is right"
+ },
+ {
+  "word": "keep",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) hold for oneself, (2) continue",
+  "pastForm": "kept",
+  "pastParticiple": "kept",
+  "usageNote": ""
+ },
+ {
+  "word": "kept",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "kill",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "cause somebody/something to die"
+ },
+ {
+  "word": "kiss",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "toouch gently with one's lips"
+ },
+ {
+  "word": "kneel",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put one's knees on the ground",
+  "pastForm": "knelt",
+  "pastParticiple": "knelt",
+  "usageNote": ""
+ },
+ {
+  "word": "knelt",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "knew",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "know",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": true,
+  "defin": "be aware of",
+  "pastForm": "knew",
+  "pastParticiple": "known",
+  "usageNote": ""
+ },
+ {
+  "word": "known",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "labour",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "work"
+ },
+ {
+  "word": "lack",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "not have, be without something"
+ },
+ {
+  "word": "lain",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "last",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": true,
+  "defin": "endure, take time"
+ },
+ {
+  "word": "laugh",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make amused noises"
+ },
+ {
+  "word": "lay",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "produce eggs"
+ },
+ {
+  "word": "lead",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(strong) be first, (weak) cover with lead",
+  "pastForm": "led",
+  "pastParticiple": "led",
+  "usageNote": ""
+ },
+ {
+  "word": "learn",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "come to know, be taught"
+ },
+ {
+  "word": "learnt",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "leave",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "go away",
+  "pastForm": "left",
+  "pastParticiple": "left",
+  "usageNote": ""
+ },
+ {
+  "word": "led",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "left",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "lend",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "let somebody borrow something from you",
+  "pastForm": "lent",
+  "pastParticiple": "lent",
+  "usageNote": ""
+ },
+ {
+  "word": "lent",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "let",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "permit",
+  "pastForm": "let",
+  "pastParticiple": "let",
+  "usageNote": ""
+ },
+ {
+  "word": "lie",
+  "strong": true,
+  "isBase": true,
+  "intransitive": true,
+  "stative": false,
+  "defin": "(strong) be on the ground, (weak) tell untruths",
+  "pastForm": "lay",
+  "pastParticiple": "lain",
+  "usageNote": ""
+ },
+ {
+  "word": "light",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make bright, start a fire",
+  "pastForm": "lit",
+  "pastParticiple": "lit",
+  "usageNote": ""
+ },
+ {
+  "word": "like",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "be fond of, love"
+ },
+ {
+  "word": "limit",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put boundaries on"
+ },
+ {
+  "word": "lip-read",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "understand language by looking at lip movements",
+  "pastForm": "lip-read",
+  "pastParticiple": "lip-read",
+  "usageNote": "alternative spelling of lipread"
+ },
+ {
+  "word": "lipread",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "understand language by looking at lip movements",
+  "pastForm": "lipread",
+  "pastParticiple": "lipread",
+  "usageNote": ""
+ },
+ {
+  "word": "list",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) write down names of things, (2) lean to one side"
+ },
+ {
+  "word": "listen",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "try to hear"
+ },
+ {
+  "word": "lit",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "live",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "have one's home, be alive"
+ },
+ {
+  "word": "load",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "fill up, take on cargo"
+ },
+ {
+  "word": "lock",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "close with a lock"
+ },
+ {
+  "word": "look",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "use one's eyes"
+ },
+ {
+  "word": "lose",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) not find, (2) not win",
+  "pastForm": "lost",
+  "pastParticiple": "lost",
+  "usageNote": ""
+ },
+ {
+  "word": "lost",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "love",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "like very much"
+ },
+ {
+  "word": "made",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "maintain",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "keep, say that somethig is true"
+ },
+ {
+  "word": "make",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "create",
+  "pastForm": "made",
+  "pastParticiple": "made",
+  "usageNote": ""
+ },
+ {
+  "word": "master",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "dominate, learn thoroughly"
+ },
+ {
+  "word": "mean",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) have meaning, (2) intend",
+  "pastForm": "meant",
+  "pastParticiple": "meant",
+  "usageNote": ""
+ },
+ {
+  "word": "meant",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "meet",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "come together",
+  "pastForm": "met",
+  "pastParticiple": "met",
+  "usageNote": ""
+ },
+ {
+  "word": "mention",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say something about"
+ },
+ {
+  "word": "met",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "miscast",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give an unsuitable role to an actor",
+  "pastForm": "miscast",
+  "pastParticiple": "miscast",
+  "usageNote": ""
+ },
+ {
+  "word": "misdeal",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give out the wrong number of cards in a game",
+  "pastForm": "misdealt",
+  "pastParticiple": "misdealt",
+  "usageNote": ""
+ },
+ {
+  "word": "misdealt",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "misgave",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "misgive",
+  "strong": true,
+  "isBase": true,
+  "intransitive": true,
+  "stative": false,
+  "defin": "have doubts",
+  "pastForm": "misgave",
+  "pastParticiple": "misgiven",
+  "usageNote": ""
+ },
+ {
+  "word": "misgiven",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "mishit",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "hit a ball inaccurately",
+  "pastForm": "mishit",
+  "pastParticiple": "mishit",
+  "usageNote": ""
+ },
+ {
+  "word": "mislaid",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "mislay",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "lose",
+  "pastForm": "mislaid",
+  "pastParticiple": "mislaid",
+  "usageNote": ""
+ },
+ {
+  "word": "mislead",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "deceive",
+  "pastForm": "misled",
+  "pastParticiple": "misled",
+  "usageNote": ""
+ },
+ {
+  "word": "misled",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "misspend",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "spend money or time unwisely",
+  "pastForm": "misspent",
+  "pastParticiple": "misspent",
+  "usageNote": ""
+ },
+ {
+  "word": "misspent",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "mistake",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be wrong, think that a person is somebody different",
+  "pastForm": "mistook",
+  "pastParticiple": "mistaken",
+  "usageNote": ""
+ },
+ {
+  "word": "mistaken",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "mistook",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "mistrust",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "not trust, disbelieve"
+ },
+ {
+  "word": "mistrust",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "misunderstand",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "understand wrongly",
+  "pastForm": "misunderstood",
+  "pastParticiple": "misunderstood",
+  "usageNote": ""
+ },
+ {
+  "word": "misunderstood",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "moan",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make noises to show one is in pain"
+ },
+ {
+  "word": "mount",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "get on (eg a horse)"
+ },
+ {
+  "word": "move",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "go from one place to another, make something go"
+ },
+ {
+  "word": "mow",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "cut grass",
+  "pastForm": "mowed",
+  "pastParticiple": "mown",
+  "usageNote": ""
+ },
+ {
+  "word": "mowed",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "mown",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "name",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give a name to"
+ },
+ {
+  "word": "need",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "require, want"
+ },
+ {
+  "word": "notice",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "see something"
+ },
+ {
+  "word": "object",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be against"
+ },
+ {
+  "word": "observe",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "see, say"
+ },
+ {
+  "word": "occur",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": true,
+  "defin": "(1) happen, (2) be thought about",
+  "usageNote": "OCCUR may have a personal subject in sense (2), as in `He occurred to me as a likely suspect'."
+ },
+ {
+  "word": "offer",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say that you will give something"
+ },
+ {
+  "word": "offset",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "start at a place after the beginning",
+  "pastForm": "offset",
+  "pastParticiple": "offset",
+  "usageNote": ""
+ },
+ {
+  "word": "open",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "begin, make something open"
+ },
+ {
+  "word": "outdid",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "outdo",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "do better than",
+  "pastForm": "outdid",
+  "pastParticiple": "outdone",
+  "usageNote": ""
+ },
+ {
+  "word": "outdone",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "outgrew",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "outgrow",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "grow too large for something",
+  "pastForm": "outgrew",
+  "pastParticiple": "outgrown",
+  "usageNote": ""
+ },
+ {
+  "word": "outgrown",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "output",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "produce, make",
+  "pastForm": "output",
+  "pastParticiple": "output",
+  "usageNote": ""
+ },
+ {
+  "word": "outran",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "outrun",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "run further than",
+  "pastForm": "outran",
+  "pastParticiple": "outrun",
+  "usageNote": ""
+ },
+ {
+  "word": "outshine",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "shine brighter than",
+  "pastForm": "outshone",
+  "pastParticiple": "outshone",
+  "usageNote": ""
+ },
+ {
+  "word": "outshone",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overate",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overbid",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "bid too high at an auction",
+  "pastForm": "overbid",
+  "pastParticiple": "overbid",
+  "usageNote": ""
+ },
+ {
+  "word": "overcame",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overcome",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "win, beat",
+  "pastForm": "overcame",
+  "pastParticiple": "overcome",
+  "usageNote": ""
+ },
+ {
+  "word": "overdid",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overdo",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "work too hard",
+  "pastForm": "overdid",
+  "pastParticiple": "overdone",
+  "usageNote": ""
+ },
+ {
+  "word": "overdone",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overdraw",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "draw out more moeny than one has in the bank",
+  "pastForm": "overdrew",
+  "pastParticiple": "overdrawn",
+  "usageNote": ""
+ },
+ {
+  "word": "overdrawn",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overdrew",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overeat",
+  "strong": true,
+  "isBase": true,
+  "intransitive": true,
+  "stative": false,
+  "defin": "eat too much",
+  "pastForm": "overate",
+  "pastParticiple": "overeaten",
+  "usageNote": ""
+ },
+ {
+  "word": "overeaten",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overfed",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overfeed",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give too much food",
+  "pastForm": "overfed",
+  "pastParticiple": "overfed",
+  "usageNote": ""
+ },
+ {
+  "word": "overflew",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overflown",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overfly",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "fly over a place",
+  "pastForm": "overflew",
+  "pastParticiple": "overflown",
+  "usageNote": ""
+ },
+ {
+  "word": "overhang",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be above",
+  "pastForm": "overhung",
+  "pastParticiple": "overhung",
+  "usageNote": ""
+ },
+ {
+  "word": "overhung",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overlain",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overlay",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put something on top of a surface",
+  "usageNote": "overlaid overlaid\\"
+ },
+ {
+  "word": "overlie",
+  "strong": true,
+  "isBase": true,
+  "intransitive": true,
+  "stative": false,
+  "defin": "be on top of",
+  "pastForm": "overlay",
+  "pastParticiple": "overlain",
+  "usageNote": ""
+ },
+ {
+  "word": "overpaid",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overpay",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "pay too much money",
+  "pastForm": "overpaid",
+  "pastParticiple": "overpaid",
+  "usageNote": ""
+ },
+ {
+  "word": "overran",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overridden",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "override",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "ignore a warning or rule",
+  "pastForm": "overrode",
+  "pastParticiple": "overridden",
+  "usageNote": ""
+ },
+ {
+  "word": "overrode",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overrun",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be all over an area",
+  "pastForm": "overran",
+  "pastParticiple": "overrun",
+  "usageNote": ""
+ },
+ {
+  "word": "oversaw",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "oversee",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "organise",
+  "pastForm": "oversaw",
+  "pastParticiple": "overseen",
+  "usageNote": ""
+ },
+ {
+  "word": "overseen",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "oversell",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say something is better than it is",
+  "pastForm": "oversold",
+  "pastParticiple": "oversold",
+  "usageNote": ""
+ },
+ {
+  "word": "oversold",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overspend",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "spend too much money",
+  "pastForm": "overspent",
+  "pastParticiple": "overspent",
+  "usageNote": ""
+ },
+ {
+  "word": "overspent",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overtake",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "come from behind to go in front",
+  "pastForm": "overtook",
+  "pastParticiple": "overtaken",
+  "usageNote": ""
+ },
+ {
+  "word": "overtaken",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overtook",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overwrite",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "write on top of, replace",
+  "pastForm": "overwrote",
+  "pastParticiple": "overwritten",
+  "usageNote": ""
+ },
+ {
+  "word": "overwritten",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "overwrote",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "own",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "have, possess"
+ },
+ {
+  "word": "paid",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "partake",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "share, eat",
+  "usageNote": "usually followed by of"
+ },
+ {
+  "word": "pass",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) move past, (2) succeed in an exam"
+ },
+ {
+  "word": "pause",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "wait"
+ },
+ {
+  "word": "pay",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give money for",
+  "pastForm": "paid",
+  "pastParticiple": "paid",
+  "usageNote": ""
+ },
+ {
+  "word": "perceive",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "see"
+ },
+ {
+  "word": "persist",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "keep on doing something"
+ },
+ {
+  "word": "pick",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "choose, take fruit from a tree"
+ },
+ {
+  "word": "plant",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put seeds in the ground"
+ },
+ {
+  "word": "play",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "spend time doing enjoyable things"
+ },
+ {
+  "word": "plead",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "beg, ask strongly"
+ },
+ {
+  "word": "please",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "give pleasure"
+ },
+ {
+  "word": "postpone",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "arrange to delay an event"
+ },
+ {
+  "word": "praise",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say good things about"
+ },
+ {
+  "word": "pray",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say prayers to God, ask"
+ },
+ {
+  "word": "prefer",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "like better than"
+ },
+ {
+  "word": "present",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give, introduce"
+ },
+ {
+  "word": "press",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "use force in touching"
+ },
+ {
+  "word": "prevent",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make something impossible"
+ },
+ {
+  "word": "print",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "write in capital letters, make a book"
+ },
+ {
+  "word": "process",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "change something's form"
+ },
+ {
+  "word": "produce",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make"
+ },
+ {
+  "word": "progress",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "move forwards, become better"
+ },
+ {
+  "word": "pronounce",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "say aloud"
+ },
+ {
+  "word": "prosper",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "do well, become rich"
+ },
+ {
+  "word": "protect",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "keep something safe"
+ },
+ {
+  "word": "provide",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "supply"
+ },
+ {
+  "word": "push",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make something move"
+ },
+ {
+  "word": "put",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "place something on something",
+  "pastForm": "put",
+  "pastParticiple": "put",
+  "usageNote": ""
+ },
+ {
+  "word": "quarrel",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "be angry"
+ },
+ {
+  "word": "question",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "throw doubt on, interrogate"
+ },
+ {
+  "word": "quit",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give up, leave",
+  "pastForm": "quit",
+  "pastParticiple": "quit",
+  "usageNote": ""
+ },
+ {
+  "word": "quiver",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "shake"
+ },
+ {
+  "word": "quiz",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "interrogate, ask questions"
+ },
+ {
+  "word": "rain",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be wet (of weather)"
+ },
+ {
+  "word": "raise",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make soemthing higher, bring up children"
+ },
+ {
+  "word": "ran",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "rang",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "re-equip",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "provide new tools for"
+ },
+ {
+  "word": "reach",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "get to a place, be tall enough to touch something"
+ },
+ {
+  "word": "react",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "be surprised about, respond to a stimulus"
+ },
+ {
+  "word": "read",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "look at written words and understand them",
+  "pastForm": "read",
+  "pastParticiple": "read",
+  "usageNote": ""
+ },
+ {
+  "word": "reawake",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "wake up again",
+  "pastForm": "reawoke",
+  "pastParticiple": "reawoken",
+  "usageNote": ""
+ },
+ {
+  "word": "reawoke",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "reawoken",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "rebid",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make a second bid at an auction",
+  "pastForm": "rebid",
+  "pastParticiple": "rebid",
+  "usageNote": ""
+ },
+ {
+  "word": "rebuild",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "build a house which has been destroyed",
+  "pastForm": "rebuilt",
+  "pastParticiple": "rebuilt",
+  "usageNote": ""
+ },
+ {
+  "word": "rebuilt",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "recede",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "go away, become smaller"
+ },
+ {
+  "word": "receive",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "get"
+ },
+ {
+  "word": "recommend",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "say that something is good"
+ },
+ {
+  "word": "record",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make a record of music, write down facts"
+ },
+ {
+  "word": "recut",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "cut again",
+  "pastForm": "recut",
+  "pastParticiple": "recut",
+  "usageNote": ""
+ },
+ {
+  "word": "redeal",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "deal cards again",
+  "pastForm": "redealt",
+  "pastParticiple": "redealt",
+  "usageNote": ""
+ },
+ {
+  "word": "redealt",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "redid",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "redo",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "do again",
+  "pastForm": "redid",
+  "pastParticiple": "redone",
+  "usageNote": ""
+ },
+ {
+  "word": "redone",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "redraw",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "draw again",
+  "pastForm": "redrew",
+  "pastParticiple": "redrawn",
+  "usageNote": ""
+ },
+ {
+  "word": "redrawn",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "redrew",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "reel",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "walk irregularly, faint"
+ },
+ {
+  "word": "refer",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be connected with, talk about"
+ },
+ {
+  "word": "refight",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "fight again",
+  "pastForm": "refought",
+  "pastParticiple": "refought",
+  "usageNote": ""
+ },
+ {
+  "word": "refit",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "change broken parts, repair a ship"
+ },
+ {
+  "word": "reflect",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "show a mirror image, think"
+ },
+ {
+  "word": "refought",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "regrew",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "regrow",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "grow something again",
+  "pastForm": "regrew",
+  "pastParticiple": "regrown",
+  "usageNote": ""
+ },
+ {
+  "word": "regrown",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "rehang",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "hang something again",
+  "pastForm": "rehung",
+  "pastParticiple": "rehung",
+  "usageNote": ""
+ },
+ {
+  "word": "rehear",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "hear something again, eg a trial",
+  "pastForm": "reheard",
+  "pastParticiple": "reheard",
+  "usageNote": ""
+ },
+ {
+  "word": "reheard",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "rehung",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "rejoice",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "be happy"
+ },
+ {
+  "word": "release",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "let somebody go free, give out"
+ },
+ {
+  "word": "relent",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "change one's mind, become less cruel"
+ },
+ {
+  "word": "relet",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "let out a room or house again",
+  "pastForm": "relet",
+  "pastParticiple": "relet",
+  "usageNote": ""
+ },
+ {
+  "word": "rely",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "trust, need",
+  "usageNote": "always followed by a phrase with ON"
+ },
+ {
+  "word": "remade",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "remain",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "stay in one place, be left over"
+ },
+ {
+  "word": "remake",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make again",
+  "pastForm": "remade",
+  "pastParticiple": "remade",
+  "usageNote": ""
+ },
+ {
+  "word": "remark",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say, notice"
+ },
+ {
+  "word": "remember",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "keep in mind, not forget"
+ },
+ {
+  "word": "remove",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "take away"
+ },
+ {
+  "word": "rend",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "tear into pieces",
+  "pastForm": "rent",
+  "pastParticiple": "rent",
+  "usageNote": ""
+ },
+ {
+  "word": "render",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make, change"
+ },
+ {
+  "word": "rent",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "allow somebody to use a house or room for money"
+ },
+ {
+  "word": "repaid",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "repair",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) mend, (2) go (old-fashioned)"
+ },
+ {
+  "word": "repay",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "pay back money one owes",
+  "pastForm": "repaid",
+  "pastParticiple": "repaid",
+  "usageNote": ""
+ },
+ {
+  "word": "repeal",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "cancel a law"
+ },
+ {
+  "word": "repel",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "drive back"
+ },
+ {
+  "word": "replace",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put back in the same place"
+ },
+ {
+  "word": "report",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say what has happened"
+ },
+ {
+  "word": "request",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "ask for"
+ },
+ {
+  "word": "reran",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "rerun",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "run something again",
+  "pastForm": "reran",
+  "pastParticiple": "rerun",
+  "usageNote": ""
+ },
+ {
+  "word": "resat",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "rescue",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "save from danger"
+ },
+ {
+  "word": "resell",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "sell something again",
+  "pastForm": "resold",
+  "pastParticiple": "resold",
+  "usageNote": ""
+ },
+ {
+  "word": "reset",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put something back in a setting",
+  "pastForm": "reset",
+  "pastParticiple": "reset",
+  "usageNote": ""
+ },
+ {
+  "word": "reshoot",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "shoot again, esp a film",
+  "usageNote": "reshot reshot\\"
+ },
+ {
+  "word": "reshot",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "reshut",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "shut something again",
+  "pastForm": "reshut",
+  "pastParticiple": "reshut",
+  "usageNote": ""
+ },
+ {
+  "word": "resist",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "defend against"
+ },
+ {
+  "word": "resit",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "take an exam for the second time after failing the first",
+  "pastForm": "resat",
+  "pastParticiple": "resat",
+  "usageNote": ""
+ },
+ {
+  "word": "resold",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "respect",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "have good feelings for"
+ },
+ {
+  "word": "respond",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "answer"
+ },
+ {
+  "word": "restrang",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "restring",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put new strings on a musical instrument",
+  "pastForm": "restrang",
+  "pastParticiple": "restrung",
+  "usageNote": ""
+ },
+ {
+  "word": "restrung",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "retain",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "keep"
+ },
+ {
+  "word": "retake",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "take something again, eg a test",
+  "pastForm": "retook",
+  "pastParticiple": "retaken",
+  "usageNote": ""
+ },
+ {
+  "word": "retaken",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "retaught",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "reteach",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "teach something again",
+  "pastForm": "retaught",
+  "pastParticiple": "retaught",
+  "usageNote": ""
+ },
+ {
+  "word": "retell",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "tell a story again",
+  "pastForm": "retold",
+  "pastParticiple": "retold",
+  "usageNote": ""
+ },
+ {
+  "word": "rethink",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "think again, change one's mind",
+  "pastForm": "rethought",
+  "pastParticiple": "rethought",
+  "usageNote": ""
+ },
+ {
+  "word": "rethought",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "retold",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "retook",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "return",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "come back, go back, give back"
+ },
+ {
+  "word": "reveal",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "show"
+ },
+ {
+  "word": "rewind",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "wind back, esp. recording tape",
+  "pastForm": "rewound",
+  "pastParticiple": "rewound",
+  "usageNote": ""
+ },
+ {
+  "word": "rewound",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "rewrite",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "write something again, making changes",
+  "pastForm": "rewrote",
+  "pastParticiple": "rewritten",
+  "usageNote": ""
+ },
+ {
+  "word": "rewritten",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "rewrote",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "rid",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "remove things from a place",
+  "pastForm": "rid",
+  "pastParticiple": "rid",
+  "usageNote": ""
+ },
+ {
+  "word": "ridden",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "ride",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "go on a horse or in a vehicle",
+  "pastForm": "rode",
+  "pastParticiple": "ridden",
+  "usageNote": ""
+ },
+ {
+  "word": "ring",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) speak on the telephone, (2) surround",
+  "pastForm": "rang",
+  "pastParticiple": "rung",
+  "usageNote": ""
+ },
+ {
+  "word": "rise",
+  "strong": true,
+  "isBase": true,
+  "intransitive": true,
+  "stative": false,
+  "defin": "go up",
+  "pastForm": "rose",
+  "pastParticiple": "risen",
+  "usageNote": ""
+ },
+ {
+  "word": "risen",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "risk",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "take a chance about something"
+ },
+ {
+  "word": "roar",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make a loud noise"
+ },
+ {
+  "word": "rode",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "rose",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "run",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) go fast, (2) manage an enterprise",
+  "pastForm": "ran",
+  "pastParticiple": "run",
+  "usageNote": ""
+ },
+ {
+  "word": "rung",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "said",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "sang",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "sank",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "sat",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "save",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "keep for the future, rescue"
+ },
+ {
+  "word": "saw",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "cut wood with a saw"
+ },
+ {
+  "word": "say",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give information in speech",
+  "pastForm": "said",
+  "pastParticiple": "said",
+  "usageNote": ""
+ },
+ {
+  "word": "scale",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "climb"
+ },
+ {
+  "word": "scream",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make a high-pitched noise"
+ },
+ {
+  "word": "see",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "use one's eyes",
+  "pastForm": "saw",
+  "pastParticiple": "seen",
+  "usageNote": ""
+ },
+ {
+  "word": "seed",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "plant seeds in, select the best players in a competition"
+ },
+ {
+  "word": "seek",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "look for something",
+  "pastForm": "sought",
+  "pastParticiple": "sought",
+  "usageNote": ""
+ },
+ {
+  "word": "seem",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": true,
+  "defin": "appear"
+ },
+ {
+  "word": "seen",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "select",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "choose"
+ },
+ {
+  "word": "sell",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "persuade people to buy",
+  "pastForm": "sold",
+  "pastParticiple": "sold",
+  "usageNote": ""
+ },
+ {
+  "word": "send",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make things go from here to another place",
+  "pastForm": "sent",
+  "pastParticiple": "sent",
+  "usageNote": ""
+ },
+ {
+  "word": "sent",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "set",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put in a setting",
+  "pastForm": "set",
+  "pastParticiple": "set",
+  "usageNote": ""
+ },
+ {
+  "word": "sew",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "use a needle and thread",
+  "pastForm": "sewed",
+  "pastParticiple": "sewn",
+  "usageNote": ""
+ },
+ {
+  "word": "sewed",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "sewn",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "shake",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "move backwards and forwards",
+  "pastForm": "shook",
+  "pastParticiple": "shaken",
+  "usageNote": ""
+ },
+ {
+  "word": "shaken",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "shape",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "form into a shape, affect"
+ },
+ {
+  "word": "share",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "divide between"
+ },
+ {
+  "word": "shed",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "lose or drop a covering",
+  "pastForm": "shed",
+  "pastParticiple": "shed",
+  "usageNote": ""
+ },
+ {
+  "word": "shine",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be bright, make something bright",
+  "pastForm": "shone",
+  "pastParticiple": "shone",
+  "usageNote": ""
+ },
+ {
+  "word": "ship",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "send by ship, send"
+ },
+ {
+  "word": "shiver",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "shake because of cold or fear"
+ },
+ {
+  "word": "shock",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "surprise"
+ },
+ {
+  "word": "shod",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "shoe",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put shoes on (eg a horse)",
+  "pastForm": "shod",
+  "pastParticiple": "shod",
+  "usageNote": ""
+ },
+ {
+  "word": "shone",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "shook",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "shoot",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "fire bullets or arrows at something",
+  "pastForm": "shot",
+  "pastParticiple": "shot",
+  "usageNote": ""
+ },
+ {
+  "word": "shorten",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make shorter"
+ },
+ {
+  "word": "shot",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "show",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "demonstrate",
+  "pastForm": "showed",
+  "pastParticiple": "shown",
+  "usageNote": ""
+ },
+ {
+  "word": "showed",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "shown",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "shrank",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "shrink",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make smaller",
+  "pastForm": "shrank",
+  "pastParticiple": "shrunk",
+  "usageNote": ""
+ },
+ {
+  "word": "shrunk",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "shut",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "close, end",
+  "pastForm": "shut",
+  "pastParticiple": "shut",
+  "usageNote": ""
+ },
+ {
+  "word": "shy",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) throw things at, (2) pull away from"
+ },
+ {
+  "word": "sigh",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make a sad noise"
+ },
+ {
+  "word": "sing",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make musical sounds",
+  "pastForm": "sang",
+  "pastParticiple": "sung",
+  "usageNote": ""
+ },
+ {
+  "word": "sink",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "go lower, usually in water",
+  "pastForm": "sank",
+  "pastParticiple": "sunk",
+  "usageNote": ""
+ },
+ {
+  "word": "sit",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be in a chair",
+  "pastForm": "sat",
+  "pastParticiple": "sat",
+  "usageNote": ""
+ },
+ {
+  "word": "ski",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "move over snow on skis"
+ },
+ {
+  "word": "slain",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "slay",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "kill (old-fashioned)",
+  "pastForm": "slew",
+  "pastParticiple": "slain",
+  "usageNote": ""
+ },
+ {
+  "word": "sleep",
+  "strong": true,
+  "isBase": true,
+  "intransitive": true,
+  "stative": false,
+  "defin": "not be awake",
+  "pastForm": "slept",
+  "pastParticiple": "slept",
+  "usageNote": ""
+ },
+ {
+  "word": "slept",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "slew",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "slid",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "slide",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "move smoothly along a surface",
+  "pastForm": "slid",
+  "pastParticiple": "slid",
+  "usageNote": ""
+ },
+ {
+  "word": "sling",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "throw",
+  "pastForm": "slung",
+  "pastParticiple": "slung",
+  "usageNote": ""
+ },
+ {
+  "word": "slink",
+  "strong": true,
+  "isBase": true,
+  "intransitive": true,
+  "stative": false,
+  "defin": "move away without wanting to be seen",
+  "pastForm": "slank",
+  "pastParticiple": "slunk",
+  "usageNote": ""
+ },
+ {
+  "word": "slip",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "slide and fall, put something inside"
+ },
+ {
+  "word": "slit",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make a thin cut",
+  "pastForm": "slit",
+  "pastParticiple": "slit",
+  "usageNote": ""
+ },
+ {
+  "word": "slow",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "cause to be slower, become slower"
+ },
+ {
+  "word": "slung",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "slunk",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "smile",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make a happy expression with one's face"
+ },
+ {
+  "word": "smite",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "hit (old-fashioned)",
+  "pastForm": "smote",
+  "pastParticiple": "smitten",
+  "usageNote": ""
+ },
+ {
+  "word": "smitten",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "smote",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "snarl",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make an aggressive noise"
+ },
+ {
+  "word": "sneeze",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make an explosive noise with one's nose"
+ },
+ {
+  "word": "snore",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make a rhythmic noise while sleeping"
+ },
+ {
+  "word": "snort",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make a disbelieving noise"
+ },
+ {
+  "word": "soar",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "rise high in the sky"
+ },
+ {
+  "word": "sob",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "cry, weep"
+ },
+ {
+  "word": "sold",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "sought",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "span",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "go from one side to the other"
+ },
+ {
+  "word": "sparkle",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "be bright, reflect light"
+ },
+ {
+  "word": "spat",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "speak",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "use one's voice",
+  "pastForm": "spoke",
+  "pastParticiple": "spoken",
+  "usageNote": ""
+ },
+ {
+  "word": "specify",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give details about something"
+ },
+ {
+  "word": "sped",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "speed",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "go fast",
+  "pastForm": "sped",
+  "pastParticiple": "sped",
+  "usageNote": ""
+ },
+ {
+  "word": "spell",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say the letters in a word, write correctly"
+ },
+ {
+  "word": "spend",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "use money to buy things",
+  "pastForm": "spent",
+  "pastParticiple": "spent",
+  "usageNote": ""
+ },
+ {
+  "word": "spent",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "spin",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "go round, make something go round",
+  "pastForm": "span",
+  "pastParticiple": "spun",
+  "usageNote": ""
+ },
+ {
+  "word": "spit",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "push out salive from one's mouth",
+  "pastForm": "spat",
+  "pastParticiple": "spat",
+  "usageNote": ""
+ },
+ {
+  "word": "split",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "divide into two",
+  "pastForm": "split",
+  "pastParticiple": "split",
+  "usageNote": ""
+ },
+ {
+  "word": "spoke",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "damage with a spoke"
+ },
+ {
+  "word": "spoken",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "spot",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "see, notice"
+ },
+ {
+  "word": "sprang",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "spread",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "cover a surface thinly",
+  "pastForm": "spread",
+  "pastParticiple": "spread",
+  "usageNote": ""
+ },
+ {
+  "word": "spring",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "jump up",
+  "pastForm": "sprang",
+  "pastParticiple": "sprung",
+  "usageNote": ""
+ },
+ {
+  "word": "sprung",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "spun",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "squat",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "sit on one's heels"
+ },
+ {
+  "word": "squeak",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make a high-pitched frightened noise"
+ },
+ {
+  "word": "squeal",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make a frightened noise"
+ },
+ {
+  "word": "stand",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) be on one's feet, (2) tolerate",
+  "pastForm": "stood",
+  "pastParticiple": "stood",
+  "usageNote": ""
+ },
+ {
+  "word": "stank",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "star",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "have as its most important actor"
+ },
+ {
+  "word": "start",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "begin"
+ },
+ {
+  "word": "stay",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "remain, not do (old-fashioned)"
+ },
+ {
+  "word": "steal",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "take what does not belong to you",
+  "pastForm": "stole",
+  "pastParticiple": "stolen",
+  "usageNote": ""
+ },
+ {
+  "word": "stick",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "stay, adhere",
+  "pastForm": "stuck",
+  "pastParticiple": "stuck",
+  "usageNote": ""
+ },
+ {
+  "word": "sting",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "hurt with a sharp pain",
+  "pastForm": "stang",
+  "pastParticiple": "stung",
+  "usageNote": ""
+ },
+ {
+  "word": "stink",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": true,
+  "defin": "smell bad",
+  "pastForm": "stank",
+  "pastParticiple": "stunk",
+  "usageNote": ""
+ },
+ {
+  "word": "stole",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "stolen",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "stood",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "stoop",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "bend down, behave badly"
+ },
+ {
+  "word": "stop",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) end, (2) cause something to end"
+ },
+ {
+  "word": "strain",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make a big effort, pour a liquid through a filter"
+ },
+ {
+  "word": "strew",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "scatter",
+  "pastForm": "strewed",
+  "pastParticiple": "strewn",
+  "usageNote": ""
+ },
+ {
+  "word": "strewed",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "strewn",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "stridden",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "stride",
+  "strong": true,
+  "isBase": true,
+  "intransitive": true,
+  "stative": false,
+  "defin": "",
+  "pastForm": "strode",
+  "pastParticiple": "stridden",
+  "usageNote": ""
+ },
+ {
+  "word": "strike",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) hit, (2) stop working",
+  "pastForm": "struck",
+  "pastParticiple": "struck",
+  "usageNote": ""
+ },
+ {
+  "word": "string",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put string in",
+  "pastForm": "strung",
+  "pastParticiple": "strung",
+  "usageNote": ""
+ },
+ {
+  "word": "strive",
+  "strong": true,
+  "isBase": true,
+  "intransitive": true,
+  "stative": false,
+  "defin": "try hard",
+  "pastForm": "strove",
+  "pastParticiple": "striven",
+  "usageNote": ""
+ },
+ {
+  "word": "striven",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "strode",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "stroll",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "walk casually"
+ },
+ {
+  "word": "strove",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "struck",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "strung",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "stuck",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "stung",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "stunk",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "sublet",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "offer part of your house for rent",
+  "pastForm": "sublet",
+  "pastParticiple": "sublet",
+  "usageNote": ""
+ },
+ {
+  "word": "subside",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "become lower or less strong"
+ },
+ {
+  "word": "succeed",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) do well, (2) inherit a title or job"
+ },
+ {
+  "word": "suggest",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "propose"
+ },
+ {
+  "word": "suit",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be suitable for"
+ },
+ {
+  "word": "sulk",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "be silent to show anger"
+ },
+ {
+  "word": "sung",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "sunk",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "supply",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "provide"
+ },
+ {
+  "word": "support",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "help, hold up"
+ },
+ {
+  "word": "suppose",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": true,
+  "defin": "think, assume"
+ },
+ {
+  "word": "surprise",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "cause a feeling of surprise, do something unexpected"
+ },
+ {
+  "word": "surrender",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "admit you have lost, give up"
+ },
+ {
+  "word": "surround",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be on all side of"
+ },
+ {
+  "word": "swam",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "swear",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) promise, (2) use bad language",
+  "pastForm": "swore",
+  "pastParticiple": "sworn",
+  "usageNote": ""
+ },
+ {
+  "word": "sweep",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "brush away dirt",
+  "pastForm": "swept",
+  "pastParticiple": "swept",
+  "usageNote": ""
+ },
+ {
+  "word": "swell",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "become bigger",
+  "pastForm": "swelled",
+  "pastParticiple": "swollen",
+  "usageNote": ""
+ },
+ {
+  "word": "swelled",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "swept",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "swim",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "move through the water",
+  "pastForm": "swam",
+  "pastParticiple": "swum",
+  "usageNote": ""
+ },
+ {
+  "word": "swing",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "move back and forward while hanging down",
+  "pastForm": "swung",
+  "pastParticiple": "swung",
+  "usageNote": ""
+ },
+ {
+  "word": "swollen",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "swoon",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "faint, fall down"
+ },
+ {
+  "word": "swore",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "sworn",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "swum",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "swung",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "take",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "get for oneself",
+  "pastForm": "took",
+  "pastParticiple": "taken",
+  "usageNote": ""
+ },
+ {
+  "word": "taken",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "taught",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "teach",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give lessons",
+  "pastForm": "taught",
+  "pastParticiple": "taught",
+  "usageNote": ""
+ },
+ {
+  "word": "tear",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "spoil paper or cloth by pulling it into pieces",
+  "pastForm": "tore",
+  "pastParticiple": "torn",
+  "usageNote": ""
+ },
+ {
+  "word": "tease",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make fun of"
+ },
+ {
+  "word": "tell",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "give information",
+  "pastForm": "told",
+  "pastParticiple": "told",
+  "usageNote": ""
+ },
+ {
+  "word": "temper",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "moderate, adjust (old-fashioned)"
+ },
+ {
+  "word": "test",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "try something out"
+ },
+ {
+  "word": "think",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": true,
+  "defin": "(1) have thoughts, (2) believe",
+  "pastForm": "thought",
+  "pastParticiple": "thought",
+  "usageNote": ""
+ },
+ {
+  "word": "thought",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "threaten",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "say things to make somebody afraid"
+ },
+ {
+  "word": "threw",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "thrive",
+  "strong": true,
+  "isBase": true,
+  "intransitive": true,
+  "stative": false,
+  "defin": "grow strongly and healthily",
+  "pastForm": "throve",
+  "pastParticiple": "thriven",
+  "usageNote": ""
+ },
+ {
+  "word": "thriven",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "throb",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "beat rhythmically"
+ },
+ {
+  "word": "throve",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "throw",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make something move through the air",
+  "pastForm": "threw",
+  "pastParticiple": "thrown",
+  "usageNote": ""
+ },
+ {
+  "word": "thrown",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "thrust",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "push something against or into an object",
+  "pastForm": "thrust",
+  "pastParticiple": "thrust",
+  "usageNote": ""
+ },
+ {
+  "word": "time",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "measure the time that something lasts"
+ },
+ {
+  "word": "tingle",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "have sharp feelings in one's skin"
+ },
+ {
+  "word": "told",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "took",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "tool",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "provide with tools",
+  "usageNote": "most common as a phrasal verb: tool up"
+ },
+ {
+  "word": "tore",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "torn",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "trace",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "follow, copy a drawing"
+ },
+ {
+  "word": "travel",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "make journeys, go"
+ },
+ {
+  "word": "tread",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "walk on",
+  "pastForm": "trod",
+  "pastParticiple": "trodden",
+  "usageNote": ""
+ },
+ {
+  "word": "trod",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "trodden",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "trust",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "believe in"
+ },
+ {
+  "word": "try",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) attempt, (2) judge in a court case, (3) taste or sample",
+  "usageNote": "followed by TO VERB in sense 1 and by VERB-ING in sense 3"
+ },
+ {
+  "word": "unbend",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be less formal",
+  "pastForm": "unbent",
+  "pastParticiple": "unbent",
+  "usageNote": ""
+ },
+ {
+  "word": "unbent",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "unbind",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "take the bindings off something",
+  "pastForm": "unbound",
+  "pastParticiple": "unbound",
+  "usageNote": ""
+ },
+ {
+  "word": "unbound",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "underbid",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make a bid which is too small",
+  "pastForm": "underbid",
+  "pastParticiple": "underbid",
+  "usageNote": ""
+ },
+ {
+  "word": "undercut",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "set a lower price than other people",
+  "pastForm": "undercut",
+  "pastParticiple": "undercut",
+  "usageNote": ""
+ },
+ {
+  "word": "undergo",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "suffer an experience",
+  "pastForm": "underwent",
+  "pastParticiple": "undergone",
+  "usageNote": ""
+ },
+ {
+  "word": "undergone",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "understand",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": true,
+  "defin": "know",
+  "pastForm": "understood",
+  "pastParticiple": "understood",
+  "usageNote": ""
+ },
+ {
+  "word": "understood",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "undertake",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "agree to do something",
+  "pastForm": "undertook",
+  "pastParticiple": "undertaken",
+  "usageNote": ""
+ },
+ {
+  "word": "undertaken",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "undertook",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "underwent",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "underwrite",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "promise to pay for something",
+  "pastForm": "underwrote",
+  "pastParticiple": "underwritten",
+  "usageNote": ""
+ },
+ {
+  "word": "underwritten",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "underwrote",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "undid",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "undo",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "change something back to the way it was before",
+  "pastForm": "undid",
+  "pastParticiple": "undone",
+  "usageNote": ""
+ },
+ {
+  "word": "undone",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "unfreeze",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "let ice melt",
+  "pastForm": "unfroze",
+  "pastParticiple": "unfrozen",
+  "usageNote": ""
+ },
+ {
+  "word": "unfroze",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "unfrozen",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "unload",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "take off cargo"
+ },
+ {
+  "word": "unmade",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "unmake",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "reverse the effects of something",
+  "pastForm": "unmade",
+  "pastParticiple": "unmade",
+  "usageNote": ""
+ },
+ {
+  "word": "unpin",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "take pins out of something"
+ },
+ {
+  "word": "unwind",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "relax",
+  "pastForm": "unwound",
+  "pastParticiple": "unwound",
+  "usageNote": ""
+ },
+ {
+  "word": "unwound",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "upheld",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "uphold",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be true to",
+  "pastForm": "uphelp",
+  "pastParticiple": "upheld",
+  "usageNote": ""
+ },
+ {
+  "word": "upset",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "knock something over, make somebody unhappy",
+  "pastForm": "upset",
+  "pastParticiple": "upset",
+  "usageNote": ""
+ },
+ {
+  "word": "use",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make use of"
+ },
+ {
+  "word": "validate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "find out if something is true"
+ },
+ {
+  "word": "value",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "think something is good, estimate the cost of something"
+ },
+ {
+  "word": "vanish",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "not be seen, diappear"
+ },
+ {
+  "word": "vanquish",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "beat, conquer"
+ },
+ {
+  "word": "vary",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "change frequently"
+ },
+ {
+  "word": "violate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "damage, do something illegal"
+ },
+ {
+  "word": "vitiate",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "weaken"
+ },
+ {
+  "word": "wail",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "cry continuously"
+ },
+ {
+  "word": "wait",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "stay, delay"
+ },
+ {
+  "word": "wake",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "stop sleeping",
+  "pastForm": "woke",
+  "pastParticiple": "woken",
+  "usageNote": ""
+ },
+ {
+  "word": "wakened",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "walk",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) move on one's feet, (2) take an animal out for exercise"
+ },
+ {
+  "word": "want",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "desire, lack"
+ },
+ {
+  "word": "wash",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make things clean, clean yourself with water"
+ },
+ {
+  "word": "waste",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "use up without benefit, use carelessly"
+ },
+ {
+  "word": "watch",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "look at"
+ },
+ {
+  "word": "weaken",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make weaker, become weaker"
+ },
+ {
+  "word": "wear",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "have clothes on",
+  "pastForm": "wore",
+  "pastParticiple": "worn",
+  "usageNote": ""
+ },
+ {
+  "word": "weave",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make cloth on a loom",
+  "pastForm": "wove",
+  "pastParticiple": "woven",
+  "usageNote": ""
+ },
+ {
+  "word": "wed",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "marry",
+  "pastForm": "wed",
+  "pastParticiple": "wed",
+  "usageNote": ""
+ },
+ {
+  "word": "weed",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "pick weeds from"
+ },
+ {
+  "word": "weep",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "cry when one is sad",
+  "pastForm": "wept",
+  "pastParticiple": "wept",
+  "usageNote": ""
+ },
+ {
+  "word": "welcome",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "be glad about somebody's arrival"
+ },
+ {
+  "word": "went",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "wept",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "wet",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put water on something",
+  "pastForm": "wet",
+  "pastParticiple": "wet",
+  "usageNote": ""
+ },
+ {
+  "word": "will",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "make something happen by wanting, bequeath"
+ },
+ {
+  "word": "wilt",
+  "strong": false,
+  "isBase": false,
+  "intransitive": true,
+  "stative": false,
+  "defin": "become weak"
+ },
+ {
+  "word": "win",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "gain money, succeed in war or sport",
+  "pastForm": "won",
+  "pastParticiple": "won",
+  "usageNote": ""
+ },
+ {
+  "word": "wind",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(strong) put thread round something, (weak) hurt by running",
+  "pastForm": "wound",
+  "pastParticiple": "wound",
+  "usageNote": ""
+ },
+ {
+  "word": "withdraw",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "take back",
+  "pastForm": "withdrew",
+  "pastParticiple": "withdrawn",
+  "usageNote": ""
+ },
+ {
+  "word": "withdrawn",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "withdrew",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "withheld",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "withhold",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "not give",
+  "pastForm": "withheld",
+  "pastParticiple": "withheld",
+  "usageNote": ""
+ },
+ {
+  "word": "withstand",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "put up with",
+  "pastForm": "withstood",
+  "pastParticiple": "withstood",
+  "usageNote": ""
+ },
+ {
+  "word": "withstood",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "woke",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "won",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "wonder",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "think about, ask questions"
+ },
+ {
+  "word": "wore",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "work",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "labour, be successful"
+ },
+ {
+  "word": "work",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "(1) do labour, (2) be successful"
+ },
+ {
+  "word": "worn",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "wound",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "injure in war"
+ },
+ {
+  "word": "wove",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "woven",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "wring",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "squeeze water out of clothes",
+  "pastForm": "wrung",
+  "pastParticiple": "wrung",
+  "usageNote": ""
+ },
+ {
+  "word": "write",
+  "strong": true,
+  "isBase": true,
+  "intransitive": false,
+  "stative": false,
+  "defin": "communicate with words on paper",
+  "pastForm": "wrote",
+  "pastParticiple": "written",
+  "usageNote": ""
+ },
+ {
+  "word": "written",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "wrote",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "wrung",
+  "strong": true,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": ""
+ },
+ {
+  "word": "yawn",
+  "strong": false,
+  "isBase": false,
+  "intransitive": false,
+  "stative": false,
+  "defin": "open one's mouth wide"
+ }
+]

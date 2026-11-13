@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SORTSET</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6fb;
+    margin: 0;
+    padding: 30px 16px 60px 16px;
+    text-align: center;
+    color: #222;
+  }
+  h1 { margin-bottom: 4px; }
+  .byline { color: #555; margin-top: 0; }
+  .note {
+    max-width: 640px;
+    margin: 18px auto 26px auto;
+    background: #fff8dc;
+    border: 2px solid #3366cc;
+    border-radius: 8px;
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 0.95em;
+    line-height: 1.5em;
+  }
+
+  select, button {
+    font-size: 1em;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: 2px solid #3366cc;
+    background: #fff;
+    color: #3366cc;
+    cursor: pointer;
+  }
+  button:hover, select:hover { background: #eaf0fc; }
+  button.primary { background: #3366cc; color: #fff; }
+  button.primary:hover { background: #254a99; }
+  button:disabled { opacity: 0.45; cursor: default; }
+
+  #topicScreen { margin-top: 20px; }
+  #topicScreen select { min-width: 260px; }
+
+  #gameScreen { display: none; max-width: 900px; margin: 0 auto; }
+
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 780px;
+    margin: 0 auto 18px auto;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+  }
+  .topbar .box {
+    border: 2px solid #1c2331;
+    border-radius: 6px;
+    padding: 8px 16px;
+    background: #fff;
+  }
+  #wordBox { font-size: 1.2em; }
+
+  .columns {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .column {
+    flex: 1 1 220px;
+    max-width: 260px;
+    min-height: 300px;
+    background: #fff;
+    border: 3px solid #b9c4de;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    text-align: left;
+  }
+  .column.selected {
+    border-color: #c0392b;
+    box-shadow: 0 0 0 3px rgba(192,57,43,0.25);
+  }
+  .col-heading {
+    font-weight: bold;
+    text-align: center;
+    color: #3366cc;
+    border-bottom: 2px solid #3366cc;
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+    font-family: "Courier New", monospace;
+  }
+  .col-item {
+    font-family: "Courier New", monospace;
+    font-size: 0.92em;
+    padding: 2px 0;
+    color: #1c2331;
+  }
+  .col-preview {
+    font-family: "Courier New", monospace;
+    font-size: 0.92em;
+    padding: 2px 0;
+    color: #c0392b;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+  .col-preview.correct { color: #1a7a1a; }
+
+  .column.shake { animation: shake 0.3s; }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  .controls-hint {
+    margin-top: 16px;
+    font-size: 0.9em;
+    color: #555;
+  }
+
+  .fkeys {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(28,35,49,0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+  }
+  .overlay-box {
+    background: #fff;
+    border-radius: 10px;
+    padding: 24px 28px;
+    max-width: 800px;
+    max-height: 85vh;
+    overflow-y: auto;
+    text-align: left;
+  }
+  .overlay-box h2 {
+    margin-top: 0;
+    color: #3366cc;
+  }
+  .overlay-columns {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .overlay-columns .column { cursor: default; min-height: auto; }
+  .overlay-buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+  .summary-line { margin: 8px 0; font-size: 1.05em; }
+  .wrong-list { color: #c0392b; }
+</style>
+ <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+  </script>   
+</head>
+</head>
+<body>
+
+  <h1>SORTSET</h1>
+
+  <div class="note">
+    Words appear one at a time. Move the highlight between the three columns with
+    <strong>SPACE</strong>, the arrow keys, or by clicking, then press <strong>ENTER</strong>
+    (or click again) to place the word. Get it right and it joins the list in blue; get it
+    wrong and you'll hear a beep and can try again. 24 words make up a round &mdash; see how
+    fast you can finish.
+  </div>
+
+  <div id="topicScreen">
+    <label for="topicSelect">Choose a topic:</label><br><br>
+    <select id="topicSelect"></select>
+    <button id="startBtn" class="primary">Start</button>
+    <p style="margin-top:20px;"><a href="../textgames.html">&larr; Back to main page</a></p>
+  </div>
+
+  <div id="gameScreen">
+    <div class="topbar">
+      <div id="timeBox" class="box">Time: 0.00</div>
+      <div id="wordBox" class="box">Word 1: &nbsp;</div>
+      <div id="scoreBox" class="box">Score: 100%</div>
+    </div>
+
+    <div class="columns" id="columns"></div>
+
+    <div class="controls-hint">SPACE / arrows / click = MOVE &nbsp;&nbsp; ENTER / click again = CHOOSE</div>
+
+    <div class="fkeys">
+      <button id="f1Btn">Help</button>
+      <button id="f9Btn">Sound off</button>
+      <button id="f10Btn">Quit</button>
+    </div>
+  </div>
+
+  <div id="helpOverlay" class="overlay" style="display:none;">
+    <div class="overlay-box">
+      <h2>All the words in this round</h2>
+      <div class="overlay-columns" id="helpColumns"></div>
+      <div class="overlay-buttons">
+        <button id="helpContinueBtn" class="primary">Continue</button>
+        <button id="helpQuitBtn">Quit round</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="summaryOverlay" class="overlay" style="display:none;">
+    <div class="overlay-box">
+      <h2>Round finished!</h2>
+      <div class="summary-line" id="summaryTime"></div>
+      <div class="summary-line" id="summaryScore"></div>
+      <div class="summary-line wrong-list" id="summaryWrong"></div>
+      <div class="overlay-buttons">
+        <button id="playAgainBtn" class="primary">Play again</button>
+        <button id="chooseTopicBtn">Choose another topic</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+const SORTSET_DATA = [{"title":"Part of speech","lists":[{"heading":"VERB ONLY","words":["DECIDE","ENJOY","EXAMINE","TEACH","REVEAL","EXPECT","PROTECT","INTERFERE","CHOOSE","ASK","HARDEN","PREFER","ALTER","DEFINE","SHELVE","ADD"],"answers":["TO DECIDE","TO ENJOY","TO EXAMINE","TO TEACH","TO REVEAL","TO EXPECT","TO PROTECT","TO INTERFERE","TO CHOOSE","TO ASK","TO HARDEN","TO PREFER","TO ALTER","TO DEFINE","TO SHELVE","TO ADD"]},{"heading":"NOUN ONLY","words":["TYPEWRITER","FOOD","GIRL","POLICEMAN","SUITCASE","CUCUMBER","EXPRESSION","MULTITUDE","TERROR","OPPORTUNITY","SUSPICION","HARDNESS","ALLOWANCE","BELIEF","DISEASE","PRISON"],"answers":["A TYPEWRITER","FOOD","A GIRL","A POLICEMAN","A SUITCASE","A CUCUMBER","AN EXPRESSION","A MULTITUDE","TERROR","AN OPPORTUNITY","SUSPICION","HARDNESS","AN ALLOWANCE","A BELIEF","A DISEASE","A PRISON"]},{"heading":"NOUN OR VERB","words":["RUN","BOOK","HEAT","COPY","QUESTION","FORM","HIDE","THROW","PROFIT","CRY","PLAY","WORK","USE","EASE","OBJECT","RECORD"],"answers":["A RUN/TO RUN","A BOOK/TO BOOK","A HEAT/TO HEAT","A COPY/TO COPY","A QUESTION/TO Q","A FORM/TO FORM","A HIDE/TO HIDE","A THROW/TO THROW","PROFIT/TO PROFIT","A CRY/TO CRY","A PLAY/TO PLAY","SOME WORK/TO WORK","A USE/TO USE","EASE/TO EASE","AN OBJECT/TO OBJECT","A RECORD/TO RECORD"]},{"heading":"ADJECTIVE ONLY","words":["PRETTY","STRONG","LOUD","EXCITING","INTERESTING","DREADFUL","TRUE","PLEASANT","HARD","BIG"],"answers":["PRETTY","STRONG","LOUD","EXCITING","INTERESTING","DREADFUL","TRUE","PLEASANT","HARD","BIG"]},{"heading":"NOUN OR ADJECTIVE","words":["MUSICAL","MINUTE","EXPERT","PAST","FUTURE","BASIC","SWIFT","PLAIN"],"answers":["MUSICAL","MINUTE","EXPERT","PAST","FUTURE","BASIC","SWIFT","PLAIN"]},{"heading":"NOUN/VERB/ADJECTIVE","words":["FINE","SHORT","BLACK","PROMPT","FAST","SLICK","ROUND","QUARTER","SECOND"],"answers":["FINE","SHORT","BLACK","PROMPT","FAST","SLICK","ROUND","QUARTER","SECOND"]}]},{"title":"Count v. non-count","lists":[{"heading":"COUNT ONLY","words":["TREE","PIECE","CHAIR","PILLOW","CAR","BOOK","SHIRT","WINDOW","VILLAGE","GHOST","HONEYMOON","HOTEL","ITEM","HORSE","PENCIL","TEACHER"],"answers":["A TREE","A PIECE","A CHAIR","A PILLOW","A CAR","A BOOK","A SHIRT","A WINDOW","A VILLAGE","A GHOST","A HONEYMOON","A(N) HOTEL","AN ITEM","A HORSE","A PENCIL","A TEACHER"]},{"heading":"NON-COUNT ONLY","words":["EQUIPMENT","HASTE","LUCK","COURAGE","HAPPINESS","FAME","THIRST","ANGER","MUSIC","COOKERY","FURNITURE","INFORMATION","MONEY","NEWS","MAINTENANCE","DIRT"],"answers":["EQUIPMENT","HASTE","LUCK","COURAGE","HAPPINESS","FAME","THIRST","ANGER","MUSIC","COOKERY","FURNITURE","INFORMATION","MONEY","NEWS","MAINTENANCE","DIRT"]},{"heading":"COUNT/NON-COUNT","words":["TRUTH","TIME","TRUST","CAKE","BEAUTY","TRADE","INDUSTRY","PAPER","EXERCISE","HONOUR","JOY","PAIN","PLAY","WORK","SPACE","STONE"],"answers":["TRUTH/A TRUTH","TIME/A TIME","TRUST/A TRUST","CAKE/A CAKE","BEAUTY/A BEAUTY","TRADE/A TRADE","INDUSTRY/AN INDUSTRY","PAPER/A PAPER","EXERCISE/AN EXERCISE","HONOUR/AN HONOUR","JOY/A JOY","PAIN/A PAIN","PLAY/A PLAY","WORK/A WORK","SPACE/A SPACE","STONE/A STONE"]},{"heading":"PROPER NOUN","words":["SCOTLAND","HERCULES","NAPOLEON","WHITEHALL","BERLIN","JAMES BOND","CHARLOTTE","IBM"],"answers":["SCOTLAND","HERCULES","NAPOLEON","WHITEHALL","BERLIN","JAMES BOND","CHARLOTTE","IBM"]}]},{"title":"Singular and plural","lists":[{"heading":"+ S","words":["HAT","BIRD","TREE","HOUSE","TROLLEY","GUY","LOCH","SIGH","TOY","DOOR","PLACE","ROOF","TROUGH"],"answers":["HATS","BIRDS","TREES","HOUSES","TROLLEYS","GUYS","LOCHS","SIGHS","TOYS","DOORS","PLACES","ROOFS","TROUGHS"]},{"heading":"+ ES","words":["CHURCH","MARSH","WISH","BUSH","CLUTCH","LATCH","FISH","BUS","MESS","GAS","FUSS","COMPASS","DISH","CROSS"],"answers":["CHURCHES","MARSHES","WISHES","BUSHES","CLUTCHES","LATCHES","FISHES","BUSES","MESSES","GASES","FUSSES","COMPASSES","DISHES","CROSSES"]},{"heading":"Y = IES","words":["SKY","FAIRY","TRY","CANDY","SPY","GULLY","FURY","STORY","DEITY","PARTY","PIGSTY"],"answers":["SKIES","FAIRIES","TRIES","CANDIES","SPIES","GULLIES","FURIES","STORIES","DEITIES","PARTIES","PIGSTIES"]},{"heading":"IRREGULAR","words":["GOOSE","MAN","WOMAN","CHILD","CHAIRMAN","FOOT","MOUSE","CRISIS","TOOTH","OX","LOUSE","NUCLEUS","MAESTRO","GRANDCHILD","POSTWOMAN"],"answers":["GEESE","MEN","WOMEN","CHILDREN","CHAIRMEN","FEET","MICE","CRISES","TEETH","OXEN","LICE","NUCLEI","MAESTRI","GRANDCHILDREN","POSTWOMEN"]},{"heading":"ALREADY PLURAL","words":["CATTLE","POLICE","SCISSORS","TROUSERS","CRITERIA","STIGMATA","PEOPLE","DATA","ALUMNI","NEBULAE","NEUROSES","TEMPI","BACTERIA"],"answers":["CATTLE","POLICE","SCISSORS","TROUSERS","CRITERIA","STIGMATA","PEOPLE","DATA","ALUMNI","NEBULAE","NEUROSES","TEMPI","BACTERIA"]},{"heading":"NO CHANGE","words":["SHEEP","FISH","DEER","BISON","DOGFISH","REINDEER","CATFISH","BUFFALO"],"answers":["SHEEP","FISH","DEER","BISON","DOGFISH","REINDEER","CATFISH","BUFFALO"]}]},{"title":"Male and female","lists":[{"heading":"FEMALE ONLY","words":["BRIDE","GIRL","ACTRESS","WIFE","PRINCESS","DAUGHTER","NIECE","AUNT","SISTER","MOTHER","LADY","WOMAN","QUEEN","FIANCEE","NUN","GRANDMOTHER"],"answers":["BRIDE","GIRL","ACTRESS","WIFE","PRINCESS","DAUGHTER","NIECE","AUNT","SISTER","MOTHER","LADY","WOMAN","QUEEN","FIANCEE","NUN","GRANDMOTHER"]},{"heading":"MALE ONLY","words":["HUSBAND","FATHER","UNCLE","SON","NEPHEW","BRIDEGROOM","MAN","BOY","BROTHER","GENTLEMAN","GRANDFATHER","FIANCE","MONK","KING","PRINCE"],"answers":["HUSBAND","FATHER","UNCLE","SON","NEPHEW","BRIDEGROOM","MAN","BOY","BROTHER","GENTLEMAN","GRANDFATHER","FIANCE","MONK","KING","PRINCE"]},{"heading":"MALE OR FEMALE","words":["DOCTOR","NURSE","COUSIN","PARENT","CHILD","SPOUSE","PRESIDENT","PERSON","OFFICER","TEACHER","PARTNER","BACHELOR","DRIVER","CHEF","POET","PILOT"],"answers":["DOCTOR","NURSE","COUSIN","PARENT","CHILD","SPOUSE","PRESIDENT","PERSON","OFFICER","TEACHER","PARTNER","BACHELOR","DRIVER","CHEF","POET","PILOT"]}]},{"title":"Prefixes","lists":[{"heading":"CON-/COM-","words":["-PROMISE","-CERT","-TRARY","-PLICATED","-SOLATION","-CENTRATE","-PARISON","-BINE","-PUTER","-GLOMERATE","-TROL","-DOLENCE"],"answers":["COMPROMISE","CONCERT","CONTRARY","COMPLICATED","CONSOLATION","CONCENTRATE","COMPARISON","COMBINE","COMPUTER","CONGLOMERATE","CONTROL","CONDOLENCE"]},{"heading":"RE-","words":["-COMMEND","-FUTE","-CLINE","-COGNISE","-VISE","-COLLECT","-DRESS","-FLECTION","-MARK","-CITE","-GENERATE","-STORE","-CRUIT"],"answers":["RECOMMEND","REFUTE","RECLINE","RECOGNISE","REVISE","RECOLLECT","REDRESS","REFLECTION","REMARK","RECITE","REGENERATE","RESTORE","RECRUIT"]},{"heading":"PER-","words":["-COLATE","-FORMANCE","-ENNIAL","-FECT","-MANENT","-PETRATE","-PLEXED","-USING","-SISTENCE","-MEATE"],"answers":["PERCOLATE","PERFORMANCE","PERENNIAL","PERFECT","PERMANENT","PERPETRATE","PERPLEXED","PERUSING","PERSISTENCE","PERMEATE"]},{"heading":"TRANS-","words":["-CENDENTAL","-IT","-GRESSOR","-ATLANTIC","-FIGURE","-ITION","-MIGRATION","-PARENT","-PLANT","-PORTATION"],"answers":["TRANSCENDENTAL","TRANSIT","TRANSGRESSOR","TRANSATLANTIC","TRANSFIGURE","TRANSITION","TRANSMIGRATION","TRANSPARENT","TRANSPLANT","TRANSPORTATION"]},{"heading":"DIS-","words":["-TRESS","-COVER","-PLAY","-TURB","-OWN","-MAY","-HEVELLED","-TRAUGHT","-POSAL","-CONCERTED"],"answers":["DISTRESS","DISCOVER","DISPLAY","DISTURB","DISOWN","DISMAY","DISHEVELLED","DISTRAUGHT","DISPOSAL","DISCONCERTED"]}]},{"title":"Suffixes","lists":[{"heading":"-NESS","words":["HAPPY","SAD","BITTER","MANLY","HARD","ROUND","LARGE","GREAT","SHARP","MAD","HOLY"],"answers":["HAPPINESS","SADNESS","BITTERNESS","MANLINESS","HARDNESS","ROUNDNESS","LARGENESS","GREATNESS","SHARPNESS","MADNESS","HOLINESS"]},{"heading":"-TY","words":["CERTAIN","POOR","EXTREME","INFIRM","INANE","PROFANE","ABLE","POSSIBLE","STUPID"],"answers":["CERTAINTY","POVERTY","EXTREMITY","INFIRMITY","INANITY","PROFANITY","ABILITY","POSSIBILITY","STUPIDITY"]},{"heading":"-TION / -SION","words":["DECEIVE","CREATE","OPPOSE","INFORM","EXCEPT","PREVENT","SUCK","RESTORE","PROVIDE","ADHERE","DISPOSE"],"answers":["DECEPTION","CREATION","OPPOSITION","INFORMATION","EXCEPTION","PREVENTION","SUCTION","RESTORATION","PROVISION","ADHESION","DISPOSITION"]},{"heading":"-MENT","words":["PROCURE","AGREE","DISCERN","PREFER","MANAGE","INTERN","DEPLOY","ATTAIN"],"answers":["PROCUREMENT","AGREEMENT","DISCERNMENT","PREFERMENT","MANAGEMENT","INTERNMENT","DEPLOYMENT","ATTAINMENT"]},{"heading":"-HOOD","words":["ADULT","MAN","CHILD","BROTHER","NEIGHBOUR","NATION","PRIEST","LIVELY"],"answers":["ADULTHOOD","MANHOOD","CHILDHOOD","BROTHERHOOD","NEIGHBOURHOOD","NATIONHOOD","PRIESTHOOD","LIVELIHOOD"]}]},{"title":"Negatives","lists":[{"heading":"IM-","words":["...POSSIBLE","...PENITENT","...MATURE","...MOBILE","...MODEST","...PASSIVE","...PERFECT","...PRUDENT","...PURE","...PARTIAL","...BALANCE"],"answers":["IMPOSSIBLE","IMPENITENT","IMMATURE","IMMOBILE","IMMODEST","IMPASSIVE","IMPERFECT","IMPRUDENT","IMPURE","IMPARTIAL","IMBALANCE"]},{"heading":"IN-","words":["...ADEQUATE","...COHERENT","...EDIBLE","...ELEGANT","...FAMOUS","...FORMAL","...NUMERATE","...SECURE","...SOLUBLE","...EXPLICABLE","...SENSIBLE"],"answers":["INADEQUATE","INCOHERENT","INEDIBLE","INELEGANT","INFAMOUS","INFORMAL","INNUMERATE","INSECURE","INSOLUBLE","INEXPLICABLE","INSENSIBLE"]},{"heading":"UN-","words":["...DESERVED","...HAPPY","...MARKED","...PLEASANT","...OFFICIAL","...POPULAR","...SEEMLY","...SOCIABLE","...STEADY","...WISE","...YIELDING","...DAMAGED","...TIMELY","...BALANCED"],"answers":["UNDESERVED","UNHAPPY","UNMARKED","UNPLEASANT","UNOFFICIAL","UNPOPULAR","UNSEEMLY","UNSOCIABLE","UNSTEADY","UNWISE","UNYIELDING","UNDAMAGED","UNTIMELY","UNBALANCED"]},{"heading":"NON-","words":["...PAREIL","...DESCRIPT","...CHALANT","...ENTITY","...EXISTENT","...INTERVENTIONIST","...MEMBER","...PLUS","...RESIDENT","...SENSE","...SEQUITUR"],"answers":["NONPAREIL","NONDESCRIPT","NONCHALANT","NONENTITY","NON-EXISTENT","NON-INTERVENTIONIST","NON MEMBER","NONPLUS","NON-RESIDENT","NONSENSE","NON SEQUITUR"]}]},{"title":"Verb forms","lists":[{"heading":"REGULAR","words":["WALK","TRY","ASK","USE","LOOK","PLEASE","COOK","LACK","REACH","EXPLAIN","PLAY","WORK","THRILL","WANT","DECIDE","PASS"],"answers":["WALKED","TRIED","ASKED","USED","LOOKED","PLEASED","COOKED","LACKED","REACHED","EXPLAINED","PLAYED","WORKED","THRILLED","WANTED","DECIDED","PASSED"]},{"heading":"VOWEL CHANGE ONLY","words":["SING","SPIT","BEGIN","SHRINK","SWIM","DIG","DRINK","SHINE","FIND","SPIN","BECOME","RING","RUN","SINK","STING","SPRING"],"answers":["SANG/SUNG","SPAT/SPAT","BEGAN/BEGUN","SHRANK/SHRUNK","SWAM/SWUM","DUG/DUG","DRANK/DRUNK","SHONE/SHONE","FOUND/FOUND","SPAN/SPUN","BECAME/BECOME","RANG/RUNG","RAN/RUN","SANK/SUNK","STUNG/STUNG","SPRANG/SPRUNG"]},{"heading":"-EN PAST PARTICIPLE","words":["FORGET","BREAK","TAKE","SHAKE","FREEZE","SEE","GIVE","BITE","FALL","SPEAK","ARISE","BEAT","CHOOSE","DRIVE","EAT","FORGIVE"],"answers":["FORGOT/FORGOTTEN","BROKE/BROKEN","TOOK/TAKEN","SHOOK/SHAKEN","FROZE/FROZEN","SAW/SEEN","GAVE/GIVEN","BIT/BITTEN","FELL/FALLEN","SPOKE/SPOKEN","AROSE/ARISEN","BEAT/BEATEN","CHOSE/CHOSEN","DROVE/DRIVEN","ATE/EATEN","FORGAVE/FORGIVEN"]},{"heading":"-GHT.IN PAST","words":["FIGHT","BUY","TEACH","CATCH","SEEK","WREAK","THINK","BRING","BESEECH"],"answers":["FOUGHT","BOUGHT","TAUGHT","CAUGHT","SOUGHT","WROUGHT","THOUGHT","BROUGHT","BESOUGHT"]},{"heading":"NO CHANGE","words":["PUT","COST","CUT","HIT","HURT","LET","SET","SHUT","READ","SPLIT","SPREAD","BURST","BROADCAST","SHED","BET"],"answers":["PUT","COST","CUT","HIT","HURT","LET","SET","SHUT","READ (diff. pron.)","SPLIT","SPREAD","BURST","BROADCAST","SHED","BET"]},{"heading":"-T IN PAST","words":["BEND","BUILD","SEND","CREEP","DEAL","FEEL","KEEP","WEEP","LOSE","MEAN","SLEEP","LEAVE","LEND"],"answers":["BENT","BUILT","SENT","CREPT","DEALT","FELT","KEPT","WEPT","LOST","MEANT","SLEPT","LEFT","LENT"]},{"heading":"-T IN PAST or WEAK","words":["BURN","LEARN","SPOIL","SMELL","SPELL","SPILL","MISSPELL","RELEARN","BLESS"],"answers":["BURNT/BURNED","LEARNT/LEARNED","SPOILT/SPOILED","SMELT/SMELLED","SPELT/SPELLED","SPILT/SPILLED","MISSPELT/MISSPELLED","RELEARNT/RELEARNED","BLEST/BLESSED"]}]},{"title":"Verb usage","lists":[{"heading":"+ TO verb","words":["AGREE","EXPECT","DECIDE","TELL","WISH","DEMAND","HAPPEN","REFUSE","HOPE","FAIL","OFFER","MEAN","PRETEND","SEEM","MANAGE","HAVE"],"answers":["AGREE TO GO","EXPECT TO GO","DECIDE TO GO","TELL HIM TO GO","WISH TO GO","DEMAND TO GO","HAPPEN TO GO","REFUSE TO GO","HOPE TO GO","FAIL TO GO","OFFER TO GO","MEAN TO GO","PRETEND TO GO","SEEM TO GO","MANAGE TO GO","HAVE TO GO"]},{"heading":"+ plain verb","words":["MUST","SHALL","WILL","CAN","COULD","MAY","MIGHT","SHOULD","WOULD","MAKE","LET","HAD BETTER","DON'T"],"answers":["MUST GO","SHALL GO","WILL GO","CAN GO","COULD GO","MAY GO","MIGHT GO","SHOULD GO","WOULD GO","MAKE HIM GO","LET ME GO","HAD BETTER GO","DON'T GO"]},{"heading":"+ verbING / TO verb","words":["LIKE","PREFER","START","STOP","BEGIN","CONTINUE","REMEMBER","TRY","ADVISE","CEASE","FORGET","PROPOSE","ALLOW"],"answers":["LIKE GOING/TO GO","PREFER GOING/TO GO","START GOING/TO GO","STOP GOING/TO GO","BEGIN GOING/TO GO","CONTINUE GOING/TO GO","REMEMBER GOING/TO GO","TRY GOING/ TO GO","ADVISE GOING/X TO GO","CEASE GOING/TO GO","FORGET GOING/TO GO","PROPOSE GOING/TO GO","ALLOW GOING/X TO GO"]},{"heading":"+ verbING","words":["ENJOY","FINISH","INSIST ON","LOOK FORWARD TO","LOOK LIKE","DENY","ADORE","KEEP","RESENT","REGRET","RESUME","RISK","SUGGEST","CAN'T STAND","AVOID","CONTEMPLATE"],"answers":["ENJOY GOING","FINISH GOING","INSIST ON GOING","LOOK FWD TO GOING","LOOK LIKE GOING","DENY GOING","ADORE GOING","KEEP GOING","RESENT GOING","REGRET GOING","RESUME GOING","RISK GOING","SUGGEST GOING","CAN'T STAND GOING","AVOID GOING","CONTEMPLATE GOING"]}]},{"title":"Verb idioms","lists":[{"heading":"verb FOR","words":["SEARCH","DEMAND","WAIT TO GET MORE","EXPECT","HAVE HOPES OF","WANT VERY MUCH","MAKE ALLOWANCES","MAKE AN EFFORT"],"answers":["LOOK FOR","ASK FOR","HOLD OUT FOR","WAIT FOR","HOPE FOR","LONG FOR","ALLOW FOR","GO FOR"]},{"heading":"verb UP","words":["CONSULT A BOOK","FINISH EATING","ARRIVE","ACCEPT AN OFFER","MAKE FAST","MENTION","DESTROY A LETTER","INCREASE","COMPENSATE","BE SICK","DELAY","HAPPEN","STOP (SMOKING)","DISINTEGRATE","DISTURB"],"answers":["LOOK UP","EAT UP","TURN UP","TAKE UP","TIE UP","BRING UP","TEAR UP","GO UP","MAKE UP","THROW UP","HOLD UP","COME UP","GIVE UP","BREAK UP","SHAKE UP"]},{"heading":"verb OUT","words":["EXTRACT","DISCOVER A FACT","SUCCEED (of people)","ANNOY","EXTINGUISH A FLAME","BE CAREFUL","ESCAPE","EMERGE","DISCARD","BE PROMINENT"],"answers":["TAKE OUT","FIND OUT","MAKE OUT","PUT OUT","BLOW OUT","LOOK OUT","GET OUT","COME OUT","THROW OUT","STAND OUT"]},{"heading":"verb OFF","words":["REMOVE","SUCCEED (of events)","RUN AWAY","STOP LISTENING","POSTPONE","START","LEAVE THE HIGHWAY","AVOID A FOLLOWER"],"answers":["TAKE OFF","COME OFF","MAKE OFF","SWITCH OFF","PUT OFF","SET OFF","TURN OFF","SHAKE OFF"]}]},{"title":"Descriptive adjectives","lists":[{"heading":"SKIN","words":["SALLOW","SWARTHY","PALE","BLOTCHY","ALBINO","DARK","RUDDY","PEARLY"],"answers":["SALLOW","SWARTHY","PALE","BLOTCHY","ALBINO","DARK","RUDDY","PEARLY"]},{"heading":"HAIR","words":["BLONDE","BRUNETTE","BALD","FAIR","RED","AUBURN","WAVY","CURLY","PLAITED","LANK"],"answers":["BLONDE","BRUNETTE","BALD","FAIR","RED","AUBURN","WAVY","CURLY","PLAITED","LANK"]},{"heading":"BODY","words":["STOCKY","THIN","FAT","PLUMP","LANKY","ROTUND","DUMPY","SKINNY","STURDY","HEAVY"],"answers":["STOCKY","THIN","FAT","PLUMP","LANKY","ROTUND","DUMPY","SKINNY","STURDY","HEAVY"]},{"heading":"VOICE","words":["HARSH","SOFT","GENTLE","LOUD","GUTTURAL","HUSHED","WHISPERING","SWEET"],"answers":["HARSH","SOFT","GENTLE","LOUD","GUTTURAL","HUSHED","WHISPERING","SWEET"]}]},{"title":"Measurement","lists":[{"heading":"TIME","words":["HOUR","MINUTE","SECOND","DAY","WEEK","MONTH","YEAR","CENTURY","FORTNIGHT"],"answers":["HOUR","MINUTE","SECOND","DAY","WEEK","MONTH","YEAR","CENTURY","FORTNIGHT"]},{"heading":"DISTANCE","words":["YARD","FOOT","INCH","MILE","FURLONG","METRE","MILLIMETRE","KILOMETRE","CENTIMETRE","LEAGUE"],"answers":["YARD","FOOT","INCH","MILE","FURLONG","METRE","MILLIMETRE","KILOMETRE","CENTIMETRE","LEAGUE"]},{"heading":"WEIGHT AND VOLUME","words":["OUNCE","POUND","TON","HUNDREDWEIGHT","STONE","KILOGRAM","GRAM","PINT","QUART","LITRE","GALLON"],"answers":["OUNCE","POUND","TON","HUNDREDWEIGHT","STONE","KILOGRAM","GRAM","PINT","QUART","LITRE","GALLON"]}]},{"title":"Unrounded vowels","lists":[{"heading":"Vowel sound of TAKE","words":["SNAKE","LATE","SHEIKH","STEAK","LAME","PAIN","PLAY","TRAIN","BREAK","FAKE","GREY","MAIN","REIN"],"answers":["SNAKE","LATE","SHEIKH","STEAK","LAKE","PAIN","PLAY","TRAIN","BREAK","FAKE","GREY","MAIN","REIN"]},{"heading":"Vowel sound of ME","words":["BEAK","WE","SEE","HEAP","KEY","SLEEK","CHIC","GREEK","PIQUE","FREEZE","DREAM","QUAY"],"answers":["BEAK","WE","SEE","HEAP","KEY","SLEEK","CHIC","GREEK","PIQUE","FREEZE","DREAM","QUAY"]},{"heading":"Vowel sound of TEN","words":["TREK","BREAD","TREAD","WRECK","MEANT","DRESS","GUESS","PRESSED","FRIEND","SWELL"],"answers":["TREK","BREAD","TREAD","WRECK","MEANT","DRESS","GUESS","PRESSED","FRIEND","SWELL"]},{"heading":"Vowel sound of FIT","words":["BUILD","RING","GIVE","WOMEN","BRISK","HYMN","LINK","RIM"],"answers":["BUILD","RING","GIVE","WOMEN","BRISK","HYMN","LINK","RIM"]},{"heading":"Vowel sound of MY","words":["FIGHT","BUY","TIME","WILD","RIGHT","DINE","CRIME","SLY","SPY","FRIED"],"answers":["FIGHT","BUY","TIME","WILD","RIGHT","DINE","CRIME","SLY","SPY","FRIED"]},{"heading":"Vowel sound of HUT","words":["CUP","COME","SOME","MUST","DOUBLE","BUBBLE","RUBBER","LOVER","SHUTTLE","BUT"],"answers":["CUP","COME","SOME","MUST","DOUBLE","BUBBLE","RUBBER","LOVER","SHUTTLE","BUT"]},{"heading":"Vowel sound of HAT","words":["MAN","LADDER","PLAID","SHAMBLES","HAVE","LACK","TANK","RABBLE"],"answers":["MAN","LADDER","PLAID","SHAMBLES","HAVE","LACK","TANK","RABBLE"]}]},{"title":"Back vowels","lists":[{"heading":"Sound of COURT","words":["SHORT","BOUGHT","LAWN","OUGHT","AUGUST","AUDIENCE","AUTHOR","LORD","SWORD"],"answers":["SHORT","BOUGHT","LAWN","OUGHT","AUGUST","AUDIENCE","AUTHOR","LORD","SWORD"]},{"heading":"Sound of FOX","words":["LONG","BOX","SHOCK","TONG","COT","BOTHER","HORRID","PORRIDGE","TORRID"],"answers":["LONG","BOX","SHOCK","TONG","COT","BOTHER","HORRID","PORRIDGE","TORRID"]},{"heading":"Sound of FOOL","words":["TOOL","POOL","NOODLES","TUNE","USE","GOOSE","ROUGE","RUDE"],"answers":["TOOL","POOL","NOODLES","TUNE","USE","GOOSE","ROUGE","RUDE"]},{"heading":"Sound of HARD","words":["LARGE","FATHER","TASK","AUNT","PARLOUR","MARTYR","HEART","PAR"],"answers":["LARGE","FATHER","TASK","AUNT","PARLOUR","MARTYR","HEART","PAR"]}]},{"title":"Pronunciation of -ED","lists":[{"heading":"/id/","words":["sorted","wicked","long-legged","painted","wanted","bounded","counted","sacred"],"answers":["sorted","wicked","long-legged","painted","wanted","bounded","counted","sacred"]},{"heading":"/t/","words":["picked","sacked","passed","wished","sucked","packed","stuffed","staffed","trapped","stamped"],"answers":["picked","sacked","passed","wished","sucked","packed","stuffed","staffed","trapped","stamped"]},{"heading":"/d/","words":["banged","sobbed","sagged","robed","estranged","edged","timed","hummed","deemed","fanned","tuned"],"answers":["banged","sobbed","sagged","robed","estranged","edged","timed","hummed","deemed","fanned","tuned"]}]},{"title":"Pronunciation of -S endings","lists":[{"heading":"/s/","words":["wants","likes","picks","steps","lips","stamps","asks","puts","breaths"],"answers":["wants","likes","picks","steps","lips","stamps","asks","puts","breaths"]},{"heading":"/iz/","words":["chooses","wishes","edges","catches","watches","hisses","loses","gazes"],"answers":["chooses","wishes","edges","catches","watches","hisses","loses","gazes"]},{"heading":"/z/","words":["lands","decides","colleagues","rubs","prays","cows","knives","lives","logs","breathes"],"answers":["lands","decides","colleagues","rubs","prays","cows","knives","lives","logs","breathes"]}]},{"title":"Pronunciation of NG","lists":[{"heading":"like SING","words":["YOUNG","BRINGING","LONG","SINGER","HANGER","RINGER","WINGER","WRONG","HANG"],"answers":["YOUNG","BRINGING","LONG","SINGER","HANGER","RINGER","WINGER","WRONG","HANG"]},{"heading":"Like LONGER","words":["LINGER","SINGLE","JUNGLE","ANGLE","JINGLE","TRIANGLE","YOUNGER","HUNGER"],"answers":["LINGER","SINGLE","JUNGLE","ANGLE","JINGLE","TRIANGLE","YOUNGER","HUNGER"]},{"heading":"Like STRANGER","words":["SPONGED","MANGER","ANGEL","GINGER","LOUNGE","SINGEING","FRINGE","SYRINGE"],"answers":["SPONGED","MANGER","ANGEL","GINGER","LOUNGE","SINGEING","FRINGE","SYRINGE"]}]},{"title":"Pronunciation of TH","lists":[{"heading":"Voiced","words":["THEN","MOTHER","THEIR","THIS","BREATHE","THUS","THERE","BOTHER","BATHE","THAN","THOSE","THAT","EITHER","OTHER","THOSE","THOU"],"answers":["THEN","MOTHER","THEIR","THIS","BREATHE","THUS","THERE","BOTHER","BATHE","THAN","THOSE","THAT","EITHER","OTHER","THOSE","THOU"]},{"heading":"Voiceless","words":["THINK","THIN","THROUGH","PATH","TENTH","WRATH","THREAD","THANK","BATH","THOUGHT","THISTLE","THROW"],"answers":["THINK","THIN","THROUGH","PATH","TENTH","WRATH","THREAD","THANK","BATH","THOUGHT","THISTLE","THROW"]},{"heading":"Plosive","words":["THOMAS","THYME","THAMES","CARTHORSE","PENTHOUSE","ESTHER","CHATHAM","THERESA","MASTHEAD","FATHEAD"],"answers":["THOMAS","THYME","THAMES","CARTHORSE","PENTHOUSE","ESTHER","CHATHAM","THERESA","MASTHEAD","FATHEAD"]}]},{"title":"EI/IE/EE Spellings","lists":[{"heading":"IE","words":["F--RCE","F--LD","SH--LD","GR--VE","CH--F","HAPP--R","P--CE","BEL--VE","FR--ND","TH--F","CR--S","Y--LD"],"answers":["FIERCE","FIELD","SHIELD","GRIEVE","CHIEF","HAPPIER","PIECE","BELIEVE","FRIEND","THIEF","CRIES","YIELD"]},{"heading":"EI","words":["REC--VE","PERC--VE","W--RD","H--FER","L--SURE","C--LING","--THER","N--THER","INV--GLE","REV--LLE"],"answers":["RECEIVE","PERCEIVE","WEIRD","HEIFER","LEISURE","CEILING","EITHER","NEITHER","INVEIGLE","REVEILLE"]},{"heading":"EE","words":["N--DLE","GR--N","THR--PENCE","FR--DOM","CAR--R","F--L","BR--ZE","SQU--ZE"],"answers":["NEEDLE","GREEN","THREEPENCE","FREEDOM","CAREER","FEEL","BREEZE","SQUEEZE"]}]},{"title":"Stress","lists":[{"heading":"DA-di-di","words":["ATTITUDE","SINISTER","PERMANENT","PHOTOGRAPH","SENSITIVE","POSSIBLE","MUSICAL","TALENTED","CUSTOMER","DANGEROUS","FORTUNATE","CHEMISTRY","GEOGRAPHY","COMMONLY"],"answers":["ATTitude","SINister","PERmanent","PHOtograph","SENsitive","POSSible","MUSical","TALented","CUStomer","DANgerous","FORtunate","CHEmistry","GEOgraphy","COMmonly"]},{"heading":"di-di-DA","words":["UNDERSTAND","CIGARETTE","OVERTAKE","INTERFERE","INTERCEDE","OVERREACH","UNDERBID","ENTERTAIN","UNDERGO"],"answers":["underSTAND","cigaRETTE","overTAKE","interFERE","interCEDE","overREACH","underBID","enterTAIN","underGO"]},{"heading":"di-DA-di","words":["AMUSING","EXTREMELY","IMPRESSIVE","DEMANDING","REACTION","ATTENTION","REVERSAL","POLICEMAN"],"answers":["aMUSing","exTREMEly","imPRESSive","deMANDing","reACTion","atTENTion","reVERSal","poLICEman"]}]},{"title":"Syllables","lists":[{"heading":"Two syllables","words":["MEDICINE","BUSINESS","FORTUNE","PRIESTESS","RESCUE","RATION","SOLSTICE","HARDNESS","BISCUIT"],"answers":["MEDICINE","BUSINESS","FORTUNE","PRIESTESS","RESCUE","RATION","SOLSTICE","HARDNESS","BISCUIT"]},{"heading":"Three syllables","words":["PARLIAMENT","RADIO","CANISTER","HAPPINESS","ATTITUDE","FILIGREE","PICTURESQUE","TACITURN","FORTITUDE","CHORISTER"],"answers":["PARLIAMENT","RADIO","CANISTER","HAPPINESS","ATTITUDE","FILIGREE","PICTURESQUE","TACITURN","FORTITUDE","CHORISTER"]},{"heading":"One syllable","words":["CHOIR","PLAGUE","PLEASE","FEAR","SQUEAK","CHARGE","STRANGE","STAIR"],"answers":["CHOIR","PLAGUE","PLEASE","FEAR","SQUEAK","CHARGE","STRANGE","STAIR"]}]},{"title":"General sets","lists":[{"heading":"TRANSPORT","words":["BUS","COACH","CAR","TAXI","VAN","TRUCK","BICYCLE","MOTOR-BIKE","PLANE","HELICOPTER","TRAIN","BOAT","SHIP","CART","YACHT","TANDEM"],"answers":["BUS","COACH","CAR","TAXI","VAN","TRUCK","BICYCLE","MOTOR-BIKE","PLANE","HELICOPTER","TRAIN","BOAT","SHIP","CART","YACHT","TANDEM"]},{"heading":"FLOWERS","words":["DAISY","ROSE","DAFFODIL","FUCHSIA","DANDELION","LILY","VIOLET","BLUEBELL","BUTTERCUP","DAHLIA","HONEYSUCKLE","GERANIUM","BEGONIA","ORCHID","POPPY","MARIGOLD"],"answers":["DAISY","ROSE","DAFFODIL","FUCHSIA","DANDELION","LILY","VIOLET","BLUEBELL","BUTTERCUP","DAHLIA","HONEYSUCKLE","GERANIUM","BEGONIA","ORCHID","POPPY","MARIGOLD"]},{"heading":"FRUIT","words":["ORANGE","MANGO","BANANA","RAISIN","PINEAPPLE","PRUNE","STRAWBERRY","RASPBERRY","BLUEBERRY","BLACKCURRANT","GRAPE","TOMATO","GRAPEFRUIT","APRICOT","PEACH","BRAMBLE"],"answers":["ORANGE","MANGO","BANANA","RAISIN","PINEAPPLE","PRUNE","STRAWBERRY","RASPBERRY","BLUEBERRY","BLACKCURRANT","GRAPE","TOMATO","GRAPEFRUIT","APRICOT","PEACH","BRAMBLE"]},{"heading":"TREES","words":["OAK","ASH","ELM","ELDER","PINE","FIR","LAUREL","BANYAN","BAOBAB","CHESTNUT","WILLOW","HAWTHORN","SPRUCE","CYPRESS","SYCAMORE","BIRCH"],"answers":["OAK","ASH","ELM","ELDER","PINE","FIR","LAUREL","BANYAN","BAOBAB","CHESTNUT","WILLOW","HAWTHORN","SPRUCE","CYPRESS","SYCAMORE","BIRCH"]},{"heading":"MAMMALS","words":["DOG","CAT","COW","SHEEP","DONKEY","MOUSE","RAT","HORSE","LION","TIGER","GIRAFFE","ZEBRA","BEAR","LEOPARD","PANTHER","ELEPHANT"],"answers":["DOG","CAT","COW","SHEEP","DONKEY","MOUSE","RAT","HORSE","LION","TIGER","GIRAFFE","ZEBRA","BEAR","LEOPARD","PANTHER","ELEPHANT"]},{"heading":"CLOTHING","words":["SHIRT","DRESS","SHOES","JACKET","HAT","STOCKINGS","SOCKS","SKIRT","SUIT","PANTS","TIE","BELT","GLOVES","VEST","BLOUSE","COAT"],"answers":["SHIRT","DRESS","SHOES","JACKET","HAT","STOCKINGS","SOCKS","SKIRT","SUIT","PANTS","TIE","BELT","GLOVES","VEST","BLOUSE","COAT"]},{"heading":"BIRDS","words":["SPARROW","HEN","EAGLE","VULTURE","HAWK","ROBIN","OSTRICH","FLAMINGO","THRUSH","DUCK"],"answers":["SPARROW","HEN","EAGLE","VULTURE","HAWK","ROBIN","OSTRICH","FLAMINGO","THRUSH","DUCK"]}]},{"title":"Food","lists":[{"heading":"From the dairy","words":["CHEESE","MILK","BUTTER","CREAM","YOGHURT","SKIM-MILK","CAMEMBERT","BRIE"],"answers":["CHEESE","MILK","BUTTER","CREAM","YOGHURT","SKIM-MILK","CAMEMBERT","BRIE"]},{"heading":"From the butcher's","words":["PORK","BEEF","LAMB","RABBIT","CHOPS","STEAK","HAMBURGERS","BRISKET"],"answers":["PORK","BEEF","LAMB","RABBIT","CHOPS","STEAK","HAMBURGERS","BRISKET"]},{"heading":"From the baker's","words":["BREAD","ROLLS","BAPS","CAKES","CURRANT BUNS","SCONES","TARTS","FRENCH BREAD"],"answers":["BREAD","ROLLS","BAPS","CAKES","CURRANT BUNS","SCONES","TARTS","FRENCH BREAD"]}]},{"title":"Geography","lists":[{"heading":"COUNTRIES","words":["THE UNITED STATES","GREAT BRITAIN","MEXICO","ARGENTINA","CHILE","FRANCE","GERMANY","RUSSIA","DENMARK","SWEDEN","ITALY","TURKEY","INDIA","NIGERIA","CHINA","AUSTRALIA"],"answers":["THE UNITED STATES","GREAT BRITAIN","MEXICO","ARGENTINA","CHILE","FRANCE","GERMANY","RUSSIA","DENMARK","SWEDEN","ITALY","TURKEY","INDIA","NIGERIA","CHINA","AUSTRALIA"]},{"heading":"RIVERS","words":["MISSISSIPI","NILE","THAMES","SEINE","RHINE","CONGO","GANGES","AVON","AMAZON","SHENANDOAH","TIGRIS","CLYDE","LOIRE","NIGER","TIBER","SHANNON"],"answers":["MISSISSIPI","NILE","THAMES","SEINE","RHINE","CONGO","GANGES","AVON","AMAZON","SHENANDOAH","TIGRIS","CLYDE","LOIRE","NIGER","TIBER","SHANNON"]},{"heading":"CAPITALS","words":["LONDON","PARIS","WASHINGTON D.C","BONN","MOSCOW","ROME","BAGHDAD","CAIRO","NAIROBI","HELSINKI","RANGOON","NEW DELHI","TOKYO","STOCKHOLM","CANBERRA","MADRID"],"answers":["LONDON","PARIS","WASHINGTON D.C","BONN","MOSCOW","ROME","BAGHDAD","CAIRO","NAIROBI","HELSINKI","RANGOON","NEW DELHI","TOKYO","STOCKHOLM","CANBERRA","MADRID"]},{"heading":"SEAS AND OCEANS","words":["ATLANTIC","PACIFIC","INDIAN","ARCTIC","BALTIC","MEDITERRANEAN","IRISH","GULF OF MEXICO","CARIBBEAN","BLACK SEA","RED SEA","GULF OF SUEZ","CASPIAN","NORTH SEA"],"answers":["ATLANTIC","PACIFIC","INDIAN","ARCTIC","BALTIC","MEDITERRANEAN","IRISH","GULF OF MEXICO","CARIBBEAN","BLACK SEA","RED SEA","GULF OF SUEZ","CASPIAN","NORTH SEA"]},{"heading":"NATIONALITIES","words":["AMERICAN","BRITISH","SWISS","CANADIAN","TANZANIAN","AUSTRALIAN","BELGIAN","SOUTH AFRICAN","LEBANESE","INDIAN","IRAQI","NIGERIAN","MALAYSIAN","MEXICAN","BRAZILIAN","AUSTRALIAN"],"answers":["AMERICAN","BRITISH","SWISS","CANADIAN","TANZANIAN","AUSTRALIAN","BELGIAN","SOUTH AFRICAN","LEBANESE","INDIAN","IRAQI","NIGERIAN","MALAYSIAN","MEXICAN","BRAZILIAN","AUSTRALIAN"]},{"heading":"LANGUAGES","words":["GAELIC","HEBREW","SERBO-CROAT","FLEMISH","SWAHILI","CANTONESE","GUJERATI","ARABIC","AMHARIC","YIDDISH","CATALAN","ENGLISH","MANDARIN","URDU","AFRIKAANS","TAGALOG"],"answers":["GAELIC","HEBREW","SERBO-CROAT","FLEMISH","SWAHILI","CANTONESE","GUJERATI","ARABIC","AMHARIC","YIDDISH","CATALAN","ENGLISH","MANDARIN","URDU","AFRIKAANS","TAGALOG"]}]},{"title":"People","lists":[{"heading":"WRITERS","words":["GOETHE","SHAKESPEARE","T.S.ELIOT","CHARLES DICKENS","VOLTAIRE","TOLSTOY","BERNARD SHAW","MELVILLE","EDGAR ALLAN POE","ROBERT FROST","DUMAS"],"answers":["GOETHE","SHAKESPEARE","T.S.ELIOT","CHARLES DICKENS","VOLTAIRE","TOLSTOY","BERNARD SHAW","MELVILLE","EDGAR ALLAN POE","ROBERT FROST","DUMAS"]},{"heading":"PRESIDENTS","words":["WASHINGTON","JEFFERSON","ADAMS","VAN BUREN","KENNEDY","ROOSEVELT","TRUMAN","JOHNSON","JACKSON","COOLIDGE","REAGAN","EISENHOWER","BUCHANAN","LINCOLN","NIXON","GARFIELD"],"answers":["WASHINGTON","JEFFERSON","ADAMS","VAN BUREN","KENNEDY","ROOSEVELT","TRUMAN","JOHNSON","JACKSON","COOLIDGE","REAGAN","EISENHOWER","BUCHANAN","LINCOLN","NIXON","GARFIELD"]},{"heading":"COMPOSERS","words":["BACH","MOZART","HAYDN","BEETHOVEN","BRAHMS","SCHUBERT","SCHUMANN","DEBUSSY","BERLIOZ","TCHAIKOWSKY","VIVALDI","ELGAR","BRITTEN","MAHLER","DVORAK","STRAVINSKY"],"answers":["BACH","MOZART","HAYDN","BEETHOVEN","BRAHMS","SCHUBERT","SCHUMANN","DEBUSSY","BERLIOZ","TCHAIKOWSKY","VIVALDI","ELGAR","BRITTEN","MAHLER","DVORAK","STRAVINSKY"]},{"heading":"PEOPLE IN FICTION","words":["DON QUIXOTE","JANE EYRE","JAMES BOND","EBENEZER SCROOGE","SIDNEY CARTON","JIM HAWKINS","OTHELLO","HEATHCLIFF","D'ARTAGNAN","RIP VAN WINKLE"],"answers":["DON QUIXOTE","JANE EYRE","JAMES BOND","EBENEZER SCROOGE","SIDNEY CARTON","JIM HAWKINS","OTHELLO","HEATHCLIFF","D'ARTAGNAN","RIP VAN WINKLE"]}]},{"title":"The Bible","lists":[{"heading":"DISCIPLES","words":["ANDREW","BARTHOLOMEW","JAMES","JOHN","JUDAS ISCARIOT","MATTHEW","PETER","PHILIP","SIMON","THADDEUS","THOMAS"],"answers":["ANDREW","BARTHOLOMEW","JAMES","JOHN","JUDAS ISCARIOT","MATTHEW","PETER","PHILIP","SIMON","THADDEUS","THOMAS"]},{"heading":"BOOKS IN O.T","words":["GENESIS","EXODUS","KINGS","NUMBERS","PSALMS","LEVITICUS","DEUTERONOMY","EZEKIEL","ISAIAH","ECCLESIASTES","SONG OF SOLOMON","NEHEMIAH","SAMUEL","JUDGES","DANIEL","RUTH"],"answers":["GENESIS","EXODUS","KINGS","NUMBERS","PSALMS","LEVITICUS","DEUTERONOMY","EZEKIEL","ISAIAH","ECCLESIASTES","SONG OF SOLOMON","NEHEMIAH","SAMUEL","JUDGES","DANIEL","RUTH"]},{"heading":"BOOKS IN N.T","words":["MATTHEW","MARK","LUKE","JOHN","REVELATION","EPHESIANS","GALATIANS","ACTS","ROMANS","CORINTHIANS","PHILIPPIANS","THESSALONIANS","HEBREWS","TIMOTHY"],"answers":["MATTHEW","MARK","LUKE","JOHN","REVELATION","EPHESIANS","GALATIANS","ACTS","ROMANS","CORINTHIANS","PHILIPPIANS","THESSALONIANS","HEBREWS","TIMOTHY"]}]},{"title":"Ideas","lists":[{"heading":"PHILOSOPHY","words":["STOICISM","RATIONALISM","IDEALISM","PLATONISM","EXISTENTIALISM","EPICUREANISM","UTILITARIANISM","HEDONISM","YOGA","COMMUNISM"],"answers":["STOICISM","RATIONALISM","IDEALISM","PLATONISM","EXISTENTIALISM","EPICUREANISM","UTILITARIANISM","HEDONISM","YOGA","COMMUNISM"]},{"heading":"RELIGIONS","words":["CHRISTIANITY","BUDDHISM","ISLAM","BAHA'I","GREEK ORTHODOX","PROTESTANTISM","CATHOLICISM","ZEN","SHINTO","HINDUISM","JUDAISM","MORMONISM"],"answers":["CHRISTIANITY","BUDDHISM","ISLAM","BAHAI","GREEK ORTHODOX","PROTESTANTISM","CATHOLICISM","ZEN","SHINTO","HINDUISM","JUDAISM","MORMONISM"]},{"heading":"MATHEMATICS","words":["ALGEBRA","GEOMETRY","STATISTICS","EUCLID","TRIGONOMETRY","ARITHMETIC","CALCULUS","SET THEORY"],"answers":["ALGEBRA","GEOMETRY","STATISTICS","EUCLID","TRIGONOMETRY","ARITHMETIC","CALCULUS","SET THEORY"]}]},{"title":"Activities","lists":[{"heading":"HOBBIES","words":["SEWING","STAMP-COLLECTING","MODEL-MAKING","COMPUTER GAMES","READING","CINEMA","DANCING","KITE-FLYING","PEN PALS"],"answers":["SEWING","STAMP-COLLECTING","MODEL-MAKING","COMPUTER GAMES","READING","CINEMA","DANCING","KITE-FLYING","PEN PALS"]},{"heading":"SPORTS","words":["FOOTBALL","TENNIS","CRICKET","ATHLETICS","RIDING","BASEBALL","BOXING","WRESTLING","ARCHERY","FENCING","ROWING","SAILING"],"answers":["FOOTBALL","TENNIS","CRICKET","ATHLETICS","RIDING","BASEBALL","BOXING","WRESTLING","ARCHERY","FENCING","ROWING","SAILING"]},{"heading":"WORK","words":["TEACHING","MEDICINE","LAW","NURSING","LABOURING","MANAGEMENT","BROADCASTING","JOURNALISM","POLITICS","ADVERTISING"],"answers":["TEACHING","MEDICINE","LAW","NURSING","LABOURING","MANAGEMENT","BROADCASTING","JOURNALISM","POLITICS","ADVERTISING"]}]},{"title":"Astronomy","lists":[{"heading":"PLANETS","words":["MERCURY","VENUS","MARS","EARTH","JUPITER","SATURN","URANUS","NEPTUNE","PLUTO"],"answers":["MERCURY","VENUS","MARS","EARTH","JUPITER","SATURN","URANUS","NEPTUNE","PLUTO"]},{"heading":"STARS","words":["BETELGEUSE","SIRIUS","ARCTURUS","ALDEBARAN","CASTOR","POLLUX","POLE STAR","PROXIMA CENTAURI"],"answers":["BETELGEUSE","SIRIUS","ARCTURUS","ALDEBARAN","CASTOR","POLLUX","POLE STAR","PROXIMA CENTAURI"]},{"heading":"SIGNS OF THE ZODIAC","words":["AQUARIUS","ARIES","CAPRICORN","CANCER","GEMINI","LEO","LIBRA","PISCES","SAGITTARIUS","SCORPIO","TAURUS","VIRGO"],"answers":["AQUARIUS","ARIES","CAPRICORN","CANCER","GEMINI","LEO","LIBRA","PISCES","SAGITTARIUS","SCORPIO","TAURUS","VIRGO"]}]},{"title":"Art","lists":[{"heading":"OPERAS","words":["CARMEN","LA TRAVIATA","WILLIAM TELL","THE MAGIC FLUTE","DON GIOVANNI","FIDELIO","IL TROVATORE","OTELLO","PARSIFAL","THE FLYING DUTCHMAN","TOSCA","MADAM BUTTERFLY"],"answers":["CARMEN","LA TRAVIATA","WILLIAM TELL","THE MAGIC FLUTE","DON GIOVANNI","FIDELIO","IL TROVATORE","OTELLO","PARSIFAL","THE FLYING DUTCHMAN","TOSCA","MADAM BUTTERFLY"]},{"heading":"MUSICAL FORMS","words":["SYMPHONY","SONATA","OPERA","QUARTET","LIED","TRIO","SERENADE","PARTITA","CONCERTO","ORATORIO"],"answers":["SYMPHONY","SONATA","OPERA","QUARTET","LIED","TRIO","SERENADE","PARTITA","CONCERTO","ORATORIO"]},{"heading":"BOOKS","words":["LITTLE WOMEN","TREASURE ISLAND","WUTHERING HEIGHTS","WAR AND PEACE","PARADISE LOST","BRIGHTON ROCK","RIDDLE OF THE SANDS","THE PRELUDE"],"answers":["LITTLE WOMEN","TREASURE ISLAND","WUTHERING HEIGHTS","WAR AND PEACE","PARADISE LOST","BRIGHTON ROCK","RIDDLE OF THE SANDS","THE PRELUDE"]},{"heading":"PAINTINGS","words":["MONA LISA","GUERNICA","SUNFLOWERS","PRAYING HANDS","THE HAY WAIN","FIGHTING TEMERAIRE","RAFT OF THE MEDUSA","SUNSET AT ARLES","LA MAJA DESNUDA"],"answers":["MONA LISA","GUERNICA","SUNFLOWERS","PRAYING HANDS","THE HAY WAIN","FIGHTING TEMERAIRE","RAFT OF THE MEDUSA","SUNSET AT ARLES","LA MAJA DESNUDA"]},{"heading":"PLAYS","words":["THE RIVALS","TWELFTH NIGHT","SCHOOL FOR SCANDAL","COMEDY OF ERRORS","LOOK BACK IN ANGER","THE ICEMAN COMETH","MAN AND SUPERMAN","THE TEMPEST"],"answers":["THE RIVALS","TWELFTH NIGHT","SCHOOL FOR SCANDAL","COMEDY OF ERRORS","LOOK BACK IN ANGER","THE ICEMAN COMETH","MAN AND SUPERMAN","THE TEMPEST"]}]},{"title":"FRANÇAIS","lists":[{"heading":"BOISSONS","words":["LAIT","VIN","BIERE","EAU","PASTIS","COGNAC","CAFE","THE","JUS D'ORANGE"],"answers":["du lait","du vin","de la bière","de l'eau","du Pastis","du Cognac","du café","du thé","du jus d'orange"]},{"heading":"ANIMAUX","words":["CHAT","CHIEN","LAPIN","LION","CHAUVE SOURIS","TAUPE","ELEPHANT","CHEVAL","VACHE","LOUP"],"answers":["CHAT","CHIEN","LAPIN","LION","CHAUVE SOURIS","TAUPE","ELEPHANT","CHEVAL","VACHE","LOUP"]},{"heading":"VETEMENTS","words":["PANTALON","CHEMISE","CHAUSSURES","CHAUSSETTES","CRAVATTE","JUPE","ROBE","CHAPEAU","VESTE","MAILLOT DE CORPS","SOUS VETEMENT","GILET"],"answers":["PANTALON","CHEMISE","CHAUSSURES","CHAUSSETTES","CRAVATTE","JUPE","ROBE","CHAPEAU","VESTE","MAILLOT DE CORPS","SOUS VETEMENT","GILET"]}]},{"title":"VETEMENTS","lists":[{"heading":"POUR HOMMES","words":["une cravatte","une chemise","un maillot de corps","un costume","un chapeau melon","un smoking","un noeud papillon","un caleçon"],"answers":["une cravatte","une chemise","un maillot de corps","un costume","un chapeau melon","un smoking","un noeud papillon","un caleçon"]},{"heading":"POUR FEMMES","words":["une robe","une jupe","un chemisier","un soutien gorge","des bas","des collants","un collier","un tailleur"],"answers":["une robe","une jupe","un chemisier","un soutien gorge","des bas","des collants","un collier","un tailleur"]},{"heading":"POUR LES DEUX","words":["un pantalon","des chaussures","un chapeau","un pullover","un manteau","un foulard","une écharpe","un gilet"],"answers":["un pantalon","des chaussures","un chapeau","un pullover","un manteau","un foulard","une écharpe","un gilet"]}]}];
+
+// ------------------------------
+// DOM references
+// ------------------------------
+const topicScreen   = document.getElementById("topicScreen");
+const topicSelect   = document.getElementById("topicSelect");
+const startBtn      = document.getElementById("startBtn");
+const gameScreen     = document.getElementById("gameScreen");
+const timeBox        = document.getElementById("timeBox");
+const wordBox        = document.getElementById("wordBox");
+const scoreBox        = document.getElementById("scoreBox");
+const columnsEl        = document.getElementById("columns");
+const f1Btn = document.getElementById("f1Btn");
+const f9Btn = document.getElementById("f9Btn");
+const f10Btn = document.getElementById("f10Btn");
+const helpOverlay = document.getElementById("helpOverlay");
+const helpColumns = document.getElementById("helpColumns");
+const helpContinueBtn = document.getElementById("helpContinueBtn");
+const helpQuitBtn = document.getElementById("helpQuitBtn");
+const summaryOverlay = document.getElementById("summaryOverlay");
+const summaryTime = document.getElementById("summaryTime");
+const summaryScore = document.getElementById("summaryScore");
+const summaryWrong = document.getElementById("summaryWrong");
+const playAgainBtn = document.getElementById("playAgainBtn");
+const chooseTopicBtn = document.getElementById("chooseTopicBtn");
+
+
+// ------------------------------
+// Populate topic dropdown
+// ------------------------------
+SORTSET_DATA.forEach((topic, i) => {
+  const opt = document.createElement("option");
+  opt.value = i;
+  opt.textContent = topic.title;
+  topicSelect.appendChild(opt);
+});
+
+
+// ------------------------------
+// Utility
+// ------------------------------
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function beep(freq, ok) {
+  if (!state.soundOn) return;
+  try {
+    const ctx = beep.ctx || (beep.ctx = new (window.AudioContext || window.webkitAudioContext)());
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.frequency.value = freq;
+    osc.type = ok ? "sine" : "square";
+    gain.gain.value = 0.08;
+    osc.connect(gain).connect(ctx.destination);
+    osc.start();
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.25);
+    osc.stop(ctx.currentTime + 0.25);
+  } catch (e) { /* audio not available */ }
+}
+
+
+// ------------------------------
+// Round setup
+// ------------------------------
+// "the program chooses three lists out of those read from disk and then
+// chooses eight words from the 16 in each list, checking for duplicates" —
+// from the original SORTSET documentation.
+function buildRound(topic) {
+  const lists = shuffle(topic.lists).slice(0, Math.min(3, topic.lists.length));
+  const used = new Set();
+  const pool = [];
+
+  lists.forEach((list, colIndex) => {
+    const order = shuffle(list.words.map((_, i) => i));
+    let picked = 0;
+    for (const idx of order) {
+      if (picked >= 8) break;
+      const word = list.words[idx];
+      if (used.has(word)) continue;
+      used.add(word);
+      pool.push({ word, answer: list.answers[idx], column: colIndex });
+      picked++;
+    }
+  });
+
+  return { lists, pool: shuffle(pool) };
+}
+
+
+// ------------------------------
+// Game state
+// ------------------------------
+let state = null;
+let timerHandle = null;
+
+function currentItem() {
+  return state.round.pool[state.wordIndex];
+}
+
+function startGame(topicIndex) {
+  const topic = SORTSET_DATA[topicIndex];
+  const round = buildRound(topic);
+
+  state = {
+    topic,
+    round,
+    wordIndex: 0,
+    selectedColumn: 0,
+    placed: round.lists.map(() => []),
+    correct: 0,
+    tries: 0,
+    seconds: 0,
+    soundOn: state ? state.soundOn : true,
+    wrongWords: [],
+    paused: false,
+  };
+
+  topicScreen.style.display = "none";
+  gameScreen.style.display = "block";
+  f9Btn.textContent = state.soundOn ? "Sound off" : "Sound on";
+
+  clearInterval(timerHandle);
+  timerHandle = setInterval(() => {
+    if (state.paused) return;
+    state.seconds++;
+    renderTime();
+  }, 1000);
+
+  renderAll();
+}
+
+function renderTime() {
+  const m = Math.floor(state.seconds / 60);
+  const s = state.seconds % 60;
+  timeBox.textContent = `Time: ${m}.${String(s).padStart(2, "0")}`;
+}
+
+function renderScore() {
+  const pct = state.tries === 0 ? 100 : Math.floor((state.correct / state.tries) * 100);
+  scoreBox.textContent = `Score: ${pct}%`;
+}
+
+function renderWord() {
+  const item = currentItem();
+  wordBox.textContent = `Word ${state.wordIndex + 1}: ${item.word}`;
+}
+
+function renderColumns(feedback) {
+  columnsEl.innerHTML = "";
+  state.round.lists.forEach((list, i) => {
+    const col = document.createElement("div");
+    col.className = "column" + (i === state.selectedColumn ? " selected" : "");
+    col.addEventListener("click", () => onColumnClick(i));
+
+    const heading = document.createElement("div");
+    heading.className = "col-heading";
+    heading.textContent = list.heading;
+    col.appendChild(heading);
+
+    state.placed[i].forEach(answer => {
+      const line = document.createElement("div");
+      line.className = "col-item";
+      line.textContent = answer;
+      col.appendChild(line);
+    });
+
+    if (i === state.selectedColumn) {
+      const preview = document.createElement("div");
+      preview.className = "col-preview" + (feedback === "correct" ? " correct" : "");
+      preview.textContent = "█".repeat(currentItem().word.length);
+      col.appendChild(preview);
+      if (feedback === "wrong") col.classList.add("shake");
+    }
+
+    columnsEl.appendChild(col);
+  });
+}
+
+function renderAll(feedback) {
+  renderTime();
+  renderScore();
+  renderWord();
+  renderColumns(feedback);
+}
+
+
+// ------------------------------
+// Controls
+// ------------------------------
+function moveSelection(delta) {
+  if (state.paused) return;
+  const n = state.round.lists.length;
+  state.selectedColumn = (state.selectedColumn + delta + n) % n;
+  renderColumns();
+}
+
+function onColumnClick(i) {
+  if (state.paused) return;
+  if (i !== state.selectedColumn) {
+    state.selectedColumn = i;
+    renderColumns();
+  } else {
+    chooseColumn();
+  }
+}
+
+function chooseColumn() {
+  if (state.paused) return;
+  const item = currentItem();
+  state.tries++;
+
+  if (state.selectedColumn === item.column) {
+    state.correct++;
+    state.placed[item.column].push(item.answer);
+    beep(880, true);
+    renderAll("correct");
+
+    if (state.wordIndex + 1 >= state.round.pool.length) {
+      setTimeout(finishRound, 250);
+    } else {
+      state.wordIndex++;
+      state.selectedColumn = 0;
+      setTimeout(() => renderAll(), 200);
+    }
+  } else {
+    state.wrongWords.push(item.word);
+    beep(160, false);
+    renderAll("wrong");
+    renderScore();
+  }
+}
+
+document.addEventListener("keydown", (e) => {
+  if (!state || state.paused || summaryOverlay.style.display !== "none") return;
+
+  if (e.key === " ") { e.preventDefault(); moveSelection(1); }
+  else if (e.key === "ArrowRight") { e.preventDefault(); moveSelection(1); }
+  else if (e.key === "ArrowLeft") { e.preventDefault(); moveSelection(-1); }
+  else if (e.key === "Enter") { e.preventDefault(); chooseColumn(); }
+});
+
+
+// ------------------------------
+// F1 / F9 / F10
+// ------------------------------
+function showHelp() {
+  if (!state) return;
+  state.paused = true;
+  helpColumns.innerHTML = "";
+  state.round.lists.forEach((list, i) => {
+    const col = document.createElement("div");
+    col.className = "column";
+    const heading = document.createElement("div");
+    heading.className = "col-heading";
+    heading.textContent = list.heading;
+    col.appendChild(heading);
+    state.round.pool
+      .filter(item => item.column === i)
+      .forEach(item => {
+        const line = document.createElement("div");
+        line.className = "col-item";
+        line.textContent = item.answer;
+        col.appendChild(line);
+      });
+    helpColumns.appendChild(col);
+  });
+  helpOverlay.style.display = "flex";
+}
+
+function hideHelp(quit) {
+  helpOverlay.style.display = "none";
+  if (quit) {
+    quitRound();
+  } else if (state) {
+    state.paused = false;
+  }
+}
+
+function toggleSound() {
+  if (!state) { return; }
+  state.soundOn = !state.soundOn;
+  f9Btn.textContent = state.soundOn ? "Sound off" : "Sound on";
+}
+
+function quitRound() {
+  clearInterval(timerHandle);
+  gameScreen.style.display = "none";
+  helpOverlay.style.display = "none";
+  summaryOverlay.style.display = "none";
+  topicScreen.style.display = "block";
+}
+
+function finishRound() {
+  clearInterval(timerHandle);
+  const pct = state.tries === 0 ? 100 : Math.floor((state.correct / state.tries) * 100);
+  summaryTime.textContent = timeBox.textContent;
+  summaryScore.textContent = `Score: ${pct}%`;
+  summaryWrong.textContent = state.wrongWords.length
+    ? "Words you put in the wrong column: " + state.wrongWords.join(", ")
+    : "No mistakes — perfect round!";
+  summaryOverlay.style.display = "flex";
+}
+
+f1Btn.addEventListener("click", showHelp);
+f9Btn.addEventListener("click", toggleSound);
+f10Btn.addEventListener("click", quitRound);
+helpContinueBtn.addEventListener("click", () => hideHelp(false));
+helpQuitBtn.addEventListener("click", () => hideHelp(true));
+playAgainBtn.addEventListener("click", () => {
+  summaryOverlay.style.display = "none";
+  startGame(Number(topicSelect.value));
+});
+chooseTopicBtn.addEventListener("click", () => {
+  summaryOverlay.style.display = "none";
+  topicScreen.style.display = "block";
+});
+
+startBtn.addEventListener("click", () => {
+  startGame(Number(topicSelect.value));
+});
+</script>
+</body>
+</html>
