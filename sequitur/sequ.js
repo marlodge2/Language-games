@@ -131,9 +131,9 @@ function quitToTitle() {
   startBtn.textContent = 'Start Game';
 }
 
-// Go to John Higgins's Home Page
+// Go back to the text games page
 function goHome() {
-  window.location.href = 'https://marlodge.net';
+  window.location.href = '../textgames.html';
 }
 
 // Play again - return to title screen to choose new story
@@ -200,6 +200,11 @@ function showOptions(totalChoices = 3) {
     div.className = 'choice';
     div.textContent = choice;
     div.onclick = () => handleChoice(div, choice === correct);
+    // Driven from real mouse movement rather than CSS :hover, so a box
+    // freshly placed under a motionless cursor doesn't inherit a stale
+    // highlight left over from the box clicked for the previous answer.
+    div.onmouseenter = () => div.classList.add('hovered');
+    div.onmouseleave = () => div.classList.remove('hovered');
     container.appendChild(div);
   });
 }
@@ -233,19 +238,22 @@ console.log('🧠 Attempt:', {
 
 function needHelp() {
   const helpBtn = document.getElementById('help-button');
+  const helpMsg = document.getElementById('help-message');
   const previousIndex = currentIndex;
-  
+
   // Reveal all text
   currentIndex = phrases.length - 1;
   renderStory();
-  
+
   // Disable button and grey it out
   helpBtn.disabled = true;
-  
+  if (helpMsg) helpMsg.classList.remove('hidden');
+
   // After 5 seconds, revert to previous state
   setTimeout(() => {
     currentIndex = previousIndex;
     renderStory();
     helpBtn.disabled = false;
+    if (helpMsg) helpMsg.classList.add('hidden');
   }, 5000);
 }

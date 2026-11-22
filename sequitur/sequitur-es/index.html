@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sequitur (Español)</title>
+    <link rel="stylesheet" href="../sequ.css?v=20261120" />
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+    </script>
+  </head>
+  <body>
+    <div id="title-screen">
+      <h1>Sequitur</h1>
+      <div class="subtitle">
+        Un juego de lengua de John y Muriel Higgins<br />Revisado en verano
+        de 2026
+      </div>
+      <div id="title-instructions">
+        Ves el principio de un texto y tienes que reconstruirlo eligiendo la
+        continuación correcta en cada paso. Es una especie de rompecabezas
+        narrativo. Si te quedas atascado, pulsa &laquo;¿Necesitas ayuda?&raquo;
+        para ver la historia completa durante cinco segundos.
+      </div>
+      <div id="story-list">
+        <select id="story-select" onchange="enableStartButton()">
+          <option value="" disabled selected>
+            -- Elige una historia --
+          </option>
+          <option value="olla.txt">Nasreddín y la olla</option>
+          <option value="camisa.txt">La camisa de Nasreddín</option>
+          <option value="zorra.txt">La zorra y las uvas</option>
+        </select>
+      </div>
+
+      <button id="start-button" onclick="startGame()" disabled>
+        Empezar
+      </button>
+    </div>
+
+    <div id="game-screen" class="hidden">
+      <h2 id="story-title"></h2>
+      <div id="story-box"></div>
+      <p id="instruction" class="instruction">Elige la continuación correcta</p>
+      <div id="options"></div>
+      <p id="help-message" class="hidden">Mostrando toda la historia durante cinco segundos&hellip;</p>
+      <div id="game-controls">
+        <button id="help-button" onclick="needHelp()">¿Necesitas ayuda?</button>
+        <button id="quit-button" onclick="quitGame()">Salir</button>
+      </div>
+      <div id="end-controls" class="hidden">
+        <button id="play-again-button" onclick="restartGame()">
+          Jugar otra vez
+        </button>
+        <button id="home-button" onclick="goHome()">
+          Juegos de texto
+        </button>
+      </div>
+    </div>
+
+    <script src="sequ.js"></script>
+  </body>
+</html>

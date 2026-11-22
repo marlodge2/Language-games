@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sequitur (ภาษาไทย)</title>
+    <link rel="stylesheet" href="../sequ.css?v=20261120" />
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+    </script>
+  </head>
+  <body>
+    <div id="title-screen">
+      <h1>Sequitur</h1>
+      <div class="subtitle">
+        เกมภาษาโดยจอห์นและมิวเรียล ฮิกกินส์
+        <span class="gloss">A language game by John and Muriel Higgins &mdash; revised Summer 2026</span>
+      </div>
+      <div id="title-instructions">
+        คุณจะเห็นตอนต้นของเรื่อง แล้วต้องเลือกประโยคถัดไปที่ถูกต้องทีละขั้น
+        เหมือนกับเล่นจิ๊กซอว์เรื่องราว ถ้าติดขัด กดปุ่ม &ldquo;ต้องการความช่วยเหลือไหม?&rdquo;
+        เพื่อดูเรื่องทั้งหมดเป็นเวลาห้าวินาที
+        <span class="gloss"
+          >You see the start of a text and have to rebuild it by picking the
+          right continuation at each step. It is a kind of story jigsaw
+          puzzle. If you get stuck, click &ldquo;Need help?&rdquo; for a
+          five-second glance at the complete story.</span
+        >
+      </div>
+      <div id="story-list">
+        <select id="story-select" onchange="enableStartButton()">
+          <option value="" disabled selected>
+            -- เลือกเรื่อง / Select a story --
+          </option>
+          <option value="mor.txt">นัสรุดดินกับหม้อ / The Pot</option>
+          <option value="seua.txt">เสื้อของนัสรุดดิน / The Shirt</option>
+          <option value="maja.txt">สุนัขจิ้งจอกกับองุ่น / The Fox and the Grapes</option>
+        </select>
+      </div>
+
+      <button id="start-button" onclick="startGame()" disabled>
+        เริ่มเกม <span class="gloss">Start Game</span>
+      </button>
+    </div>
+
+    <div id="game-screen" class="hidden">
+      <h2 id="story-title"></h2>
+      <div id="story-box"></div>
+      <p id="instruction" class="instruction">
+        เลือกประโยคที่ถูกต้อง
+        <span class="gloss">Pick the right continuation</span>
+      </p>
+      <div id="options"></div>
+      <p id="help-message" class="hidden">
+        กำลังแสดงเรื่องทั้งหมดเป็นเวลาห้าวินาที&hellip;<br />
+        <span class="gloss">Showing the whole story for five seconds&hellip;</span>
+      </p>
+      <div id="game-controls">
+        <button id="help-button" onclick="needHelp()">
+          ต้องการความช่วยเหลือไหม? <span class="gloss">Need help?</span>
+        </button>
+        <button id="quit-button" onclick="quitGame()">
+          ออก <span class="gloss">Quit</span>
+        </button>
+      </div>
+      <div id="end-controls" class="hidden">
+        <button id="play-again-button" onclick="restartGame()">
+          เล่นอีกครั้ง <span class="gloss">Play Again</span>
+        </button>
+        <button id="home-button" onclick="goHome()">
+          เกมข้อความ
+          <span class="gloss">Text Games</span>
+        </button>
+      </div>
+    </div>
+
+    <script src="sequ.js"></script>
+  </body>
+</html>

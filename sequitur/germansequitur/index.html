@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sequitur (Deutsch)</title>
-    <link rel="stylesheet" href="sequ.css?v=20240604" />
+    <link rel="stylesheet" href="../sequ.css?v=20261120" />
      <!-- Privacy-friendly analytics by Plausible -->
     <script
       async
@@ -57,6 +57,7 @@
       <div id="story-box"></div>
       <p id="instruction" class="instruction">Wähle die richtige Fortsetzung</p>
       <div id="options"></div>
+      <p id="help-message" class="hidden">Die ganze Geschichte wird fünf Sekunden lang angezeigt&hellip;</p>
       <div id="game-controls">
         <button id="help-button" onclick="needHelp()">Brauchen Sie Hilfe?</button>
         <button id="quit-button" onclick="quitGame()">Beenden</button>
@@ -64,7 +65,7 @@
       <div id="end-controls" class="hidden">
         <button id="play-again-button" onclick="restartGame()">Nochmal spielen</button>
         <button id="home-button" onclick="goHome()">
-          Startseite von John Higgins
+          Textspiele
         </button>
       </div>
     </div>
