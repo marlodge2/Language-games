@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Printer's Devil</title>
+    <meta name="description" content="A word game by John Higgins: guess the rule behind the mutilated words" />
+    <meta name="author" content="John Higgins" />
+    <link rel="stylesheet" href="printersdevil.css" />
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script
+      async
+      src="https://plausible.io/js/pa-VNPOVeguAik3r5b6-1YbT.js"
+    ></script>
+    <script>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+    </script>
+  </head>
+  <body>
+    <div id="title-screen">
+      <h1>Printer's Devil</h1>
+      <div class="subtitle">
+        A word game by John Higgins &mdash; a 2026 revival of a program
+        originally written for language learners in the 1980s
+      </div>
+      <div id="instructions">
+        A printer's devil was the mischievous apprentice who was blamed for
+        every misprint. Here, the devil has mutilated five words in exactly
+        the same way &mdash; perhaps by reversing them, swapping letters
+        around, or dropping the vowels. Study the mutilated words, work out
+        what has been done to them, then pick the correct rule from the
+        choices offered.
+      </div>
+      <div style="text-align: center">
+        <button id="start-button" onclick="startGame()">Start</button>
+      </div>
+    </div>
+
+    <div id="game-screen" class="hidden">
+      <h2>What has been done to these words?</h2>
+      <div id="puzzle-box">
+        <div id="mutilated-words"></div>
+        <div id="restored-words"></div>
+      </div>
+
+      <div id="rule-choices"></div>
+
+      <p id="result-message"></p>
+      <p id="scoreline">Score: 0 correct out of 0</p>
+
+      <div id="controls">
+        <button id="next-button" class="hidden" onclick="newPuzzle()">
+          Next puzzle
+        </button>
+        <button class="secondary" onclick="location.reload()">
+          Back to start
+        </button>
+      </div>
+    </div>
+
+    <script src="printersdevil.js"></script>
+  </body>
+</html>
